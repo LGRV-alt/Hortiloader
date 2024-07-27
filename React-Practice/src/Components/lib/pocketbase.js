@@ -1,4 +1,5 @@
 import PocketBase from "pocketbase";
+
 const pb = new PocketBase("https://hortiloader.pockethost.io");
 
 export async function createTask(title, description, date, day) {
@@ -9,7 +10,8 @@ export async function createTask(title, description, date, day) {
     day: day,
   };
   await pb.collection("tasks").create(data);
-  window.location.reload();
+  //   window.location.reload();
+  history.go(0);
 }
 
 export async function deleteTask(id) {

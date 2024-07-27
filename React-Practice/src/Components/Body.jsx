@@ -1,24 +1,23 @@
-import PocketBase from "pocketbase";
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { createTask, deleteTask } from "./lib/pocketbase";
-const pb = new PocketBase("https://hortiloader.pockethost.io");
-const records = await pb.collection("tasks").getFullList({});
-console.log(records);
 
-export default function Body() {
+export default function Body({ records }) {
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
   const [date, setDate] = useState(null);
   const [day, setDay] = useState("monday");
 
   const filterUsersByDay = (day) => {
+    // eslint-disable-next-line react/prop-types
     return records.filter((record) => record.day == day);
   };
 
   const monday = filterUsersByDay("monday");
-  console.log(monday);
   const tuesday = filterUsersByDay("tuesday");
-  console.log(tuesday);
+  const wednesday = filterUsersByDay("wednesday");
+  const thursday = filterUsersByDay("thursday");
+  const friday = filterUsersByDay("friday");
 
   const handleSubmit = () => {
     if (!title) {
@@ -59,6 +58,9 @@ export default function Body() {
             >
               <option value="monday">monday</option>
               <option value="tuesday">tuesday</option>
+              <option value="wednesday">wednesday</option>
+              <option value="thursday">thursday</option>
+              <option value="friday">friday</option>
             </select>
           </div>
           <button
@@ -79,7 +81,7 @@ export default function Body() {
             <div className="grid grid-cols-5 border">
               <div className="border ">
                 <h5>Monday</h5>
-                {records.map((record) => (
+                {monday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
                       {record.title} {record.description} {record.day}
@@ -111,26 +113,52 @@ export default function Body() {
               </div>
               <div>
                 <h5>Wednesday</h5>
+                {wednesday.map((record) => (
+                  <div className="flex" key={record.id}>
+                    <p>
+                      {record.title} {record.description} {record.day}
+                    </p>
+                    <button
+                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                      onClick={() => deleteTask(record.id)}
+                    >
+                      <span className="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                ))}
               </div>
               <div>
                 <h5>Thursday</h5>
+                {thursday.map((record) => (
+                  <div className="flex" key={record.id}>
+                    <p>
+                      {record.title} {record.description} {record.day}
+                    </p>
+                    <button
+                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                      onClick={() => deleteTask(record.id)}
+                    >
+                      <span className="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                ))}
               </div>
               <div>
                 <h5>Friday</h5>
+                {friday.map((record) => (
+                  <div className="flex" key={record.id}>
+                    <p>
+                      {record.title} {record.description} {record.day}
+                    </p>
+                    <button
+                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                      onClick={() => deleteTask(record.id)}
+                    >
+                      <span className="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                ))}
               </div>
-              {/* {records.map((record) => (
-                <div className="flex" key={record.id}>
-                  <p>
-                    {record.title} {record.description}
-                  </p>
-                  <button
-                    className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                    onClick={() => deleteTask(record.id)}
-                  >
-                    <span className="material-symbols-outlined">delete</span>
-                  </button>
-                </div>
-              ))} */}
             </div>
           </div>
         </div>
