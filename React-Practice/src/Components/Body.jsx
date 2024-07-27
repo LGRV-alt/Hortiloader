@@ -4,9 +4,9 @@ import { createTask, deleteTask } from "./lib/pocketbase";
 
 export default function Body({ records }) {
   const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [date, setDate] = useState(null);
   const [day, setDay] = useState("monday");
+  const [postcode, setPostcode] = useState(null);
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
@@ -24,7 +24,7 @@ export default function Body({ records }) {
       window.alert("Please enter a title");
       return;
     }
-    createTask(title, description, date, day);
+    createTask(title, day, postcode, orderNumber);
   };
   return (
     <>
@@ -35,22 +35,25 @@ export default function Body({ records }) {
             <input
               className="text-input "
               type="text"
-              placeholder="Title"
+              placeholder="Customer Name"
               onChange={(e) => setTitle(e.target.value)}
               required
             />
             <input
-              className="text-input"
-              onChange={(e) => setDescription(e.target.value)}
+              className="text-input "
               type="text"
-              placeholder="Description"
+              placeholder="Postcode"
+              onChange={(e) => setPostcode(e.target.value)}
+              required
             />
             <input
-              className="text-input"
-              onChange={(e) => setDate(e.target.value)}
-              type="date"
-              placeholder="Date"
+              className="text-input "
+              type="text"
+              placeholder="Order No."
+              onChange={(e) => setOrderNumber(e.target.value)}
+              required
             />
+
             <select
               name="day"
               id="day"
@@ -68,13 +71,12 @@ export default function Body({ records }) {
             onClick={handleSubmit}
           >
             <div className="flex">
-              <span className="material-symbols-outlined -ml-2">save</span>
-              <p className="text-base ml-2">Save</p>
+              <p className="">Save</p>
             </div>
           </button>
 
           {/* ------------------------------------------------------- */}
-          <div className="grid grid-cols-[5rem_auto]">
+          <div className="grid grid-cols-[5rem_auto] h-full">
             <div>
               <h3 className="">sidebar</h3>
             </div>
@@ -84,7 +86,7 @@ export default function Body({ records }) {
                 {monday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title} {record.description} {record.day}
+                      {record.title} {record.postcode} {record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
@@ -100,7 +102,7 @@ export default function Body({ records }) {
                 {tuesday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title} {record.description} {record.day}
+                      {record.title} {record.postcode} {record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
@@ -116,7 +118,7 @@ export default function Body({ records }) {
                 {wednesday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title} {record.description} {record.day}
+                      {record.title}-{record.postcode}-{record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
@@ -132,7 +134,7 @@ export default function Body({ records }) {
                 {thursday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title} {record.description} {record.day}
+                      {record.title}-{record.postcode}-{record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
@@ -148,7 +150,7 @@ export default function Body({ records }) {
                 {friday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title} {record.description} {record.day}
+                      {record.title}-{record.postcode}-{record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"

@@ -2,12 +2,12 @@ import PocketBase from "pocketbase";
 
 const pb = new PocketBase("https://hortiloader.pockethost.io");
 
-export async function createTask(title, description, date, day) {
+export async function createTask(title, day, postcode, orderNumber) {
   const data = {
     title: title,
-    description: description,
-    date: date,
     day: day,
+    postcode: postcode,
+    orderNumber: orderNumber,
   };
   await pb.collection("tasks").create(data);
   //   window.location.reload();
