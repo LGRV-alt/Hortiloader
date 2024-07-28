@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { createTask, deleteTask } from "./lib/pocketbase";
+
+import { deleteTask } from "./lib/pocketbase";
+import CreateCustomer from "./CreateCustomer";
 
 export default function Body({ records }) {
-  const [title, setTitle] = useState(null);
-  const [day, setDay] = useState("monday");
-  const [postcode, setPostcode] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter((record) => record.day == day);
@@ -19,61 +15,11 @@ export default function Body({ records }) {
   const thursday = filterUsersByDay("thursday");
   const friday = filterUsersByDay("friday");
 
-  const handleSubmit = () => {
-    if (!title) {
-      window.alert("Please enter a title");
-      return;
-    }
-    createTask(title, day, postcode, orderNumber);
-  };
   return (
     <>
       <div className="bg-gray-500 flex flex-col">
         <div>
-          <h2>Create Task</h2>
-          <div className="grid gap-6 mt-4 text-base">
-            <input
-              className="text-input "
-              type="text"
-              placeholder="Customer Name"
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-            <input
-              className="text-input "
-              type="text"
-              placeholder="Postcode"
-              onChange={(e) => setPostcode(e.target.value)}
-              required
-            />
-            <input
-              className="text-input "
-              type="text"
-              placeholder="Order No."
-              onChange={(e) => setOrderNumber(e.target.value)}
-              required
-            />
-
-            <select
-              name="day"
-              id="day"
-              onChange={(e) => setDay(e.target.value)}
-            >
-              <option value="monday">monday</option>
-              <option value="tuesday">tuesday</option>
-              <option value="wednesday">wednesday</option>
-              <option value="thursday">thursday</option>
-              <option value="friday">friday</option>
-            </select>
-          </div>
-          <button
-            className="bg-green-500 text-white py-2 px-4 rounded-md text-base mt-6 hover:bg-green-600"
-            onClick={handleSubmit}
-          >
-            <div className="flex">
-              <p className="">Save</p>
-            </div>
-          </button>
+          <CreateCustomer></CreateCustomer>
 
           {/* ------------------------------------------------------- */}
           <div className="grid grid-cols-[5rem_auto] h-full">
@@ -118,7 +64,8 @@ export default function Body({ records }) {
                 {wednesday.map((record) => (
                   <div className="flex" key={record.id}>
                     <p>
-                      {record.title}-{record.postcode}-{record.orderNumber}
+                      {record.title}-{record.postcode.toUpperCase()}-
+                      {record.orderNumber}
                     </p>
                     <button
                       className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
