@@ -19,7 +19,7 @@ export default function Body({ records }) {
     <>
       <div className="bg-gray-500 flex flex-col">
         <div>
-          <div className="bg-red-500 pb-5">
+          <div className=" pt-2 pb-5">
             <CreateCustomer></CreateCustomer>
           </div>
 
