@@ -10,6 +10,7 @@ export async function createTask(title, day, postcode, orderNumber) {
     orderNumber: orderNumber,
   };
   await pb.collection("tasks").create(data);
+
   //   window.location.reload();
   history.go(0);
 }

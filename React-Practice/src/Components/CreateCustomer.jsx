@@ -15,12 +15,12 @@ export default function CreateCustomer() {
     createTask(title, day, postcode, orderNumber);
   };
   return (
-    <div className="bg-gray-500 flex flex-col">
-      <div>
-        <h2>Create Task</h2>
-        <div className="grid gap-6 mt-4 text-base">
+    <div className="flex justify-center">
+      <div className="flex gap-3 items-center">
+        <h2 className="">Create Task</h2>
+        <div className="flex gap-2">
           <input
-            className="text-input "
+            className="text-input"
             type="text"
             placeholder="Customer Name"
             onChange={(e) => setTitle(e.target.value)}
@@ -50,10 +50,10 @@ export default function CreateCustomer() {
           </select>
         </div>
         <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md text-base mt-6 hover:bg-green-600"
+          className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 "
           onClick={handleSubmit}
         >
-          <div className="flex">
+          <div className="">
             <p className="">Save</p>
           </div>
         </button>

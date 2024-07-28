@@ -19,7 +19,9 @@ export default function Body({ records }) {
     <>
       <div className="bg-gray-500 flex flex-col">
         <div>
-          <CreateCustomer></CreateCustomer>
+          <div className="bg-red-500 pb-5">
+            <CreateCustomer></CreateCustomer>
+          </div>
 
           {/* ------------------------------------------------------- */}
           <div className="grid grid-cols-[5rem_auto] h-full">
