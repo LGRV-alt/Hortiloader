@@ -28,7 +28,7 @@ export default function Body({ records }) {
           <div className="border-r-2 border-black">
             <h5 className="flex justify-center pb-2">Monday</h5>
             {monday.map((record) => (
-              <div className="flex " key={record.id}>
+              <div className="flex justify-between px-1" key={record.id}>
                 <p>
                   {record.title} {record.postcode} {record.orderNumber}
                 </p>
@@ -44,7 +44,7 @@ export default function Body({ records }) {
           <div className="border-r-2 border-black">
             <h5 className="flex justify-center pb-2">Tuesday</h5>
             {tuesday.map((record) => (
-              <div className="flex" key={record.id}>
+              <div className="flex  justify-between px-1" key={record.id}>
                 <p>
                   {record.title} {record.postcode} {record.orderNumber}
                 </p>
@@ -60,7 +60,7 @@ export default function Body({ records }) {
           <div className="border-r-2 border-black">
             <h5 className="flex justify-center pb-2">Wednesday</h5>
             {wednesday.map((record) => (
-              <div className="flex" key={record.id}>
+              <div className="flex  justify-between px-1" key={record.id}>
                 <p>
                   {record.title}-{record.postcode.toUpperCase()}-
                   {record.orderNumber}
@@ -77,7 +77,7 @@ export default function Body({ records }) {
           <div className="border-r-2 border-black">
             <h5 className="flex justify-center pb-2">Thursday</h5>
             {thursday.map((record) => (
-              <div className="flex" key={record.id}>
+              <div className="flex justify-between px-1" key={record.id}>
                 <p>
                   {record.title}-{record.postcode}-{record.orderNumber}
                 </p>
@@ -93,7 +93,7 @@ export default function Body({ records }) {
           <div>
             <h5 className="flex justify-center pb-2">Friday</h5>
             {friday.map((record) => (
-              <div className="flex" key={record.id}>
+              <div className="flex  justify-between px-1" key={record.id}>
                 <p>
                   {record.title}-{record.postcode}-{record.orderNumber}
                 </p>
