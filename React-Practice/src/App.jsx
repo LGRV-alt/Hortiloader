@@ -17,7 +17,7 @@ export default function App() {
   console.log(rec);
   return (
     <>
-      <div className="grid-cols-1 grid-rows-[3rem,4fr,0.3fr] grid w-screen h-dvh overflow-x-hidden">
+      <div className="grid-cols-1 grid-rows-[3rem,auto,0.1fr] grid w-screen h-dvh overflow-x-hidden">
         <Header></Header>
         <Body records={rec}></Body>
         <Footer></Footer>

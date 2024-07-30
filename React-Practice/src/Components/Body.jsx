@@ -16,105 +16,99 @@ export default function Body({ records }) {
   const friday = filterUsersByDay("friday");
 
   return (
-    <>
-      <div className="bg-gray-500 flex flex-col">
-        <div>
-          <div className=" pt-2 pb-5">
-            <CreateCustomer></CreateCustomer>
-          </div>
+    <div className=" flex flex-col h-full">
+      <CreateCustomer></CreateCustomer>
 
-          {/* ------------------------------------------------------- */}
-          <div className="grid grid-cols-[5rem_auto] h-full">
-            <div>
-              <h3 className="">sidebar</h3>
-            </div>
-            <div className="grid grid-cols-5 border">
-              <div className="border ">
-                <h5>Monday</h5>
-                {monday.map((record) => (
-                  <div className="flex" key={record.id}>
-                    <p>
-                      {record.title} {record.postcode} {record.orderNumber}
-                    </p>
-                    <button
-                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                      onClick={() => deleteTask(record.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </div>
-                ))}
+      {/* ------------------------------------------------------- */}
+      <div className="grid grid-cols-[7rem_auto] h-full">
+        <div className="pl-2 h-auto">
+          <h3 className="">sidebar</h3>
+        </div>
+        <div className="grid grid-cols-5  outline">
+          <div className="outline">
+            <h5>Monday</h5>
+            {monday.map((record) => (
+              <div className="flex " key={record.id}>
+                <p>
+                  {record.title} {record.postcode} {record.orderNumber}
+                </p>
+                <button
+                  className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                  onClick={() => deleteTask(record.id)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
-              <div>
-                <h5>Tuesday</h5>
-                {tuesday.map((record) => (
-                  <div className="flex" key={record.id}>
-                    <p>
-                      {record.title} {record.postcode} {record.orderNumber}
-                    </p>
-                    <button
-                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                      onClick={() => deleteTask(record.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </div>
-                ))}
+            ))}
+          </div>
+          <div>
+            <h5>Tuesday</h5>
+            {tuesday.map((record) => (
+              <div className="flex" key={record.id}>
+                <p>
+                  {record.title} {record.postcode} {record.orderNumber}
+                </p>
+                <button
+                  className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                  onClick={() => deleteTask(record.id)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
-              <div>
-                <h5>Wednesday</h5>
-                {wednesday.map((record) => (
-                  <div className="flex" key={record.id}>
-                    <p>
-                      {record.title}-{record.postcode.toUpperCase()}-
-                      {record.orderNumber}
-                    </p>
-                    <button
-                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                      onClick={() => deleteTask(record.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </div>
-                ))}
+            ))}
+          </div>
+          <div>
+            <h5>Wednesday</h5>
+            {wednesday.map((record) => (
+              <div className="flex" key={record.id}>
+                <p>
+                  {record.title}-{record.postcode.toUpperCase()}-
+                  {record.orderNumber}
+                </p>
+                <button
+                  className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                  onClick={() => deleteTask(record.id)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
-              <div>
-                <h5>Thursday</h5>
-                {thursday.map((record) => (
-                  <div className="flex" key={record.id}>
-                    <p>
-                      {record.title}-{record.postcode}-{record.orderNumber}
-                    </p>
-                    <button
-                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                      onClick={() => deleteTask(record.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </div>
-                ))}
+            ))}
+          </div>
+          <div>
+            <h5>Thursday</h5>
+            {thursday.map((record) => (
+              <div className="flex" key={record.id}>
+                <p>
+                  {record.title}-{record.postcode}-{record.orderNumber}
+                </p>
+                <button
+                  className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                  onClick={() => deleteTask(record.id)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
-              <div>
-                <h5>Friday</h5>
-                {friday.map((record) => (
-                  <div className="flex" key={record.id}>
-                    <p>
-                      {record.title}-{record.postcode}-{record.orderNumber}
-                    </p>
-                    <button
-                      className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-                      onClick={() => deleteTask(record.id)}
-                    >
-                      <span className="material-symbols-outlined">delete</span>
-                    </button>
-                  </div>
-                ))}
+            ))}
+          </div>
+          <div>
+            <h5>Friday</h5>
+            {friday.map((record) => (
+              <div className="flex" key={record.id}>
+                <p>
+                  {record.title}-{record.postcode}-{record.orderNumber}
+                </p>
+                <button
+                  className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+                  onClick={() => deleteTask(record.id)}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </button>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
