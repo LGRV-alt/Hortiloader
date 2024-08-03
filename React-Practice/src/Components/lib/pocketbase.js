@@ -27,5 +27,6 @@ export async function deleteTask(id) {
 export async function taskStatus(id, title, status) {
   const data = { title: title, id: id, status: status };
   await pb.collection("tasks").update(id, data);
-  window.location.reload();
+
+  history.go(0);
 }
