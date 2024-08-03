@@ -23,3 +23,9 @@ export async function deleteTask(id) {
   await pb.collection("tasks").delete(id);
   window.location.reload();
 }
+
+export async function taskStatus(id, title, status) {
+  const data = { title: title, id: id, status: status };
+  await pb.collection("tasks").update(id, data);
+  window.location.reload();
+}

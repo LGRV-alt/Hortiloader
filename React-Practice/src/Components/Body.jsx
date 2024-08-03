@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { deleteTask } from "./lib/pocketbase";
+import { deleteTask, taskStatus } from "./lib/pocketbase";
 import CreateCustomer from "./CreateCustomer";
 
 export default function Body({ records }) {
@@ -30,13 +30,24 @@ export default function Body({ records }) {
             {monday.map((record) => (
               <div className="flex justify-between px-1 pb-2" key={record.id}>
                 <p>
-                  {record.title} {record.postcode} {record.orderNumber}
+                  {record.title} {record.postcode} {record.orderNumber}{" "}
                 </p>
+                <select
+                  value={record.status}
+                  onChange={(e) =>
+                    taskStatus(record.id, record.title, e.target.value)
+                  }
+                >
+                  <option value="pulled">Pulled</option>
+                  <option value="loaded">Loaded</option>
+                  <option value="sent">Sent</option>
+                </select>
+
                 <button
                   className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
                   onClick={() => deleteTask(record.id)}
                 >
-                  <span className="material-symbols-outlined">delete</span>
+                  <span className="material-symbols-outlined">X</span>
                 </button>
               </div>
             ))}
@@ -46,8 +57,9 @@ export default function Body({ records }) {
             {tuesday.map((record) => (
               <div className="flex  justify-between px-1 pb-2" key={record.id}>
                 <p>
-                  {record.title} {record.postcode} {record.orderNumber}
+                  {record.title} {record.postcode} {record.orderNumber}{" "}
                 </p>
+
                 <button
                   className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
                   onClick={() => deleteTask(record.id)}
