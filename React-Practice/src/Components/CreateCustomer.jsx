@@ -6,13 +6,14 @@ export default function CreateCustomer() {
   const [day, setDay] = useState("monday");
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
+  const [customerType, setCustomerType] = useState("wholesale");
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    createTask(title, day, postcode, orderNumber);
+    createTask(title, day, postcode, orderNumber, customerType);
   };
   return (
     <div className="flex justify-center">
@@ -40,6 +41,15 @@ export default function CreateCustomer() {
             onChange={(e) => setOrderNumber(e.target.value)}
             required
           />
+
+          <select
+            name="customerType"
+            id="customerType"
+            onChange={(e) => setCustomerType(e.target.value)}
+          >
+            <option value="wholesale">Wholesale</option>
+            <option value="retail">Retail</option>
+          </select>
 
           <select name="day" id="day" onChange={(e) => setDay(e.target.value)}>
             <option value="monday">monday</option>

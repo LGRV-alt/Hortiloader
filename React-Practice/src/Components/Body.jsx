@@ -18,26 +18,22 @@ export default function Body({ records }) {
   return (
     <div className=" flex flex-col h-full">
       <CreateCustomer></CreateCustomer>
-      <div className="grid grid-cols-[7rem_auto] h-full">
-        <div className="pl-2 h-auto">
-          <h3 className="">sidebar</h3>
+
+      <div className="grid grid-cols-5 outline h-full">
+        <div className="border-r-2 border-black">
+          <DayColumn arr={monday} day={"Monday"}></DayColumn>
         </div>
-        <div className="grid grid-cols-5 outline">
-          <div className="border-r-2 border-black">
-            <DayColumn arr={monday} day={"monday"}></DayColumn>
-          </div>
-          <div className="border-r-2 border-black">
-            <DayColumn arr={tuesday} day={"tuesday"}></DayColumn>
-          </div>
-          <div className="border-r-2 border-black">
-            <DayColumn arr={wednesday} day={"Wednesday"}></DayColumn>
-          </div>
-          <div className="border-r-2 border-black">
-            <DayColumn arr={thursday} day={"Thursday"}></DayColumn>
-          </div>
-          <div>
-            <DayColumn arr={friday} day={"Friday"}></DayColumn>
-          </div>
+        <div className="border-r-2 border-black">
+          <DayColumn arr={tuesday} day={"Tuesday"}></DayColumn>
+        </div>
+        <div className="border-r-2 border-black">
+          <DayColumn arr={wednesday} day={"Wednesday"}></DayColumn>
+        </div>
+        <div className="border-r-2 border-black">
+          <DayColumn arr={thursday} day={"Thursday"}></DayColumn>
+        </div>
+        <div>
+          <DayColumn arr={friday} day={"Friday"}></DayColumn>
         </div>
       </div>
     </div>

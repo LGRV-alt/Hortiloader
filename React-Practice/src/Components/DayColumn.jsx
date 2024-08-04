@@ -4,12 +4,21 @@ export default function DayColumn({ arr, day }) {
   const array = arr;
   return (
     <>
-      <h5 className="flex justify-center pb-2">{day}</h5>
+      <h5 className="flex justify-center border-b-2 mb-2 border-black">
+        {day}
+      </h5>
       {array.map((record) => (
-        <div className="flex justify-between px-1 pb-2" key={record.id}>
-          <p>
-            {record.title} {record.postcode} {record.orderNumber}{" "}
-          </p>
+        <div className="flex justify-between px-1 pt-2" key={record.id}>
+          {record.customerType === "retail" ? (
+            <p className="text-blue-700">
+              {record.title} {record.postcode} {record.orderNumber}{" "}
+            </p>
+          ) : (
+            <p className="">
+              {record.title} {record.postcode} {record.orderNumber}{" "}
+            </p>
+          )}
+
           <select
             value={record.status}
             onChange={(e) =>
