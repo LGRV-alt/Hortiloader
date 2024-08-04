@@ -49,6 +49,8 @@ export default function CreateCustomer() {
           >
             <option value="wholesale">Wholesale</option>
             <option value="retail">Retail</option>
+            <option value="missed">Missed</option>
+            <option value="other">Other</option>
           </select>
 
           <select name="day" id="day" onChange={(e) => setDay(e.target.value)}>
