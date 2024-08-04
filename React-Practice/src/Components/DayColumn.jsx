@@ -14,19 +14,23 @@ export default function DayColumn({ arr, day }) {
           <div className="flex">
             {record.customerType === "retail" ? (
               <p className="text-blue-700">
-                {record.title} {record.postcode} {record.orderNumber}{" "}
+                {record.title} {record.postcode.toUpperCase()}{" "}
+                {record.orderNumber}{" "}
               </p>
             ) : record.customerType === "other" ? (
               <p className="text-red-500">
-                {record.title} {record.postcode} {record.orderNumber}{" "}
+                {record.title} {record.postcode.toUpperCase()}{" "}
+                {record.orderNumber}{" "}
               </p>
             ) : record.customerType === "missed" ? (
               <p className="text-fuchsia-600">
-                {record.title} {record.postcode} {record.orderNumber}{" "}
+                {record.title} {record.postcode.toUpperCase()}{" "}
+                {record.orderNumber}{" "}
               </p>
             ) : (
               <p className="">
-                {record.title} {record.postcode} {record.orderNumber}{" "}
+                {record.title} {record.postcode.toUpperCase()}{" "}
+                {record.orderNumber}{" "}
               </p>
             )}
 
@@ -39,7 +43,7 @@ export default function DayColumn({ arr, day }) {
               <option></option>
               <option value="pulled">Pulled</option>
               <option value="loaded">Loaded</option>
-              <option value="sent">Sent</option>
+              <option value="missed">Missed</option>
             </select>
           </div>
           {record.status === "pulled" ? (
@@ -47,7 +51,7 @@ export default function DayColumn({ arr, day }) {
           ) : record.status === "loaded" ? (
             <p>Loaded</p>
           ) : (
-            <p>Sent</p>
+            <p>Missed</p>
           )}
 
           <button
