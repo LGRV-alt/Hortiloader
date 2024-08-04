@@ -17,8 +17,8 @@ export default function CreateCustomer() {
   };
   return (
     <div className="flex justify-center">
-      <div className="flex gap-3 items-center">
-        <h2 className="">Create Task</h2>
+      <div className="flex gap-2 items-center">
+        <h2 className="text-lg font-bold">Create Task -</h2>
         <div className="flex gap-2">
           <input
             className="text-input"
@@ -43,6 +43,7 @@ export default function CreateCustomer() {
           />
 
           <select
+            className="outline"
             name="customerType"
             id="customerType"
             onChange={(e) => setCustomerType(e.target.value)}
@@ -53,16 +54,21 @@ export default function CreateCustomer() {
             <option value="other">Other</option>
           </select>
 
-          <select name="day" id="day" onChange={(e) => setDay(e.target.value)}>
-            <option value="monday">monday</option>
-            <option value="tuesday">tuesday</option>
-            <option value="wednesday">wednesday</option>
-            <option value="thursday">thursday</option>
-            <option value="friday">friday</option>
+          <select
+            className="outline"
+            name="day"
+            id="day"
+            onChange={(e) => setDay(e.target.value)}
+          >
+            <option value="monday">Monday</option>
+            <option value="tuesday">Tuesday</option>
+            <option value="wednesday">Wednesday</option>
+            <option value="thursday">Thursday</option>
+            <option value="friday">Friday</option>
           </select>
         </div>
         <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 "
+          className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
           onClick={handleSubmit}
         >
           <div className="">

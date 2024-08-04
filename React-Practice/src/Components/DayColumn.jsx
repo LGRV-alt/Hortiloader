@@ -43,7 +43,7 @@ export default function DayColumn({ arr, day }) {
             </select>
           </div>
           {record.status === "pulled" ? (
-            <p>pulled</p>
+            <p></p>
           ) : record.status === "loaded" ? (
             <p>Loaded</p>
           ) : (
