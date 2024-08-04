@@ -47,22 +47,24 @@ export default function DayColumn({ arr, day }) {
               <option value="missed">Missed</option>
             </select>
           </div>
-          {record.status === "pulled" ? (
-            <p>Pulled</p>
-          ) : record.status === "loaded" ? (
-            <p>Loaded</p>
-          ) : record.status === "working" ? (
-            <p>Working</p>
-          ) : (
-            <p>Missed</p>
-          )}
+          <div className="flex">
+            {record.status === "pulled" ? (
+              <p>Pulled</p>
+            ) : record.status === "loaded" ? (
+              <p>Loaded</p>
+            ) : record.status === "working" ? (
+              <p>Working</p>
+            ) : (
+              <p>Missed</p>
+            )}
 
-          <button
-            className="ml-4 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-            onClick={() => deleteTask(record.id)}
-          >
-            <span className="material-symbols-outlined">X</span>
-          </button>
+            <button
+              className="ml-1 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
+              onClick={() => deleteTask(record.id)}
+            >
+              <span className="material-symbols-outlined">X</span>
+            </button>
+          </div>
         </div>
       ))}
     </>
