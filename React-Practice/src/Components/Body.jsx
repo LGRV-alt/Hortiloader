@@ -38,6 +38,7 @@ export default function Body({ records }) {
                     taskStatus(record.id, record.title, e.target.value)
                   }
                 >
+                  <option></option>
                   <option value="pulled">Pulled</option>
                   <option value="loaded">Loaded</option>
                   <option value="sent">Sent</option>
