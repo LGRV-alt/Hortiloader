@@ -41,15 +41,18 @@ export default function DayColumn({ arr, day }) {
               }
             >
               <option></option>
+              <option value="working">Working</option>
               <option value="pulled">Pulled</option>
               <option value="loaded">Loaded</option>
               <option value="missed">Missed</option>
             </select>
           </div>
           {record.status === "pulled" ? (
-            <p></p>
+            <p>Pulled</p>
           ) : record.status === "loaded" ? (
             <p>Loaded</p>
+          ) : record.status === "working" ? (
+            <p>Working</p>
           ) : (
             <p>Missed</p>
           )}
