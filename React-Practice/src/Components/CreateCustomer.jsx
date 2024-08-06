@@ -6,7 +6,7 @@ export default function CreateCustomer() {
   const [day, setDay] = useState("monday");
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
-  const [customerType, setCustomerType] = useState("wholesale");
+  const [customerType, setCustomerType] = useState("Wholesale");
 
   const handleSubmit = () => {
     if (!title) {

@@ -54,8 +54,10 @@ export default function DayColumn({ arr, day }) {
               <p>Loaded</p>
             ) : record.status === "working" ? (
               <p>Working</p>
-            ) : (
+            ) : record.status === "missed" ? (
               <p>Missed</p>
+            ) : (
+              <p></p>
             )}
 
             <button
