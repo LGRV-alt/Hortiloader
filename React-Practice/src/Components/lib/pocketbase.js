@@ -1,6 +1,7 @@
 import PocketBase from "pocketbase";
 
 const pb = new PocketBase("https://hortiloader.pockethost.io");
+export default pb;
 
 export async function createTask(
   title,
