@@ -21,7 +21,7 @@ export default function Body({ records }) {
 
       <div className="grid grid-cols-5 grid-rows-1 outline h-full">
         <div className="border-r-2 border-black">
-          <DayColumn arr={monday} day={"Monday"}></DayColumn>
+          <DayColumn arr={monday} day={"Monday"} ></DayColumn>
         </div>
         <div className="border-r-2 border-black">
           <DayColumn arr={tuesday} day={"Tuesday"}></DayColumn>
