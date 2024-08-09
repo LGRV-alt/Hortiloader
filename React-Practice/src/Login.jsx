@@ -3,10 +3,16 @@ import pb from "./Components/lib/pocketbase";
 import { useForm } from "react-hook-form";
 
 export default function Login() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const [isLoading, setLoading] = useState(false);
+  const [dummy, setDummy] = useState(0);
 
   const isLoggedIn = pb.authStore.isValid;
+
+  function logout() {
+    pb.authStore.clear();
+    setDummy(Math.random());
+  }
 
   async function login(data) {
     setLoading(true);
@@ -19,19 +25,14 @@ export default function Login() {
       alert(e);
     }
     setLoading(false);
+    reset();
   }
 
   if (isLoggedIn)
     return (
       <div>
         <h1>Logged In: {pb.authStore.model.email}</h1>
-        <button
-          onClick={() => {
-            pb.authStore.clear();
-          }}
-        >
-          Log Out
-        </button>
+        <button onClick={logout}>Log Out</button>
       </div>
     );
 
