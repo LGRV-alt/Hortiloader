@@ -16,6 +16,7 @@ export async function createTask(
     postcode: postcode,
     orderNumber: orderNumber,
     customerType: customerType,
+    user: pb.authStore.model.id,
   };
   await pb.collection("tasks").create(data);
 
@@ -33,8 +34,32 @@ export async function deleteTask(id) {
 }
 
 export async function taskStatus(id, title, status) {
-  const data = { title: title, id: id, status: status };
+  const data = {
+    title: title,
+    id: id,
+    status: status,
+    user: pb.authStore.model.id,
+  };
   await pb.collection("tasks").update(id, data);
 
   history.go(0);
+}
+
+export const isUserValid = pb.authStore.isValid;
+
+export async function login(username, password) {
+  await pb.collection("tasks").authWithPassword(username, password);
+}
+
+export function signout() {
+  pb.authStore.clear();
+}
+
+export async function signup(username, password) {
+  const data = {
+    username: username,
+    password: password,
+    passowrdConfirm: password,
+  };
+  await pb.collection("tasks").create(data);
 }

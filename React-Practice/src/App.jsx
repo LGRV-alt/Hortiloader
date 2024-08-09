@@ -21,8 +21,8 @@ export default function App() {
     <>
       <div className="grid-cols-1 grid-rows-[1fr,10fr,0.5fr] grid w-screen h-dvh overflow-x-hidden">
         <Header></Header>
-        {/* <Body records={rec}></Body> */}
-        <Login></Login>
+        <Body records={rec}></Body>
+        {/* <Login></Login> */}
         <Footer></Footer>
       </div>
     </>
