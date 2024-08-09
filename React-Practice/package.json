@@ -12,11 +12,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.51.23",
     "gh-pages": "^6.1.1",
     "pocketbase": "^0.21.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.52.2"
+    "react-hook-form": "^7.52.2",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
