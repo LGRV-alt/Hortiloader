@@ -1,26 +1,37 @@
 import { useState } from "react";
 import pb from "./Components/lib/pocketbase";
 import { useForm } from "react-hook-form";
-import useLogout from "./hooks/useLogout";
-import useLogin from "./hooks/useLogin";
 
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm();
-  const logout = useLogout();
-  const { mutate, isLoading, isError } = useLogin();
+  const { register, handleSubmit } = useForm();
+  const [isLoading, setLoading] = useState(false);
 
   const isLoggedIn = pb.authStore.isValid;
 
-  async function onSubmit(data) {
-    mutate({ email: data.email, password: data.password });
-    reset();
+  async function login(data) {
+    setLoading(true);
+    try {
+      const authData = await pb
+        .collection("users")
+        .authWithPassword(data.email, data.password);
+      console.log(data);
+    } catch (e) {
+      alert(e);
+    }
+    setLoading(false);
   }
 
   if (isLoggedIn)
     return (
       <div>
         <h1>Logged In: {pb.authStore.model.email}</h1>
-        <button onClick={logout}>Log Out</button>
+        <button
+          onClick={() => {
+            pb.authStore.clear();
+          }}
+        >
+          Log Out
+        </button>
       </div>
     );
 
@@ -29,8 +40,7 @@ export default function Login() {
       <div className="flex flex-col">
         <h1>Please Log In</h1>
         {isLoading && <p>Loading....</p>}
-        {isError && <p>Invalid email or password</p>}
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(login)}>
           <input type="text" placeholder="email" {...register("email")} />
           <input
             type="password"
