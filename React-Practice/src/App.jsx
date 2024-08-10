@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 import About from "./templates/About";
-
+import Navbar from "./Components/Navbar";
 export default function App() {
   console.log(isUserValid);
   const [rec, setRecords] = useState([]);
@@ -24,15 +24,53 @@ export default function App() {
 
   return (
     <>
-      <div className="grid-cols-1 grid-rows-[1fr_10fr] grid w-screen h-dvh overflow-x-hidden ">
-        <Header></Header>
+      {isUserValid ? (
+        <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+          <div className="col-start-1 col-end-6 row-start-1 row-end-2">
+            <Header></Header>
+          </div>
+          <div className="col-start-1 col-end-2 row-start-2 row-end-3">
+            <Navbar></Navbar>
+          </div>
+
+          <div className="col-start-2 col-end-4 row-start-2 row-end-3">
+            <Routes>
+              <Route path="/" element={<Body records={rec}></Body>} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </div>
+        </div>
+      ) : (
+        <div className="grid-cols-1 grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+          <Header></Header>
+          <Login></Login>
+        </div>
+      )}
+
+      {/* <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+        <div className="col-start-1 col-end-6 row-start-1 row-end-2">
+          <Header></Header>
+        </div>
+        <div className="col-start-1 col-end-2 row-start-2 row-end-3">
+          {isUserValid ? <Navbar></Navbar> : null}
+          <Navbar></Navbar>
+        </div>
+
         {isUserValid ? <Body records={rec}></Body> : <Login></Login>}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
+        <div className="col-start-2 col-end-4 row-start-2 row-end-3">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                isUserValid ? <Body records={rec}></Body> : <Login></Login>
+              }
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </div>
+      </div> */}
     </>
   );
 }

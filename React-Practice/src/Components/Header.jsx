@@ -6,7 +6,7 @@ function Header() {
     <>
       <div
         className={
-          " flex justify-between items-center bg-regal-blue pl-10 border-b-2 border-black "
+          " flex justify-between h-full items-center bg-regal-blue pl-10 border-b-2 border-black "
         }
       >
         <h2 className="text-2xl">Hortiloader</h2>
