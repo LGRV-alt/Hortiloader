@@ -1,4 +1,4 @@
-import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
+import { isUserValid, signout } from "./lib/pocketbase";
 
 function Header() {
   isUserValid;
@@ -10,7 +10,7 @@ function Header() {
         }
       >
         <h2 className="text-2xl">Hortiloader</h2>
-        <p>Current Week - {getDateWeek()}</p>
+
         {!isUserValid ? (
           <p></p>
         ) : (
