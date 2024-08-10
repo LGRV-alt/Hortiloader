@@ -2,7 +2,8 @@
 
 import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
-import Footer from "./Footer";
+
+import Navbar from "./Navbar";
 
 export default function Body({ records }) {
   const filterUsersByDay = (day) => {
@@ -18,7 +19,9 @@ export default function Body({ records }) {
 
   return (
     <div className="grid grid-cols-[1fr_10fr]">
-      <Footer></Footer>
+      {/* <Footer></Footer> */}
+      <Navbar />
+
       <div className=" flex flex-col h-full">
         <CreateCustomer></CreateCustomer>
         <div className="grid grid-cols-5 grid-rows-1 outline h-full">
