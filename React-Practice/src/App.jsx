@@ -4,8 +4,10 @@ import Footer from "./Components/Footer";
 import PocketBase from "pocketbase";
 import { useEffect, useState } from "react";
 import Login from "./Login";
+import { isUserValid } from "./Components/lib/pocketbase";
 
 export default function App() {
+  console.log(isUserValid);
   const [rec, setRecords] = useState([]);
   useEffect(() => {
     async function fetchData() {
@@ -21,8 +23,8 @@ export default function App() {
     <>
       <div className="grid-cols-1 grid-rows-[1fr,10fr,0.5fr] grid w-screen h-dvh overflow-x-hidden">
         <Header></Header>
-        <Body records={rec}></Body>
-        {/* <Login></Login> */}
+        {isUserValid ? <Body records={rec}></Body> : <Login></Login>}
+
         <Footer></Footer>
       </div>
     </>

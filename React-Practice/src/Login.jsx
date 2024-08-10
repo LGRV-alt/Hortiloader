@@ -1,59 +1,46 @@
 import { useState } from "react";
-import pb from "./Components/lib/pocketbase";
-import { useForm } from "react-hook-form";
+import { login } from "./Components/lib/pocketbase";
 
 export default function Login() {
-  const { register, handleSubmit, reset } = useForm();
-  const [isLoading, setLoading] = useState(false);
-  const [dummy, setDummy] = useState(0);
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
 
-  const isLoggedIn = pb.authStore.isValid;
-
-  function logout() {
-    pb.authStore.clear();
-    setDummy(Math.random());
-  }
-
-  async function login(data) {
-    setLoading(true);
-    try {
-      const authData = await pb
-        .collection("users")
-        .authWithPassword(data.email, data.password);
-      console.log(data);
-    } catch (e) {
-      alert(e);
+  const handleSubmit = () => {
+    if (!username || !password) {
+      window.alert("Invalid Login credentials");
+      return;
     }
-    setLoading(false);
-    reset();
-  }
 
-  if (isLoggedIn)
-    return (
-      <div>
-        <h1>Logged In: {pb.authStore.model.email}</h1>
-        <button onClick={logout}>Log Out</button>
-      </div>
-    );
-
+    login(username, password);
+  };
   return (
     <>
-      <div className="flex flex-col">
-        <h1>Please Log In</h1>
-        {isLoading && <p>Loading....</p>}
-        <form onSubmit={handleSubmit(login)}>
-          <input type="text" placeholder="email" {...register("email")} />
-          <input
-            type="password"
-            placeholder="password"
-            {...register("password")}
-          />
-
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Loading" : "Login"}
-          </button>
-        </form>
+      <h2>Log In As Existing User</h2>
+      <div className="grid gap-6 mt-4 text-base">
+        <input
+          className="text-input "
+          type="text"
+          placeholder="Username"
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
+          className="text-input"
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="Password"
+        />
       </div>
+
+      <button
+        className="bg-green-500 text-white py-2 px-4 rounded-md text-base mt-6 hover:bg-green-600"
+        onClick={handleSubmit}
+      >
+        <div className="flex">
+          <span className="material-symbols-outlined -ml-2">login</span>
+          <p className="text-base ml-2">Continue</p>
+        </div>
+      </button>
     </>
   );
 }

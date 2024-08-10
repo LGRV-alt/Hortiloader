@@ -1,26 +1,7 @@
+import { isUserValid, signout } from "./lib/pocketbase";
+
 function Header() {
-  function getDateWeek(date) {
-    const currentDate = typeof date === "object" ? date : new Date();
-    const januaryFirst = new Date(currentDate.getFullYear(), 0, 1);
-    const daysToNextMonday =
-      januaryFirst.getDay() === 1 ? 0 : (7 - januaryFirst.getDay()) % 7;
-    const nextMonday = new Date(
-      currentDate.getFullYear(),
-      0,
-      januaryFirst.getDate() + daysToNextMonday
-    );
-
-    return currentDate < nextMonday
-      ? 52
-      : currentDate > nextMonday
-      ? Math.ceil((currentDate - nextMonday) / (24 * 3600 * 1000) / 7)
-      : 1;
-  }
-
-  const currentDate = new Date();
-  const weekNumber = getDateWeek();
-
-  console.log("Week number of " + currentDate + " is : " + weekNumber);
+  isUserValid;
   return (
     <>
       <div
@@ -29,7 +10,16 @@ function Header() {
         }
       >
         <h2 className="text-2xl">Hortiloader</h2>
-        <p className="pr-6 ">Current Week - {weekNumber}</p>
+        {!isUserValid ? (
+          <p></p>
+        ) : (
+          <button
+            className="border border-green-500 text-green-500 py-2 px-4 rounded-md ml-4 hover:bg-green-500 hover:text-white"
+            onClick={signout}
+          >
+            Signout
+          </button>
+        )}
       </div>
     </>
   );
