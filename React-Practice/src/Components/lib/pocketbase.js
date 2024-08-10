@@ -6,6 +6,7 @@ export const isUserValid = client.authStore.isValid;
 export async function getTasks() {
   return await client.collection("tasks").getFullList();
 }
+
 // export async function createTask(title, description) {
 //   const data = {
 //     title: title,
