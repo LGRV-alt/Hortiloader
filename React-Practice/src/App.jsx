@@ -47,30 +47,6 @@ export default function App() {
           <Login></Login>
         </div>
       )}
-
-      {/* <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
-        <div className="col-start-1 col-end-6 row-start-1 row-end-2">
-          <Header></Header>
-        </div>
-        <div className="col-start-1 col-end-2 row-start-2 row-end-3">
-          {isUserValid ? <Navbar></Navbar> : null}
-          <Navbar></Navbar>
-        </div>
-
-        {isUserValid ? <Body records={rec}></Body> : <Login></Login>}
-        <div className="col-start-2 col-end-4 row-start-2 row-end-3">
-          <Routes>
-            <Route
-              path="/"
-              element={
-                isUserValid ? <Body records={rec}></Body> : <Login></Login>
-              }
-            />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </div>
-      </div> */}
     </>
   );
 }
