@@ -21,7 +21,7 @@ export default function Login() {
     signup(username, password);
   };
   return (
-    <div className="grid grid-rows-1 grid-cols-2">
+    <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2">
       <div className="flex flex-col justify-evenly items-center">
         <div className="bg-white flex flex-col justify-center items-start">
           <h2>Log In As Existing User</h2>
@@ -81,7 +81,7 @@ export default function Login() {
           </button>
         </div>
       </div>
-      <div className="bg-stone-500 flex items-center p-20">
+      <div className="md:flex hidden bg-stone-500 items-center p-20">
         <p>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem
           quasi consequuntur quod saepe numquam facilis dicta quas expedita odit

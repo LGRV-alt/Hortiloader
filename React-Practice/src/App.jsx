@@ -1,7 +1,6 @@
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import Contact from "./templates/Contact";
-import Home from "./templates/Home";
 import { Routes, Route } from "react-router-dom";
 import PocketBase from "pocketbase";
 import { useEffect, useState } from "react";
@@ -9,6 +8,8 @@ import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 import About from "./templates/About";
 import Navbar from "./Components/Navbar";
+import CreateCustomer from "./Components/CreateCustomer";
+
 export default function App() {
   console.log(isUserValid);
   const [rec, setRecords] = useState([]);
@@ -32,12 +33,11 @@ export default function App() {
           <div className="col-start-1 col-end-2 row-start-2 row-end-3">
             <Navbar></Navbar>
           </div>
-
           <div className="col-start-2 col-end-4 row-start-2 row-end-3">
             <Routes>
               <Route path="/" element={<Body records={rec}></Body>} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/contact" element={<CreateCustomer />} />
             </Routes>
           </div>
         </div>
