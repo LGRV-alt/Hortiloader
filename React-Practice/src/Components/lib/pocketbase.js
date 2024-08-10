@@ -56,13 +56,22 @@ export async function signup(username, password) {
 
 // ---------------------Brought Over----------------------
 export async function deleteTask(id) {
-  let confirm = window.confirm("Are you sure you want to delete this task?");
-  if (!confirm) {
+  const realPass = "ratstan";
+  const pass = prompt("Please enter the password");
+  if (realPass === pass) {
+    await client.collection("tasks").delete(id);
+    window.location.reload();
+  } else {
     return;
   }
-  await client.collection("tasks").delete(id);
-  window.location.reload();
 }
+//   let confirm = window.confirm("Are you sure you want to delete this task?");
+//   if (!confirm) {
+//     return;
+//   }
+//   await client.collection("tasks").delete(id);
+//   window.location.reload();
+// }
 
 export async function taskStatus(id, title, status) {
   const data = {

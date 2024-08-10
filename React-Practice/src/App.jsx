@@ -1,6 +1,6 @@
 import Header from "./Components/Header";
 import Body from "./Components/Body";
-import Footer from "./Components/Footer";
+
 import PocketBase from "pocketbase";
 import { useEffect, useState } from "react";
 import Login from "./Login";
@@ -21,11 +21,9 @@ export default function App() {
 
   return (
     <>
-      <div className="grid-cols-1 grid-rows-[1fr,10fr,0.5fr] grid w-screen h-dvh overflow-x-hidden">
+      <div className="grid-cols-1 grid-rows-[1fr_10fr] grid w-screen h-dvh overflow-x-hidden ">
         <Header></Header>
         {isUserValid ? <Body records={rec}></Body> : <Login></Login>}
-
-        <Footer></Footer>
       </div>
     </>
   );

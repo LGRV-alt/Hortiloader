@@ -16,7 +16,7 @@ export default function CreateCustomer() {
     createTask(title, day, postcode, orderNumber, customerType);
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-slate-300">
       <div className="flex gap-2 items-center">
         <h2 className="text-lg font-bold">Create Task -</h2>
         <div className="flex gap-2">

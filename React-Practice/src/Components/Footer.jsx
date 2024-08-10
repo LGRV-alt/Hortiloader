@@ -1,8 +1,8 @@
 function Footer() {
   return (
     <>
-      <h2 className="text-2xl text-black border-t-4 border-black flex justify-center items-center ">
-        <p></p>
+      <h2 className="text-2xl text-white bg-regal-blue flex justify-center items-center ">
+        <p>Im a sidebar</p>
       </h2>
     </>
   );
