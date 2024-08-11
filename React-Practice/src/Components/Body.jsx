@@ -3,8 +3,6 @@
 import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
 
-import Navbar from "./Navbar";
-
 export default function Body({ records }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types

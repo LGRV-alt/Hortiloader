@@ -11,7 +11,6 @@ import Navbar from "./Components/Navbar";
 import CreateCustomer from "./Components/CreateCustomer";
 
 export default function App() {
-  console.log(isUserValid);
   const [rec, setRecords] = useState([]);
   useEffect(() => {
     async function fetchData() {
