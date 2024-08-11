@@ -77,7 +77,7 @@ export default function Login() {
       ) : (
         <div className=" flex flex-col justify-evenly items-center">
           <div className="bg-white flex flex-col  items-center pt-10 h-full md:justify-center">
-            <h2 className="text-2xl  font-semibold  mb-10">Create New User</h2>
+            <h2 className="text-2xl  font-semibold  mb-10">Sign up</h2>
             <div className="grid gap-6 mt-4 text-base">
               <div className="w-72">
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
@@ -121,7 +121,7 @@ export default function Login() {
       <div className="md:flex bg-regal-blue items-center justify-center pt-1 md:p-20 row-start-1 md:col-start-2 ">
         <div className="items-center flex flex-col">
           <h2 className="text-4xl text-white font-black">HortiLoader</h2>
-          <p className="text-lg text-white font-semibold">
+          <p className="text-sm  text-white font-medium- md:font-semibold md:text-lg">
             Create and track orders
           </p>
         </div>
