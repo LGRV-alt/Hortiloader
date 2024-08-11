@@ -41,8 +41,8 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <div className="grid-cols-1 grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
-          <Header></Header>
+        <div className="grid-cols-1  grid w-screen h-dvh overflow-x-hidden ">
+          {/* <Header></Header> */}
           <Login></Login>
         </div>
       )}
