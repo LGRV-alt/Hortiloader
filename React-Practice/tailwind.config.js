@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         "regal-blue": "#7C9082",
+        "secondary-colour": "#E88D67",
       },
     },
   },

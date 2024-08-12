@@ -16,9 +16,9 @@ export default function CreateCustomer() {
     createTask(title, day, postcode, orderNumber, customerType);
   };
   return (
-    <div className="flex justify-center bg-slate-300">
+    <div className="flex justify-center bg-regal-blue pb-2 ">
       <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-bold">Create Task -</h2>
+        <h2 className="text-lg font-bold text-white ">Create Order-</h2>
         <div className="flex gap-2">
           <input
             className="text-input"

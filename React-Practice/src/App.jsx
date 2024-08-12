@@ -29,10 +29,7 @@ export default function App() {
           <div className="col-start-1 col-end-6 row-start-1 row-end-2">
             <Header></Header>
           </div>
-          <div className="col-start-1 col-end-2 row-start-2 row-end-3">
-            <Navbar></Navbar>
-          </div>
-          <div className="col-start-2 col-end-4 row-start-2 row-end-3">
+          <div className="col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               <Route path="/" element={<Body records={rec}></Body>} />
               <Route path="/about" element={<About />} />
@@ -41,7 +38,7 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <div className="grid-cols-1  grid w-screen h-dvh overflow-x-hidden ">
+        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
           {/* <Header></Header> */}
           <Login></Login>
         </div>
