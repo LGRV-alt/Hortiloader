@@ -6,7 +6,9 @@ import DayColumn from "./DayColumn";
 export default function Body({ records }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
-    return records.filter((record) => record.day == day);
+    return records.filter(
+      (record) => (record.day == day) & (record.other == "none")
+    );
   };
 
   const monday = filterUsersByDay("monday");

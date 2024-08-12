@@ -33,7 +33,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<Body records={rec}></Body>} />
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<CreateCustomer />} />
+              <Route path="/contact" element={<Contact records={rec} />} />
             </Routes>
           </div>
         </div>

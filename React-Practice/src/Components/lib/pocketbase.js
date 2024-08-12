@@ -103,7 +103,8 @@ export async function createTask(
   day,
   postcode,
   orderNumber,
-  customerType
+  customerType,
+  other
 ) {
   const data = {
     title: title,
@@ -112,6 +113,7 @@ export async function createTask(
     orderNumber: orderNumber,
     customerType: customerType,
     user: client.authStore.model.id,
+    other,
   };
   await client.collection("tasks").create(data);
   history.go(0);

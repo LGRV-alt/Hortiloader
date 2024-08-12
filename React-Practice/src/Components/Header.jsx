@@ -1,5 +1,6 @@
-import { isUserValid, signout } from "./lib/pocketbase";
+import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
+
 function Header() {
   isUserValid;
   return (
@@ -9,7 +10,10 @@ function Header() {
           " flex justify-between h-full items-center bg-regal-blue pl-10  "
         }
       >
-        <h2 className="text-2xl text-white font-semibold">HortiLoader</h2>
+        <h2 className="text-2xl text-white font-semibold mr-5">HortiLoader</h2>
+        <h2 className=" text-white font-medium">
+          Current Week - {getDateWeek()}
+        </h2>
 
         {!isUserValid ? (
           <p></p>
