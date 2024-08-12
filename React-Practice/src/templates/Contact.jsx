@@ -1,11 +1,15 @@
+/* eslint-disable react/prop-types */
 import CreateCustomer from "../Components/CreateCustomer";
 import DayColumn from "../Components/DayColumn";
 
-export default function Contact({ records }) {
+export default function Contact({ records, chosenWeek }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
-      (record) => (record.day == day) & (record.other == "collect")
+      (record) =>
+        (record.day == day) &
+        (record.weekNumber == chosenWeek) &
+        (record.other == "collect")
     );
   };
 
@@ -18,6 +22,7 @@ export default function Contact({ records }) {
   return (
     <div className=" flex flex-col h-full">
       <CreateCustomer></CreateCustomer>
+
       <div className="grid grid-cols-5 grid-rows-1 outline h-full">
         <div className="border-r-2 border-black">
           <DayColumn arr={monday} day={"Monday"}></DayColumn>

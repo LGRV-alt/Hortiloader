@@ -1,20 +1,31 @@
 import { useState } from "react";
-import { createTask } from "./lib/pocketbase";
+import { createTask, getDateWeek } from "./lib/pocketbase";
 
 export default function CreateCustomer() {
+  const currentWeek = getDateWeek();
+
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [customerType, setCustomerType] = useState("wholesale");
   const [other, setOther] = useState("none");
+  const [weekNumber, setWeekNumber] = useState(currentWeek);
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    createTask(title, day, postcode, orderNumber, customerType, other);
+    createTask(
+      title,
+      day,
+      postcode,
+      orderNumber,
+      customerType,
+      other,
+      weekNumber
+    );
   };
   return (
     <div className="flex justify-center bg-regal-blue pb-2 ">
@@ -80,12 +91,21 @@ export default function CreateCustomer() {
             onChange={(e) => setOther(e.target.value)}
           >
             <option value="" disabled>
-              Other
+              Type
             </option>
-            <option value="none">None</option>
+            <option value="none">Deliver</option>
             <option value="holding">Holding</option>
             <option value="collect">Collect</option>
           </select>
+          <input
+            className=" w-16 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+            type="number"
+            min={currentWeek}
+            max={52}
+            placeholder="Week"
+            onChange={(e) => setWeekNumber(e.target.value)}
+            required
+          />
         </div>
         <button
           className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "

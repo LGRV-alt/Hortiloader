@@ -3,11 +3,14 @@
 import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
 
-export default function Body({ records }) {
+export default function Body({ records, chosenWeek }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
-      (record) => (record.day == day) & (record.other == "none")
+      (record) =>
+        (record.day == day) &
+        (record.weekNumber == chosenWeek) &
+        (record.other == "none")
     );
   };
 
