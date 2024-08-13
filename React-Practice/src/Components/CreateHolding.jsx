@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
 
-export default function CreateCustomer() {
+export default function CreateHolding() {
   const currentWeek = getDateWeek();
+  const other = "holding";
 
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [customerType, setCustomerType] = useState("wholesale");
-  const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const [orderInfo, setCustomerInfo] = useState("");
 
   const handleSubmit = () => {
     if (!title) {
@@ -24,13 +25,14 @@ export default function CreateCustomer() {
       orderNumber,
       customerType,
       other,
-      weekNumber
+      weekNumber,
+      orderInfo
     );
   };
   return (
-    <div className="flex justify-center bg-regal-blue pb-2 ">
+    <div className="flex flex-col justify-center items-center bg-regal-blue pb-2 ">
       <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-white ">Create Order-</h2>
+        <h2 className="text-lg font-medium text-white ">Holding Order - </h2>
         <div className="flex gap-2">
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
@@ -69,7 +71,7 @@ export default function CreateCustomer() {
             <option value="other">Other</option>
           </select>
 
-          <select
+          {/* <select
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
             id="day"
@@ -83,22 +85,9 @@ export default function CreateCustomer() {
             <option value="wednesday">Wednesday</option>
             <option value="thursday">Thursday</option>
             <option value="friday">Friday</option>
-          </select>
+          </select> */}
 
-          <select
-            className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
-            name="day"
-            id="day"
-            onChange={(e) => setOther(e.target.value)}
-          >
-            <option value="" disabled>
-              Type
-            </option>
-            <option value="none">Whiteboard</option>
-            <option value="holding">Holding</option>
-            <option value="collect">Collect</option>
-          </select>
-          <input
+          {/* <input
             className=" w-16 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="number"
             min={currentWeek}
@@ -106,7 +95,7 @@ export default function CreateCustomer() {
             placeholder="Week"
             onChange={(e) => setWeekNumber(e.target.value)}
             required
-          />
+          /> */}
         </div>
         <button
           className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
@@ -116,6 +105,16 @@ export default function CreateCustomer() {
             <p className="">Save</p>
           </div>
         </button>
+      </div>
+      <div className="w-1/2 flex justify-center items-center text-white">
+        <h2>Notes</h2>
+        <input
+          className="ml-5 w-full bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          type="text"
+          placeholder="Additonal information"
+          onChange={(e) => setCustomerInfo(e.target.value)}
+          required
+        />
       </div>
     </div>
   );
