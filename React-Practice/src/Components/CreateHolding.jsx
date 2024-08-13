@@ -6,11 +6,11 @@ export default function CreateHolding() {
   const other = "holding";
 
   const [title, setTitle] = useState(null);
-  const [day, setDay] = useState("monday");
+  const [day, setDay] = useState(null);
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [customerType, setCustomerType] = useState("wholesale");
-  const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const [weekNumber, setWeekNumber] = useState(null);
   const [orderInfo, setCustomerInfo] = useState("");
 
   const handleSubmit = () => {

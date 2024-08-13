@@ -1,12 +1,19 @@
+/* eslint-disable react/prop-types */
 import CreateHolding from "../Components/CreateHolding";
 
-export default function About() {
+export default function About({ records }) {
+  const holding = records.filter((record) => record.other == "holding");
+  console.log(holding);
+
   return (
     <div>
       <CreateHolding></CreateHolding>
-      <h1>
-        <center>Create and track customer orders</center>
-      </h1>
+
+      {holding.map((record) => (
+        <p key={record.id}>
+          {record.title} - {record.orderInfo}
+        </p>
+      ))}
     </div>
   );
 }

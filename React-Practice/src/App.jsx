@@ -36,7 +36,7 @@ export default function App() {
                 path="/"
                 element={<Body records={rec} chosenWeek={chosenWeek}></Body>}
               />
-              <Route path="/about" element={<About />} />
+              <Route path="/about" element={<About records={rec} />} />
               <Route
                 path="/contact"
                 element={<Contact records={rec} chosenWeek={chosenWeek} />}
