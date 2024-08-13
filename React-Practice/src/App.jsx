@@ -1,17 +1,18 @@
 import Header from "./Components/Header";
 import Body from "./Components/Body";
 import Contact from "./templates/Contact";
-import Home from "./templates/Home";
 import { Routes, Route } from "react-router-dom";
 import PocketBase from "pocketbase";
 import { useEffect, useState } from "react";
 import Login from "./Login";
-import { isUserValid } from "./Components/lib/pocketbase";
+import { getDateWeek, isUserValid } from "./Components/lib/pocketbase";
 import About from "./templates/About";
 
 export default function App() {
-  console.log(isUserValid);
+  const currentWeek = getDateWeek();
+
   const [rec, setRecords] = useState([]);
+  const [chosenWeek, setChosenWeek] = useState(currentWeek);
   useEffect(() => {
     async function fetchData() {
       const pb = new PocketBase("https://hortiloader.pockethost.io");
@@ -20,19 +21,35 @@ export default function App() {
     }
     fetchData();
   }, []);
-  console.log(rec);
+  console.log(rec, chosenWeek);
 
   return (
     <>
-      <div className="grid-cols-1 grid-rows-[1fr_10fr] grid w-screen h-dvh overflow-x-hidden ">
-        <Header></Header>
-        {isUserValid ? <Body records={rec}></Body> : <Login></Login>}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
+      {isUserValid ? (
+        <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+          <div className="col-start-1 col-end-6 row-start-1 row-end-2">
+            <Header setChosenWeek={setChosenWeek}></Header>
+          </div>
+          <div className="col-start-1 col-end-4 row-start-2 row-end-3">
+            <Routes>
+              <Route
+                path="/"
+                element={<Body records={rec} chosenWeek={chosenWeek}></Body>}
+              />
+              <Route path="/about" element={<About records={rec} />} />
+              <Route
+                path="/contact"
+                element={<Contact records={rec} chosenWeek={chosenWeek} />}
+              />
+            </Routes>
+          </div>
+        </div>
+      ) : (
+        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
+          {/* <Header></Header> */}
+          <Login></Login>
+        </div>
+      )}
     </>
   );
 }

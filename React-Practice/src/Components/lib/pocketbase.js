@@ -34,8 +34,16 @@ export async function updateTask(id, title, day) {
 }
 
 export async function login(username, password) {
-  await client.collection("users").authWithPassword(username, password);
-  window.location.reload();
+  try {
+    await client.collection("users").authWithPassword(username, password);
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+    console.log(error.data);
+    if (error.data.code) {
+      alert("Invalid username or password");
+    }
+  }
 }
 
 export function signout() {
@@ -50,8 +58,13 @@ export async function signup(username, password) {
   };
   try {
     await client.collection("users").create(data);
+    alert("User Created");
   } catch (error) {
     console.log("Error:", error);
+    console.log(error.data);
+    if (error.data.data.username.code) {
+      alert("user already exist");
+    }
   }
 }
 
@@ -90,7 +103,10 @@ export async function createTask(
   day,
   postcode,
   orderNumber,
-  customerType
+  customerType,
+  other,
+  weekNumber,
+  orderInfo
 ) {
   const data = {
     title: title,
@@ -99,6 +115,9 @@ export async function createTask(
     orderNumber: orderNumber,
     customerType: customerType,
     user: client.authStore.model.id,
+    other,
+    weekNumber,
+    orderInfo,
   };
   await client.collection("tasks").create(data);
   history.go(0);
