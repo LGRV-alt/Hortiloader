@@ -20,7 +20,7 @@ function Header({ setChosenWeek }) {
           </h2>
         </div>
         <div className="flex justify-center items-center">
-          <p className="text-white mr-2">Select Week</p>
+          <p className="text-white mr-2">Selected Week</p>
           <input
             className="bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             type="number"
