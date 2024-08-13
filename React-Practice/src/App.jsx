@@ -1,12 +1,15 @@
 import Header from "./Components/Header";
 import Body from "./Components/Body";
-import Contact from "./templates/Contact";
+
 import { Routes, Route } from "react-router-dom";
 import PocketBase from "pocketbase";
 import { useEffect, useState } from "react";
 import Login from "./Login";
 import { getDateWeek, isUserValid } from "./Components/lib/pocketbase";
-import About from "./templates/About";
+
+import Edit from "./templates/Edit";
+import HoldingPage from "./templates/HoldingPage";
+import Collect from "./templates/Collect";
 
 export default function App() {
   const currentWeek = getDateWeek();
@@ -36,11 +39,17 @@ export default function App() {
                 path="/"
                 element={<Body records={rec} chosenWeek={chosenWeek}></Body>}
               />
-              <Route path="/about" element={<About records={rec} />} />
+
               <Route
-                path="/contact"
-                element={<Contact records={rec} chosenWeek={chosenWeek} />}
+                path="/holdingPage"
+                element={<HoldingPage records={rec} />}
               />
+
+              <Route
+                path="/collect"
+                element={<Collect records={rec} chosenWeek={chosenWeek} />}
+              />
+              <Route path="/edit:id" element={<Edit></Edit>} />
             </Routes>
           </div>
         </div>

@@ -2,7 +2,7 @@
 import CreateCustomer from "../Components/CreateCustomer";
 import DayColumn from "../Components/DayColumn";
 
-export default function Contact({ records, chosenWeek }) {
+export default function Collect({ records, chosenWeek }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
