@@ -49,7 +49,7 @@ export default function App() {
                 path="/collect"
                 element={<Collect records={rec} chosenWeek={chosenWeek} />}
               />
-              <Route path="/edit:id" element={<Edit></Edit>} />
+              <Route path="/edit/:id" element={<Edit />} />
             </Routes>
           </div>
         </div>

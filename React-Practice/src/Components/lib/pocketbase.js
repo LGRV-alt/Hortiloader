@@ -24,13 +24,14 @@ export async function getTasks() {
 //   await client.collection("tasks").delete(id);
 //   window.location.reload();
 // }
-export async function updateTask(id, title, day) {
+
+// function to update the record from the edit section
+export async function updateTask(id, title) {
   const data = {
     title: title,
-    day: day,
-    user: client.authStore.model.id,
   };
   await client.collection("tasks").update(id, data);
+  window.location.reload();
 }
 
 export async function login(username, password) {
@@ -79,6 +80,7 @@ export async function deleteTask(id) {
     return;
   }
 }
+
 //   let confirm = window.confirm("Are you sure you want to delete this task?");
 //   if (!confirm) {
 //     return;

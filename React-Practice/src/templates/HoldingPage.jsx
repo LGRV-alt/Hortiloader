@@ -13,7 +13,7 @@ export default function HoldingPage({ records }) {
       <div className="flex justify-start flex-col mx-5 mt-5 ">
         {holding.map((record) => (
           <div className="flex  items-center border-b-2 mb-5" key={record.id}>
-            <Link to={`edit/${record.id}`}>
+            <Link to={`/edit/${record.id}`}>
               <button className="ml-4 bg-gray-500 rounded-md text-white px-2 hover:bg-gray-600 mr-2">
                 <span className="">edit</span>
               </button>

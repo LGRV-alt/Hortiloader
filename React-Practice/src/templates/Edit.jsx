@@ -1,32 +1,27 @@
 import { useState } from "react";
-import { createTask, getDateWeek } from "../Components/lib/pocketbase";
+import { getDateWeek, updateTask } from "../Components/lib/pocketbase";
+import { useParams } from "react-router-dom";
 
 export default function Edit() {
   const currentWeek = getDateWeek();
+  const { id } = useParams();
 
   const [title, setTitle] = useState(null);
-  const [day, setDay] = useState("monday");
-  const [postcode, setPostcode] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [customerType, setCustomerType] = useState("wholesale");
-  const [other, setOther] = useState("none");
-  const [weekNumber, setWeekNumber] = useState(currentWeek);
+  //   const [day, setDay] = useState("monday");
+  //   const [postcode, setPostcode] = useState(null);
+  //   const [orderNumber, setOrderNumber] = useState(null);
+  //   const [customerType, setCustomerType] = useState("wholesale");
+  //   const [other, setOther] = useState("none");
+  //   const [weekNumber, setWeekNumber] = useState(currentWeek);
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    createTask(
-      title,
-      day,
-      postcode,
-      orderNumber,
-      customerType,
-      other,
-      weekNumber
-    );
+    updateTask(id, title);
   };
+  console.log(id);
   return (
     <div className="flex justify-center bg-regal-blue pb-2 ">
       <div className="flex gap-2 items-center">
