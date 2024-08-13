@@ -36,7 +36,7 @@ function Header({ setChosenWeek }) {
           <div className="flex gap-5 justify-center items-center text-white">
             <Link to="/">Whiteboard</Link>
             <Link to="/contact">Collects</Link>
-            <Link to="/about">About</Link>
+            <Link to="/about">Holding Area</Link>
 
             <button
               className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
