@@ -13,9 +13,11 @@ export default function Edit({ records }) {
   const selectedRecord = records.filter((record) => record.id == id);
   const [title, setTitle] = useState(selectedRecord[0].title);
   const [day, setDay] = useState(selectedRecord[0].day);
-  // const [postcode, setPostcode] = useState(null);
-  // const [orderNumber, setOrderNumber] = useState(null);
-  // const [customerType, setCustomerType] = useState("wholesale");
+  const [postcode, setPostcode] = useState(selectedRecord[0].postcode);
+  const [orderNumber, setOrderNumber] = useState(selectedRecord[0].orderNumber);
+  const [customerType, setCustomerType] = useState(
+    selectedRecord[0].customerType
+  );
   const [other, setOther] = useState(selectedRecord[0].other);
   const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
 
@@ -25,7 +27,16 @@ export default function Edit({ records }) {
       return;
     }
     navigate(-1);
-    updateTask(id, title, other, weekNumber, day);
+    updateTask(
+      id,
+      title,
+      other,
+      weekNumber,
+      day,
+      postcode,
+      orderNumber,
+      customerType
+    );
   };
 
   return (
@@ -46,6 +57,7 @@ export default function Edit({ records }) {
             type="text"
             placeholder="Postcode"
             onChange={(e) => setPostcode(e.target.value)}
+            value={postcode}
             required
           />
           <input
@@ -53,6 +65,7 @@ export default function Edit({ records }) {
             type="text"
             placeholder="Order No."
             onChange={(e) => setOrderNumber(e.target.value)}
+            value={orderNumber}
             required
           />
 
@@ -61,6 +74,7 @@ export default function Edit({ records }) {
             name="customerType"
             id="customerType"
             onChange={(e) => setCustomerType(e.target.value)}
+            value={customerType}
           >
             <option value="" disabled>
               Customer Type
