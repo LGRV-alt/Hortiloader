@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { deleteTask, taskStatus } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
-export default function DayColumn({ arr, day }) {
+export default function DayColumn({ arr, day, route }) {
   const array = arr;
 
   return (
     <>
-      <h5 className="flex justify-center border-b-2 mb-2 text-lg font-bold border-black">
-        {day}
-      </h5>
+      <div className="flex flex-col justify-center items-center  border-b-2   border-black">
+        <h5 className="text-lg font-bold">{day}</h5>
+        <p>{route}</p>
+      </div>
       {array.map((record) => (
         <div className="flex justify-between px-1 pt-2" key={record.id}>
           <div className="flex hover:outline hover:outline-red-500">
