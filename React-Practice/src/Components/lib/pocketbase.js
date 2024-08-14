@@ -26,9 +26,12 @@ export async function getTasks() {
 // }
 
 // function to update the record from the edit section
-export async function updateTask(id, title) {
+export async function updateTask(id, title, other, weekNumber, day) {
   const data = {
     title: title,
+    other: other,
+    weekNumber: weekNumber,
+    day: day,
   };
   await client.collection("tasks").update(id, data);
   window.location.reload();

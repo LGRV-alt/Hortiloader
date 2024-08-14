@@ -3,36 +3,36 @@
 
 import { useState } from "react";
 import { getDateWeek, updateTask } from "../Components/lib/pocketbase";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Edit({ records }) {
   const currentWeek = getDateWeek();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const selectedRecord = records.filter((record) => record.id == id);
   const [title, setTitle] = useState(selectedRecord[0].title);
-
-  //   const [day, setDay] = useState("monday");
-  //   const [postcode, setPostcode] = useState(null);
-  //   const [orderNumber, setOrderNumber] = useState(null);
-  //   const [customerType, setCustomerType] = useState("wholesale");
-  //   const [other, setOther] = useState("none");
-  //   const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const [day, setDay] = useState(selectedRecord[0].day);
+  // const [postcode, setPostcode] = useState(null);
+  // const [orderNumber, setOrderNumber] = useState(null);
+  // const [customerType, setCustomerType] = useState("wholesale");
+  const [other, setOther] = useState(selectedRecord[0].other);
+  const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    updateTask(id, title);
+    navigate(-1);
+    updateTask(id, title, other, weekNumber, day);
   };
 
   return (
     <div className="h-full grid ">
       <div className="flex h-full bg-regal-blue pb-2 ">
-        <div className="flex flex-col gap-2 ">
+        <div className=" ml-10 mt-28 flex flex-col gap-2 w-1/2">
           <h2 className="text-lg font-medium text-white ">Edit Order-</h2>
-
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
@@ -77,7 +77,7 @@ export default function Edit({ records }) {
             id="day"
             onChange={(e) => setDay(e.target.value)}
           >
-            <option value="" disabled>
+            <option value={day} disabled>
               Day Required
             </option>
             <option value="monday">Monday</option>
@@ -91,11 +91,10 @@ export default function Edit({ records }) {
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
             id="day"
+            value={other}
             onChange={(e) => setOther(e.target.value)}
           >
-            <option value="" disabled>
-              Type
-            </option>
+            <option disabled>Type</option>
             <option value="none">Whiteboard</option>
             <option value="holding">Holding</option>
             <option value="collect">Collect</option>
@@ -106,6 +105,7 @@ export default function Edit({ records }) {
             min={currentWeek}
             max={52}
             placeholder="Week"
+            value={weekNumber}
             onChange={(e) => setWeekNumber(e.target.value)}
             required
           />
