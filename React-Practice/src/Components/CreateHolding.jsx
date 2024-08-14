@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { createTask, getDateWeek } from "./lib/pocketbase";
+import { createTask } from "./lib/pocketbase";
 
 export default function CreateHolding() {
-  const currentWeek = getDateWeek();
   const other = "holding";
+  const day = null;
+  const weekNumber = null;
 
   const [title, setTitle] = useState(null);
-  const [day, setDay] = useState(null);
+
   const [postcode, setPostcode] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
   const [customerType, setCustomerType] = useState("wholesale");
-  const [weekNumber, setWeekNumber] = useState(null);
+
   const [orderInfo, setCustomerInfo] = useState("");
 
   const handleSubmit = () => {

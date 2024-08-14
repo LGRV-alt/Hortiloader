@@ -25,19 +25,39 @@ export default function Body({ records, chosenWeek }) {
       <CreateCustomer></CreateCustomer>
       <div className="grid grid-cols-5 grid-rows-1 outline h-full">
         <div className="border-r-2 border-black">
-          <DayColumn arr={monday} day={"Monday"}></DayColumn>
+          <DayColumn
+            arr={monday}
+            day={"Monday"}
+            route={"Glasgow Wholesale"}
+          ></DayColumn>
         </div>
         <div className="border-r-2 border-black">
-          <DayColumn arr={tuesday} day={"Tuesday"}></DayColumn>
+          <DayColumn
+            arr={tuesday}
+            day={"Tuesday"}
+            route={"Edinburgh + Lanark"}
+          ></DayColumn>
         </div>
         <div className="border-r-2 border-black">
-          <DayColumn arr={wednesday} day={"Wednesday"}></DayColumn>
+          <DayColumn
+            arr={wednesday}
+            day={"Wednesday"}
+            route={"Dumfries/South"}
+          ></DayColumn>
         </div>
         <div className="border-r-2 border-black">
-          <DayColumn arr={thursday} day={"Thursday"}></DayColumn>
+          <DayColumn
+            arr={thursday}
+            day={"Thursday"}
+            route={"North"}
+          ></DayColumn>
         </div>
         <div className="border-r-2 border-black">
-          <DayColumn arr={friday} day={"Friday"}></DayColumn>
+          <DayColumn
+            arr={friday}
+            day={"Friday"}
+            route={"Ayrshire + Glasgow Retails"}
+          ></DayColumn>
         </div>
       </div>
     </div>

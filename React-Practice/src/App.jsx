@@ -13,18 +13,31 @@ import Collect from "./templates/Collect";
 
 export default function App() {
   const currentWeek = getDateWeek();
-
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
+
+  function compare(a, b) {
+    if (a.created < b.created) {
+      return -1;
+    }
+    if (a.created > b.created) {
+      return 1;
+    }
+    return 0;
+  }
+
   useEffect(() => {
     async function fetchData() {
       const pb = new PocketBase("https://hortiloader.pockethost.io");
       const records = await pb.collection("tasks").getFullList({});
+
       setRecords(records);
     }
     fetchData();
   }, []);
-  console.log(rec, chosenWeek);
+
+  // Sort the array to newest created
+  rec.sort(compare);
 
   return (
     <>
@@ -49,7 +62,7 @@ export default function App() {
                 path="/collect"
                 element={<Collect records={rec} chosenWeek={chosenWeek} />}
               />
-              <Route path="/edit:id" element={<Edit></Edit>} />
+              <Route path="/edit/:id" element={<Edit records={rec} />} />
             </Routes>
           </div>
         </div>

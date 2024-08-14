@@ -1,41 +1,54 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
+
 import { useState } from "react";
-import { createTask, getDateWeek } from "../Components/lib/pocketbase";
+import { getDateWeek, updateTask } from "../Components/lib/pocketbase";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function Edit() {
+export default function Edit({ records }) {
   const currentWeek = getDateWeek();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-  const [title, setTitle] = useState(null);
-  const [day, setDay] = useState("monday");
-  const [postcode, setPostcode] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
-  const [customerType, setCustomerType] = useState("wholesale");
-  const [other, setOther] = useState("none");
-  const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const selectedRecord = records.filter((record) => record.id == id);
+  const [title, setTitle] = useState(selectedRecord[0].title);
+  const [day, setDay] = useState(selectedRecord[0].day);
+  const [postcode, setPostcode] = useState(selectedRecord[0].postcode);
+  const [orderNumber, setOrderNumber] = useState(selectedRecord[0].orderNumber);
+  const [customerType, setCustomerType] = useState(
+    selectedRecord[0].customerType
+  );
+  const [other, setOther] = useState(selectedRecord[0].other);
+  const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    createTask(
+    navigate(-1);
+    updateTask(
+      id,
       title,
+      other,
+      weekNumber,
       day,
       postcode,
       orderNumber,
-      customerType,
-      other,
-      weekNumber
+      customerType
     );
   };
+
   return (
-    <div className="flex justify-center bg-regal-blue pb-2 ">
-      <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-white ">Create Order-</h2>
-        <div className="flex gap-2">
+    <div className="h-full grid ">
+      <div className="flex h-full bg-regal-blue pb-2 ">
+        <div className=" ml-10 mt-28 flex flex-col gap-2 w-1/2">
+          <h2 className="text-lg font-medium text-white ">Edit Order-</h2>
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
             placeholder="Customer Name"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
@@ -44,6 +57,7 @@ export default function Edit() {
             type="text"
             placeholder="Postcode"
             onChange={(e) => setPostcode(e.target.value)}
+            value={postcode}
             required
           />
           <input
@@ -51,6 +65,7 @@ export default function Edit() {
             type="text"
             placeholder="Order No."
             onChange={(e) => setOrderNumber(e.target.value)}
+            value={orderNumber}
             required
           />
 
@@ -59,6 +74,7 @@ export default function Edit() {
             name="customerType"
             id="customerType"
             onChange={(e) => setCustomerType(e.target.value)}
+            value={customerType ? customerType : []}
           >
             <option value="" disabled>
               Customer Type
@@ -74,10 +90,9 @@ export default function Edit() {
             name="day"
             id="day"
             onChange={(e) => setDay(e.target.value)}
+            value={day ? day : []}
           >
-            <option value="" disabled>
-              Day Required
-            </option>
+            <option disabled>Day Required</option>
             <option value="monday">Monday</option>
             <option value="tuesday">Tuesday</option>
             <option value="wednesday">Wednesday</option>
@@ -89,11 +104,10 @@ export default function Edit() {
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
             id="day"
+            value={other ? other : []}
             onChange={(e) => setOther(e.target.value)}
           >
-            <option value="" disabled>
-              Type
-            </option>
+            <option disabled>Type</option>
             <option value="none">Whiteboard</option>
             <option value="holding">Holding</option>
             <option value="collect">Collect</option>
@@ -104,18 +118,17 @@ export default function Edit() {
             min={currentWeek}
             max={52}
             placeholder="Week"
+            value={weekNumber}
             onChange={(e) => setWeekNumber(e.target.value)}
             required
           />
-        </div>
-        <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
-          onClick={handleSubmit}
-        >
-          <div className="">
+          <button
+            className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
+            onClick={handleSubmit}
+          >
             <p className="">Save</p>
-          </div>
-        </button>
+          </button>
+        </div>
       </div>
     </div>
   );
