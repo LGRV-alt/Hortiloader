@@ -11,9 +11,11 @@ function Header({ setChosenWeek }) {
         }
       >
         <div className="flex justify-center items-center">
-          <h2 className="text-2xl text-white font-semibold mr-5">
-            HortiLoader
-          </h2>
+          <Link to="/">
+            <h2 className="text-2xl text-white font-semibold mr-5">
+              HortiLoader
+            </h2>
+          </Link>
 
           <h2 className=" text-white font-medium mr-3">
             Current Week - {getDateWeek()}

@@ -74,7 +74,7 @@ export default function Edit({ records }) {
             name="customerType"
             id="customerType"
             onChange={(e) => setCustomerType(e.target.value)}
-            value={customerType}
+            value={customerType ? customerType : []}
           >
             <option value="" disabled>
               Customer Type
@@ -90,7 +90,7 @@ export default function Edit({ records }) {
             name="day"
             id="day"
             onChange={(e) => setDay(e.target.value)}
-            value={day}
+            value={day ? day : []}
           >
             <option disabled>Day Required</option>
             <option value="monday">Monday</option>
@@ -104,7 +104,7 @@ export default function Edit({ records }) {
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
             id="day"
-            value={other}
+            value={other ? other : []}
             onChange={(e) => setOther(e.target.value)}
           >
             <option disabled>Type</option>

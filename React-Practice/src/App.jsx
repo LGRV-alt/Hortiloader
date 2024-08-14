@@ -35,7 +35,7 @@ export default function App() {
     }
     fetchData();
   }, []);
-  console.log(rec, chosenWeek);
+
   // Sort the array to newest created
   rec.sort(compare);
 
