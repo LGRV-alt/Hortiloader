@@ -90,10 +90,9 @@ export default function Edit({ records }) {
             name="day"
             id="day"
             onChange={(e) => setDay(e.target.value)}
+            value={day}
           >
-            <option value={day} disabled>
-              Day Required
-            </option>
+            <option disabled>Day Required</option>
             <option value="monday">Monday</option>
             <option value="tuesday">Tuesday</option>
             <option value="wednesday">Wednesday</option>

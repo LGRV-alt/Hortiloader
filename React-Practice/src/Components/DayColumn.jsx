@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { deleteTask, taskStatus } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
@@ -11,28 +12,30 @@ export default function DayColumn({ arr, day }) {
       </h5>
       {array.map((record) => (
         <div className="flex justify-between px-1 pt-2" key={record.id}>
-          <div className="flex">
-            {record.customerType === "retail" ? (
-              <p className="text-blue-700">
-                {record.title} {record.postcode.toUpperCase()}{" "}
-                {record.orderNumber}{" "}
-              </p>
-            ) : record.customerType === "other" ? (
-              <p className="text-red-500">
-                {record.title} {record.postcode.toUpperCase()}{" "}
-                {record.orderNumber}{" "}
-              </p>
-            ) : record.customerType === "missed" ? (
-              <p className="text-fuchsia-600">
-                {record.title} {record.postcode.toUpperCase()}{" "}
-                {record.orderNumber}{" "}
-              </p>
-            ) : (
-              <p className="">
-                {record.title} {record.postcode.toUpperCase()}{" "}
-                {record.orderNumber}{" "}
-              </p>
-            )}
+          <div className="flex hover:outline hover:outline-red-500">
+            <Link to={`/edit/${record.id}`}>
+              {record.customerType === "retail" ? (
+                <p className="text-blue-700">
+                  {record.title} {record.postcode.toUpperCase()}{" "}
+                  {record.orderNumber}{" "}
+                </p>
+              ) : record.customerType === "other" ? (
+                <p className="text-red-500">
+                  {record.title} {record.postcode.toUpperCase()}{" "}
+                  {record.orderNumber}{" "}
+                </p>
+              ) : record.customerType === "missed" ? (
+                <p className="text-fuchsia-600">
+                  {record.title} {record.postcode.toUpperCase()}{" "}
+                  {record.orderNumber}{" "}
+                </p>
+              ) : (
+                <p className="">
+                  {record.title} {record.postcode.toUpperCase()}{" "}
+                  {record.orderNumber}{" "}
+                </p>
+              )}
+            </Link>
 
             <select
               className="w-4"
