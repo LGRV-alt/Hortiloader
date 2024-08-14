@@ -23,7 +23,7 @@ export default function Body({ records, chosenWeek }) {
   return (
     <div className=" flex flex-col h-full">
       <CreateCustomer></CreateCustomer>
-      <div className="grid grid-cols-5 grid-rows-1 outline h-full">
+      <div className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 outline h-full">
         <div className="border-r-2 border-black">
           <DayColumn
             arr={monday}
