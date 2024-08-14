@@ -10,7 +10,7 @@ export default function Edit({ records }) {
   const { id } = useParams();
 
   const selectedRecord = records.filter((record) => record.id == id);
-  const [title, setTitle] = useState(null);
+  const [title, setTitle] = useState(selectedRecord[0].title);
 
   //   const [day, setDay] = useState("monday");
   //   const [postcode, setPostcode] = useState(null);
@@ -26,18 +26,18 @@ export default function Edit({ records }) {
     }
     updateTask(id, title);
   };
-  console.log(selectedRecord[0].title);
 
   return (
     <div>
       <div className="flex justify-center bg-regal-blue pb-2 ">
         <div className="flex gap-2 items-center">
-          <h2 className="text-lg font-medium text-white ">Create Order-</h2>
+          <h2 className="text-lg font-medium text-white ">Edit Order-</h2>
           <div className="flex gap-2">
             <input
               className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
               type="text"
               placeholder="Customer Name"
+              value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
