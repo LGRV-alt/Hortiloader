@@ -41,9 +41,15 @@ function Header({ setChosenWeek }) {
           <div
             className={`${
               toggleNav ? "flex" : "hidden"
-            } w-full left-1/4 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-black  md:w-auto md:bg-transparent md:flex  `}
+            } w-full pr-10 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
-            <div className="flex-col  md:flex-row flex gap-5 md:items-center">
+            <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:items-center">
+              <button
+                className="md:hidden justify-end items-end flex"
+                onClick={() => setToggleNav(!toggleNav)}
+              >
+                Close
+              </button>
               <Link to="/">Whiteboard</Link>
               <Link to="/collect">Collects</Link>
               <Link to="/holdingPage">Holding Page</Link>
@@ -54,19 +60,13 @@ function Header({ setChosenWeek }) {
               >
                 Signout
               </button>
-              <button
-                className="md:hidden"
-                onClick={() => setToggleNav(!toggleNav)}
-              >
-                more
-              </button>
             </div>
           </div>
           <button
-            className="md:hidden"
+            className="md:hidden   w-1/2 h-1/2 text-sm  rounded-md bg-green-500 hover:bg-green-600 text-white"
             onClick={() => setToggleNav(!toggleNav)}
           >
-            more
+            Open Nav
           </button>
         </>
       )}
