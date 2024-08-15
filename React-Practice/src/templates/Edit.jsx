@@ -131,9 +131,9 @@ export default function Edit({ records }) {
           Additional Info
         </h3>
         <textarea
-          className="p-2 w-full h-1/2 text-center  outline bg-transparent  text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          className="p-2 w-full h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
           type="text"
-          placeholder="Order No."
+          placeholder="Issues/Load information"
           onChange={(e) => setOrderInfo(e.target.value)}
           value={orderInfo}
           required
