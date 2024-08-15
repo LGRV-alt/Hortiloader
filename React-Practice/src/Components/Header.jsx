@@ -8,12 +8,12 @@ function Header({ setChosenWeek }) {
   return (
     <div
       className={
-        "px-2 pt-2  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
+        "  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className="flex justify-between md:flex-row  md:justify-center md:items-center">
+      <div className=" px-2 pt-2 flex justify-between md:flex-row  md:justify-center md:items-center">
         <Link to="/">
-          <h2 className="mr-2 md:text-2xl text-white font-semibold md:mr-5">
+          <h2 className="mr-2 text-2xl text-white font-semibold md:mr-5">
             HortiLoader
           </h2>
         </Link>
@@ -33,10 +33,10 @@ function Header({ setChosenWeek }) {
           />
         </div>
         <button
-          className="md:hidden text-sm  rounded-md bg-green-500 hover:bg-green-600 text-white"
+          className="md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
           onClick={() => setToggleNav(!toggleNav)}
         >
-          Open Nav
+          {toggleNav ? "Close" : "Open"}
         </button>
       </div>
 
@@ -50,12 +50,6 @@ function Header({ setChosenWeek }) {
             } w-full pr-10 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
             <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:items-center">
-              <button
-                className="md:hidden justify-end items-end flex"
-                onClick={() => setToggleNav(!toggleNav)}
-              >
-                Close
-              </button>
               <h2 className="md:hidden text-white text-sm md:font-medium mr-3">
                 Current Week - {getDateWeek()}
               </h2>
