@@ -22,7 +22,7 @@ export default function HoldingPage({ records }) {
               <span className="material-symbols-outlined">X</span>
             </button>
             <Link to={`/edit/${record.id}`}>
-              <div className="flex ">
+              <div className="flex hover:text-blue-500">
                 <h3 className="font-medium md:text-lg mr-2">{record.title}</h3>
                 <p className="font-medium md:text-lg mr-2">
                   {record.postcode.toUpperCase()}

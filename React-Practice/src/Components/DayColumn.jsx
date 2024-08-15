@@ -13,7 +13,7 @@ export default function DayColumn({ arr, day, route }) {
       </div>
       {array.map((record) => (
         <div className="flex justify-between px-1 pt-2" key={record.id}>
-          <div className="flex hover:outline hover:outline-red-500">
+          <div className="flex hover:bg-blue-200">
             <Link to={`/edit/${record.id}`}>
               {record.customerType === "retail" ? (
                 <p className="text-blue-700">
