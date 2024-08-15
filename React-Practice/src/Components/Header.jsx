@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
 
 function Header({ setChosenWeek }) {
+  const [toggleNav, setToggleNav] = useState(true);
   return (
     <div
       className={
@@ -35,17 +37,23 @@ function Header({ setChosenWeek }) {
       {!isUserValid ? (
         <p></p>
       ) : (
-        <div className="hidden md:flex gap-5 justify-center items-center text-white">
-          <Link to="/">Whiteboard</Link>
-          <Link to="/collect">Collects</Link>
-          <Link to="/holdingPage">Holding Page</Link>
+        <div
+          className={` ${
+            toggleNav ? "flex" : "hidden"
+          } absolute md:static   bg-black  md:w-auto md:bg-transparent md:flex  `}
+        >
+          <div className="gap-5 justify-center items-center text-white flex">
+            <Link to="/">Whiteboard</Link>
+            <Link to="/collect">Collects</Link>
+            <Link to="/holdingPage">Holding Page</Link>
 
-          <button
-            className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
-            onClick={signout}
-          >
-            Signout
-          </button>
+            <button
+              className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
+              onClick={signout}
+            >
+              Signout
+            </button>
+          </div>
         </div>
       )}
     </div>
