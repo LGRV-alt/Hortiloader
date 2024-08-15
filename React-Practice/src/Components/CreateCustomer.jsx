@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
 
+import { useNavigate } from "react-router-dom";
+
 export default function CreateCustomer() {
   const currentWeek = getDateWeek();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
@@ -18,6 +21,7 @@ export default function CreateCustomer() {
       window.alert("Please enter a title");
       return;
     }
+    navigate(-1);
     createTask(
       title,
       day,

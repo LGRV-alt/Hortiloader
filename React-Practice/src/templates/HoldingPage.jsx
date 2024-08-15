@@ -10,7 +10,7 @@ export default function HoldingPage({ records }) {
   return (
     <div>
       <div className="hidden md:block">
-        <CreateHolding></CreateHolding>
+        {/* <CreateHolding></CreateHolding> */}
       </div>
       <div className="flex justify-start flex-col mx-5 mt-5 ">
         {holding.map((record) => (
