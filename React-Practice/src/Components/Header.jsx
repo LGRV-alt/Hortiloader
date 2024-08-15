@@ -8,21 +8,21 @@ function Header({ setChosenWeek }) {
   return (
     <div
       className={
-        "pl-2 grid grid-cols-2 grid-rows-1  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
+        "px-2 pt-2  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className="flex flex-col md:flex-row  md:justify-center md:items-center">
+      <div className="flex justify-between md:flex-row  md:justify-center md:items-center">
         <Link to="/">
           <h2 className="mr-2 md:text-2xl text-white font-semibold md:mr-5">
             HortiLoader
           </h2>
         </Link>
 
-        <h2 className=" text-white text-sm md:font-medium mr-3">
+        <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
           Current Week - {getDateWeek()}
         </h2>
 
-        <div className="flex md:justify-center items-center">
+        <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
           <input
             className="bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -32,6 +32,12 @@ function Header({ setChosenWeek }) {
             onChange={(e) => setChosenWeek(e.target.value)}
           />
         </div>
+        <button
+          className="md:hidden text-sm  rounded-md bg-green-500 hover:bg-green-600 text-white"
+          onClick={() => setToggleNav(!toggleNav)}
+        >
+          Open Nav
+        </button>
       </div>
 
       {!isUserValid ? (
@@ -50,9 +56,32 @@ function Header({ setChosenWeek }) {
               >
                 Close
               </button>
-              <Link to="/">Whiteboard</Link>
-              <Link to="/collect">Collects</Link>
-              <Link to="/holdingPage">Holding Page</Link>
+              <h2 className="md:hidden text-white text-sm md:font-medium mr-3">
+                Current Week - {getDateWeek()}
+              </h2>
+
+              <div className="md:hidden flex items-center">
+                <p className="text-white text-sm md:text-base mr-2">
+                  Selected Week
+                </p>
+                <input
+                  className=" bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  type="number"
+                  min={1}
+                  max={52}
+                  onChange={(e) => setChosenWeek(e.target.value)}
+                />
+              </div>
+
+              <Link onClick={() => setToggleNav(!toggleNav)} to="/">
+                Whiteboard
+              </Link>
+              <Link onClick={() => setToggleNav(!toggleNav)} to="/collect">
+                Collects
+              </Link>
+              <Link onClick={() => setToggleNav(!toggleNav)} to="/holdingPage">
+                Holding Page
+              </Link>
 
               <button
                 className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
@@ -62,12 +91,6 @@ function Header({ setChosenWeek }) {
               </button>
             </div>
           </div>
-          <button
-            className="md:hidden   w-1/2 h-1/2 text-sm  rounded-md bg-green-500 hover:bg-green-600 text-white"
-            onClick={() => setToggleNav(!toggleNav)}
-          >
-            Open Nav
-          </button>
         </>
       )}
     </div>
