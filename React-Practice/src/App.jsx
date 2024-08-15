@@ -10,6 +10,7 @@ import { getDateWeek, isUserValid } from "./Components/lib/pocketbase";
 import Edit from "./templates/Edit";
 import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
+import CreateCustomer from "./Components/CreateCustomer";
 
 export default function App() {
   const currentWeek = getDateWeek();
@@ -80,6 +81,10 @@ export default function App() {
                 element={<Collect records={rec} chosenWeek={chosenWeek} />}
               />
               <Route path="/edit/:id" element={<Edit records={rec} />} />
+              <Route
+                path="/createCustomer"
+                element={<CreateCustomer></CreateCustomer>}
+              />
             </Routes>
           </div>
         </div>

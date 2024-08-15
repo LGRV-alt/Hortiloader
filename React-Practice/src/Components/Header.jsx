@@ -76,6 +76,12 @@ function Header({ setChosenWeek }) {
               <Link onClick={() => setToggleNav(!toggleNav)} to="/holdingPage">
                 Holding Page
               </Link>
+              <Link
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/createCustomer"
+              >
+                Create Customer
+              </Link>
 
               <button
                 className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"

@@ -23,7 +23,7 @@ export default function Body({ records, chosenWeek }) {
   return (
     <div className=" flex flex-col h-full">
       <div className="hidden md:block">
-        <CreateCustomer></CreateCustomer>
+        {/* <CreateCustomer></CreateCustomer> */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-1 md:outline h-full">
         <div className=" mb-10 md:mb-0 md:border-r-2  border-black">

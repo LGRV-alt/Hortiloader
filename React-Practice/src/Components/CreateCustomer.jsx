@@ -11,6 +11,7 @@ export default function CreateCustomer() {
   const [customerType, setCustomerType] = useState("wholesale");
   const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const [orderInfo, setOrderInfo] = useState("");
 
   const handleSubmit = () => {
     if (!title) {
@@ -24,14 +25,15 @@ export default function CreateCustomer() {
       orderNumber,
       customerType,
       other,
-      weekNumber
+      weekNumber,
+      orderInfo
     );
   };
   return (
-    <div className="flex justify-center bg-regal-blue pb-2 ">
-      <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-white ">Create Order-</h2>
-        <div className="flex gap-2">
+    <div className="flex flex-col items-center  h-full  justify-start bg-regal-blue pb-2 ">
+      <div className="flex-col md:flex-row  flex gap-2 items-center">
+        <h2 className="text-lg font-medium text-white ">Create Order</h2>
+        <div className=" flex-col md:flex-row flex gap-2">
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
@@ -108,6 +110,17 @@ export default function CreateCustomer() {
             required
           />
         </div>
+        <h3 className="md:hidden pb-2 text-lg font-medium text-white ">
+          Additional Info
+        </h3>
+        <textarea
+          className="md:hidden p-2 w-full h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          type="text"
+          placeholder="Issues/Load information"
+          onChange={(e) => setOrderInfo(e.target.value)}
+          value={orderInfo}
+          required
+        />
         <button
           className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
           onClick={handleSubmit}
@@ -116,6 +129,19 @@ export default function CreateCustomer() {
             <p className="">Save</p>
           </div>
         </button>
+      </div>
+      <div className="h-full w-full p-2 flex flex-col items-center">
+        <h3 className="hidden md:block pb-2 text-lg font-medium text-white ">
+          Additional Info
+        </h3>
+        <textarea
+          className="hidden md:flex p-2 w-full h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          type="text"
+          placeholder="Issues/Load information"
+          onChange={(e) => setOrderInfo(e.target.value)}
+          value={orderInfo}
+          required
+        />
       </div>
     </div>
   );
