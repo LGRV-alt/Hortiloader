@@ -25,7 +25,7 @@ export default function Collect({ records, chosenWeek }) {
         <CreateCustomer></CreateCustomer>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-1  h-full">
+      <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-1 md:outline h-full">
         <div className="md:border-r-2 border-black">
           <DayColumn arr={monday} day={"Monday"}></DayColumn>
         </div>
