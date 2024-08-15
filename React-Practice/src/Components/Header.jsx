@@ -33,7 +33,7 @@ function Header({ setChosenWeek }) {
           />
         </div>
         <button
-          className="md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
+          className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
           onClick={() => setToggleNav(!toggleNav)}
         >
           {toggleNav ? "Close" : "Open"}
@@ -47,7 +47,7 @@ function Header({ setChosenWeek }) {
           <div
             className={`${
               toggleNav ? "flex" : "hidden"
-            } w-full pr-10 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-black  md:w-auto md:bg-transparent md:flex  `}
+            } w-full pr-10 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
             <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:items-center">
               <h2 className="md:hidden text-white text-sm md:font-medium mr-3">

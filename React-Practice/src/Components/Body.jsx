@@ -23,36 +23,36 @@ export default function Body({ records, chosenWeek }) {
   return (
     <div className=" flex flex-col h-full">
       <CreateCustomer></CreateCustomer>
-      <div className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 outline h-full">
-        <div className="border-r-2 border-black">
+      <div className="grid grid-cols-1 md:grid-cols-5 grid-rows-1 md:outline h-full">
+        <div className=" mb-10 md:mb-0 md:border-r-2  border-black">
           <DayColumn
             arr={monday}
             day={"Monday"}
             route={"Glasgow Wholesale"}
           ></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="mb-10 md:mb-0 md:border-r-2 border-black">
           <DayColumn
             arr={tuesday}
             day={"Tuesday"}
             route={"Edinburgh + Lanark"}
           ></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="mb-10 md:mb-0 md:border-r-2 border-black">
           <DayColumn
             arr={wednesday}
             day={"Wednesday"}
             route={"Dumfries/South"}
           ></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="mb-10 md:mb-0 md:border-r-2 border-black">
           <DayColumn
             arr={thursday}
             day={"Thursday"}
             route={"North"}
           ></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="mb-10 md:mb-0 md:border-r-2 border-black">
           <DayColumn
             arr={friday}
             day={"Friday"}

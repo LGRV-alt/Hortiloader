@@ -7,7 +7,7 @@ export default function DayColumn({ arr, day, route }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center  border-b-2   border-black">
+      <div className="flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <h5 className="text-lg font-bold">{day}</h5>
         <p>{route}</p>
       </div>
