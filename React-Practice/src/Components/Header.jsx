@@ -4,7 +4,7 @@ import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
 
 function Header({ setChosenWeek }) {
-  const [toggleNav, setToggleNav] = useState(true);
+  const [toggleNav, setToggleNav] = useState(false);
   return (
     <div
       className={
@@ -37,24 +37,38 @@ function Header({ setChosenWeek }) {
       {!isUserValid ? (
         <p></p>
       ) : (
-        <div
-          className={` ${
-            toggleNav ? "flex" : "hidden"
-          } absolute md:static   bg-black  md:w-auto md:bg-transparent md:flex  `}
-        >
-          <div className="gap-5 justify-center items-center text-white flex">
-            <Link to="/">Whiteboard</Link>
-            <Link to="/collect">Collects</Link>
-            <Link to="/holdingPage">Holding Page</Link>
+        <>
+          <div
+            className={`${
+              toggleNav ? "flex" : "hidden"
+            } w-full left-1/4 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-black  md:w-auto md:bg-transparent md:flex  `}
+          >
+            <div className="flex-col  md:flex-row flex gap-5 md:items-center">
+              <Link to="/">Whiteboard</Link>
+              <Link to="/collect">Collects</Link>
+              <Link to="/holdingPage">Holding Page</Link>
 
-            <button
-              className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
-              onClick={signout}
-            >
-              Signout
-            </button>
+              <button
+                className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
+                onClick={signout}
+              >
+                Signout
+              </button>
+              <button
+                className="md:hidden"
+                onClick={() => setToggleNav(!toggleNav)}
+              >
+                more
+              </button>
+            </div>
           </div>
-        </div>
+          <button
+            className="md:hidden"
+            onClick={() => setToggleNav(!toggleNav)}
+          >
+            more
+          </button>
+        </>
       )}
     </div>
   );
