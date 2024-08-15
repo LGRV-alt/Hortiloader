@@ -47,6 +47,7 @@ export async function updateTask(
   };
   await client.collection("tasks").update(id, data);
   window.location.reload();
+  window.print();
 }
 
 export async function login(username, password) {

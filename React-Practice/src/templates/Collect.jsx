@@ -21,22 +21,24 @@ export default function Collect({ records, chosenWeek }) {
 
   return (
     <div className=" flex flex-col h-full">
-      <CreateCustomer></CreateCustomer>
+      <div className="hidden md:block">
+        <CreateCustomer></CreateCustomer>
+      </div>
 
-      <div className="grid grid-cols-5 grid-rows-1 outline h-full">
-        <div className="border-r-2 border-black">
+      <div className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-1 outline h-full">
+        <div className="md:border-r-2 border-black">
           <DayColumn arr={monday} day={"Monday"}></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="md:border-r-2 border-black">
           <DayColumn arr={tuesday} day={"Tuesday"}></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="md:border-r-2 border-black">
           <DayColumn arr={wednesday} day={"Wednesday"}></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="md:border-r-2 border-black">
           <DayColumn arr={thursday} day={"Thursday"}></DayColumn>
         </div>
-        <div className="border-r-2 border-black">
+        <div className="md:border-r-2 border-black">
           <DayColumn arr={friday} day={"Friday"}></DayColumn>
         </div>
       </div>
