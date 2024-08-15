@@ -42,7 +42,7 @@ export default function Edit({ records }) {
   };
 
   return (
-    <div className="h-full bg-regal-blue grid grid-cols-1 grid-rows-[6fr_5fr_1fr] md:grid-cols-2  ">
+    <div className="h-full bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_5fr_1fr] md:grid-cols-2  ">
       <div className="flex  justify-center h-full pb-2 ">
         <div className="  flex flex-col gap-2 w-1/2">
           <h2 className="text-lg font-medium text-white ">Edit Order-</h2>
@@ -126,10 +126,12 @@ export default function Edit({ records }) {
           />
         </div>
       </div>
-      <div className="w-full flex-col  items-center h-full flex p-2">
-        <h3 className="text-lg font-medium text-white ">Additional Info</h3>
+      <div className="md:pr-10 w-full flex-col  items-center h-full flex p-2">
+        <h3 className="pb-2 text-lg font-medium text-white ">
+          Additional Info
+        </h3>
         <textarea
-          className=" w-full h-1/2 text-center  outline bg-transparent  text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          className="p-2 w-full h-1/2 text-center  outline bg-transparent  text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
           type="text"
           placeholder="Order No."
           onChange={(e) => setOrderInfo(e.target.value)}
