@@ -15,6 +15,7 @@ export default function App() {
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
+  // const [week, setWeek] = useState([]);
 
   function compare(a, b) {
     if (a.created < b.created) {
@@ -35,6 +36,19 @@ export default function App() {
     }
     fetchData();
   }, []);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const pb = new PocketBase("https://hortiloader.pockethost.io");
+  //     const records = await pb
+  //       .collection("tasks")
+  //       .getFullList({ filter: `weekNumber=${currentWeek}` });
+
+  //     setWeek(records);
+  //   }
+  //   fetchData();
+  // }, []);
+  // console.log(week);
 
   // Sort the array to newest created
   rec.sort(compare);
