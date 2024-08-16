@@ -21,7 +21,7 @@ export default function Edit({ records, setRefresh }) {
   const [other, setOther] = useState(selectedRecord[0].other);
   const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
   const [orderInfo, setOrderInfo] = useState(selectedRecord[0].orderInfo);
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(selectedRecord[0].status);
 
   const handleSubmit = () => {
     if (!title) {

@@ -18,7 +18,6 @@ export default function App() {
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
   // const [week, setWeek] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   function compare(a, b) {
     if (a.created < b.created) {
