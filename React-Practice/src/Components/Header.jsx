@@ -49,14 +49,7 @@ function Header({ setChosenWeek, setRefresh }) {
             {weekNumbers}
           </select>
         </div>
-        {/* <input
-            className="bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            type="number"
-            min={1}
-            max={52}
-            onChange={(e) => handleState(e)}
-          />
-        </div> */}
+
         <button
           className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
           onClick={() => setToggleNav(!toggleNav)}
