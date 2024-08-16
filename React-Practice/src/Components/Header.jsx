@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
 import Logo from "./Hamburger";
+import LogoTree from "./LogoTree";
 
 function Header({ setChosenWeek, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -28,10 +29,13 @@ function Header({ setChosenWeek, setRefresh }) {
   return (
     <div
       className={
-        "  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
+        "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className=" px-2 pt-2 flex items-center justify-between md:flex-row  md:justify-center md:items-center">
+      <div className=" px-2  flex items-center justify-between md:flex-row  md:justify-center md:items-center">
+        <div className="flex items-center justify-center pr-2">
+          <LogoTree></LogoTree>
+        </div>
         <Link to="/">
           <h2 className="mr-2 text-2xl text-white font-semibold md:mr-5">
             HortiLoader
