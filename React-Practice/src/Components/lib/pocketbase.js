@@ -48,7 +48,7 @@ export async function updateTask(
     orderInfo: orderInfo,
   };
   await client.collection("tasks").update(id, data);
-  history.go(0);
+  // history.go(0);
 }
 
 export async function login(username, password) {
@@ -92,7 +92,7 @@ export async function deleteTask(id) {
   const pass = prompt("Please enter the password");
   if (realPass === pass) {
     await client.collection("tasks").delete(id);
-    window.location.reload();
+    // window.location.reload();
   } else {
     return;
   }

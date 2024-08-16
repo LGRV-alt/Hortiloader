@@ -13,6 +13,7 @@ import Collect from "./templates/Collect";
 import CreateCustomer from "./Components/CreateCustomer";
 
 export default function App() {
+  const [refresh, setRefresh] = useState(1);
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
@@ -35,11 +36,10 @@ export default function App() {
       const records = await pb.collection("tasks").getFullList({});
 
       setRecords(records);
+      console.log(records);
     }
-
     fetchData();
-  }, []);
-  console.log(loading);
+  }, [refresh]);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -62,13 +62,22 @@ export default function App() {
       {isUserValid ? (
         <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2">
-            <Header setChosenWeek={setChosenWeek}></Header>
+            <Header
+              setChosenWeek={setChosenWeek}
+              setRefresh={setRefresh}
+            ></Header>
           </div>
           <div className="col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               <Route
                 path="/"
-                element={<Body records={rec} chosenWeek={chosenWeek}></Body>}
+                element={
+                  <Body
+                    records={rec}
+                    chosenWeek={chosenWeek}
+                    refresh={refresh}
+                  ></Body>
+                }
               />
 
               <Route
@@ -80,10 +89,15 @@ export default function App() {
                 path="/collect"
                 element={<Collect records={rec} chosenWeek={chosenWeek} />}
               />
-              <Route path="/edit/:id" element={<Edit records={rec} />} />
+              <Route
+                path="/edit/:id"
+                element={<Edit setRefresh={setRefresh} records={rec} />}
+              />
               <Route
                 path="/createCustomer"
-                element={<CreateCustomer></CreateCustomer>}
+                element={
+                  <CreateCustomer setRefresh={setRefresh}></CreateCustomer>
+                }
               />
             </Routes>
           </div>

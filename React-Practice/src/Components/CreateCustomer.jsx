@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
 
 import { useNavigate } from "react-router-dom";
 
-export default function CreateCustomer() {
+export default function CreateCustomer({ setRefresh }) {
   const currentWeek = getDateWeek();
   const navigate = useNavigate();
 
@@ -22,6 +23,7 @@ export default function CreateCustomer() {
       return;
     }
     // navigate(-1);
+    setRefresh(Math.random());
     createTask(
       title,
       day,

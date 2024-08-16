@@ -4,7 +4,6 @@ import { deleteTask, taskStatus } from "./lib/pocketbase";
 // eslint-disable-next-line react/prop-types
 export default function DayColumn({ arr, day, route, numberOfDay }) {
   const array = arr;
-  console.log(numberOfDay);
 
   return (
     <>

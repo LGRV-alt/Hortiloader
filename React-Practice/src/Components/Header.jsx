@@ -3,8 +3,14 @@ import { useState } from "react";
 import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
 
-function Header({ setChosenWeek }) {
+function Header({ setChosenWeek, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
+
+  function handleState(e) {
+    setChosenWeek(e.target.value);
+    console.log(Math.random(1));
+    setRefresh(Math.random());
+  }
   return (
     <div
       className={
@@ -29,7 +35,7 @@ function Header({ setChosenWeek }) {
             type="number"
             min={1}
             max={52}
-            onChange={(e) => setChosenWeek(e.target.value)}
+            onChange={(e) => handleState(e)}
           />
         </div>
         <button

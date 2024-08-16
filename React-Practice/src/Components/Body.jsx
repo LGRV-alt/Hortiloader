@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 
-import { useState } from "react";
 import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
 
-export default function Body({ records, chosenWeek }) {
+export default function Body({ records, chosenWeek, refresh }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(

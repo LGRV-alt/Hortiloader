@@ -5,7 +5,7 @@ import { useState } from "react";
 import { getDateWeek, updateTask } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
 
-export default function Edit({ records }) {
+export default function Edit({ records, setRefresh }) {
   const currentWeek = getDateWeek();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ export default function Edit({ records }) {
       return;
     }
     navigate(-1);
+    setRefresh(Math.random());
     updateTask(
       id,
       title,
