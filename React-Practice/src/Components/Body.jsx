@@ -145,7 +145,7 @@ export default function Body({ records, chosenWeek, refresh, setRefresh }) {
             setRefresh={setRefresh}
           ></DayColumn>
         </div>
-        <div className="mb-10  border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
+        <div className="mb-10 md:border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
           <DayColumn
             arr={sunday}
             day={"Sunday"}
