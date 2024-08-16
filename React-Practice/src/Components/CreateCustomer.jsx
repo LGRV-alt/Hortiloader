@@ -89,6 +89,8 @@ export default function CreateCustomer() {
             <option value="wednesday">Wednesday</option>
             <option value="thursday">Thursday</option>
             <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
           </select>
 
           <select
