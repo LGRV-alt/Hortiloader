@@ -15,9 +15,6 @@ export default function Body({ records, chosenWeek, refresh }) {
   };
 
   // Working on this
-  if (chosenWeek == false) {
-    console.log("issue");
-  }
 
   const daysOfWeek = {
     1: [1, 2, 3, 4, 5, 7, 8],
@@ -26,7 +23,6 @@ export default function Body({ records, chosenWeek, refresh }) {
     4: [23, 24, 25, 26, 27, 28, 29],
     33: [12, 16, 17, 18, 19, 20, 21],
   };
-  console.log(daysOfWeek[chosenWeek]);
 
   const monday = filterUsersByDay("monday");
   const tuesday = filterUsersByDay("tuesday");
@@ -48,6 +44,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Monday"}
             route={"Glasgow Wholesale"}
             numberOfDay={daysOfWeek[chosenWeek][0]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -56,6 +53,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Tuesday"}
             route={"Edinburgh + Lanark"}
             numberOfDay={daysOfWeek[chosenWeek][1]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -64,6 +62,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Wednesday"}
             route={"Dumfries/South"}
             numberOfDay={daysOfWeek[chosenWeek][2]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -72,6 +71,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Thursday"}
             route={"North"}
             numberOfDay={daysOfWeek[chosenWeek][3]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -80,6 +80,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Friday"}
             route={"Ayrshire + Glasgow Retails"}
             numberOfDay={daysOfWeek[chosenWeek][4]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 border-black">
@@ -88,6 +89,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Saturday"}
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenWeek][5]}
+            refresh={refresh}
           ></DayColumn>
         </div>
         <div className="mb-10  border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
@@ -96,6 +98,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             day={"Sunday"}
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenWeek][6]}
+            refresh={refresh}
           ></DayColumn>
         </div>
       </div>

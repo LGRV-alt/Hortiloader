@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { deleteTask, taskStatus } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
-export default function DayColumn({ arr, day, route, numberOfDay }) {
+export default function DayColumn({ arr, day, route, numberOfDay, refresh }) {
   const array = arr;
+  refresh;
 
   return (
     <>

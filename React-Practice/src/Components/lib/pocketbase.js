@@ -92,7 +92,7 @@ export async function deleteTask(id) {
   const pass = prompt("Please enter the password");
   if (realPass === pass) {
     await client.collection("tasks").delete(id);
-    // window.location.reload();
+    history.go(0);
   } else {
     return;
   }
@@ -139,7 +139,7 @@ export async function createTask(
     orderInfo,
   };
   await client.collection("tasks").create(data);
-  history.go(0);
+  // history.go(0);
 }
 
 export function getDateWeek(date) {

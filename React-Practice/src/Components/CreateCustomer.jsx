@@ -23,7 +23,7 @@ export default function CreateCustomer({ setRefresh }) {
       return;
     }
     // navigate(-1);
-    setRefresh(Math.random());
+
     createTask(
       title,
       day,
@@ -34,6 +34,8 @@ export default function CreateCustomer({ setRefresh }) {
       weekNumber,
       orderInfo
     );
+    setRefresh(Math.random());
+    navigate(-1);
   };
   return (
     <div className="flex flex-col items-center  h-full  justify-start bg-regal-blue pb-2 ">

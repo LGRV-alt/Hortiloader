@@ -8,7 +8,7 @@ function Header({ setChosenWeek, setRefresh }) {
 
   function handleState(e) {
     setChosenWeek(e.target.value);
-    console.log(Math.random(1));
+
     setRefresh(Math.random());
   }
   return (
