@@ -45,10 +45,10 @@ export default function Edit({ records, setRefresh }) {
   };
 
   return (
-    <div className="h-full bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_5fr_1fr] md:grid-cols-2  ">
-      <div className="flex  justify-center h-full pb-2 ">
-        <div className="  flex flex-col gap-2 w-1/2">
-          <div className="flex gap-2">
+    <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_6fr_1fr] md:grid-cols-2  ">
+      <div className="flex justify-center h-full pb-2 ">
+        <div className="  flex flex-col  gap-2 w-1/2">
+          <div className="flex gap-2 pt-2">
             <h2 className="text-lg font-medium text-white ">Edit Order</h2>{" "}
             <select
               value={status}
@@ -141,12 +141,12 @@ export default function Edit({ records, setRefresh }) {
           />
         </div>
       </div>
-      <div className="md:pr-10 w-full flex-col  items-center h-full flex p-2">
+      <div className="md:row-start-1 md:row-end-3 md:col-start-2 md:pr-10 w-full flex-col  items-center h-2/3 flex p-2">
         <h3 className="pb-2 text-lg font-medium text-white ">
           Additional Info
         </h3>
         <textarea
-          className="p-2 w-full h-1/2 md:h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          className="  p-2 w-full h-full md:h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
           type="text"
           placeholder="Issues/Load information"
           onChange={(e) => setOrderInfo(e.target.value)}

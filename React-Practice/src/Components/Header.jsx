@@ -32,12 +32,12 @@ function Header({ setChosenWeek, setRefresh }) {
         "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className=" px-2  flex items-center justify-between md:flex-row  md:justify-center md:items-center">
+      <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center">
         <div className="flex items-center justify-center pr-2">
           <LogoTree></LogoTree>
         </div>
         <Link to="/">
-          <h2 className="mr-2 text-2xl text-white font-semibold md:mr-5">
+          <h2 className=" text-2xl text-white  font-semibold md:mr-5 ">
             HortiLoader
           </h2>
         </Link>
@@ -76,9 +76,9 @@ function Header({ setChosenWeek, setRefresh }) {
           <div
             className={`${
               toggleNav ? "flex" : "hidden"
-            } right-0 w-full pr-10 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
+            } right-0 w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
-            <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:items-center">
+            <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:justify-center md:items-center">
               <h2 className="md:hidden text-white text-sm md:font-medium mr-3">
                 Current Week - {getDateWeek()}
               </h2>
