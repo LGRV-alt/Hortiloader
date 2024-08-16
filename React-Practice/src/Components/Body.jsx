@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 
-import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
 
 export default function Body({ records, chosenWeek, refresh, setRefresh }) {

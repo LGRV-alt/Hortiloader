@@ -35,7 +35,8 @@ export async function updateTask(
   postcode,
   orderNumber,
   customerType,
-  orderInfo
+  orderInfo,
+  status
 ) {
   const data = {
     title: title,
@@ -46,6 +47,7 @@ export async function updateTask(
     orderNumber: orderNumber,
     customerType: customerType,
     orderInfo: orderInfo,
+    status: status,
   };
   await client.collection("tasks").update(id, data);
   // history.go(0);

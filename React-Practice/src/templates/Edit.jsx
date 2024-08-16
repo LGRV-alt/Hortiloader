@@ -21,6 +21,7 @@ export default function Edit({ records, setRefresh }) {
   const [other, setOther] = useState(selectedRecord[0].other);
   const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
   const [orderInfo, setOrderInfo] = useState(selectedRecord[0].orderInfo);
+  const [status, setStatus] = useState();
 
   const handleSubmit = () => {
     if (!title) {
@@ -38,7 +39,8 @@ export default function Edit({ records, setRefresh }) {
       postcode,
       orderNumber,
       customerType,
-      orderInfo
+      orderInfo,
+      status
     );
   };
 
@@ -46,7 +48,20 @@ export default function Edit({ records, setRefresh }) {
     <div className="h-full bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_5fr_1fr] md:grid-cols-2  ">
       <div className="flex  justify-center h-full pb-2 ">
         <div className="  flex flex-col gap-2 w-1/2">
-          <h2 className="text-lg font-medium text-white ">Edit Order-</h2>
+          <div className="flex gap-2">
+            <h2 className="text-lg font-medium text-white ">Edit Order</h2>{" "}
+            <select
+              value={status}
+              className=" bg-transparent text-input text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option disabled>Status</option>
+              <option value="working">Working</option>
+              <option value="pulled">Pulled</option>
+              <option value="loaded">Loaded</option>
+              <option value="missed">Missed</option>
+            </select>
+          </div>
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
@@ -71,7 +86,6 @@ export default function Edit({ records, setRefresh }) {
             value={orderNumber}
             required
           />
-
           <select
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="customerType"
@@ -87,7 +101,6 @@ export default function Edit({ records, setRefresh }) {
             <option value="missed">Missed</option>
             <option value="other">Other</option>
           </select>
-
           <select
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
@@ -104,7 +117,6 @@ export default function Edit({ records, setRefresh }) {
             <option value="saturday">Saturday</option>
             <option value="sunday">Sunday</option>
           </select>
-
           <select
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
@@ -134,7 +146,7 @@ export default function Edit({ records, setRefresh }) {
           Additional Info
         </h3>
         <textarea
-          className="p-2 w-full h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          className="p-2 w-full h-1/2 md:h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
           type="text"
           placeholder="Issues/Load information"
           onChange={(e) => setOrderInfo(e.target.value)}
