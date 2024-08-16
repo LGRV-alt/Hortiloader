@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
+import Logo from "./Hamburger";
 
 function Header({ setChosenWeek, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -30,7 +31,7 @@ function Header({ setChosenWeek, setRefresh }) {
         "  md:flex-row md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className=" px-2 pt-2 flex justify-between md:flex-row  md:justify-center md:items-center">
+      <div className=" px-2 pt-2 flex items-center justify-between md:flex-row  md:justify-center md:items-center">
         <Link to="/">
           <h2 className="mr-2 text-2xl text-white font-semibold md:mr-5">
             HortiLoader
@@ -49,13 +50,19 @@ function Header({ setChosenWeek, setRefresh }) {
             {weekNumbers}
           </select>
         </div>
-
-        <button
+        <div
+          onClick={() => setToggleNav(!toggleNav)}
+          className="h-full  w-14 flex justify-center items-center md:hidden"
+        >
+          <Logo fillColor={"white"}></Logo>
+        </div>
+        {/* <button
           className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
           onClick={() => setToggleNav(!toggleNav)}
         >
+          <Logo></Logo>
           {toggleNav ? "Close" : "Open"}
-        </button>
+        </button> */}
       </div>
 
       {!isUserValid ? (

@@ -94,7 +94,7 @@ export async function deleteTask(id) {
   const pass = prompt("Please enter the password");
   if (realPass === pass) {
     await client.collection("tasks").delete(id);
-    history.go(0);
+    // history.go(0);
   } else {
     return;
   }
