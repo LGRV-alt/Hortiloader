@@ -16,6 +16,9 @@ export default function Body({ records, chosenWeek }) {
   };
 
   // Working on this
+  if (chosenWeek == false) {
+    console.log("issue");
+  }
 
   const daysOfWeek = {
     1: [1, 2, 3, 4, 5, 7, 8],
