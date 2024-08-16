@@ -44,6 +44,7 @@ function Header({ setChosenWeek, setRefresh }) {
         <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
           <select onChange={(e) => handleState(e)} name="" id="">
+            <option value=""></option>
             {/* {weeks.map}
             <option value="33">33</option>
             <option value="1">1</option> */}
