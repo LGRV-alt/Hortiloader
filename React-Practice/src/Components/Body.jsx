@@ -3,7 +3,8 @@
 import CreateCustomer from "./CreateCustomer";
 import DayColumn from "./DayColumn";
 
-export default function Body({ records, chosenWeek, refresh }) {
+export default function Body({ records, chosenWeek, refresh, setRefresh }) {
+  refresh;
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
@@ -45,6 +46,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Glasgow Wholesale"}
             numberOfDay={daysOfWeek[chosenWeek][0]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -54,6 +56,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Edinburgh + Lanark"}
             numberOfDay={daysOfWeek[chosenWeek][1]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -63,6 +66,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Dumfries/South"}
             numberOfDay={daysOfWeek[chosenWeek][2]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -72,6 +76,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"North"}
             numberOfDay={daysOfWeek[chosenWeek][3]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
@@ -81,6 +86,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Ayrshire + Glasgow Retails"}
             numberOfDay={daysOfWeek[chosenWeek][4]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 border-black">
@@ -90,6 +96,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenWeek][5]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
         <div className="mb-10  border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
@@ -99,6 +106,7 @@ export default function Body({ records, chosenWeek, refresh }) {
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenWeek][6]}
             refresh={refresh}
+            setRefresh={setRefresh}
           ></DayColumn>
         </div>
       </div>

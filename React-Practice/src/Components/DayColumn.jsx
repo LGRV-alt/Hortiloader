@@ -1,10 +1,23 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { deleteTask, taskStatus } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
-export default function DayColumn({ arr, day, route, numberOfDay, refresh }) {
+export default function DayColumn({
+  arr,
+  day,
+  route,
+  numberOfDay,
+  refresh,
+  setRefresh,
+}) {
   const array = arr;
   refresh;
+  function handleChange(record, e) {
+    setRefresh(Math.random());
+    taskStatus(record.id, record.title, e.target.value);
+    setRefresh(Math.random());
+  }
 
   return (
     <>
@@ -45,9 +58,10 @@ export default function DayColumn({ arr, day, route, numberOfDay, refresh }) {
 
             <select
               className="w-4"
-              onChange={(e) =>
-                taskStatus(record.id, record.title, e.target.value)
-              }
+              // onChange={(e) =>
+              //   taskStatus(record.id, record.title, e.target.value)
+              // }
+              onChange={(e) => handleChange(record, e)}
             >
               <option></option>
               <option value="working">Working</option>

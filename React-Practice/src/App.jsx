@@ -76,6 +76,7 @@ export default function App() {
                     records={rec}
                     chosenWeek={chosenWeek}
                     refresh={refresh}
+                    setRefresh={setRefresh}
                   ></Body>
                 }
               />

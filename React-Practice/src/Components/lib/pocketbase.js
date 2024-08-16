@@ -114,7 +114,7 @@ export async function taskStatus(id, title, status) {
   };
   await client.collection("tasks").update(id, data);
 
-  history.go(0);
+  // history.go(0);
 }
 
 export async function createTask(
