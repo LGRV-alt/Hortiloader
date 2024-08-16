@@ -15,7 +15,13 @@ export default function Body({ records, chosenWeek }) {
     );
   };
 
-  const daysOfWeek = { 33: [12, 16, 17, 18, 19], 1: [1, 2, 3, 4, 5] };
+  const daysOfWeek = {
+    1: [1, 2, 3, 4, 5, 7, 8],
+    2: [9, 10, 11, 12, 13, 14, 15],
+    3: [16, 17, 18, 19, 20, 21, 22],
+    4: [23, 24, 25, 26, 27, 28, 29],
+    33: [12, 16, 17, 18, 19],
+  };
   console.log(daysOfWeek[chosenWeek]);
 
   const monday = filterUsersByDay("monday");
