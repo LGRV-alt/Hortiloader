@@ -45,9 +45,7 @@ function Header({ setChosenWeek, setRefresh }) {
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
           <select onChange={(e) => handleState(e)} name="" id="">
             <option value=""></option>
-            {/* {weeks.map}
-            <option value="33">33</option>
-            <option value="1">1</option> */}
+
             {weekNumbers}
           </select>
         </div>
@@ -85,13 +83,16 @@ function Header({ setChosenWeek, setRefresh }) {
                 <p className="text-white text-sm md:text-base mr-2">
                   Selected Week
                 </p>
-                <input
-                  className=" bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  type="number"
-                  min={1}
-                  max={52}
-                  onChange={(e) => setChosenWeek(e.target.value)}
-                />
+                <select
+                  className="text-black"
+                  onChange={(e) => handleState(e)}
+                  name=""
+                  id=""
+                >
+                  <option value=""></option>
+
+                  {weekNumbers}
+                </select>
               </div>
 
               <Link onClick={() => setToggleNav(!toggleNav)} to="/">
