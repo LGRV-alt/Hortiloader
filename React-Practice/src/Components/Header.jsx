@@ -6,6 +6,19 @@ import { Link } from "react-router-dom";
 function Header({ setChosenWeek, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
 
+  const weeks = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
+  ];
+  let weekNumbers = weeks.map((item) => {
+    return (
+      <option key={item} value={item}>
+        {item}
+      </option>
+    );
+  });
+
   function handleState(e) {
     setChosenWeek(e.target.value);
 
@@ -30,14 +43,21 @@ function Header({ setChosenWeek, setRefresh }) {
 
         <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
-          <input
+          <select onChange={(e) => handleState(e)} name="" id="">
+            {/* {weeks.map}
+            <option value="33">33</option>
+            <option value="1">1</option> */}
+            {weekNumbers}
+          </select>
+        </div>
+        {/* <input
             className="bg-transparent border-white border-2 text-center  text-white [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             type="number"
             min={1}
             max={52}
             onChange={(e) => handleState(e)}
           />
-        </div>
+        </div> */}
         <button
           className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
           onClick={() => setToggleNav(!toggleNav)}
