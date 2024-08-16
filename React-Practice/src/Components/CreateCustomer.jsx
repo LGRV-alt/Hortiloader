@@ -21,7 +21,7 @@ export default function CreateCustomer() {
       window.alert("Please enter a title");
       return;
     }
-    navigate(-1);
+    // navigate(-1);
     createTask(
       title,
       day,

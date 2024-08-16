@@ -48,8 +48,7 @@ export async function updateTask(
     orderInfo: orderInfo,
   };
   await client.collection("tasks").update(id, data);
-  window.location.reload();
-  window.print();
+  history.go(0);
 }
 
 export async function login(username, password) {
