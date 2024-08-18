@@ -49,7 +49,12 @@ function Header({ setChosenWeek, setRefresh }) {
 
         <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
-          <select onChange={(e) => handleState(e)} name="" id="">
+          <select
+            onChange={(e) => handleState(e)}
+            name=""
+            id=""
+            className=" w-12 bg-transparent text-white focus:text-black focus:bg-white "
+          >
             <option value=""></option>
 
             {weekNumbers}
@@ -94,7 +99,7 @@ function Header({ setChosenWeek, setRefresh }) {
                   Selected Week
                 </p>
                 <select
-                  className="text-black"
+                  className=" w-12 bg-transparent focus:text-black focus:bg-white  border-white border-2"
                   onChange={(e) => handleState(e)}
                   name=""
                   id=""
@@ -120,26 +125,30 @@ function Header({ setChosenWeek, setRefresh }) {
                 Collects
               </Link>
               <Link
-                className="hover:text-secondary-colour transition-all"
+                className="hover:text-secondary-colour md:w-full transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/holdingPage"
               >
                 Holding Page
               </Link>
-              <Link
-                className="hover:text-secondary-colour transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/createCustomer"
-              >
-                Create Customer
-              </Link>
+              <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
+                <Link
+                  className="w-full"
+                  onClick={() => setToggleNav(!toggleNav)}
+                  to="/createCustomer"
+                >
+                  <button className=" w-full md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                    Add Order
+                  </button>
+                </Link>
 
-              <button
-                className="mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-secondary-colour hover:outline transition-all duration-300 bg-secondary-colour  text-white"
-                onClick={signout}
-              >
-                Signout
-              </button>
+                <button
+                  className=" w-1/3 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
+                  onClick={signout}
+                >
+                  Signout
+                </button>
+              </div>
             </div>
           </div>
         </>

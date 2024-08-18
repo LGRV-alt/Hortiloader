@@ -17,48 +17,48 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
         <p>{route}</p>
       </div>
       {array.map((record) => (
-        <div
-          className=" border-b-2 flex justify-between px-1 pt-2"
-          key={record.id}
-        >
-          <div className="flex hover:bg-blue-200">
+        <div className="  flex justify-between px-1 pt-2 " key={record.id}>
+          <div className="flex justify-between w-full hover:text-green-500 hover:font-bold  transition-all">
             <Link to={`/edit/${record.id}`}>
-              {record.customerType === "retail" ? (
-                <p className="text-blue-700">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : record.customerType === "other" ? (
-                <p className="text-red-500">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : record.customerType === "missed" ? (
-                <p className="text-fuchsia-600">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : (
-                <p className="">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              )}
+              <div className="flex">
+                {record.customerType === "retail" ? (
+                  <p className="text-blue-700 hover:text-green-500">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber}{" "}
+                  </p>
+                ) : record.customerType === "other" ? (
+                  <p className="text-red-500 hover:text-green-500">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber}{" "}
+                  </p>
+                ) : record.customerType === "missed" ? (
+                  <p className="text-fuchsia-600 hover:text-green-500">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber}{" "}
+                  </p>
+                ) : (
+                  <p className="">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber}{" "}
+                  </p>
+                )}
+              </div>
             </Link>
-          </div>
-
-          <div className="flex">
-            {record.status === "pulled" ? (
-              <p>Pulled</p>
-            ) : record.status === "loaded" ? (
-              <p>Loaded</p>
-            ) : record.status === "working" ? (
-              <p>Working</p>
-            ) : record.status === "missed" ? (
-              <p>Missed</p>
-            ) : (
-              <p></p>
-            )}
+            <Link to={`/edit/${record.id}`}>
+              <div className="flex justify-center items-center">
+                {record.status === "pulled" ? (
+                  <p>Pulled</p>
+                ) : record.status === "loaded" ? (
+                  <p>Loaded</p>
+                ) : record.status === "working" ? (
+                  <p>Working</p>
+                ) : record.status === "missed" ? (
+                  <p>Missed</p>
+                ) : (
+                  <p></p>
+                )}
+              </div>
+            </Link>
 
             {/* <button
               className="ml-1 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
