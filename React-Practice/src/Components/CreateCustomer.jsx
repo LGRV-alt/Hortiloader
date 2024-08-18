@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function CreateCustomer({ setRefresh }) {
   const currentWeek = getDateWeek();
   const navigate = useNavigate();
+  const status = null;
 
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
@@ -32,7 +33,8 @@ export default function CreateCustomer({ setRefresh }) {
       customerType,
       other,
       weekNumber,
-      orderInfo
+      orderInfo,
+      status
     );
     setRefresh(Math.random());
     navigate(-1);

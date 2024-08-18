@@ -71,7 +71,7 @@ export default function Edit({ records, setRefresh }) {
                 className=" bg-transparent text-input text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <option disabled>Status</option>
+                <option value=""></option>
                 <option value="working">Working</option>
                 <option value="pulled">Pulled</option>
                 <option value="loaded">Loaded</option>
