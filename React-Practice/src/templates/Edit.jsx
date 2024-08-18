@@ -8,6 +8,7 @@ import {
   updateTask,
 } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
+const realPass = "gilmore";
 
 export default function Edit({ records, setRefresh }) {
   const currentWeek = getDateWeek();
@@ -49,8 +50,13 @@ export default function Edit({ records, setRefresh }) {
   };
 
   const handleDelete = (id) => {
-    deleteTask(id);
-    navigate(-1);
+    const pass = prompt("Enter Password").toLocaleLowerCase();
+    if (pass === realPass) {
+      navigate(-1);
+      deleteTask(id);
+    } else {
+      alert("Wrong Password");
+    }
   };
 
   return (

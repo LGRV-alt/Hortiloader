@@ -90,15 +90,18 @@ export async function signup(username, password) {
 }
 
 // ---------------------Brought Over----------------------
+// export async function deleteTask(id) {
+//   const realPass = "ratstan";
+//   const pass = prompt("Please enter the password");
+//   if (realPass === pass) {
+//     await client.collection("tasks").delete(id);
+//     // history.go(0);
+//   } else {
+//     return;
+//   }
+// }
 export async function deleteTask(id) {
-  const realPass = "ratstan";
-  const pass = prompt("Please enter the password");
-  if (realPass === pass) {
-    await client.collection("tasks").delete(id);
-    // history.go(0);
-  } else {
-    return;
-  }
+  await client.collection("tasks").delete(id);
 }
 
 //   let confirm = window.confirm("Are you sure you want to delete this task?");
