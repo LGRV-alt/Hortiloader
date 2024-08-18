@@ -58,7 +58,7 @@ function Header({ setChosenWeek, setRefresh }) {
           onClick={() => setToggleNav(!toggleNav)}
           className="h-full  w-7 mr-3 flex justify-center items-center md:hidden"
         >
-          <Logo fillColor={"white"}></Logo>
+          <Logo fillColor={toggleNav ? "red" : "white"}></Logo>
         </div>
         {/* <button
           className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
@@ -99,16 +99,29 @@ function Header({ setChosenWeek, setRefresh }) {
                 </select>
               </div>
 
-              <Link onClick={() => setToggleNav(!toggleNav)} to="/">
+              <Link
+                className="hover:text-secondary-colour  transition-all"
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/"
+              >
                 Whiteboard
               </Link>
-              <Link onClick={() => setToggleNav(!toggleNav)} to="/collect">
+              <Link
+                className="hover:text-secondary-colour  transition-all"
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/collect"
+              >
                 Collects
               </Link>
-              <Link onClick={() => setToggleNav(!toggleNav)} to="/holdingPage">
+              <Link
+                className="hover:text-secondary-colour transition-all"
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/holdingPage"
+              >
                 Holding Page
               </Link>
               <Link
+                className="hover:text-secondary-colour transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/createCustomer"
               >
@@ -116,7 +129,7 @@ function Header({ setChosenWeek, setRefresh }) {
               </Link>
 
               <button
-                className="mr-4 py-2 px-4 rounded-md bg-green-500 hover:bg-green-600 text-white"
+                className="mr-4 py-1 px-2 rounded-md outline hover:bg-secondary-colour text-white"
                 onClick={signout}
               >
                 Signout
