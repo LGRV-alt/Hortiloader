@@ -24,22 +24,22 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
                 {record.customerType === "retail" ? (
                   <p className="text-blue-700 hover:text-green-500">
                     {record.title} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 ) : record.customerType === "other" ? (
                   <p className="text-red-500 hover:text-green-500">
                     {record.title} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 ) : record.customerType === "missed" ? (
                   <p className="text-fuchsia-600 hover:text-green-500">
                     {record.title} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 ) : (
                   <p className="">
                     {record.title} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 )}
               </div>
