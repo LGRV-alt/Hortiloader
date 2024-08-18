@@ -4,6 +4,7 @@ import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
 import { Link } from "react-router-dom";
 import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
+import CloseIcon from "./CloseIcon";
 
 function Header({ setChosenWeek, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -58,7 +59,12 @@ function Header({ setChosenWeek, setRefresh }) {
           onClick={() => setToggleNav(!toggleNav)}
           className="h-full  w-7 mr-3 flex justify-center items-center md:hidden"
         >
-          <Logo fillColor={toggleNav ? "red" : "white"}></Logo>
+          {toggleNav ? (
+            <CloseIcon></CloseIcon>
+          ) : (
+            <Logo fillColor={"white"}></Logo>
+          )}
+          {/* <Logo fillColor={toggleNav ? "red" : "white"}></Logo> */}
         </div>
         {/* <button
           className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
@@ -129,7 +135,7 @@ function Header({ setChosenWeek, setRefresh }) {
               </Link>
 
               <button
-                className="mr-4 py-1 px-2 rounded-md outline hover:bg-secondary-colour text-white"
+                className="mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-secondary-colour hover:outline transition-all duration-300 bg-secondary-colour  text-white"
                 onClick={signout}
               >
                 Signout

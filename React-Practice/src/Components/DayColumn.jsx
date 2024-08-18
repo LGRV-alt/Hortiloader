@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { deleteTask } from "./lib/pocketbase";
+// import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
 export default function DayColumn({ arr, day, route, numberOfDay }) {
@@ -8,7 +8,7 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+      <div className=" flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2">
           <h5 className="text-lg font-bold">{day}</h5>
 
@@ -17,7 +17,10 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
         <p>{route}</p>
       </div>
       {array.map((record) => (
-        <div className="flex justify-between px-1 pt-2" key={record.id}>
+        <div
+          className=" border-b-2 flex justify-between px-1 pt-2"
+          key={record.id}
+        >
           <div className="flex hover:bg-blue-200">
             <Link to={`/edit/${record.id}`}>
               {record.customerType === "retail" ? (
@@ -57,12 +60,12 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
               <p></p>
             )}
 
-            <button
+            {/* <button
               className="ml-1 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
               onClick={() => deleteTask(record.id)}
             >
               <span className="material-symbols-outlined">X</span>
-            </button>
+            </button> */}
           </div>
         </div>
       ))}

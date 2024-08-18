@@ -132,7 +132,7 @@ export default function CreateCustomer({ setRefresh }) {
           required
         />
         <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
+          className="bg-secondary-colour text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
           onClick={handleSubmit}
         >
           <div className="">

@@ -2,7 +2,11 @@
 /* eslint-disable no-undef */
 
 import { useState } from "react";
-import { getDateWeek, updateTask } from "../Components/lib/pocketbase";
+import {
+  deleteTask,
+  getDateWeek,
+  updateTask,
+} from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function Edit({ records, setRefresh }) {
@@ -44,23 +48,38 @@ export default function Edit({ records, setRefresh }) {
     );
   };
 
+  const handleDelete = (id) => {
+    deleteTask(id);
+    navigate(-1);
+  };
+
   return (
     <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_6fr_1fr] md:grid-cols-2  ">
       <div className="flex justify-center h-full pb-2 ">
         <div className="  flex flex-col  gap-2 w-1/2">
-          <div className="flex gap-2 pt-2">
-            <h2 className="text-lg font-medium text-white ">Edit Order</h2>{" "}
-            <select
-              value={status}
-              className=" bg-transparent text-input text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option disabled>Status</option>
-              <option value="working">Working</option>
-              <option value="pulled">Pulled</option>
-              <option value="loaded">Loaded</option>
-              <option value="missed">Missed</option>
-            </select>
+          <div className="flex justify-between pt-2">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-medium text-white ">Edit Order</h2>{" "}
+              <select
+                value={status}
+                className=" bg-transparent text-input text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option disabled>Status</option>
+                <option value="working">Working</option>
+                <option value="pulled">Pulled</option>
+                <option value="loaded">Loaded</option>
+                <option value="missed">Missed</option>
+              </select>
+            </div>
+            <div className="items-center flex justify-center">
+              <button
+                className="ml-1 bg-red-500 rounded-md w-12 h-7 text-white px-2 hover:bg-red-600"
+                onClick={() => handleDelete(id)}
+              >
+                <span className="material-symbols-outlined">X</span>
+              </button>
+            </div>
           </div>
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
@@ -156,7 +175,7 @@ export default function Edit({ records, setRefresh }) {
       </div>
       <div className="flex justify-center items-start">
         <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 w-full md:w-1/2"
+          className="bg-secondary-colour text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
           onClick={handleSubmit}
         >
           <p className="">Save</p>
