@@ -37,7 +37,7 @@ function Header({ setChosenWeek, setRefresh }) {
           <LogoTree></LogoTree>
         </div>
         <Link to="/">
-          <h2 className=" text-2xl text-white  font-semibold md:mr-5 ">
+          <h2 className="font-display  text-4xl text-white   md:mr-5 ">
             HortiLoader
           </h2>
         </Link>
@@ -56,7 +56,7 @@ function Header({ setChosenWeek, setRefresh }) {
         </div>
         <div
           onClick={() => setToggleNav(!toggleNav)}
-          className="h-full  w-14 flex justify-center items-center md:hidden"
+          className="h-full  w-7 mr-3 flex justify-center items-center md:hidden"
         >
           <Logo fillColor={"white"}></Logo>
         </div>
