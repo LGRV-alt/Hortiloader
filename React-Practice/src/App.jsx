@@ -35,9 +35,7 @@ export default function App() {
     pb.collection("tasks").subscribe(
       "*",
       function (e) {
-        setLoading(true);
         fetchData();
-        setLoading(false);
         console.log(e.action);
         console.log(e.record);
       },
@@ -54,7 +52,7 @@ export default function App() {
     }
 
     fetchData();
-  }, [refresh]);
+  }, []);
 
   // useEffect(() => {
   //   async function fetchData() {
