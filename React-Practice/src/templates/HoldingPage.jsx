@@ -6,7 +6,6 @@ import { deleteTask } from "../Components/lib/pocketbase";
 export default function HoldingPage({ records }) {
   const holding = records.filter((record) => record.other == "holding");
   console.log(holding);
-  function getDateUpdated(s) {}
 
   return (
     <div>

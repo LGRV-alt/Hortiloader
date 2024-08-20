@@ -111,7 +111,7 @@ export default function Edit({ records, setRefresh }) {
             required
           />
           <label
-            className=" flex justify-between w-full md:w-2/3  pl-1 text-lg text-white"
+            className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
             htmlFor=""
           >
             {" "}
@@ -126,7 +126,7 @@ export default function Edit({ records, setRefresh }) {
             />
           </label>
           <label
-            className="flex justify-between w-full md:w-2/3  pl-1 text-lg text-white"
+            className="flex justify-between w-full md:w-[250px] pl-1 text-lg text-white"
             htmlFor=""
           >
             {" "}
