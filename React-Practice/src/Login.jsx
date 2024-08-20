@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { login, signup } from "./Components/lib/pocketbase";
+import LogoTree from "./Components/LogoTree";
 
 export default function Login() {
   const [username, setUsername] = useState(null);
@@ -119,8 +120,14 @@ export default function Login() {
         </div>
       )}
       <div className="md:flex bg-regal-blue items-center justify-center pt-1 md:p-20 row-start-1 md:col-start-2 ">
-        <div className="items-center flex flex-col">
-          <h2 className="text-4xl text-white font-black">HortiLoader</h2>
+        <div className="items-center  flex flex-col">
+          <div className="pb-3 hidden md:flex">
+            <LogoTree height={"200px"}></LogoTree>
+          </div>
+
+          <h2 className="text-6xl font-normal font-display text-white ">
+            HortiLoader
+          </h2>
           <p className="text-sm  text-white font-medium- md:font-semibold md:text-lg">
             Create and track orders
           </p>

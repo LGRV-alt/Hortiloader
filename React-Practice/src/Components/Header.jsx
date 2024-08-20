@@ -35,7 +35,7 @@ function Header({ setChosenWeek, setRefresh }) {
     >
       <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center">
         <div className="flex items-center justify-center pr-2">
-          <LogoTree></LogoTree>
+          <LogoTree height={"45px"} width={"45px"}></LogoTree>
         </div>
         <Link to="/">
           <h2 className="font-display  text-4xl text-white   md:mr-5 ">

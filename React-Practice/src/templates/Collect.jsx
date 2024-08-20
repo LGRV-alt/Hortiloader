@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import CreateCustomer from "../Components/CreateCustomer";
+
 import DayColumn from "../Components/DayColumn";
 
 export default function Collect({ records, chosenWeek }) {

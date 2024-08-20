@@ -1,8 +1,8 @@
-export default function LogoTree() {
+export default function LogoTree({ height, width }) {
   return (
     <svg
-      width="45px"
-      height="45px"
+      width={width}
+      height={height}
       viewBox="0 0 1024.00 1024.00"
       className="icon"
       version="1.1"
