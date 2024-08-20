@@ -6,6 +6,7 @@ import { deleteTask } from "../Components/lib/pocketbase";
 export default function HoldingPage({ records }) {
   const holding = records.filter((record) => record.other == "holding");
   console.log(holding);
+  function getDateUpdated(s) {}
 
   return (
     <div>
@@ -18,14 +19,11 @@ export default function HoldingPage({ records }) {
             className="flex  items-center border-b-2 border-slate-300 mb-5 "
             key={record.id}
           >
-            {/* <button
-              className="mr-2 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-              onClick={() => deleteTask(record.id)}
-            >
-              <span className="material-symbols-outlined">X</span>
-            </button> */}
+            {/* {console.log(record.updated.slice(5, 10))} */}
+
             <Link to={`/edit/${record.id}`}>
               <div className="flex items-center hover:text-blue-500">
+                {/* <p className="mr-2">Created-{record.created.slice(5, 10)}</p> */}
                 <h3 className="font-medium md:text-lg mr-2">{record.title}</h3>
                 <p className="font-medium md:text-lg mr-2">
                   {record.postcode.toUpperCase()}
