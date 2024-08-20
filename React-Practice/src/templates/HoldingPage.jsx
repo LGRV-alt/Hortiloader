@@ -14,23 +14,26 @@ export default function HoldingPage({ records }) {
       </div>
       <div className="flex justify-start flex-col mx-5 mt-5 ">
         {holding.map((record) => (
-          <div className="flex  items-center border-b-2 mb-5" key={record.id}>
-            <button
+          <div
+            className="flex  items-center border-b-2 border-slate-300 mb-5 "
+            key={record.id}
+          >
+            {/* <button
               className="mr-2 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
               onClick={() => deleteTask(record.id)}
             >
               <span className="material-symbols-outlined">X</span>
-            </button>
+            </button> */}
             <Link to={`/edit/${record.id}`}>
-              <div className="flex hover:text-blue-500">
+              <div className="flex items-center hover:text-blue-500">
                 <h3 className="font-medium md:text-lg mr-2">{record.title}</h3>
                 <p className="font-medium md:text-lg mr-2">
                   {record.postcode.toUpperCase()}
                 </p>
-                <p className="mr-2 ">
+                <p className=" ">
                   {record.orderNumber ? record.orderNumber : ""}
                 </p>
-                <p className="hidden md:block">{record.orderInfo}</p>
+                <p className="hidden ml-2 md:block">{record.orderInfo}</p>
               </div>
             </Link>
           </div>
