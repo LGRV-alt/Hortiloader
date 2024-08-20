@@ -69,15 +69,7 @@ function Header({ setChosenWeek, setRefresh }) {
           ) : (
             <Logo fillColor={"white"}></Logo>
           )}
-          {/* <Logo fillColor={toggleNav ? "red" : "white"}></Logo> */}
         </div>
-        {/* <button
-          className="mb-2 md:hidden text-sm w-28 h-8  rounded-md bg-green-500 hover:bg-green-600 text-white"
-          onClick={() => setToggleNav(!toggleNav)}
-        >
-          <Logo></Logo>
-          {toggleNav ? "Close" : "Open"}
-        </button> */}
       </div>
 
       {!isUserValid ? (
