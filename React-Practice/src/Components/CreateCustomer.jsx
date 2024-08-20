@@ -23,7 +23,6 @@ export default function CreateCustomer({ setRefresh }) {
       window.alert("Please enter a title");
       return;
     }
-    // navigate(-1);
 
     createTask(
       title,
