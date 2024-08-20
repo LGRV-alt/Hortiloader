@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import CreateHolding from "../Components/CreateHolding";
-import { deleteTask } from "../Components/lib/pocketbase";
 
 export default function HoldingPage({ records }) {
   const holding = records.filter((record) => record.other == "holding");
@@ -21,9 +19,24 @@ export default function HoldingPage({ records }) {
             {/* {console.log(record.updated.slice(5, 10))} */}
 
             <Link to={`/edit/${record.id}`}>
-              <div className="flex items-center hover:text-blue-500">
+              <div className="flex items-center hover:border-black hover:border-b-2 ">
                 {/* <p className="mr-2">Created-{record.created.slice(5, 10)}</p> */}
-                <h3 className="font-medium md:text-lg mr-2">{record.title}</h3>
+                {record.customerType === "retail" ? (
+                  <p className="text-blue-700 md:text-lg mr-2 ">
+                    {record.title}
+                  </p>
+                ) : record.customerType === "other" ? (
+                  <p className="text-red-500  font-medium md:text-lg mr-2">
+                    {record.title}
+                  </p>
+                ) : record.customerType === "missed" ? (
+                  <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
+                    {record.title}
+                  </p>
+                ) : (
+                  <p className="font-medium md:text-lg mr-2 ">{record.title}</p>
+                )}
+
                 <p className="font-medium md:text-lg mr-2">
                   {record.postcode.toUpperCase()}
                 </p>

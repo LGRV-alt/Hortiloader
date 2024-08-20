@@ -18,21 +18,21 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
       </div>
       {array.map((record) => (
         <div className="  flex justify-between px-1 pt-2 " key={record.id}>
-          <div className="flex justify-between w-full hover:text-green-500 hover:font-bold  transition-all">
+          <div className="flex justify-between w-full  hover:font-bold hover:border-b-2 hover:border-black  transition-all">
             <Link to={`/edit/${record.id}`}>
               <div className="flex">
                 {record.customerType === "retail" ? (
-                  <p className="text-blue-700 hover:text-green-500">
+                  <p className="text-blue-700 ">
                     {record.title} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 ) : record.customerType === "other" ? (
-                  <p className="text-red-500 hover:text-green-500">
+                  <p className="text-red-500 ">
                     {record.title} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
                 ) : record.customerType === "missed" ? (
-                  <p className="text-fuchsia-600 hover:text-green-500">
+                  <p className="text-fuchsia-600">
                     {record.title} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber ? record.orderNumber : ""}{" "}
                   </p>
@@ -45,7 +45,7 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
               </div>
             </Link>
             <Link to={`/edit/${record.id}`}>
-              <div className="flex justify-center items-center">
+              <div className="pl-2 flex justify-center items-center">
                 {record.status === "pulled" ? (
                   <p>Pulled</p>
                 ) : record.status === "loaded" ? (
