@@ -27,7 +27,9 @@ export default function HoldingPage({ records }) {
                 <p className="font-medium md:text-lg mr-2">
                   {record.postcode.toUpperCase()}
                 </p>
-                <p className="mr-2 ">{record.orderNumber}</p>
+                <p className="mr-2 ">
+                  {record.orderNumber ? record.orderNumber : ""}
+                </p>
                 <p className="hidden md:block">{record.orderInfo}</p>
               </div>
             </Link>
