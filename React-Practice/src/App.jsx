@@ -17,8 +17,6 @@ export default function App() {
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
-  // const [week, setWeek] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   function compare(a, b) {
     if (a.created < b.created) {
@@ -54,19 +52,6 @@ export default function App() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const pb = new PocketBase("https://hortiloader.pockethost.io");
-  //     const records = await pb
-  //       .collection("tasks")
-  //       .getFullList({ filter: `weekNumber=${currentWeek}` });
-
-  //     setWeek(records);
-  //   }
-  //   fetchData();
-  // }, []);
-  // console.log(week);
-
   // Sort the array to newest created
   rec.sort(compare);
 
@@ -80,49 +65,45 @@ export default function App() {
               setRefresh={setRefresh}
             ></Header>
           </div>
-          {loading ? (
-            <p>loading</p>
-          ) : (
-            <div className="col-start-1 col-end-4 row-start-2 row-end-3">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Body
-                      records={rec}
-                      chosenWeek={chosenWeek}
-                      refresh={refresh}
-                      setRefresh={setRefresh}
-                    ></Body>
-                  }
-                />
 
-                <Route
-                  path="/holdingPage"
-                  element={<HoldingPage records={rec} />}
-                />
+          <div className="col-start-1 col-end-4 row-start-2 row-end-3">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <Body
+                    records={rec}
+                    chosenWeek={chosenWeek}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  ></Body>
+                }
+              />
 
-                <Route
-                  path="/collect"
-                  element={<Collect records={rec} chosenWeek={chosenWeek} />}
-                />
-                <Route
-                  path="/edit/:id"
-                  element={<Edit setRefresh={setRefresh} records={rec} />}
-                />
-                <Route
-                  path="/createCustomer"
-                  element={
-                    <CreateCustomer setRefresh={setRefresh}></CreateCustomer>
-                  }
-                />
-              </Routes>
-            </div>
-          )}
+              <Route
+                path="/holdingPage"
+                element={<HoldingPage records={rec} />}
+              />
+
+              <Route
+                path="/collect"
+                element={<Collect records={rec} chosenWeek={chosenWeek} />}
+              />
+              <Route
+                path="/edit/:id"
+                element={<Edit setRefresh={setRefresh} records={rec} />}
+              />
+              <Route
+                path="/createCustomer"
+                element={
+                  <CreateCustomer setRefresh={setRefresh}></CreateCustomer>
+                }
+              />
+            </Routes>
+          </div>
         </div>
       ) : (
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
-          {/* <Header></Header> */}
           <Login></Login>
         </div>
       )}

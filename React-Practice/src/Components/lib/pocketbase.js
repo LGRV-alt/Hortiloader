@@ -8,24 +8,6 @@ export async function getTasks() {
   return await client.collection("tasks").getFullList();
 }
 
-// export async function createTask(title, description) {
-//   const data = {
-//     title: title,
-//     description: description,
-//     user: client.authStore.model.id,
-//   };
-//   await client.collection("tasks").create(data);
-// }
-
-// export async function deleteTask(id) {
-//   let confirm = window.confirm("Are you sure you want to delete this task?");
-//   if (!confirm) {
-//     return;
-//   }
-//   await client.collection("tasks").delete(id);
-//   window.location.reload();
-// }
-
 // function to update the record from the edit section
 export async function updateTask(
   id,
@@ -90,27 +72,10 @@ export async function signup(username, password) {
 }
 
 // ---------------------Brought Over----------------------
-// export async function deleteTask(id) {
-//   const realPass = "ratstan";
-//   const pass = prompt("Please enter the password");
-//   if (realPass === pass) {
-//     await client.collection("tasks").delete(id);
-//     // history.go(0);
-//   } else {
-//     return;
-//   }
-// }
+
 export async function deleteTask(id) {
   await client.collection("tasks").delete(id);
 }
-
-//   let confirm = window.confirm("Are you sure you want to delete this task?");
-//   if (!confirm) {
-//     return;
-//   }
-//   await client.collection("tasks").delete(id);
-//   window.location.reload();
-// }
 
 export async function taskStatus(id, title, status) {
   const data = {
@@ -119,8 +84,6 @@ export async function taskStatus(id, title, status) {
     status: status,
   };
   await client.collection("tasks").update(id, data);
-
-  // history.go(0);
 }
 
 export async function createTask(
@@ -147,7 +110,6 @@ export async function createTask(
     status: status,
   };
   await client.collection("tasks").create(data);
-  // history.go(0);
 }
 
 export function getDateWeek(date) {
