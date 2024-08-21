@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
@@ -102,27 +102,42 @@ function Header({ setChosenWeek, setRefresh }) {
                 </select>
               </div>
 
-              <Link
-                className="hover:text-secondary-colour  transition-all"
+              <NavLink
+                // className="hover:text-secondary-colour  transition-all"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-secondary-colour font-bold  "
+                    : "text-white font-thin"
+                }
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/"
               >
                 Whiteboard
-              </Link>
-              <Link
-                className="hover:text-secondary-colour  transition-all"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-secondary-colour font-bold  "
+                    : "text-white font-thin"
+                }
+                // className="hover:text-secondary-colour  transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/collect"
               >
                 Collects
-              </Link>
-              <Link
-                className="hover:text-secondary-colour md:w-full transition-all"
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-secondary-colour font-bold md:w-full "
+                    : "text-white font-thin md:w-full"
+                }
+                // className="hover:text-secondary-colour md:w-full transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/holdingPage"
               >
                 Holding Page
-              </Link>
+              </NavLink>
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
                 <Link
                   className="w-full"
