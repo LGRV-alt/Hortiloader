@@ -107,7 +107,7 @@ function Header({ setChosenWeek, setRefresh }) {
                 className={({ isActive }) =>
                   isActive
                     ? "text-secondary-colour font-bold  "
-                    : "text-white font-thin"
+                    : "text-white font-normal "
                 }
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/"
@@ -118,7 +118,7 @@ function Header({ setChosenWeek, setRefresh }) {
                 className={({ isActive }) =>
                   isActive
                     ? "text-secondary-colour font-bold  "
-                    : "text-white font-thin"
+                    : "text-white font-normal"
                 }
                 // className="hover:text-secondary-colour  transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
@@ -130,7 +130,7 @@ function Header({ setChosenWeek, setRefresh }) {
                 className={({ isActive }) =>
                   isActive
                     ? "text-secondary-colour font-bold md:w-full "
-                    : "text-white font-thin md:w-full"
+                    : "text-white font-normal md:w-full"
                 }
                 // className="hover:text-secondary-colour md:w-full transition-all"
                 onClick={() => setToggleNav(!toggleNav)}
