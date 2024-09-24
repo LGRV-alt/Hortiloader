@@ -72,7 +72,7 @@ export default function Login() {
             >
               <span className="">Sign in</span>
             </button>
-            {/* <button onClick={handleToggle}>Create an account</button> */}
+            <button onClick={handleToggle}>Create an account</button>
           </div>{" "}
         </div>
       ) : (
