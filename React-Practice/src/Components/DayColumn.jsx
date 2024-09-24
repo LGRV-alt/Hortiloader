@@ -1,75 +1,71 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { deleteTask, taskStatus } from "./lib/pocketbase";
+// import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
-export default function DayColumn({ arr, day, route }) {
+export default function DayColumn({ arr, day, route, numberOfDay }) {
   const array = arr;
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center  border-b-2   border-black">
-        <h5 className="text-lg font-bold">{day}</h5>
+      <div className=" flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+        <div className="flex items-center gap-2">
+          <h5 className="text-lg font-bold">{day}</h5>
+
+          <p className="font-bold"> {numberOfDay}</p>
+        </div>
         <p>{route}</p>
       </div>
       {array.map((record) => (
-        <div className="flex justify-between px-1 pt-2" key={record.id}>
-          <div className="flex hover:outline hover:outline-red-500">
+        <div className="  flex justify-between px-1 pt-2 " key={record.id}>
+          <div className="flex justify-between w-full  hover:font-bold hover:border-b-2 hover:border-black  transition-all">
             <Link to={`/edit/${record.id}`}>
-              {record.customerType === "retail" ? (
-                <p className="text-blue-700">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : record.customerType === "other" ? (
-                <p className="text-red-500">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : record.customerType === "missed" ? (
-                <p className="text-fuchsia-600">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              ) : (
-                <p className="">
-                  {record.title} {record.postcode.toUpperCase()}{" "}
-                  {record.orderNumber}{" "}
-                </p>
-              )}
+              <div className="flex">
+                {record.customerType === "retail" ? (
+                  <p className="text-blue-700 ">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
+                  </p>
+                ) : record.customerType === "other" ? (
+                  <p className="text-red-500 ">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
+                  </p>
+                ) : record.customerType === "missed" ? (
+                  <p className="text-fuchsia-600">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
+                  </p>
+                ) : (
+                  <p className="">
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber ? record.orderNumber : ""}{" "}
+                  </p>
+                )}
+              </div>
+            </Link>
+            <Link to={`/edit/${record.id}`}>
+              <div className="pl-2 flex justify-center items-center">
+                {record.status === "pulled" ? (
+                  <p>Pulled</p>
+                ) : record.status === "loaded" ? (
+                  <p>Loaded</p>
+                ) : record.status === "working" ? (
+                  <p>Working</p>
+                ) : record.status === "missed" ? (
+                  <p>Missed</p>
+                ) : (
+                  <p></p>
+                )}
+              </div>
             </Link>
 
-            <select
-              className="w-4"
-              onChange={(e) =>
-                taskStatus(record.id, record.title, e.target.value)
-              }
-            >
-              <option></option>
-              <option value="working">Working</option>
-              <option value="pulled">Pulled</option>
-              <option value="loaded">Loaded</option>
-              <option value="missed">Missed</option>
-            </select>
-          </div>
-          <div className="flex">
-            {record.status === "pulled" ? (
-              <p>Pulled</p>
-            ) : record.status === "loaded" ? (
-              <p>Loaded</p>
-            ) : record.status === "working" ? (
-              <p>Working</p>
-            ) : record.status === "missed" ? (
-              <p>Missed</p>
-            ) : (
-              <p></p>
-            )}
-
-            <button
+            {/* <button
               className="ml-1 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
               onClick={() => deleteTask(record.id)}
             >
               <span className="material-symbols-outlined">X</span>
-            </button>
+            </button> */}
           </div>
         </div>
       ))}

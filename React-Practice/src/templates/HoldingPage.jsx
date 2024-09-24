@@ -1,7 +1,5 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import CreateHolding from "../Components/CreateHolding";
-import { deleteTask } from "../Components/lib/pocketbase";
 
 export default function HoldingPage({ records }) {
   const holding = records.filter((record) => record.other == "holding");
@@ -9,27 +7,45 @@ export default function HoldingPage({ records }) {
 
   return (
     <div>
-      <CreateHolding></CreateHolding>
+      <div className="hidden md:block">
+        {/* <CreateHolding></CreateHolding> */}
+      </div>
       <div className="flex justify-start flex-col mx-5 mt-5 ">
         {holding.map((record) => (
-          <div className="flex  items-center border-b-2 mb-5" key={record.id}>
+          <div
+            className="flex  items-center border-b-2 border-slate-300 mb-5 "
+            key={record.id}
+          >
+            {/* {console.log(record.updated.slice(5, 10))} */}
+
             <Link to={`/edit/${record.id}`}>
-              <button className="ml-4 bg-gray-500 rounded-md text-white px-2 hover:bg-gray-600 mr-2">
-                <span className="">edit</span>
-              </button>
+              <div className="flex items-center hover:border-black hover:border-b-2 ">
+                {/* <p className="mr-2">Created-{record.created.slice(5, 10)}</p> */}
+                {record.customerType === "retail" ? (
+                  <p className="text-blue-700 md:text-lg mr-2 ">
+                    {record.title}
+                  </p>
+                ) : record.customerType === "other" ? (
+                  <p className="text-red-500  font-medium md:text-lg mr-2">
+                    {record.title}
+                  </p>
+                ) : record.customerType === "missed" ? (
+                  <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
+                    {record.title}
+                  </p>
+                ) : (
+                  <p className="font-medium md:text-lg mr-2 ">{record.title}</p>
+                )}
+
+                <p className="font-medium md:text-lg mr-2">
+                  {record.postcode.toUpperCase()}
+                </p>
+                <p className=" ">
+                  {record.orderNumber ? record.orderNumber : ""}
+                </p>
+                <p className="hidden ml-2 md:block">{record.orderInfo}</p>
+              </div>
             </Link>
-            <button
-              className="mr-2 bg-red-500 rounded-md text-white px-2 hover:bg-red-600"
-              onClick={() => deleteTask(record.id)}
-            >
-              <span className="material-symbols-outlined">X</span>
-            </button>
-            <h3 className="font-medium text-lg mr-2">{record.title}</h3>
-            <p className="font-medium text-lg mr-2">
-              {record.postcode.toUpperCase()}
-            </p>
-            <p className="mr-2">{record.orderNumber}</p>
-            <p>{record.orderInfo}</p>
           </div>
         ))}
       </div>

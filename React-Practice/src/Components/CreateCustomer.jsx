@@ -1,8 +1,13 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
 
-export default function CreateCustomer() {
+import { useNavigate } from "react-router-dom";
+
+export default function CreateCustomer({ setRefresh }) {
   const currentWeek = getDateWeek();
+  const navigate = useNavigate();
+  const status = null;
 
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
@@ -11,12 +16,14 @@ export default function CreateCustomer() {
   const [customerType, setCustomerType] = useState("wholesale");
   const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
+  const [orderInfo, setOrderInfo] = useState("");
 
   const handleSubmit = () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
+
     createTask(
       title,
       day,
@@ -24,14 +31,18 @@ export default function CreateCustomer() {
       orderNumber,
       customerType,
       other,
-      weekNumber
+      weekNumber,
+      orderInfo,
+      status
     );
+    setRefresh(Math.random());
+    navigate(-1);
   };
   return (
-    <div className="flex justify-center bg-regal-blue pb-2 ">
-      <div className="flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-white ">Create Order-</h2>
-        <div className="flex gap-2">
+    <div className="flex flex-col items-center  h-full  justify-start bg-regal-blue pb-2 ">
+      <div className="flex-col md:flex-row  flex gap-2 items-center">
+        <h2 className="text-lg font-medium text-white ">Create Order</h2>
+        <div className=" flex-col md:flex-row flex gap-2">
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
@@ -83,6 +94,8 @@ export default function CreateCustomer() {
             <option value="wednesday">Wednesday</option>
             <option value="thursday">Thursday</option>
             <option value="friday">Friday</option>
+            <option value="saturday">Saturday</option>
+            <option value="sunday">Sunday</option>
           </select>
 
           <select
@@ -108,14 +121,38 @@ export default function CreateCustomer() {
             required
           />
         </div>
+        <h3 className="md:hidden pb-2 text-lg font-medium text-white ">
+          Additional Info
+        </h3>
+        <textarea
+          className="md:hidden p-2 w-full h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          type="text"
+          placeholder="Issues/Load information"
+          onChange={(e) => setOrderInfo(e.target.value)}
+          value={orderInfo}
+          required
+        />
         <button
-          className="bg-green-500 text-white py-2 px-4 rounded-md m-1 hover:bg-green-600 "
+          className="bg-secondary-colour text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
           onClick={handleSubmit}
         >
           <div className="">
             <p className="">Save</p>
           </div>
         </button>
+      </div>
+      <div className="h-full w-full p-2 flex flex-col items-center">
+        <h3 className="hidden md:block pb-2 text-lg font-medium text-white ">
+          Additional Info
+        </h3>
+        <textarea
+          className="hidden md:flex p-2 w-full h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          type="text"
+          placeholder="Issues/Load information"
+          onChange={(e) => setOrderInfo(e.target.value)}
+          value={orderInfo}
+          required
+        />
       </div>
     </div>
   );
