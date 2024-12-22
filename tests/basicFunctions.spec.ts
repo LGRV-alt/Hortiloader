@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("Login Page", async ({ page }) => {
-  await page.goto("http://localhost:5174/");
+  await page.goto("http://localhost:5173/");
   // Assertions that we are on the right page
   const title = page.getByRole("heading", { name: "Hortiloader" });
   const usernameInput = page.getByLabel("Username");
@@ -28,7 +28,7 @@ test("Login Page", async ({ page }) => {
 
 test.describe("Testing all the pages", () => {
   test.beforeEach("Login", async ({ page }) => {
-    await page.goto("http://localhost:5174/");
+    await page.goto("http://localhost:5173/");
     // Assertions that we are on the right page
     const title = page.getByRole("heading", { name: "Hortiloader" });
     const usernameInput = page.getByLabel("Username");
