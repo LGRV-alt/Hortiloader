@@ -1,8 +1,8 @@
-# Hortiloader
+# React + Vite
 
-Hortiloader is a "whiteboard" webapp built to replace a physical whiteboard within a logistics setting. 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Individual accounts can be set up and multiple users can be logged in at the same time, this allows for multiple changes/new orders to be added and updated in real-time to insure that all users have the most recent data. 
+Currently, two official plugins are available:
 
-## Build
-The website was created using Vite and React with the backend data coming from pocketbase.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
