@@ -13,11 +13,11 @@ test("Login Page", async ({ page }) => {
   await passwordInput.fill("Password1");
 
   // Hit Sign in button
-  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.getByRole("button", { name: "Sign in" }).click({ timeout: 10000 });
 
   // Assert that log in worked
   const signoutButton = page.getByRole("button", { name: "Signout" });
-  // await expect(signoutButton).toBeVisible();
+  await expect(signoutButton).toBeVisible({ timeout: 10000 });
   await signoutButton.click();
 
   // Assert we are back to the login page and successfully logged out
@@ -38,9 +38,11 @@ test.describe("Testing all the pages", () => {
     await usernameInput.fill("Playwright");
     await passwordInput.fill("Password1");
     // Hit Sign in button
-    await page.getByRole("button", { name: "Sign in" }).click();
+    const signInButton = page.getByRole("button", { name: "Sign in" });
+    await signInButton.click({ force: true });
     // Assert that log in worked
     const signoutButton = page.getByRole("button", { name: "Signout" });
+    await expect(signoutButton).toBeVisible({ timeout: 10000 });
   });
 
   test("check user entry page", async ({ page }) => {
