@@ -13,8 +13,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+      - name: Log Current Directory
+        run: pwd
       - name: Change Dir
         run: cd React-Practice
+      - name: Log Current Directory
+        run: pwd
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
