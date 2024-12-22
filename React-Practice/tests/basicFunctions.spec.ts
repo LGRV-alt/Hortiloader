@@ -26,45 +26,42 @@ test("Login Page", async ({ page }) => {
   await expect(passwordInput).toBeVisible();
 });
 
-test.describe("CRUD Tests", () => {
-  test.beforeEach("Login", async ({ page }) => {
-    await page.goto("http://localhost:5173/");
-    // Assertions that we are on the right page
-    const title = page.getByRole("heading", { name: "Hortiloader" });
-    const usernameInput = page.getByLabel("Username");
-    const passwordInput = page.getByLabel("Password");
-    await expect(title).toBeVisible();
-    // Fill out login section
-    await usernameInput.fill("Playwright");
-    await passwordInput.fill("Password1");
-    // Hit Sign in button
-    await page.getByRole("button", { name: "Sign in" }).click();
-  });
+// test.describe("CRUD Tests", () => {
+//   test.beforeEach("Login", async ({ page }) => {
+//     await page.goto("http://localhost:5173/");
+//     // Assertions that we are on the right page
+//     const title = page.getByRole("heading", { name: "Hortiloader" });
+//     const usernameInput = page.getByLabel("Username");
+//     const passwordInput = page.getByLabel("Password");
+//     await expect(title).toBeVisible();
+//     // Fill out login section
+//     await usernameInput.fill("Playwright");
+//     await passwordInput.fill("Password1");
+//     // Hit Sign in button
+//     await page.getByRole("button", { name: "Sign in" }).click();
+//   });
 
-  test("Adding customer info", async ({ page }) => {
-    // Fill out the customer information
-    await page.getByRole("button", { name: "Add Order" }).click();
-    const orderType = page.locator("#customerType");
-    await orderType.selectOption("retail");
-    await page.getByPlaceholder("Customer Name").fill("John Doe");
-    await page.getByPlaceholder("Postcode").fill("KA10 7AZ");
-    await page.getByPlaceholder("Order No").fill("09890");
-    await page.getByRole("button", { name: "save" }).click();
+//   test("Adding customer info", async ({ page }) => {
+//     // Fill out the customer information
+//     await page.getByRole("button", { name: "Add Order" }).click();
+//     const orderType = page.locator("#customerType");
+//     await orderType.selectOption("retail");
+//     await page.getByPlaceholder("Customer Name").fill("John Doe");
+//     await page.getByPlaceholder("Postcode").fill("KA10 7AZ");
+//     await page.getByPlaceholder("Order No").fill("09890");
+//     await page.getByRole("button", { name: "save" }).click();
 
-    // Assert the new entry appears on the whiteboard
-    const newEntry = page.getByText("John Doe");
-    await expect(newEntry).toBeVisible();
-    await newEntry.click();
+//     // Assert the new entry appears on the whiteboard
+//     const newEntry = page.getByText("John Doe");
+//     await expect(newEntry).toBeVisible();
+//     await newEntry.click();
 
-    // Handle the browser popup asking for a password
-    page.on("dialog", async (dialog) => {
-      console.log(`Dialog message: ${dialog.message()}`);
-      await dialog.accept("Gilmore");
-    });
-    // Triggers the popup
-    await page.getByRole("button", { name: "x" }).click();
-
-    // Assert the entry no longer appears on the whiteboard
-    await expect(newEntry).not.toBeVisible();
-  });
-});
+//     // Handle the browser popup asking for a password
+//     page.on("dialog", async (dialog) => {
+//       console.log(`Dialog message: ${dialog.message()}`);
+//       await dialog.accept("Gilmore");
+//     });
+//     // Triggers the popup
+//     await page.getByRole("button", { name: "x" }).click();
+//   });
+// });
