@@ -48,7 +48,7 @@ export default function App() {
 
       setRecords(records);
     }
-    console.log("Testing CI on github");
+    console.log("Testing CI branch on push");
 
     fetchData();
   }, []);
