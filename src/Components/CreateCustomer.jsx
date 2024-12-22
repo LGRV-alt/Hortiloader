@@ -101,7 +101,7 @@ export default function CreateCustomer({ setRefresh }) {
           <select
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
             name="day"
-            id="day"
+            id="boardPage"
             onChange={(e) => setOther(e.target.value)}
           >
             <option value="" disabled>

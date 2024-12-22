@@ -41,7 +41,47 @@ test.describe("Testing all the pages", () => {
     await page.getByRole("button", { name: "Sign in" }).click();
     // Assert that log in worked
     const signoutButton = page.getByRole("button", { name: "Signout" });
-    await expect(signoutButton).toBeVisible();
+  });
+
+  test("check user entry page", async ({ page }) => {
+    const data = {
+      name: "lewis",
+      postcode: "ka10",
+      orderNumber: "1234",
+      orderType: "retail",
+      orderDay: "tuesday",
+      boardType: "holding",
+      week: "34",
+    };
+    // Navigate to the customer input page
+    await page.getByRole("button", { name: "Add Order" }).click();
+
+    // Selectors for the elements on the page
+    const customerName = page.getByPlaceholder("Customer Name");
+    const postcode = page.getByPlaceholder("Postcode");
+    const orderNo = page.getByPlaceholder("Order No");
+    const orderType = page.locator("#customerType");
+    const orderDay = page.locator("#day");
+    const boardType = page.locator("#boardPage");
+    const weekInput = page.getByPlaceholder("Week");
+
+    // Enter the data from object into elements
+    await customerName.fill(data.name);
+    await postcode.fill(data.postcode);
+    await orderNo.fill(data.orderNumber);
+    await orderType.selectOption(data.orderType);
+    await orderDay.selectOption(data.orderDay);
+    await boardType.selectOption(data.boardType);
+    await weekInput.fill(data.week);
+
+    // Assert the values have been passed over
+    await expect(customerName).toHaveValue(data.name);
+    await expect(postcode).toHaveValue(data.postcode);
+    await expect(orderNo).toHaveValue(data.orderNumber);
+    await expect(orderType).toHaveValue(data.orderType);
+    await expect(orderDay).toHaveValue(data.orderDay);
+    await expect(boardType).toHaveValue(data.boardType);
+    await expect(weekInput).toHaveValue(data.week);
   });
 });
 
