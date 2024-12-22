@@ -48,6 +48,7 @@ export default function App() {
 
       setRecords(records);
     }
+    console.log("Testing CI");
 
     fetchData();
   }, []);
