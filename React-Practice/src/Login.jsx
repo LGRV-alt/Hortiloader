@@ -39,29 +39,33 @@ export default function Login() {
             <div className="grid gap-6 mt-4 text-base">
               <div className="w-72">
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
-                  <label className="font-thin">Username</label>
-                  <input
-                    className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
-                    placeholder=""
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
+                  <label className="font-thin">
+                    Username
+                    <input
+                      className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
+                      placeholder=""
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </label>
                 </div>
               </div>
 
               <div className="w-72 ">
-                <div className=" flex flex-col w-full min-w-[200px] h-10">
-                  <label className="font-thin">Password</label>
-                  <input
-                    className=" text-input text-lg border-b-2 focus:outline-none focus:border-green-600"
-                    placeholder="  "
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
+                <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
+                  <label className="font-thin">
+                    Password
+                    <input
+                      className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
+                      placeholder="  "
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </label>
                 </div>
               </div>
             </div>
