@@ -52,7 +52,7 @@ function Header({ setChosenWeek, setRefresh }) {
           <select
             onChange={(e) => handleState(e)}
             name=""
-            id=""
+            id="weekSelector"
             className=" w-12 bg-transparent text-white focus:text-black focus:bg-white "
           >
             <option value=""></option>

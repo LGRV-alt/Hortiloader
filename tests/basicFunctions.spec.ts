@@ -85,6 +85,10 @@ test.describe("Testing all the pages", () => {
     await expect(boardType).toHaveValue(data.boardType);
     await expect(weekInput).toHaveValue(data.week);
   });
+
+  test("Check that data appears on the page", async ({ page }) => {
+    await page.locator("#weekSelector").selectOption("51");
+  });
 });
 
 // test.describe("CRUD Tests", () => {
