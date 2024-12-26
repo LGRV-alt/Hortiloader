@@ -17,6 +17,7 @@ export default function App() {
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
+  const [chosenYear, setChosenYear] = useState(2025);
 
   function compare(a, b) {
     if (a.created < b.created) {
@@ -48,13 +49,12 @@ export default function App() {
 
       setRecords(records);
     }
-    console.log("Testing CI branch on push");
-
     fetchData();
   }, []);
 
   // Sort the array to newest created
   rec.sort(compare);
+  console.log(rec);
 
   return (
     <>
@@ -63,6 +63,7 @@ export default function App() {
           <div className="col-start-1 col-end-6 row-start-1 row-end-2">
             <Header
               setChosenWeek={setChosenWeek}
+              setChosenYear={setChosenYear}
               setRefresh={setRefresh}
             ></Header>
           </div>
@@ -75,6 +76,7 @@ export default function App() {
                   <Body
                     records={rec}
                     chosenWeek={chosenWeek}
+                    chosenYear={chosenYear}
                     refresh={refresh}
                     setRefresh={setRefresh}
                   ></Body>
@@ -88,7 +90,13 @@ export default function App() {
 
               <Route
                 path="/collect"
-                element={<Collect records={rec} chosenWeek={chosenWeek} />}
+                element={
+                  <Collect
+                    records={rec}
+                    chosenWeek={chosenWeek}
+                    chosenYear={chosenYear}
+                  />
+                }
               />
               <Route
                 path="/edit/:id"

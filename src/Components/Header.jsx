@@ -6,7 +6,7 @@ import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 
-function Header({ setChosenWeek, setRefresh }) {
+function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
 
   const weeks = [
@@ -27,6 +27,12 @@ function Header({ setChosenWeek, setRefresh }) {
 
     setRefresh(Math.random());
   }
+
+  function handleYear(e) {
+    setChosenYear(Number(e.target.value));
+    setRefresh(Math.random());
+  }
+
   return (
     <div
       className={
@@ -46,6 +52,19 @@ function Header({ setChosenWeek, setRefresh }) {
         <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
           Current Week - {getDateWeek()}
         </h2>
+
+        <div className="hidden md:flex md:justify-center items-center">
+          <p className="text-white text-sm md:text-base">Year</p>
+          <select
+            onChange={(e) => handleYear(e)}
+            name=""
+            id=""
+            className=" w-16 bg-transparent text-white focus:text-black focus:bg-white "
+          >
+            <option value={0}>2024</option>
+            <option value={2025}>2025</option>
+          </select>
+        </div>
 
         <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>

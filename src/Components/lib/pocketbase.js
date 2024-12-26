@@ -19,7 +19,8 @@ export async function updateTask(
   orderNumber,
   customerType,
   orderInfo,
-  status
+  status,
+  year
 ) {
   const data = {
     title: title,
@@ -31,6 +32,7 @@ export async function updateTask(
     customerType: customerType,
     orderInfo: orderInfo,
     status: status,
+    year: year,
   };
   await client.collection("tasks").update(id, data);
   // history.go(0);
@@ -95,7 +97,8 @@ export async function createTask(
   other,
   weekNumber,
   orderInfo,
-  status
+  status,
+  year
 ) {
   const data = {
     title: title,
@@ -108,6 +111,7 @@ export async function createTask(
     weekNumber,
     orderInfo,
     status: status,
+    year: year,
   };
   await client.collection("tasks").create(data);
 }

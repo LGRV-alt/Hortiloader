@@ -2,7 +2,13 @@
 
 import DayColumn from "./DayColumn";
 
-export default function Body({ records, chosenWeek, refresh, setRefresh }) {
+export default function Body({
+  records,
+  chosenWeek,
+  chosenYear,
+  refresh,
+  setRefresh,
+}) {
   refresh;
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
@@ -10,7 +16,8 @@ export default function Body({ records, chosenWeek, refresh, setRefresh }) {
       (record) =>
         (record.day == day) &
         (record.weekNumber == chosenWeek) &
-        (record.other == "none")
+        (record.other == "none") &
+        (record.year === chosenYear)
     );
   };
 
