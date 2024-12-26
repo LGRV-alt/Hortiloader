@@ -20,6 +20,18 @@ export default function searchPage({ records }) {
             val.orderNumber.toString().includes(searchItem)
         );
 
+  function compare(a, b) {
+    if (a.weekNumber > b.weekNumber) {
+      return -1;
+    }
+    if (a.weekNumberk < b.weekNumber) {
+      return 1;
+    }
+    return 0;
+  }
+
+  filteredEntry.sort(compare);
+
   return (
     <div>
       <div className="flex justify-start flex-col mx-5 mt-5 ">
