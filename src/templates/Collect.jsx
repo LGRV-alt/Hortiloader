@@ -2,14 +2,15 @@
 
 import DayColumn from "../Components/DayColumn";
 
-export default function Collect({ records, chosenWeek }) {
+export default function Collect({ records, chosenWeek, chosenYear }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
       (record) =>
         (record.day == day) &
         (record.weekNumber == chosenWeek) &
-        (record.other == "collect")
+        (record.other == "collect") &
+        (record.year == chosenYear)
     );
   };
 

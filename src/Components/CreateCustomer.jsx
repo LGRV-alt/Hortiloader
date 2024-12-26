@@ -131,7 +131,7 @@ export default function CreateCustomer({ setRefresh }) {
             <option value="" disabled>
               Type
             </option>
-            <option value="2024">2024</option>
+            <option value="0">2024</option>
             <option value="2025">2025</option>
           </select>
         </div>
