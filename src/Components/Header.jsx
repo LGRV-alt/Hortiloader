@@ -70,7 +70,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
             onChange={(e) => handleState(e)}
             name=""
             id=""
-            className=" w-12 bg-transparent text-white focus:text-black focus:bg-white "
+            className=" w-10 bg-transparent text-white focus:text-black focus:bg-white "
           >
             <option value="1"></option>
 
