@@ -48,23 +48,21 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
             HortiLoader
           </h2>
         </Link>
-
-        <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
-          Current Week - {getDateWeek()}
-        </h2>
-
-        <div className="hidden md:flex md:justify-center items-center">
+        <div className="hidden md:flex md:justify-center items-center mr-2">
           <p className="text-white text-sm md:text-base">Year</p>
           <select
             onChange={(e) => handleYear(e)}
             name=""
             id=""
-            className=" w-16 bg-transparent text-white focus:text-black focus:bg-white "
+            className=" w-14 bg-transparent text-white focus:text-black focus:bg-white "
           >
             <option value={2025}>2025</option>
             <option value={0}>2024</option>
           </select>
         </div>
+        <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
+          Current Week - {getDateWeek()}
+        </h2>
 
         <div className="hidden md:flex md:justify-center items-center">
           <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
