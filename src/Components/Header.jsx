@@ -61,8 +61,8 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
             id=""
             className=" w-16 bg-transparent text-white focus:text-black focus:bg-white "
           >
-            <option value={0}>2024</option>
             <option value={2025}>2025</option>
+            <option value={0}>2024</option>
           </select>
         </div>
 
