@@ -17,6 +17,7 @@ export default function CreateCustomer({ setRefresh }) {
   const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
   const [orderInfo, setOrderInfo] = useState("");
+  const [year, setYear] = useState(2025);
 
   const handleSubmit = () => {
     if (!title) {
@@ -33,7 +34,8 @@ export default function CreateCustomer({ setRefresh }) {
       other,
       weekNumber,
       orderInfo,
-      status
+      status,
+      year
     );
     setRefresh(Math.random());
     navigate(-1);
@@ -120,6 +122,18 @@ export default function CreateCustomer({ setRefresh }) {
             onChange={(e) => setWeekNumber(e.target.value)}
             required
           />
+          <select
+            className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+            name="day"
+            id="yearSelector"
+            onChange={(e) => setYear(e.target.value)}
+          >
+            <option value="" disabled>
+              Type
+            </option>
+            <option value="2025">2025</option>
+            <option value="0">2024</option>
+          </select>
         </div>
         <h3 className="md:hidden pb-2 text-lg font-medium text-white ">
           Additional Info

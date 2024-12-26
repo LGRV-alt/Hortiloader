@@ -6,7 +6,7 @@ import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 
-function Header({ setChosenWeek, setRefresh }) {
+function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
 
   const weeks = [
@@ -27,6 +27,12 @@ function Header({ setChosenWeek, setRefresh }) {
 
     setRefresh(Math.random());
   }
+
+  function handleYear(e) {
+    setChosenYear(Number(e.target.value));
+    setRefresh(Math.random());
+  }
+
   return (
     <div
       className={
@@ -42,7 +48,18 @@ function Header({ setChosenWeek, setRefresh }) {
             HortiLoader
           </h2>
         </Link>
-
+        <div className="hidden md:flex md:justify-center items-center mr-2">
+          <p className="text-white text-sm md:text-base">Year</p>
+          <select
+            onChange={(e) => handleYear(e)}
+            name=""
+            id=""
+            className=" w-14 bg-transparent text-white focus:text-black focus:bg-white "
+          >
+            <option value={2025}>2025</option>
+            <option value={0}>2024</option>
+          </select>
+        </div>
         <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
           Current Week - {getDateWeek()}
         </h2>
@@ -53,9 +70,9 @@ function Header({ setChosenWeek, setRefresh }) {
             onChange={(e) => handleState(e)}
             name=""
             id=""
-            className=" w-12 bg-transparent text-white focus:text-black focus:bg-white "
+            className=" w-10 bg-transparent text-white focus:text-black focus:bg-white "
           >
-            <option value=""></option>
+            <option value="1"></option>
 
             {weekNumbers}
           </select>
@@ -82,6 +99,18 @@ function Header({ setChosenWeek, setRefresh }) {
             } right-0 w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
             <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:justify-center md:items-center">
+              <div className="md:hidden flex items-center">
+                <p className="text-white text-sm md:text-base mr-2">Year</p>
+                <select
+                  onChange={(e) => handleYear(e)}
+                  name=""
+                  id=""
+                  className=" w-16 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+                >
+                  <option value={2025}>2025</option>
+                  <option value={0}>2024</option>
+                </select>
+              </div>
               <h2 className="md:hidden text-white text-sm md:font-medium mr-3">
                 Current Week - {getDateWeek()}
               </h2>
@@ -125,6 +154,18 @@ function Header({ setChosenWeek, setRefresh }) {
                 to="/collect"
               >
                 Collects
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-secondary-colour font-bold  "
+                    : "text-white font-normal"
+                }
+                // className="hover:text-secondary-colour  transition-all"
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/search"
+              >
+                Search
               </NavLink>
               <NavLink
                 className={({ isActive }) =>

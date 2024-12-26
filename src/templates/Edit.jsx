@@ -27,6 +27,7 @@ export default function Edit({ records, setRefresh }) {
   const [weekNumber, setWeekNumber] = useState(selectedRecord[0].weekNumber);
   const [orderInfo, setOrderInfo] = useState(selectedRecord[0].orderInfo);
   const [status, setStatus] = useState(selectedRecord[0].status);
+  const [year, setYear] = useState(selectedRecord[0].year);
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -58,7 +59,8 @@ export default function Edit({ records, setRefresh }) {
       orderNumber,
       customerType,
       orderInfo,
-      status
+      status,
+      year
     );
   };
 
@@ -203,6 +205,19 @@ export default function Edit({ records, setRefresh }) {
               id=""
             >
               {weekNumbers}
+            </select>
+          </div>
+          <div className="flex gap-2 pl-1 text-lg text-white ">
+            <p>Year</p>
+            <select
+              value={year}
+              className="cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+              onChange={(e) => setYear(e.target.value)}
+              name=""
+              id=""
+            >
+              <option value="0">2024</option>
+              <option value="2025">2025</option>
             </select>
           </div>
         </div>

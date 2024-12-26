@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 
 import DayColumn from "../Components/DayColumn";
+import { daysOfWeek } from "../Components/lib/pocketbase";
 
-export default function Collect({ records, chosenWeek }) {
+export default function Collect({ records, chosenWeek, chosenYear }) {
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(
       (record) =>
         (record.day == day) &
         (record.weekNumber == chosenWeek) &
-        (record.other == "collect")
+        (record.other == "collect") &
+        (record.year == chosenYear)
     );
   };
 
@@ -29,25 +31,53 @@ export default function Collect({ records, chosenWeek }) {
 
       <div className="grid grid-cols-1 md:grid-cols-6 md:grid-rows-2 md:outline h-full">
         <div className="md:border-r-2 border-black row-span-2">
-          <DayColumn arr={monday} day={"Monday"}></DayColumn>
+          <DayColumn
+            arr={monday}
+            day={"Monday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2 border-black row-span-2 ">
-          <DayColumn arr={tuesday} day={"Tuesday"}></DayColumn>
+          <DayColumn
+            arr={tuesday}
+            day={"Tuesday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2 border-black row-span-2">
-          <DayColumn arr={wednesday} day={"Wednesday"}></DayColumn>
+          <DayColumn
+            arr={wednesday}
+            day={"Wednesday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2 border-black row-span-2">
-          <DayColumn arr={thursday} day={"Thursday"}></DayColumn>
+          <DayColumn
+            arr={thursday}
+            day={"Thursday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2  border-black row-span-2">
-          <DayColumn arr={friday} day={"Friday"}></DayColumn>
+          <DayColumn
+            arr={friday}
+            day={"Friday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2 border-black ">
-          <DayColumn arr={saturday} day={"Saturday"}></DayColumn>
+          <DayColumn
+            arr={saturday}
+            day={"Saturday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
+          ></DayColumn>
         </div>
         <div className="md:border-r-2 border-t-2 border-black">
-          <DayColumn arr={sunday} day={"Sunday"}></DayColumn>
+          <DayColumn
+            arr={sunday}
+            day={"Sunday"}
+            numberOfDay={daysOfWeek[chosenYear][chosenWeek][6]}
+          ></DayColumn>
         </div>
       </div>
     </div>

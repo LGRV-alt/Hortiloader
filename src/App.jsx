@@ -10,6 +10,7 @@ import { getDateWeek, isUserValid } from "./Components/lib/pocketbase";
 import Edit from "./templates/Edit";
 import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
+import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(currentWeek);
+  const [chosenYear, setChosenYear] = useState(2025);
 
   function compare(a, b) {
     if (a.created < b.created) {
@@ -48,8 +50,6 @@ export default function App() {
 
       setRecords(records);
     }
-    console.log("Testing CI branch on push");
-
     fetchData();
   }, []);
 
@@ -63,6 +63,7 @@ export default function App() {
           <div className="col-start-1 col-end-6 row-start-1 row-end-2">
             <Header
               setChosenWeek={setChosenWeek}
+              setChosenYear={setChosenYear}
               setRefresh={setRefresh}
             ></Header>
           </div>
@@ -75,6 +76,7 @@ export default function App() {
                   <Body
                     records={rec}
                     chosenWeek={chosenWeek}
+                    chosenYear={chosenYear}
                     refresh={refresh}
                     setRefresh={setRefresh}
                   ></Body>
@@ -85,10 +87,17 @@ export default function App() {
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
               />
+              <Route path="/search" element={<SearchPage records={rec} />} />
 
               <Route
                 path="/collect"
-                element={<Collect records={rec} chosenWeek={chosenWeek} />}
+                element={
+                  <Collect
+                    records={rec}
+                    chosenWeek={chosenWeek}
+                    chosenYear={chosenYear}
+                  />
+                }
               />
               <Route
                 path="/edit/:id"
