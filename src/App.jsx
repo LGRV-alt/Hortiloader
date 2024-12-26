@@ -10,6 +10,7 @@ import { getDateWeek, isUserValid } from "./Components/lib/pocketbase";
 import Edit from "./templates/Edit";
 import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
+import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 
 export default function App() {
@@ -54,7 +55,6 @@ export default function App() {
 
   // Sort the array to newest created
   rec.sort(compare);
-  console.log(rec);
 
   return (
     <>
@@ -87,6 +87,7 @@ export default function App() {
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
               />
+              <Route path="/search" element={<SearchPage records={rec} />} />
 
               <Route
                 path="/collect"

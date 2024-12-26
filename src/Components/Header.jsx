@@ -158,6 +158,18 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
               <NavLink
                 className={({ isActive }) =>
                   isActive
+                    ? "text-secondary-colour font-bold  "
+                    : "text-white font-normal"
+                }
+                // className="hover:text-secondary-colour  transition-all"
+                onClick={() => setToggleNav(!toggleNav)}
+                to="/search"
+              >
+                Search
+              </NavLink>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
                     ? "text-secondary-colour font-bold md:w-full "
                     : "text-white font-normal md:w-full"
                 }
