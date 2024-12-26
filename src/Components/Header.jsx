@@ -72,7 +72,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
             id=""
             className=" w-12 bg-transparent text-white focus:text-black focus:bg-white "
           >
-            <option value=""></option>
+            <option value="1"></option>
 
             {weekNumbers}
           </select>
