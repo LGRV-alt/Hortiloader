@@ -16,7 +16,7 @@ export default function searchPage({ records }) {
       ? records.filter((val) => val.title.includes("xxxxxxx"))
       : records.filter(
           (val) =>
-            val.title.toLowerCase().includes(searchItem) ||
+            val.title.toLowerCase().includes(searchItem.toLowerCase()) ||
             val.orderNumber.toString().includes(searchItem)
         );
 
