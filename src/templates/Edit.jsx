@@ -8,6 +8,8 @@ import {
   updateTask,
 } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
+import Pictures from "../Components/Pictures";
+import FileUpload from "../Components/FileUpload";
 const realPass = "gilmore";
 
 export default function Edit({ records, setRefresh }) {
@@ -234,7 +236,11 @@ export default function Edit({ records, setRefresh }) {
           value={orderInfo}
           required
         />
+        <FileUpload taskID={id} />
+        <Pictures taskID={id} />
+        {console.log(id)}
       </div>
+
       <div className="flex justify-center items-start w-full">
         <button
           className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"

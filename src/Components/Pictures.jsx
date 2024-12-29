@@ -3,10 +3,13 @@ import Modal from "react-modal"; // Import Modal
 import pb from "./lib/pocketbase";
 Modal.setAppElement("#root"); // Ensure accessibility
 
-const Pictures = () => {
+const Pictures = ({ taskID }) => {
   const [pictures, setPictures] = useState([]);
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [error, setError] = useState("");
+  const id = taskID;
+
+  console.log(id);
 
   useEffect(() => {
     const fetchPictures = async (projectID) => {
@@ -14,6 +17,7 @@ const Pictures = () => {
         const records = await pb
           .collection("files")
           .getList(1, 50, { filter: `taskID = "${projectID}"` }); // Fetch up to 50 pictures
+        //   .getList(1, 50); // Fetch up to 50 pictures
         setPictures(records.items);
       } catch (err) {
         console.error("Error fetching pictures:", err);
@@ -21,7 +25,7 @@ const Pictures = () => {
       }
     };
 
-    fetchPictures("ntysa1l7cpjxick");
+    fetchPictures(id);
   }, []);
 
   //   const fetchProjectFiles = async (projectId) => {

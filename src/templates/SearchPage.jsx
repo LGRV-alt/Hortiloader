@@ -37,9 +37,6 @@ export default function searchPage({ records }) {
   return (
     <div>
       <div className="flex justify-start flex-col mx-5 mt-5  ">
-        <FileUpload />
-        <Pictures />
-
         <input
           className="mb-4"
           type="text"

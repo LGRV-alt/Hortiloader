@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import pb from "./lib/pocketbase";
 
-const FileUpload = () => {
+const FileUpload = ({ taskID }) => {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
+  const id = taskID;
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -20,6 +21,7 @@ const FileUpload = () => {
     const formData = new FormData();
     formData.append("file", file); // The field name should match your collection's file field
     formData.append("title", title);
+    formData.append("taskID", id);
 
     try {
       const record = await pb.collection("files").create(formData);
