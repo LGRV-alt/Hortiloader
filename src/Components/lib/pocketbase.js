@@ -2,6 +2,8 @@ import PocketBase from "pocketbase";
 
 // const url = `${import.meta.env.VITE_POCKETBASE}`;
 const client = new PocketBase("https://hortiloader.pockethost.io");
+const pb = new PocketBase("https://hortiloader.pockethost.io");
+export default pb;
 client.autoCancellation(false);
 export const isUserValid = client.authStore.isValid;
 export async function getTasks() {

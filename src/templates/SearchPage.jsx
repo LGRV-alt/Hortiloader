@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FileUpload from "../Components/FileUpload";
+import Pictures from "../Components/Pictures";
 
 export default function searchPage({ records }) {
   // const holding = records.filter((record) => record.other == "holding");
@@ -35,6 +37,9 @@ export default function searchPage({ records }) {
   return (
     <div>
       <div className="flex justify-start flex-col mx-5 mt-5  ">
+        <FileUpload />
+        <Pictures />
+
         <input
           className="mb-4"
           type="text"
