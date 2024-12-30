@@ -17,7 +17,8 @@ export default function App() {
   const [refresh, setRefresh] = useState(1);
   const currentWeek = getDateWeek();
   const [rec, setRecords] = useState([]);
-  const [chosenWeek, setChosenWeek] = useState(currentWeek);
+  // const [chosenWeek, setChosenWeek] = useState(currentWeek);
+  const [chosenWeek, setChosenWeek] = useState(52);
   const [chosenYear, setChosenYear] = useState(2025);
 
   function compare(a, b) {
