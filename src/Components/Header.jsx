@@ -9,7 +9,7 @@ import CloseIcon from "./CloseIcon";
 function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
   // const [week, setWeek] = useState(getDateWeek());
-  const [week, setWeek] = useState(52);
+  const [week, setWeek] = useState(51);
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
