@@ -100,8 +100,6 @@ export default function Edit({ records, setRefresh }) {
     }
   };
 
-  console.log(records.length);
-
   if (records.length < 1) {
     {
       return (
