@@ -238,7 +238,6 @@ export default function Edit({ records, setRefresh }) {
         />
         <FileUpload taskID={id} />
         <Pictures taskID={id} />
-        {console.log(id)}
       </div>
 
       <div className="flex justify-center items-start w-full">

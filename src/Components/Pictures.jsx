@@ -21,7 +21,7 @@ const Pictures = ({ taskID }) => {
         setPictures(records.items);
       } catch (err) {
         console.error("Error fetching pictures:", err);
-        setError("Failed to load pictures.");
+        // setError("Failed to load pictures.");
       }
     };
 
@@ -41,6 +41,24 @@ const Pictures = ({ taskID }) => {
 
   const closeModal = () => {
     setSelectedPicture(null);
+  };
+
+  const deleteFile = async (fileId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this file?"
+    );
+    if (!confirmed) return;
+
+    try {
+      await pb.collection("files").delete(fileId);
+      setPictures((prevFiles) =>
+        prevFiles.filter((file) => file.id !== fileId)
+      );
+      alert("File deleted successfully.");
+    } catch (err) {
+      console.error("Error deleting file:", err);
+      alert("Failed to delete the file.");
+    }
   };
 
   return (
@@ -86,6 +104,7 @@ const Pictures = ({ taskID }) => {
           <button onClick={closeModal} style={{ marginTop: "10px" }}>
             Close
           </button>
+          <button onClick={() => deleteFile(selectedPicture.id)}>Delete</button>
         </Modal>
       )}
     </div>

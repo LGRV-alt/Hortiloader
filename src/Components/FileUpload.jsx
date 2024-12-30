@@ -19,9 +19,10 @@ const FileUpload = ({ taskID }) => {
     }
 
     const formData = new FormData();
-    formData.append("file", file); // The field name should match your collection's file field
+    formData.append("file", file);
     formData.append("title", title);
     formData.append("taskID", id);
+    formData.append("user", pb.authStore.model.id);
 
     try {
       const record = await pb.collection("files").create(formData);
