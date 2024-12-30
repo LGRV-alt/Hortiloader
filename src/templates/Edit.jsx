@@ -104,7 +104,11 @@ export default function Edit({ records, setRefresh }) {
 
   if (records.length < 1) {
     {
-      return <h2>Loading</h2>;
+      return (
+        <div className="flex justify-center items-center h-full bg-regal-blue ">
+          <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+        </div>
+      );
     }
   } else {
     return (
