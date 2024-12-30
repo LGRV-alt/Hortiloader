@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Modal from "react-modal"; // Import Modal
+import Modal from "react-modal";
 import pb from "./lib/pocketbase";
-Modal.setAppElement("#root"); // Ensure accessibility
+Modal.setAppElement("#root");
 
 const Pictures = ({ taskID }) => {
   const [pictures, setPictures] = useState([]);
