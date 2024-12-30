@@ -28,13 +28,6 @@ const Pictures = ({ taskID }) => {
     fetchPictures(id);
   }, []);
 
-  //   const fetchProjectFiles = async (projectId) => {
-  //     const files = await pb.collection("files").getFullList(1, 50, {
-  //       filter: `project.id = "${projectId}"`,
-  //     });
-  //     console.log(files);
-  //   };
-
   const openModal = (picture) => {
     setSelectedPicture(picture);
   };
@@ -55,6 +48,7 @@ const Pictures = ({ taskID }) => {
         prevFiles.filter((file) => file.id !== fileId)
       );
       alert("File deleted successfully.");
+      closeModal();
     } catch (err) {
       console.error("Error deleting file:", err);
       alert("Failed to delete the file.");
