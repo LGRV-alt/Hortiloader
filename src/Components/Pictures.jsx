@@ -93,16 +93,28 @@ const Pictures = ({ taskID }) => {
             },
           }}
         >
-          <img
-            src={`${pb.baseUrl}/api/files/${selectedPicture.collectionId}/${selectedPicture.id}/${selectedPicture.file}`}
-            alt={selectedPicture.title || "Uploaded image"}
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
-          <p>{selectedPicture.title}</p>
-          <button onClick={closeModal} style={{ marginTop: "10px" }}>
-            Close
-          </button>
-          <button onClick={() => deleteFile(selectedPicture.id)}>Delete</button>
+          <p className="text-2xl font-bold">{selectedPicture.title}</p>
+          <div className="flex justify-center items-center">
+            <button
+              className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/4"
+              onClick={closeModal}
+            >
+              Close
+            </button>
+            <button
+              className="bg-red-600 text-white py-2 px-4 rounded-md m-1 hover:bg-white hover:text-black transition-all hover:outline hover:outline-red-500 w-full md:w-1/4"
+              onClick={() => deleteFile(selectedPicture.id)}
+            >
+              Delete
+            </button>
+          </div>
+          <div className="flex justify-center items-center">
+            <img
+              src={`${pb.baseUrl}/api/files/${selectedPicture.collectionId}/${selectedPicture.id}/${selectedPicture.file}`}
+              alt={selectedPicture.title || "Uploaded image"}
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
         </Modal>
       )}
     </div>
