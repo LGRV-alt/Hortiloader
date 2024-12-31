@@ -249,12 +249,12 @@ export default function Edit({ records, setRefresh }) {
               </select>
             </div>
             {/* -------------------- Info Section-------------------- */}
-            <div className="w-full flex-col items-center h-full flex p-2">
+            <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2 text-lg font-medium text-white ">
                 Additional Info
               </h3>
               <textarea
-                className=" p-2 w-full md:h-2/3 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                className=" p-2 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
                 type="text"
                 placeholder="Issues/Load information"
                 onChange={(e) => setOrderInfo(e.target.value)}
@@ -273,11 +273,13 @@ export default function Edit({ records, setRefresh }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 grid-rows-2 md:grid-cols-1 ">
-          <div className="flex items-center justify-center">
+        <div className="grid grid-cols-1 grid-rows-[1fr_2fr] md:grid-cols-1 ">
+          <div className="flex justify-center pb-10">
             <FileUpload taskID={id} setRefresh={setRefresh} />
           </div>
-          <Pictures taskID={id} />
+          <div className="pb-5">
+            <Pictures taskID={id} />
+          </div>
         </div>
       </div>
     );

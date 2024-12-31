@@ -57,18 +57,22 @@ const Pictures = ({ taskID }) => {
 
   return (
     <div>
-      <h2>Picture Gallery</h2>
       {error && <p>{error}</p>}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+      <div className="flex justify-center gap-2 flex-wrap">
         {pictures.map((picture) => (
-          <div key={picture.id} style={{ textAlign: "center" }}>
+          <div
+            className="text-center border-2 hover:border-orange-600"
+            key={picture.id}
+          >
+            <p className="text-lg border-b-2 border-black bg-white text-center">
+              {picture.title}
+            </p>
             <img
               src={`${pb.baseUrl}/api/files/${picture.collectionId}/${picture.id}/${picture.file}`}
               alt={picture.title || "Uploaded image"}
               style={{ maxWidth: "200px", height: "auto", cursor: "pointer" }}
               onClick={() => openModal(picture)}
             />
-            <p>{picture.title}</p>
           </div>
         ))}
       </div>
