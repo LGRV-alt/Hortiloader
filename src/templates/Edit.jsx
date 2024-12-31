@@ -273,8 +273,8 @@ export default function Edit({ records, setRefresh }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 grid-rows-[1fr_2fr] md:grid-cols-1 ">
-          <div className="flex justify-center pb-10">
+        <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 ">
+          <div className="flex justify-center mb-4">
             <FileUpload taskID={id} setRefresh={setRefresh} />
           </div>
           <div className="pb-5">

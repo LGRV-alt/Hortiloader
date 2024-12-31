@@ -42,48 +42,52 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
         "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
-      <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center">
-        <div className="flex items-center justify-center pr-2">
+      <div className="flex items-center justify-center md:flex-row  md:justify-center md:items-center">
+        <div className="flex items-center justify-center mr-auto ">
           <LogoTree height={"45px"} width={"45px"}></LogoTree>
         </div>
+
         <Link to="/">
-          <h2 className="font-display  text-4xl text-white   md:mr-5 ">
+          <h2 className="font-display text-4xl text-white  md:mr-5 ml-1   ">
             HortiLoader
           </h2>
         </Link>
+
         <div className="hidden md:flex md:justify-center items-center mr-2">
-          <p className="text-white text-sm md:text-base">Year</p>
+          <p className="text-white text-sm md:text-base">Year - </p>
           <select
             onChange={(e) => handleYear(e)}
             name=""
             id=""
-            className=" w-14 bg-transparent text-white focus:text-black focus:bg-white "
+            className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
           >
             <option value={2025}>2025</option>
             <option value={0}>2024</option>
           </select>
         </div>
-        <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
-          Current Week - {getDateWeek()}
-        </h2>
 
-        <div className="hidden md:flex md:justify-center items-center">
-          <p className="text-white text-sm md:text-base mr-2">Selected Week</p>
-          <select
-            onChange={(e) => handleState(e)}
-            name=""
-            id=""
-            className=" w-10 bg-transparent text-white focus:text-black focus:bg-white "
-            value={week}
-          >
-            <option value="1"></option>
-
-            {weekNumbers}
-          </select>
+        <div>
+          <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
+            Current Week - {getDateWeek()}
+          </h2>
+          <div className="hidden md:flex md:justify-center items-center">
+            <p className="text-white text-sm md:text-base">Selected Week - </p>
+            <select
+              onChange={(e) => handleState(e)}
+              name=""
+              id=""
+              className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
+              value={week}
+            >
+              <option value="1"></option>
+              {weekNumbers}
+            </select>
+          </div>
         </div>
+
         <div
           onClick={() => setToggleNav(!toggleNav)}
-          className="h-full  w-7 mr-3 flex justify-center items-center md:hidden"
+          className="h-full  w-7 mr-3 flex justify-center items-center md:hidden ml-auto"
         >
           {toggleNav ? (
             <CloseIcon></CloseIcon>
@@ -181,7 +185,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/holdingPage"
               >
-                Holding Page
+                Holding
               </NavLink>
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
                 <Link
@@ -201,6 +205,11 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                   Signout
                 </button>
               </div>
+
+              <div
+                className="h-full w-full"
+                onClick={() => setToggleNav(!toggleNav)}
+              ></div>
             </div>
           </div>
         </>

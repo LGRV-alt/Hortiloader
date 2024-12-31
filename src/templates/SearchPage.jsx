@@ -36,17 +36,21 @@ export default function searchPage({ records }) {
 
   return (
     <div>
-      <div className="flex justify-start flex-col mx-5 mt-5  ">
-        <input
-          className="mb-4"
-          type="text"
-          placeholder="Search here"
-          onChange={handleChange}
-          value={searchItem}
-        />
+      <div className="flex justify-start flex-col md:mx-24 mt-5">
+        <div className="flex justify-center items-center w-full border-b-4 pb-4 border-black mb-4">
+          <p className="text-xl pr-2">Search -</p>
+          <input
+            className=" text-xl border-2 w-1/2 p-2 rounded-xl border-black"
+            type="text"
+            placeholder="Enter details"
+            onChange={handleChange}
+            value={searchItem}
+          />
+        </div>
+
         {filteredEntry.map((record) => (
           <div
-            className="flex  items-center border-b-2 border-slate-300 mb-5 "
+            className="flex pl-2  items-center border-b-2 border-slate-300 mb-5 "
             key={record.id}
           >
             <Link to={`/edit/${record.id}`}>
