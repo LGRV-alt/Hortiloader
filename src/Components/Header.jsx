@@ -41,7 +41,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
         "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10   "
       }
     >
-      <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center sticky top-0 z-50">
+      <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center">
         <div className="flex items-center justify-center pr-2">
           <LogoTree height={"45px"} width={"45px"}></LogoTree>
         </div>

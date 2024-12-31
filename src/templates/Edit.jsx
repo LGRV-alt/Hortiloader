@@ -110,7 +110,7 @@ export default function Edit({ records, setRefresh }) {
     }
   } else {
     return (
-      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr_6fr_1fr] md:grid-cols-2  ">
+      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr] md:grid-cols-2  ">
         <div className="flex justify-center h-full pb-2 ">
           <div className="  flex flex-col  gap-2 w-full px-10 md:px-2 md:w-2/3">
             <div className="flex justify-between pt-2 ">
@@ -221,6 +221,7 @@ export default function Edit({ records, setRefresh }) {
               <option value="collect">Collect</option>
             </select>
 
+            {/* ----------------Week Select ------------------- */}
             <div className="flex gap-2 pl-1 text-lg text-white">
               <p>Week Number</p>
               <select
@@ -233,6 +234,7 @@ export default function Edit({ records, setRefresh }) {
                 {weekNumbers}
               </select>
             </div>
+            {/* -------------- Year Select -------------------- */}
             <div className="flex gap-2 pl-1 text-lg text-white ">
               <p>Year</p>
               <select
@@ -246,6 +248,20 @@ export default function Edit({ records, setRefresh }) {
                 <option value="2025">2025</option>
               </select>
             </div>
+            {/* -------------------- Info Section-------------------- */}
+            <div className="w-full flex-col items-center h-full flex p-2">
+              <h3 className="pb-2 text-lg font-medium text-white ">
+                Additional Info
+              </h3>
+              <textarea
+                className=" p-2 w-full md:h-2/3 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                type="text"
+                placeholder="Issues/Load information"
+                onChange={(e) => setOrderInfo(e.target.value)}
+                value={orderInfo}
+                required
+              />
+            </div>
             <div className="flex justify-center items-start w-full">
               <button
                 className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
@@ -256,23 +272,10 @@ export default function Edit({ records, setRefresh }) {
             </div>
           </div>
         </div>
-        <div className="md:row-start-1 md:row-end-3 md:col-start-2 md:pr-10 w-full flex-col  items-center h-2/3 flex p-2">
-          <h3 className="pb-2 text-lg font-medium text-white ">
-            Additional Info
-          </h3>
-          <textarea
-            className=" p-2 w-full md:h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-            type="text"
-            placeholder="Issues/Load information"
-            onChange={(e) => setOrderInfo(e.target.value)}
-            value={orderInfo}
-            required
-          />
-          <FileUpload taskID={id} setRefresh={setRefresh} />
-        </div>
 
         <div className="w-full flex justify-center ">
           <Pictures taskID={id} />
+          <FileUpload taskID={id} setRefresh={setRefresh} />
         </div>
       </div>
     );
