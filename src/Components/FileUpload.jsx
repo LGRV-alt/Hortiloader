@@ -34,11 +34,13 @@ const FileUpload = ({ taskID, setRefresh }) => {
   };
 
   return (
-    <div className=" w-full flex justify-center  text-white">
+    <div className=" w-2/3 flex justify-center border-2 rounded-xl text-white">
       <form onSubmit={handleSubmit} className="w-1/2">
         <div className="flex flex-col gap-2 pt-4 ">
-          <h3 className="text-center ">Upload Picklist/Pictures</h3>
-          <div className="flex gap-2">
+          <h3 className="text-center font-bold text-xl ">
+            Upload Picklist/Pictures
+          </h3>
+          <div className="flex gap-1">
             <label>Title:</label>
             <input
               className="text-black"
@@ -51,10 +53,10 @@ const FileUpload = ({ taskID, setRefresh }) => {
             <label>File:</label>
             <input type="file" onChange={handleFileChange} />
           </div>
-          <div className="flex w-full justify-center">
+          <div className="flex w-full justify-center pb-2">
             <button
               type="submit"
-              className="bg-green-500  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
+              className="bg-green-500  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full "
             >
               Upload
             </button>

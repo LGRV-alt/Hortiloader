@@ -38,7 +38,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   return (
     <div
       className={
-        "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10   "
+        "  md:flex-row p-2 md:flex md:justify-between h-full md:items-center bg-regal-blue md:pl-10  "
       }
     >
       <div className="flex items-center justify-between md:flex-row  md:justify-center md:items-center">

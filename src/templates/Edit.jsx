@@ -273,9 +273,11 @@ export default function Edit({ records, setRefresh }) {
           </div>
         </div>
 
-        <div className="w-full flex justify-center ">
+        <div className="grid grid-cols-1 grid-rows-2 md:grid-cols-1 ">
+          <div className="flex items-center justify-center">
+            <FileUpload taskID={id} setRefresh={setRefresh} />
+          </div>
           <Pictures taskID={id} />
-          <FileUpload taskID={id} setRefresh={setRefresh} />
         </div>
       </div>
     );
