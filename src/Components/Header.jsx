@@ -47,18 +47,18 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
         </div>
 
         <Link to="/">
-          <h2 className="font-display text-4xl text-white  md:mr-5   ">
+          <h2 className="font-display text-4xl text-white  md:mr-5 ml-1   ">
             HortiLoader
           </h2>
         </Link>
 
         <div className="hidden md:flex md:justify-center items-center mr-2">
-          <p className="text-white text-sm md:text-base">Year</p>
+          <p className="text-white text-sm md:text-base">Year - </p>
           <select
             onChange={(e) => handleYear(e)}
             name=""
             id=""
-            className=" w-14 bg-transparent text-white focus:text-black focus:bg-white "
+            className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
           >
             <option value={2025}>2025</option>
             <option value={0}>2024</option>
