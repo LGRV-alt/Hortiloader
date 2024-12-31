@@ -200,6 +200,11 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                   Signout
                 </button>
               </div>
+
+              <div
+                className="h-full w-full"
+                onClick={() => setToggleNav(!toggleNav)}
+              ></div>
             </div>
           </div>
         </>
