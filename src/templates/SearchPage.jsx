@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import FileUpload from "../Components/FileUpload";
+import Pictures from "../Components/Pictures";
 
 export default function searchPage({ records }) {
   // const holding = records.filter((record) => record.other == "holding");
