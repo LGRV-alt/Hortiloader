@@ -180,7 +180,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                 onClick={() => setToggleNav(!toggleNav)}
                 to="/holdingPage"
               >
-                Holding Page
+                Holding
               </NavLink>
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
                 <Link

@@ -41,10 +41,12 @@ export default function CreateCustomer({ setRefresh }) {
     navigate(-1);
   };
   return (
-    <div className="flex flex-col items-center  h-full  justify-start bg-regal-blue pb-2 ">
-      <div className="flex-col md:flex-row  flex gap-2 items-center">
-        <h2 className="text-lg font-medium text-white ">Create Order</h2>
-        <div className=" flex-col md:flex-row flex gap-2">
+    <div className="flex flex-col items-center w-full  h-full  justify-start bg-regal-blue pb-2 ">
+      <div className="flex-col w-full md:flex-row md:justify-center  flex gap-2 items-center">
+        <h2 className="text-lg md:text-base md:pt-0 pt-4 font-medium text-white ">
+          Create Order
+        </h2>
+        <div className=" flex-col w-2/3 md:w-auto md:flex-row flex gap-2">
           <input
             className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
@@ -53,7 +55,7 @@ export default function CreateCustomer({ setRefresh }) {
             required
           />
           <input
-            className=" w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+            className=" md:w-24 w-full bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
             type="text"
             placeholder="Postcode"
             onChange={(e) => setPostcode(e.target.value)}
@@ -135,11 +137,11 @@ export default function CreateCustomer({ setRefresh }) {
             <option value="0">2024</option>
           </select>
         </div>
-        <h3 className="md:hidden pb-2 text-lg font-medium text-white ">
+        <h3 className="md:hidden pt-2 text-lg font-medium text-white ">
           Additional Info
         </h3>
         <textarea
-          className="md:hidden p-2 w-full h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+          className="md:hidden p-2 w-3/4 h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
           type="text"
           placeholder="Issues/Load information"
           onChange={(e) => setOrderInfo(e.target.value)}
@@ -147,7 +149,7 @@ export default function CreateCustomer({ setRefresh }) {
           required
         />
         <button
-          className="bg-secondary-colour text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
+          className="bg-secondary-colour md:w-auto w-2/3 text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
           onClick={handleSubmit}
         >
           <div className="">
@@ -155,6 +157,8 @@ export default function CreateCustomer({ setRefresh }) {
           </div>
         </button>
       </div>
+
+      {/* --------------Desktop Info section ----------------- */}
       <div className="h-full w-full p-2 flex flex-col items-center">
         <h3 className="hidden md:block pb-2 text-lg font-medium text-white ">
           Additional Info
