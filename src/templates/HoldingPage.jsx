@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export default function HoldingPage({ records }) {
   const holding = records.filter((record) => record.other == "holding");
-  console.log(holding);
 
   return (
     <div>
