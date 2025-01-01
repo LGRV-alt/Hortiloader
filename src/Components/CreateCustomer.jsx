@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
-
 import { useNavigate } from "react-router-dom";
 
 export default function CreateCustomer({ setRefresh }) {
-  const currentWeek = getDateWeek();
+  const currentWeek = getDateWeek(new Date());
   const navigate = useNavigate();
   const status = null;
 

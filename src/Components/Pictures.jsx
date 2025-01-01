@@ -9,8 +9,6 @@ const Pictures = ({ taskID }) => {
   const [error, setError] = useState("");
   const id = taskID;
 
-  console.log(id);
-
   useEffect(() => {
     const fetchPictures = async (projectID) => {
       try {

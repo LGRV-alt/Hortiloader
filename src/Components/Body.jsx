@@ -31,12 +31,6 @@ export default function Body({
   const sunday = filterUsersByDay("sunday");
 
   if (records.length < 1) {
-    console.log("Not Loaded");
-  } else {
-    console.log("Loaded");
-  }
-
-  if (records.length < 1) {
     return (
       <div className="flex justify-center items-center h-full bg-regal-blue ">
         <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />

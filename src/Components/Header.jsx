@@ -8,14 +8,15 @@ import CloseIcon from "./CloseIcon";
 
 function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
-  // const [week, setWeek] = useState(getDateWeek());
-  const [week, setWeek] = useState(51);
+
+  const [week, setWeek] = useState(getDateWeek(new Date()));
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
     41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
   ];
+
   let weekNumbers = weeks.map((item) => {
     return (
       <option key={item} value={item}>
@@ -27,7 +28,6 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   function handleState(e) {
     setChosenWeek(e.target.value);
     setWeek(e.target.value);
-
     setRefresh(Math.random());
   }
 
@@ -68,7 +68,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
 
         <div>
           <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
-            Current Week - {getDateWeek()}
+            Current Week - {getDateWeek(new Date())}
           </h2>
           <div className="hidden md:flex md:justify-center items-center">
             <p className="text-white text-sm md:text-base">Selected Week - </p>
@@ -79,7 +79,6 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
               className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
               value={week}
             >
-              <option value="1"></option>
               {weekNumbers}
             </select>
           </div>
@@ -120,7 +119,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                 </select>
               </div>
               <h2 className="md:hidden text-white text-sm md:font-medium mr-3">
-                Current Week - {getDateWeek()}
+                Current Week - {getDateWeek(new Date())}
               </h2>
 
               <div className="md:hidden flex items-center">

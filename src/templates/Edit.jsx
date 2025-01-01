@@ -2,21 +2,15 @@
 /* eslint-disable no-undef */
 
 import { useEffect, useState } from "react";
-import {
-  deleteTask,
-  getDateWeek,
-  updateTask,
-} from "../Components/lib/pocketbase";
+import { deleteTask, updateTask } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
 const realPass = "gilmore";
 
 export default function Edit({ records, setRefresh }) {
-  const currentWeek = getDateWeek();
   const { id } = useParams();
   const navigate = useNavigate();
-
   const loadingState = [
     {
       title: "loading",
