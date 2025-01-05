@@ -41,17 +41,28 @@ export default function searchPage({ records }) {
             val.orderNumber.toString().includes(searchTerm)
         );
 
-  function compare(a, b) {
-    if (a.weekNumber > b.weekNumber) {
+  // function compare(a, b) {
+  //   if (a.weekNumber > b.weekNumber) {
+  //     return -1;
+  //   }
+  //   if (a.weekNumber < b.weekNumber) {
+  //     return 1;
+  //   }
+  //   return 0;
+  // }
+
+  function compareYear(a, b) {
+    if (a.created > b.created) {
       return -1;
     }
-    if (a.weekNumberk < b.weekNumber) {
+    if (a.created < b.created) {
       return 1;
     }
     return 0;
   }
 
-  filteredEntry.sort(compare);
+  filteredEntry.sort(compareYear);
+  // filteredEntry.sort(compare);
 
   return (
     <div>
