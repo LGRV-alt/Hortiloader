@@ -1,25 +1,44 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import FileUpload from "../Components/FileUpload";
 import Pictures from "../Components/Pictures";
 
 export default function searchPage({ records }) {
-  // const holding = records.filter((record) => record.other == "holding");
-  const [searchItem, setSearchItem] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const location = useLocation(); // Get the current location
+  const navigate = useNavigate();
+
+  // Update searchTerm based on URL when on the search page
+  useEffect(() => {
+    if (location.pathname === "/search") {
+      const params = new URLSearchParams(location.search);
+      const query = params.get("q");
+      if (query) {
+        setSearchTerm(query);
+      }
+    }
+  }, [location]);
 
   const handleChange = (e) => {
-    e.preventDefault();
-    setSearchItem(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (location.pathname === "/search") {
+      // Only update the URL if on the search page
+      const params = new URLSearchParams();
+      params.set("q", value);
+      navigate(`?${params.toString()}`, { replace: true });
+    }
   };
 
   const filteredEntry =
-    searchItem.length < 1
+    searchTerm.length < 1
       ? records.filter((val) => val.title.includes("xxxxxxx"))
       : records.filter(
           (val) =>
-            val.title.toLowerCase().includes(searchItem.toLowerCase()) ||
-            val.orderNumber.toString().includes(searchItem)
+            val.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            val.orderNumber.toString().includes(searchTerm)
         );
 
   function compare(a, b) {
@@ -44,7 +63,7 @@ export default function searchPage({ records }) {
             type="text"
             placeholder="Enter details"
             onChange={handleChange}
-            value={searchItem}
+            value={searchTerm}
           />
         </div>
 
