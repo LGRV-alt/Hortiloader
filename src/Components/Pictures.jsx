@@ -100,7 +100,7 @@ const Pictures = ({ taskID }) => {
           // className="fixed inset-0 bg-white p-6 flex flex-col justify-between max-h-dvh overflow-y-auto"
         >
           <div className="bg-slate-700 border-black border-4 p-4 rounded-3xl mb-1">
-            <p className="text-2xl md:text-4xl pb-3 font-bold text-white ">
+            <p className="text-xl md:text-4xl pb-3 font-bold text-white ">
               {selectedPicture.title.toUpperCase()}
             </p>
             <div className="flex justify-center items-center">
