@@ -82,14 +82,18 @@ const Pictures = ({ taskID }) => {
           onRequestClose={closeModal}
           contentLabel="Enlarged Image"
           style={{
-            overlay: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
+            overlay: { backgroundColor: "rgba(0, 0, 0, 0.7) " },
             content: {
-              maxWidth: "600px",
+              maxWidth: "700px",
               margin: "auto",
               borderRadius: "10px",
               textAlign: "center",
             },
           }}
+          // isOpen={!!selectedPicture}
+          // onRequestClose={closeModal}
+          // overlayClassName="fixed inset-0 bg-black bg-opacity-50 z-50"
+          // className="fixed inset-0 bg-white p-6 flex flex-col justify-between max-h-[90%] overflow-y-auto"
         >
           <p className="text-2xl font-bold">{selectedPicture.title}</p>
           <div className="flex justify-center items-center">
