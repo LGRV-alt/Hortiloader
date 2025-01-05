@@ -248,7 +248,7 @@ export default function Edit({ records, setRefresh }) {
                 Additional Info
               </h3>
               <textarea
-                className=" p-2 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
                 type="text"
                 placeholder="Issues/Load information"
                 onChange={(e) => setOrderInfo(e.target.value)}
