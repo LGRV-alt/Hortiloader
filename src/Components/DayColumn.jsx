@@ -18,7 +18,10 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
         <p>{route}</p>
       </div>
       {array.map((record) => (
-        <div className="  flex justify-between px-1 pt-2 " key={record.id}>
+        <div
+          className="  flex justify-between items-center px-1 pt-1 "
+          key={record.id}
+        >
           <div className="flex justify-between w-full  hover:bg-slate-300  hover:border-black  transition-all">
             <Link to={`/edit/${record.id}`}>
               <a

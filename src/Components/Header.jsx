@@ -67,7 +67,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
         </div>
 
         <div>
-          <h2 className="hidden md:flex text-white text-sm md:font-medium mr-3">
+          <h2 className="hidden md:flex text-white text-sm  mr-3">
             Current Week - {getDateWeek(new Date())}
           </h2>
           <div className="hidden md:flex md:justify-center items-center">
