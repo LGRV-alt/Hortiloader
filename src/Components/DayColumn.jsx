@@ -19,7 +19,7 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
       </div>
       {array.map((record) => (
         <div className="  flex justify-between px-1 pt-2 " key={record.id}>
-          <div className="flex justify-between w-full  hover:font-bold hover:border-b-2 hover:border-black  transition-all">
+          <div className="flex justify-between w-full  hover:bg-slate-300  hover:border-black  transition-all">
             <Link to={`/edit/${record.id}`}>
               <a
                 data-tooltip-id={`my-tooltip-${record.id}`}
