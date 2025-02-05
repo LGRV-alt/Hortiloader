@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 // import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
@@ -19,7 +20,14 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
       {array.map((record) => (
         <div className="  flex justify-between px-1 pt-2 " key={record.id}>
           <div className="flex justify-between w-full  hover:font-bold hover:border-b-2 hover:border-black  transition-all">
+            <a
+              data-tooltip-id={`my-tooltip-${record.id}`}
+              data-tooltip-content={record.postcode}
+            >
+              Tool
+            </a>
             <Link to={`/edit/${record.id}`}>
+              <Tooltip id={`my-tooltip-${record.id}`} />
               <div className="flex">
                 {record.customerType === "retail" ? (
                   <p className="text-blue-700 ">
