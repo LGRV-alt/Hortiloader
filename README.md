@@ -5,6 +5,7 @@ HortiLoader is a multi-user whiteboard and calendar web app that enables users t
 
 ### Login
 New users can create and account on the signup page, this requires a unique username that currently is not store within the database and a password, once the account has been created they can they login to the page.
+![Login Page](https://github.com/LGRV-alt/CodeSpace2024/blob/main/MK-Time%20Project/Images/HortiLoader-Login.png)
 
 ### Homepage
 The mainpage will open on the current week of the year, from here the user can add new tasks and interact with any currently inserted. 
