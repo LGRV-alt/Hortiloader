@@ -1,3 +1,8 @@
+
+# HortiLoader
+
+HortiLoader is a multi-user whiteboard and calendar web app that enables users to add and manage tasks/orders on a week-by-week board. The app updates in real-time, ensuring that all users see the latest changes instantly and work with the same up-to-date data.
+
 ### Login
 New users can create and account on the signup page, this requires a unique username that currently is not store within the database and a password, once the account has been created they can they login to the page.
 
