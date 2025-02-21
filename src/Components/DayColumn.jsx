@@ -11,7 +11,9 @@ export default function DayColumn({ arr, day, route, numberOfDay }) {
     <>
       <div className=" flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2">
-          <h5 className="text-lg font-bold">{day}</h5>
+          <h5 className="text-lg font-bold" onClick={() => console.log(arr)}>
+            {day}
+          </h5>
 
           <p className="font-bold"> {numberOfDay}</p>
         </div>
