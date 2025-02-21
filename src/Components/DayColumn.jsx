@@ -19,19 +19,18 @@ export default function DayColumn({
     <>
       <div className=" flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2">
-          <NavLink
-            // onClick={() => setToggleNav(!toggleNav)}
-
-            to={`weekday/${chosenYear}/${chosenWeek}/${day}`}
-          >
-            Holding
-          </NavLink>
-
           <h5 className="text-lg font-bold" onClick={() => console.log(arr)}>
             {day}
           </h5>
 
           <p className="font-bold"> {numberOfDay}</p>
+          <NavLink
+            // onClick={() => setToggleNav(!toggleNav)}
+
+            to={`weekday/${chosenYear}/${chosenWeek}/${day}/${numberOfDay}`}
+          >
+            View
+          </NavLink>
         </div>
         <p>{route}</p>
       </div>

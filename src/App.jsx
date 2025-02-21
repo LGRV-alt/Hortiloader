@@ -103,7 +103,7 @@ export default function App() {
                 element={<HoldingPage records={rec} />}
               />
               <Route
-                path="/weekday/:year/:week/:day"
+                path="/weekday/:year/:week/:day/:number"
                 element={<WeekdayPage records={rec} />}
               />
               <Route path="/search" element={<SearchPage records={rec} />} />
