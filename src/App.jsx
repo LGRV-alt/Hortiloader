@@ -12,6 +12,7 @@ import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
 import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
+import WeekdayPage from "./templates/Weekday";
 
 export default function App() {
   const [refresh, setRefresh] = useState(1);
@@ -100,6 +101,10 @@ export default function App() {
               <Route
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
+              />
+              <Route
+                path="/weekday/:year/:week/:day"
+                element={<WeekdayPage records={rec} />}
               />
               <Route path="/search" element={<SearchPage records={rec} />} />
 
