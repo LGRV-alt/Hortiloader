@@ -39,7 +39,7 @@ export default function Body({
   } else {
     return (
       <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 md:outline h-full">
-        <div className=" mb-10 md:mb-0  md:border-r-2 row-span-2 border-black">
+        <div className=" mb-10 border-t-2 md:border-t-0 md:mb-0  md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={monday}
             day={"Monday"}
@@ -51,7 +51,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
+        <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={tuesday}
             day={"Tuesday"}
@@ -63,7 +63,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
+        <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={wednesday}
             day={"Wednesday"}
@@ -75,7 +75,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
+        <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={thursday}
             day={"Thursday"}
@@ -87,7 +87,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 row-span-2 border-black">
+        <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={friday}
             day={"Friday"}
@@ -99,7 +99,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 border-black">
+        <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 border-black">
           <DayColumn
             arr={saturday}
             day={"Saturday"}
@@ -111,7 +111,7 @@ export default function Body({
             chosenWeek={chosenWeek}
           ></DayColumn>
         </div>
-        <div className="mb-10 md:border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
+        <div className="mb-10 border-t-2 md:border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black">
           <DayColumn
             arr={sunday}
             day={"Sunday"}

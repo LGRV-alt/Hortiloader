@@ -22,7 +22,7 @@ export default function DayColumn({
 
   return (
     <>
-      <div className=" flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+      <div className="bg-neutral-200 flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2">
           <h5 className="text-lg font-bold" onClick={() => console.log(arr)}>
             {day}
@@ -30,8 +30,6 @@ export default function DayColumn({
 
           <p className="font-bold"> {numberOfDay}</p>
           <NavLink
-            // onClick={() => setToggleNav(!toggleNav)}
-
             to={`weekday/${chosenYear}/${chosenWeek}/${day}/${numberOfDay}`}
           >
             <FaSearchPlus />
@@ -41,7 +39,7 @@ export default function DayColumn({
       </div>
       {array.map((record) => (
         <div
-          className="  flex justify-between items-center px-1 pt-1 "
+          className="flex justify-between items-center px-1 pt-1 "
           key={record.id}
         >
           <div className="flex justify-between w-full  hover:bg-slate-300  hover:border-black  transition-all">
@@ -76,8 +74,11 @@ export default function DayColumn({
                 </div>
               </a>
             </Link>
-            <Link to={`/edit/${record.id}`}>
-              <div className="pl-2 flex justify-center items-center">
+            <Link
+              className="flex justify-center items-center"
+              to={`/edit/${record.id}`}
+            >
+              <div className="flex justify-center items-center">
                 {record.status === "pulled" ? (
                   // <p>Pulled</p>
                   <IoCheckmarkSharp color="green" fontSize="1.5em" />
@@ -91,7 +92,7 @@ export default function DayColumn({
                   // <p>Missed</p>
                   <FaExclamation color="red" fontSize="1em" />
                 ) : (
-                  <p></p>
+                  <FaExclamation color="black" fontSize="1em" />
                 )}
               </div>
             </Link>
