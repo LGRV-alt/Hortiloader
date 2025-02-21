@@ -20,6 +20,7 @@
     "react-hook-form": "^7.52.2",
     "react-modal": "^3.16.3",
     "react-router-hash-link": "^2.4.3",
+    "react-to-pdf": "^1.0.1",
     "react-tooltip": "^5.28.0"
   },
   "devDependencies": {
