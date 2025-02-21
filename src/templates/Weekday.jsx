@@ -21,14 +21,12 @@ export default function WeekdayPage({ records }) {
     <div>
       <div ref={targetRef}>
         <div className="w-full h-36 flex justify-center items-center bg-slate-300 text-center p-2">
-          <h3 className="text-3xl font-bold">
-            {day} {number} {year}
-          </h3>
+          <h3 className="text-3xl font-bold">{`${day}-${number} ${year}`}</h3>
         </div>
         <div className="flex flex-col justify-center p-3">
           {arr.map((record) => (
             <div
-              className="flex  items-center border-b-2 border-slate-300 mb-5 "
+              className="flex items-center border-b-2 border-black p-2 mb-5 "
               key={record.id}
             >
               <Link to={`/edit/${record.id}`}>
@@ -64,12 +62,14 @@ export default function WeekdayPage({ records }) {
           ))}
         </div>
       </div>
-      <button
-        onClick={() => toPDF()}
-        className=" px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
-      >
-        Download PDF
-      </button>
+      <div className="pb-4 w-full flex justify-center">
+        <button
+          onClick={() => toPDF()}
+          className="w-1/2 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+        >
+          Download PDF
+        </button>
+      </div>
     </div>
   );
 }
