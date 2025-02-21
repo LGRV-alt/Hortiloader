@@ -2,6 +2,11 @@
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
+import { FaSearchPlus } from "react-icons/fa";
+import { IoCheckmarkSharp } from "react-icons/io5";
+import { FaExclamation } from "react-icons/fa";
+import { TiSpanner } from "react-icons/ti";
+import { MdPresentToAll } from "react-icons/md";
 // import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
@@ -29,7 +34,7 @@ export default function DayColumn({
 
             to={`weekday/${chosenYear}/${chosenWeek}/${day}/${numberOfDay}`}
           >
-            View
+            <FaSearchPlus />
           </NavLink>
         </div>
         <p>{route}</p>
@@ -74,13 +79,17 @@ export default function DayColumn({
             <Link to={`/edit/${record.id}`}>
               <div className="pl-2 flex justify-center items-center">
                 {record.status === "pulled" ? (
-                  <p>Pulled</p>
+                  // <p>Pulled</p>
+                  <IoCheckmarkSharp color="green" fontSize="1.5em" />
                 ) : record.status === "loaded" ? (
-                  <p>Loaded</p>
+                  // <p>Loaded</p>
+                  <MdPresentToAll color="green" fontSize="1.5em" />
                 ) : record.status === "working" ? (
-                  <p>Working</p>
+                  // <p>Working</p>
+                  <TiSpanner fontSize="1.5em" />
                 ) : record.status === "missed" ? (
-                  <p>Missed</p>
+                  // <p>Missed</p>
+                  <FaExclamation color="red" fontSize="1em" />
                 ) : (
                   <p></p>
                 )}
