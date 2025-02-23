@@ -1,9 +1,12 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { usePDF } from "react-to-pdf";
 
 export default function WeekdayPage({ records }) {
+  const [extras, setExtras] = useState(false);
+  console.log(extras);
   const { year, day, week, number } = useParams();
   const { toPDF, targetRef } = usePDF({
     filename: `${day}-${number}-${year}`,
@@ -26,7 +29,7 @@ export default function WeekdayPage({ records }) {
         <div className="flex flex-col justify-center p-3">
           {arr.map((record) => (
             <div
-              className="flex items-center border-b-2 border-black p-2 mb-5 "
+              className="flex justify-between items-center border-b-2 border-black p-2 pl-8 mb-5 "
               key={record.id}
             >
               <Link to={`/edit/${record.id}`}>
@@ -58,16 +61,58 @@ export default function WeekdayPage({ records }) {
                   {/* <p className="hidden ml-2 md:block">{record.orderInfo}</p> */}
                 </div>
               </Link>
+              {extras ? (
+                <div className="flex gap-4 pr-8">
+                  <div className="flex gap-1">
+                    <p className="pb-2">Green</p>
+                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                  </div>
+
+                  <div className="flex gap-1">
+                    <p className="pb-2">Yellow</p>
+                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                  </div>
+
+                  <div className="flex gap-1">
+                    <p className="pb-2">Shelves</p>
+                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                  </div>
+
+                  <div className="flex gap-1">
+                    <p className="pb-2">Pallets</p>
+                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                  </div>
+
+                  <div className="flex gap-1">
+                    <p className="pb-2">Cages</p>
+                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                  </div>
+
+                  <div className="flex gap-1">
+                    <p className="pb-2">Extras</p>
+                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                  </div>
+                </div>
+              ) : (
+                <p></p>
+              )}
             </div>
           ))}
         </div>
       </div>
+
       <div className="pb-4 w-full flex justify-center">
         <button
-          onClick={() => toPDF()}
-          className="w-1/2 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+          className="w-1/6 mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
+          onClick={() => setExtras(!extras)}
         >
-          Download PDF
+          Show Extras
+        </button>
+        <button
+          onClick={() => toPDF()}
+          className="w-1/6 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+        >
+          Print
         </button>
       </div>
     </div>

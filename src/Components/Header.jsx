@@ -5,7 +5,7 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
-
+import { CiLogout } from "react-icons/ci";
 function Header({ setChosenWeek, setChosenYear, setRefresh }) {
   const [toggleNav, setToggleNav] = useState(false);
 
@@ -201,7 +201,8 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                   className=" w-1/3 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
                   onClick={signout}
                 >
-                  Signout
+                  {toggleNav ? "Signout" : <CiLogout fontSize="1.5rem" />}
+                  {/* Signout */}
                 </button>
               </div>
 
