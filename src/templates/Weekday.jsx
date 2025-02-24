@@ -26,71 +26,71 @@ export default function WeekdayPage({ records }) {
         <div className="w-full h-36 flex justify-center items-center bg-slate-300 text-center p-2">
           <h3 className="text-3xl font-bold">{`${day}-${number} ${year}`}</h3>
         </div>
-        <div className="flex flex-col justify-center p-3">
+        <div className="flex flex-col justify-center p-3 ">
           {arr.map((record) => (
             <div
-              className="flex justify-between items-center border-b-2 border-black p-2 pl-8 mb-5 "
+              className="flex justify-between items-center border-b-2 border-black p-4 pl-8 mt-12  "
               key={record.id}
             >
               <Link to={`/edit/${record.id}`}>
-                <div className="flex items-center hover:border-black hover:border-b-2 ">
+                <div className=" flex justify-center hover:border-black hover:border-b-2 ">
                   {record.customerType === "retail" ? (
-                    <p className="text-blue-700 md:text-lg mr-2 ">
+                    <p className="text-blue-700 md:text-5xl mr-2 ">
                       {record.title}
                     </p>
                   ) : record.customerType === "other" ? (
-                    <p className="text-red-500  font-medium md:text-lg mr-2">
+                    <p className="text-red-500  font-medium md:text-5xl mr-2">
                       {record.title}
                     </p>
                   ) : record.customerType === "missed" ? (
-                    <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
+                    <p className="text-fuchsia-600  font-medium md:text-5xl mr-2">
                       {record.title}
                     </p>
                   ) : (
-                    <p className="font-medium md:text-lg mr-2 ">
+                    <p className="font-medium md:text-5xl mr-2 ">
                       {record.title}
                     </p>
                   )}
 
-                  <p className="font-medium md:text-lg mr-2">
+                  {/* <p className="font-medium md:text-lg mr-2">
                     {record.postcode.toUpperCase()}
-                  </p>
-                  <p className=" ">
+                  </p> */}
+                  <p className=" text-2xl self-end">
                     {record.orderNumber ? record.orderNumber : ""}
                   </p>
                   {/* <p className="hidden ml-2 md:block">{record.orderInfo}</p> */}
                 </div>
               </Link>
               {extras ? (
-                <div className="flex gap-4 pr-8">
+                <div className="text-2xl flex gap-4 pr-8">
                   <div className="flex gap-1">
                     <p className="pb-2">Green</p>
-                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
 
                   <div className="flex gap-1">
                     <p className="pb-2">Yellow</p>
-                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
 
                   <div className="flex gap-1">
                     <p className="pb-2">Shelves</p>
-                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
 
                   <div className="flex gap-1">
                     <p className="pb-2">Pallets</p>
-                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
 
                   <div className="flex gap-1">
                     <p className="pb-2">Cages</p>
-                    <span className="self-end w-10 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
 
                   <div className="flex gap-1">
                     <p className="pb-2">Extras</p>
-                    <span className="self-end w-8 h-6 border-black border-2"></span>
+                    <span className="self-end w-20 h-14 border-black border-2"></span>
                   </div>
                 </div>
               ) : (
