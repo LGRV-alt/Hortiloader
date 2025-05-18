@@ -19,7 +19,13 @@ export default function DayColumn({
   chosenYear,
   edit,
 }) {
+  const customerList = [];
   const array = arr;
+
+  const handleCustomerList = (string) => {
+    customerList.push(string);
+    console.log(customerList);
+  };
 
   return (
     <>
@@ -49,6 +55,7 @@ export default function DayColumn({
               <a
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}
+                onClick={(e) => handleCustomerList(e.target.textContent)}
               >
                 <Tooltip id={`my-tooltip-${record.id}`} />
                 <div className="flex">
