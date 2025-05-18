@@ -21,9 +21,9 @@ export default function App() {
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
-  const [createRun, setCreateRun] = useState([]);
+  const [customerList, setCustomerList] = useState([]);
 
-  console.log(edit);
+  console.log(customerList);
   function compare(a, b) {
     if (a.created < b.created) {
       return -1;
@@ -101,6 +101,8 @@ export default function App() {
                     refresh={refresh}
                     setRefresh={setRefresh}
                     edit={edit}
+                    setCustomerList={setCustomerList}
+                    customerList={customerList}
                   ></Body>
                 }
               />
