@@ -13,13 +13,17 @@ import Collect from "./templates/Collect";
 import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
+import TrolleyMapper from "./templates/TrolleyMapper";
 
 export default function App() {
   const [refresh, setRefresh] = useState(1);
   const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
+  const [edit, setEdit] = useState(false);
+  const [createRun, setCreateRun] = useState([]);
 
+  console.log(edit);
   function compare(a, b) {
     if (a.created < b.created) {
       return -1;
@@ -80,6 +84,8 @@ export default function App() {
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
               setRefresh={setRefresh}
+              setEdit={setEdit}
+              edit={edit}
             ></Header>
           </div>
 
@@ -94,6 +100,7 @@ export default function App() {
                     chosenYear={chosenYear}
                     refresh={refresh}
                     setRefresh={setRefresh}
+                    edit={edit}
                   ></Body>
                 }
               />
@@ -101,6 +108,11 @@ export default function App() {
               <Route
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
+              />
+
+              <Route
+                path="/trolley-mapper"
+                element={<TrolleyMapper records={rec} />}
               />
               <Route
                 path="/weekday/:year/:week/:day/:number"

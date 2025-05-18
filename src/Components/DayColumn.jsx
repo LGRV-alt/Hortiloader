@@ -17,6 +17,7 @@ export default function DayColumn({
   numberOfDay,
   chosenWeek,
   chosenYear,
+  edit,
 }) {
   const array = arr;
 
@@ -42,8 +43,9 @@ export default function DayColumn({
           className="flex justify-between items-center px-1 pt-1 "
           key={record.id}
         >
+          {/* Working on this section - Toggle switch to remove linking to the edit page so the orders can be added to an array */}
           <div className="flex justify-between w-full  hover:bg-slate-300  hover:border-black  transition-all">
-            <Link to={`/edit/${record.id}`}>
+            {edit ? (
               <a
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}
@@ -73,7 +75,39 @@ export default function DayColumn({
                   )}
                 </div>
               </a>
-            </Link>
+            ) : (
+              <Link to={`/edit/${record.id}`}>
+                <a
+                  data-tooltip-id={`my-tooltip-${record.id}`}
+                  data-tooltip-content={record.orderInfo}
+                >
+                  <Tooltip id={`my-tooltip-${record.id}`} />
+                  <div className="flex">
+                    {record.customerType === "retail" ? (
+                      <p className="text-blue-700 ">
+                        {record.title} {record.postcode.toUpperCase()}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                      </p>
+                    ) : record.customerType === "other" ? (
+                      <p className="text-red-500 ">
+                        {record.title} {record.postcode.toUpperCase()}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                      </p>
+                    ) : record.customerType === "missed" ? (
+                      <p className="text-fuchsia-600">
+                        {record.title} {record.postcode.toUpperCase()}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                      </p>
+                    ) : (
+                      <p className="">
+                        {record.title} {record.postcode.toUpperCase()}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                      </p>
+                    )}
+                  </div>
+                </a>
+              </Link>
+            )}
             <Link
               className="flex justify-center items-center"
               to={`/edit/${record.id}`}

@@ -9,6 +9,7 @@ export default function Body({
   chosenYear,
   refresh,
   setRefresh,
+  edit,
 }) {
   refresh;
   const filterUsersByDay = (day) => {
@@ -49,6 +50,7 @@ export default function Body({
             setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
+            edit={edit}
           ></DayColumn>
         </div>
         <div className="mb-10 border-t-2 md:border-t-0 md:mb-0 md:border-r-2 row-span-2 border-black">
