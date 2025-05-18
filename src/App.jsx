@@ -158,7 +158,9 @@ export default function App() {
 
               <Route
                 path="/trolley-mapper"
-                element={<TrolleyMapper records={rec} />}
+                element={
+                  <TrolleyMapper records={rec} customerList={customerList} />
+                }
               />
               <Route
                 path="/weekday/:year/:week/:day/:number"
