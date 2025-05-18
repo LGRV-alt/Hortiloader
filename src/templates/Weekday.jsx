@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { usePDF } from "react-to-pdf";
 
 export default function WeekdayPage({ records }) {
-  const [extras, setExtras] = useState(false);
+  const [extras, setExtras] = useState(true);
   console.log(extras);
   const { year, day, week, number } = useParams();
   const { toPDF, targetRef } = usePDF({
