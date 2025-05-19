@@ -7,6 +7,7 @@ import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 import { CiLogout } from "react-icons/ci";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { FaSearch } from "react-icons/fa";
 import Edit from "../templates/Edit";
 function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -98,12 +99,12 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
       </div>
       <div className="md:flex md:flex-row md:items-center">
         <div className="hidden md:flex md:justify-center items-center">
-          <p
+          <button
             className=" items-center text-2xl text-white cursor-pointer hover:text-red-500 "
             onClick={() => handleWeekChange(week - 1)}
           >
             <GrFormPrevious />
-          </p>
+          </button>
           <p className="text-white text-sm md:text-base">Week-</p>
           <select
             onChange={(e) => handleState(e)}
@@ -115,12 +116,12 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
             {weekNumbers}
           </select>
         </div>
-        <p
+        <button
           onClick={() => handleWeekChange(week + 1)}
-          className="items-center text-2xl text-white cursor-pointer hover:text-red-500 "
+          className="items-center w-6 text-2xl text-white cursor-pointer hover:text-red-500 "
         >
           <GrFormNext />
-        </p>
+        </button>
       </div>
 
       {!isUserValid ? (
@@ -175,49 +176,51 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
                   </button>
                 </Link>
               ) : (
-                <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col md:flex-row md:items-center  gap-2">
                   <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-secondary-colour font-bold  "
-                        : "text-white font-normal "
-                    }
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal"
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/search"
+                  >
+                    <FaSearch />
+                  </NavLink>
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal "
+                    // }
+                    className={"hover:text-blue-500"}
                     onClick={() => setToggleNav(!toggleNav)}
                     to="/"
                   >
                     Whiteboard
                   </NavLink>
                   <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-secondary-colour font-bold  "
-                        : "text-white font-normal"
-                    }
-                    // className="hover:text-secondary-colour  transition-all"
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal"
+                    // }
+                    className={"hover:text-blue-500"}
                     onClick={() => setToggleNav(!toggleNav)}
                     to="/collect"
                   >
                     Collects
                   </NavLink>
+
                   <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-secondary-colour font-bold  "
-                        : "text-white font-normal"
-                    }
-                    // className="hover:text-secondary-colour  transition-all"
-                    onClick={() => setToggleNav(!toggleNav)}
-                    to="/search"
-                  >
-                    Search
-                  </NavLink>
-                  <NavLink
-                    className={({ isActive }) =>
-                      isActive
-                        ? "text-secondary-colour font-bold md:w-full "
-                        : "text-white font-normal md:w-full"
-                    }
-                    // className="hover:text-secondary-colour md:w-full transition-all"
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold md:w-full "
+                    //     : "text-white font-normal md:w-full"
+                    // }
+                    className={"hover:text-blue-500"}
                     onClick={() => setToggleNav(!toggleNav)}
                     to="/holdingPage"
                   >
