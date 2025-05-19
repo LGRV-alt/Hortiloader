@@ -6,6 +6,7 @@ import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 import { CiLogout } from "react-icons/ci";
+import { GrFormNext } from "react-icons/gr";
 import Edit from "../templates/Edit";
 function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -32,6 +33,18 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
     setRefresh(Math.random());
   }
 
+  function handleWeekChange(num) {
+    if (num > 52 || num < 1) {
+      setChosenWeek(1);
+      setWeek(1);
+    } else {
+      setChosenWeek(num);
+      setWeek(num);
+    }
+
+    // setRefresh(Math.random());
+  }
+
   function handleYear(e) {
     setChosenYear(Number(e.target.value));
     setRefresh(Math.random());
@@ -54,35 +67,22 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
           </h2>
         </Link>
 
-        <div className="hidden md:flex md:justify-center items-center mr-2">
-          <p className="text-white text-sm md:text-base">Year - </p>
-          <select
-            onChange={(e) => handleYear(e)}
-            name=""
-            id=""
-            className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
-          >
-            <option value={2025}>2025</option>
-            <option value={0}>2024</option>
-          </select>
-        </div>
-
-        <div>
-          <h2 className="hidden md:flex text-white text-sm  mr-3">
-            Current Week - {getDateWeek(new Date())}
-          </h2>
-          <div className="hidden md:flex md:justify-center items-center">
-            <p className="text-white text-sm md:text-base">Selected Week - </p>
+        <div className="hidden md:flex  md:flex-col mr-2">
+          <div className="flex text-sm">
+            <p className="text-white text-sm md:text-base">Year - </p>
             <select
-              onChange={(e) => handleState(e)}
+              onChange={(e) => handleYear(e)}
               name=""
               id=""
-              className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
-              value={week}
+              className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
             >
-              {weekNumbers}
+              <option value={2025}>2025</option>
+              <option value={0}>2024</option>
             </select>
           </div>
+          <p className="hidden md:flex text-white text-sm  mr-3">
+            Current Week - {getDateWeek(new Date())}
+          </p>
         </div>
 
         <div
@@ -95,6 +95,29 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
             <Logo fillColor={"white"}></Logo>
           )}
         </div>
+      </div>
+      <div className="md:flex md:flex-row md:items-center">
+        <div className="hidden md:flex md:justify-center items-center">
+          <p className="pr-2" onClick={() => handleWeekChange(week - 1)}>
+            Prev
+          </p>
+          <p className="text-white text-sm md:text-base">Week-</p>
+          <select
+            onChange={(e) => handleState(e)}
+            name=""
+            id=""
+            className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
+            value={week}
+          >
+            {weekNumbers}
+          </select>
+        </div>
+        <p
+          onClick={() => handleWeekChange(week + 1)}
+          className="pl-2 items-center text-2xl text-white cursor-pointer hover:text-red-500 "
+        >
+          <GrFormNext />
+        </p>
       </div>
 
       {!isUserValid ? (
@@ -138,55 +161,68 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
                   {weekNumbers}
                 </select>
               </div>
+              {edit ? (
+                <Link
+                  className="w-full"
+                  onClick={() => setEdit(!edit)}
+                  to="/trolley-mapper"
+                >
+                  <button className=" w-full md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                    Trolley Mapper
+                  </button>
+                </Link>
+              ) : (
+                <div className="flex flex-col md:flex-row gap-2">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-secondary-colour font-bold  "
+                        : "text-white font-normal "
+                    }
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/"
+                  >
+                    Whiteboard
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-secondary-colour font-bold  "
+                        : "text-white font-normal"
+                    }
+                    // className="hover:text-secondary-colour  transition-all"
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/collect"
+                  >
+                    Collects
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-secondary-colour font-bold  "
+                        : "text-white font-normal"
+                    }
+                    // className="hover:text-secondary-colour  transition-all"
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/search"
+                  >
+                    Search
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-secondary-colour font-bold md:w-full "
+                        : "text-white font-normal md:w-full"
+                    }
+                    // className="hover:text-secondary-colour md:w-full transition-all"
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/holdingPage"
+                  >
+                    Holding
+                  </NavLink>
+                </div>
+              )}
 
-              <NavLink
-                // className="hover:text-secondary-colour  transition-all"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal "
-                }
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/"
-              >
-                Whiteboard
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal"
-                }
-                // className="hover:text-secondary-colour  transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/collect"
-              >
-                Collects
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal"
-                }
-                // className="hover:text-secondary-colour  transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/search"
-              >
-                Search
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold md:w-full "
-                    : "text-white font-normal md:w-full"
-                }
-                // className="hover:text-secondary-colour md:w-full transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/holdingPage"
-              >
-                Holding
-              </NavLink>
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
                 <Link
                   className="w-full"
@@ -199,11 +235,10 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
                 </Link>
 
                 <button
-                  className=" w-1/3 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
+                  className=" w-10 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
                   onClick={signout}
                 >
-                  {toggleNav ? "Signout" : <CiLogout fontSize="1.5rem" />}
-                  {/* Signout */}
+                  <CiLogout fontSize="1.5rem" />
                 </button>
 
                 <button
@@ -211,7 +246,6 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
                   onClick={() => setEdit(!edit)}
                 >
                   {toggleNav ? "Edit" : "Edit"}
-                  {/* Signout */}
                 </button>
               </div>
 
