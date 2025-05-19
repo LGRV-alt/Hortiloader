@@ -6,7 +6,7 @@ import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 import { CiLogout } from "react-icons/ci";
-import { GrFormNext } from "react-icons/gr";
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import Edit from "../templates/Edit";
 function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
   const [toggleNav, setToggleNav] = useState(false);
@@ -98,8 +98,11 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
       </div>
       <div className="md:flex md:flex-row md:items-center">
         <div className="hidden md:flex md:justify-center items-center">
-          <p className="pr-2" onClick={() => handleWeekChange(week - 1)}>
-            Prev
+          <p
+            className=" items-center text-2xl text-white cursor-pointer hover:text-red-500 "
+            onClick={() => handleWeekChange(week - 1)}
+          >
+            <GrFormPrevious />
           </p>
           <p className="text-white text-sm md:text-base">Week-</p>
           <select
@@ -114,7 +117,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
         </div>
         <p
           onClick={() => handleWeekChange(week + 1)}
-          className="pl-2 items-center text-2xl text-white cursor-pointer hover:text-red-500 "
+          className="items-center text-2xl text-white cursor-pointer hover:text-red-500 "
         >
           <GrFormNext />
         </p>
@@ -127,7 +130,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
           <div
             className={`${
               toggleNav ? "flex" : "hidden"
-            } right-0 w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
+            } right-0 top-[60px] w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
             <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:justify-center md:items-center">
               <div className="md:hidden flex items-center">
