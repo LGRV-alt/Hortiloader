@@ -130,6 +130,7 @@ export default function App() {
               setRefresh={setRefresh}
               setEdit={setEdit}
               edit={edit}
+              setCustomerList={setCustomerList}
             ></Header>
           </div>
 

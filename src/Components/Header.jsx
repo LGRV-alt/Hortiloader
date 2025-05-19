@@ -9,7 +9,14 @@ import { CiLogout } from "react-icons/ci";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
 import Edit from "../templates/Edit";
-function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
+function Header({
+  setChosenWeek,
+  setChosenYear,
+  setRefresh,
+  setEdit,
+  edit,
+  setCustomerList,
+}) {
   const [toggleNav, setToggleNav] = useState(false);
 
   const [week, setWeek] = useState(getDateWeek(new Date()));
@@ -166,16 +173,26 @@ function Header({ setChosenWeek, setChosenYear, setRefresh, setEdit, edit }) {
                 </select>
               </div>
               {edit ? (
-                <Link
-                  className="w-full"
-                  onClick={() => setEdit(!edit)}
-                  to="/trolley-mapper"
-                >
-                  <button className=" w-full md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
-                    Trolley Mapper
+                // ---------------------When in order picking state------------------------------------
+                <div className="flex gap-2">
+                  <Link
+                    className="w-full"
+                    onClick={() => setEdit(!edit)}
+                    to="/trolley-mapper"
+                  >
+                    <button className=" md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                      Create Run
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => setCustomerList([])}
+                    className="  md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-orange-600 hover:outline transition-all duration-200 bg-orange-600  text-white"
+                  >
+                    Clear
                   </button>
-                </Link>
+                </div>
               ) : (
+                // --------------------Normal state------------------------------------
                 <div className="flex flex-col md:flex-row md:items-center  gap-2">
                   <NavLink
                     // className={({ isActive }) =>
