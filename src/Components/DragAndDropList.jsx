@@ -14,7 +14,10 @@ import {
 } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
 
-export default function DragAndDropList({ items: initialItems = [] }) {
+export default function DragAndDropList({
+  items: initialItems = [],
+  onReorder,
+}) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
@@ -42,6 +45,7 @@ export default function DragAndDropList({ items: initialItems = [] }) {
     const newIndex = items.findIndex((item) => item.id === over.id);
     const newArray = arrayMove(items, oldIndex, newIndex);
     setItems(newArray);
+    if (onReorder) onReorder(newArray); // callback to parent if needed
   };
 
   const handleItemEdit = (id, newData) => {
