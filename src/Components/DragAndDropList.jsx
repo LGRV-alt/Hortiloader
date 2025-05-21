@@ -14,8 +14,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-function SortableItem({ item }) {
-  const { id, title, postcode } = item;
+function SortableItem({ item, index }) {
   const {
     attributes,
     listeners,
@@ -23,7 +22,7 @@ function SortableItem({ item }) {
     transform,
     transition,
     isDragging,
-  } = useSortable({ id });
+  } = useSortable({ id: item.id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -36,12 +35,15 @@ function SortableItem({ item }) {
       {...attributes}
       {...listeners}
       style={style}
-      className={`p-4 mb-2 bg-white rounded shadow cursor-move transition ${
-        isDragging ? "opacity-50" : "hover:bg-gray-100"
-      }`}
+      className={`flex items-center gap-4 p-4 bg-white rounded-xl shadow-md transition-all duration-200 cursor-move 
+        ${isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"}
+      `}
     >
-      <div className="font-semibold">{title}</div>
-      <div className="text-sm text-gray-500">{postcode}</div>
+      <span className="text-gray-500 w-6 text-right">{index + 1}.</span>
+      <div>
+        <div className="font-semibold text-lg text-gray-800">{item.title}</div>
+        <div className="text-sm text-gray-500">{item.postcode}</div>
+      </div>
     </li>
   );
 }
@@ -81,8 +83,8 @@ export default function DragAndDropList({
           strategy={verticalListSortingStrategy}
         >
           <ul>
-            {items.map((item) => (
-              <SortableItem key={item.id} item={item} />
+            {items.map((item, index) => (
+              <SortableItem key={item.id} item={item} index={index} />
             ))}
           </ul>
         </SortableContext>
