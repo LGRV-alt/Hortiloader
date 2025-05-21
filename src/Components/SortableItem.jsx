@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-export default function SortableItem({ item, index, isEditing, onEdit }) {
+export default function SortableItem({
+  item,
+  index,
+  isEditing,
+  onEdit,
+  onDelete,
+}) {
   const {
     attributes,
     listeners,
@@ -42,8 +48,8 @@ export default function SortableItem({ item, index, isEditing, onEdit }) {
   return (
     <li
       ref={setNodeRef}
-      {...attributes}
-      {...listeners}
+      {...(isEditing ? {} : attributes)}
+      {...(isEditing ? {} : listeners)}
       style={style}
       className={`p-4 bg-white rounded-xl shadow-md transition-all duration-200 cursor-move space-y-2 ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
@@ -83,6 +89,12 @@ export default function SortableItem({ item, index, isEditing, onEdit }) {
             onChange={(e) => handleChange("extras", e.target.value)}
             placeholder="Extras"
           />
+          <button
+            onClick={() => onDelete(item.id)}
+            className="mt-2 text-red-600 hover:text-red-800 text-sm"
+          >
+            Delete
+          </button>
         </div>
       ) : (
         <div>

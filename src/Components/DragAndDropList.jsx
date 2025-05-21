@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
 import {
   DndContext,
   closestCenter,
@@ -17,6 +18,21 @@ export default function DragAndDropList({ items: initialItems = [] }) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
+
+  const handleDelete = (id) => {
+    setItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleAddTask = () => {
+    const newTask = {
+      id: nanoid(),
+      title: "",
+      postcode: "",
+      trollies: "",
+      extras: "",
+    };
+    setItems((prev) => [...prev, newTask]);
+  };
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -37,12 +53,22 @@ export default function DragAndDropList({ items: initialItems = [] }) {
 
   return (
     <div className="max-w-2xl mx-auto mt-6 space-y-4">
-      <button
-        onClick={() => setIsEditing((prev) => !prev)}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        {isEditing ? "Finish Editing" : "Edit All"}
-      </button>
+      <div className="flex justify-between items-center">
+        <button
+          onClick={() => setIsEditing((prev) => !prev)}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          {isEditing ? "Finish Editing" : "Edit All"}
+        </button>
+        {isEditing && (
+          <button
+            onClick={handleAddTask}
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            + Add Task
+          </button>
+        )}
+      </div>
 
       <DndContext
         sensors={sensors}
@@ -61,6 +87,7 @@ export default function DragAndDropList({ items: initialItems = [] }) {
                 index={index}
                 isEditing={isEditing}
                 onEdit={handleItemEdit}
+                onDelete={handleDelete}
               />
             ))}
           </ul>
