@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   DndContext,
   closestCenter,
@@ -8,56 +8,15 @@ import {
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  useSortable,
   verticalListSortingStrategy,
   arrayMove,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import SortableItem from "./SortableItem";
 
-function SortableItem({ item, index }) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: item.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <li
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      style={style}
-      className={`flex items-center gap-4 p-4 bg-white rounded-xl shadow-md transition-all duration-200 cursor-move 
-        ${isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"}
-      `}
-    >
-      <span className="text-gray-500 w-6 text-right">{index + 1}.</span>
-      <div>
-        <div className="font-semibold text-lg text-gray-800">{item.title}</div>
-        <div className="text-sm text-gray-500">{item.postcode}</div>
-      </div>
-    </li>
-  );
-}
-
-export default function DragAndDropList({
-  items: initialItems = [],
-  onReorder,
-}) {
+export default function DragAndDropList({ items: initialItems = [] }) {
   const [items, setItems] = useState(initialItems);
+  const [isEditing, setIsEditing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
-
-  useEffect(() => {
-    setItems(initialItems);
-  }, [initialItems]);
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -65,14 +24,26 @@ export default function DragAndDropList({
 
     const oldIndex = items.findIndex((item) => item.id === active.id);
     const newIndex = items.findIndex((item) => item.id === over.id);
-
     const newArray = arrayMove(items, oldIndex, newIndex);
     setItems(newArray);
-    if (onReorder) onReorder(newArray);
+  };
+
+  const handleItemEdit = (id, newData) => {
+    const updated = items.map((item) =>
+      item.id === id ? { ...item, ...newData } : item
+    );
+    setItems(updated);
   };
 
   return (
-    <div className="">
+    <div className="max-w-2xl mx-auto mt-6 space-y-4">
+      <button
+        onClick={() => setIsEditing((prev) => !prev)}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        {isEditing ? "Finish Editing" : "Edit All"}
+      </button>
+
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -82,9 +53,15 @@ export default function DragAndDropList({
           items={items.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          <ul>
+          <ul className="space-y-3">
             {items.map((item, index) => (
-              <SortableItem key={item.id} item={item} index={index} />
+              <SortableItem
+                key={item.id}
+                item={item}
+                index={index}
+                isEditing={isEditing}
+                onEdit={handleItemEdit}
+              />
             ))}
           </ul>
         </SortableContext>
