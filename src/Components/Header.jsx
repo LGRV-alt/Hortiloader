@@ -174,19 +174,19 @@ function Header({
               </div>
               {edit ? (
                 // ---------------------When in order picking state------------------------------------
-                <div className="flex gap-2">
+                <div className="flex  gap-2">
                   <Link
-                    className="w-1/2"
+                    className=""
                     onClick={() => setEdit(!edit)}
                     to="/trolley-mapper"
                   >
-                    <button className=" md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                    <button className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
                       Create Run
                     </button>
                   </Link>
                   <button
                     onClick={() => setCustomerList([])}
-                    className="  md:w-32 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-orange-600 hover:outline transition-all duration-200 bg-orange-600  text-white"
+                    className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-orange-600 hover:outline transition-all duration-200 bg-orange-600  text-white"
                   >
                     Clear
                   </button>
@@ -247,6 +247,12 @@ function Header({
               )}
 
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
+                <button
+                  className=" w-1/3 md:w-1/2  py-1 px-2 rounded-md hover:bg-regal-blue hover:text-blue-300 hover:outline transition-all duration-300 bg-blue-600  text-white"
+                  onClick={() => setEdit(!edit)}
+                >
+                  {toggleNav ? "Map" : "Map"}
+                </button>
                 <Link
                   className="w-full"
                   onClick={() => setToggleNav(!toggleNav)}
@@ -262,13 +268,6 @@ function Header({
                   onClick={signout}
                 >
                   <CiLogout fontSize="1.5rem" />
-                </button>
-
-                <button
-                  className=" w-1/3 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
-                  onClick={() => setEdit(!edit)}
-                >
-                  {toggleNav ? "Edit" : "Edit"}
                 </button>
               </div>
 
