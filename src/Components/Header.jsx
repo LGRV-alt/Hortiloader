@@ -176,7 +176,7 @@ function Header({
                 // ---------------------When in order picking state------------------------------------
                 <div className="flex gap-2">
                   <Link
-                    className="w-full"
+                    className="w-1/2"
                     onClick={() => setEdit(!edit)}
                     to="/trolley-mapper"
                   >
@@ -216,7 +216,7 @@ function Header({
                     onClick={() => setToggleNav(!toggleNav)}
                     to="/"
                   >
-                    Whiteboard
+                    Home
                   </NavLink>
                   <NavLink
                     // className={({ isActive }) =>
