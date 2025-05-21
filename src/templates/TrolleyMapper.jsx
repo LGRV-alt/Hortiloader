@@ -2,22 +2,6 @@
 import React, { useState } from "react";
 import DragAndDropList from "../Components/DragAndDropList";
 
-const initialTasks = [
-  {
-    id: "cp47w6z5h4e3h2i",
-    title: "Caulfield",
-    postcode: "ka10 7lh",
-    orderNumber: 8375,
-  },
-  {
-    id: "r6bbpsns2zk48t9",
-    title: "The Good Garden",
-    postcode: "KA91RE",
-    orderNumber: 3004046,
-  },
-  // more items...
-];
-
 export default function TrolleyMapper({ records, customerList }) {
   const selectedRecords = records.filter((item) =>
     customerList.includes(item.id)
