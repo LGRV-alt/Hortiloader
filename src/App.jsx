@@ -14,10 +14,11 @@ import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
+import useTasks from "./hooks/useTasks";
 
 export default function App() {
   const [refresh, setRefresh] = useState(1);
-  const [rec, setRecords] = useState([]);
+  // const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
@@ -57,52 +58,55 @@ export default function App() {
   //   fetchData();
   // }, []);
 
-  useEffect(() => {
-    const pb = new PocketBase("https://hortiloader.pockethost.io");
+  // useEffect(() => {
+  //   const pb = new PocketBase("https://hortiloader.pockethost.io");
 
-    // Fetch and set tasks
-    async function fetchData() {
-      const records = await pb.collection("tasks").getFullList({});
-      setRecords(records);
-    }
+  //   // Fetch and set tasks
+  //   async function fetchData() {
+  //     const records = await pb.collection("tasks").getFullList({});
+  //     setRecords(records);
+  //   }
 
-    fetchData();
+  //   fetchData();
 
-    // Real-time subscription
-    const initRealtime = async () => {
-      try {
-        const unsubscribe = await pb.collection("tasks").subscribe("*", (e) => {
-          console.log(
-            `%c[Realtime %c${e.action.toUpperCase()}%c] ID: ${e.record.id}`,
-            "color: gray;",
-            e.action === "create"
-              ? "color: green;"
-              : e.action === "update"
-              ? "color: orange;"
-              : "color: red;",
-            "color: gray;"
-          );
+  //   // Real-time subscription
+  //   const initRealtime = async () => {
+  //     try {
+  //       const unsubscribe = await pb.collection("tasks").subscribe("*", (e) => {
+  //         console.log(
+  //           `%c[Realtime %c${e.action.toUpperCase()}%c] ID: ${e.record.id}`,
+  //           "color: gray;",
+  //           e.action === "create"
+  //             ? "color: green;"
+  //             : e.action === "update"
+  //             ? "color: orange;"
+  //             : "color: red;",
+  //           "color: gray;"
+  //         );
 
-          console.log("Full Record:", e.record);
+  //         console.log("Full Record:", e.record);
 
-          // Fetch updated list after change
-          fetchData();
-        });
-      } catch (err) {
-        console.error("Failed to subscribe to realtime:", err);
-      }
-    };
+  //         // Fetch updated list after change
+  //         fetchData();
+  //       });
+  //     } catch (err) {
+  //       console.error("Failed to subscribe to realtime:", err);
+  //     }
+  //   };
 
-    initRealtime();
+  //   initRealtime();
 
-    // Optional: unsubscribe on cleanup
-    return () => {
-      pb.collection("tasks").unsubscribe();
-    };
-  }, []);
+  //   // Optional: unsubscribe on cleanup
+  //   return () => {
+  //     pb.collection("tasks").unsubscribe();
+  //   };
+  // }, []);
+
+  const rec = useTasks();
+  console.log(rec);
 
   // Sort the array to newest created
-  rec.sort(compare);
+  // tasks.sort(compare);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
