@@ -25,88 +25,9 @@ export default function App() {
   const [customerList, setCustomerList] = useState([]);
 
   console.log(customerList);
-  function compare(a, b) {
-    if (a.created < b.created) {
-      return -1;
-    }
-    if (a.created > b.created) {
-      return 1;
-    }
-    return 0;
-  }
-
-  // useEffect(() => {
-  //   const pb = new PocketBase("https://hortiloader.pockethost.io");
-  //   pb.collection("tasks").subscribe(
-  //     "*",
-  //     function (e) {
-  //       fetchData();
-  //       // console.log(e.action);
-  //       // console.log(e.record);
-  //     },
-  //     {
-  //       /* other options like expand, custom headers, etc. */
-  //     }
-  //   );
-
-  //   async function fetchData() {
-  //     const pb = new PocketBase("https://hortiloader.pockethost.io");
-  //     const records = await pb.collection("tasks").getFullList({});
-
-  //     setRecords(records);
-  //   }
-  //   fetchData();
-  // }, []);
-
-  // useEffect(() => {
-  //   const pb = new PocketBase("https://hortiloader.pockethost.io");
-
-  //   // Fetch and set tasks
-  //   async function fetchData() {
-  //     const records = await pb.collection("tasks").getFullList({});
-  //     setRecords(records);
-  //   }
-
-  //   fetchData();
-
-  //   // Real-time subscription
-  //   const initRealtime = async () => {
-  //     try {
-  //       const unsubscribe = await pb.collection("tasks").subscribe("*", (e) => {
-  //         console.log(
-  //           `%c[Realtime %c${e.action.toUpperCase()}%c] ID: ${e.record.id}`,
-  //           "color: gray;",
-  //           e.action === "create"
-  //             ? "color: green;"
-  //             : e.action === "update"
-  //             ? "color: orange;"
-  //             : "color: red;",
-  //           "color: gray;"
-  //         );
-
-  //         console.log("Full Record:", e.record);
-
-  //         // Fetch updated list after change
-  //         fetchData();
-  //       });
-  //     } catch (err) {
-  //       console.error("Failed to subscribe to realtime:", err);
-  //     }
-  //   };
-
-  //   initRealtime();
-
-  //   // Optional: unsubscribe on cleanup
-  //   return () => {
-  //     pb.collection("tasks").unsubscribe();
-  //   };
-  // }, []);
 
   const rec = useTasks();
   console.log(rec);
-
-  // Sort the array to newest created
-  // tasks.sort(compare);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
