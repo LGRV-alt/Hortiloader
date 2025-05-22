@@ -6,7 +6,17 @@ import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
 import CloseIcon from "./CloseIcon";
 import { CiLogout } from "react-icons/ci";
-function Header({ setChosenWeek, setChosenYear, setRefresh }) {
+import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { FaSearch } from "react-icons/fa";
+import Edit from "../templates/Edit";
+function Header({
+  setChosenWeek,
+  setChosenYear,
+  setRefresh,
+  setEdit,
+  edit,
+  setCustomerList,
+}) {
   const [toggleNav, setToggleNav] = useState(false);
 
   const [week, setWeek] = useState(getDateWeek(new Date()));
@@ -31,6 +41,18 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
     setRefresh(Math.random());
   }
 
+  function handleWeekChange(num) {
+    if (num > 52 || num < 1) {
+      setChosenWeek(1);
+      setWeek(1);
+    } else {
+      setChosenWeek(num);
+      setWeek(num);
+    }
+
+    // setRefresh(Math.random());
+  }
+
   function handleYear(e) {
     setChosenYear(Number(e.target.value));
     setRefresh(Math.random());
@@ -53,35 +75,22 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
           </h2>
         </Link>
 
-        <div className="hidden md:flex md:justify-center items-center mr-2">
-          <p className="text-white text-sm md:text-base">Year - </p>
-          <select
-            onChange={(e) => handleYear(e)}
-            name=""
-            id=""
-            className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
-          >
-            <option value={2025}>2025</option>
-            <option value={0}>2024</option>
-          </select>
-        </div>
-
-        <div>
-          <h2 className="hidden md:flex text-white text-sm  mr-3">
-            Current Week - {getDateWeek(new Date())}
-          </h2>
-          <div className="hidden md:flex md:justify-center items-center">
-            <p className="text-white text-sm md:text-base">Selected Week - </p>
+        <div className="hidden md:flex  md:flex-col mr-2">
+          <div className="flex text-sm">
+            <p className="text-white text-sm md:text-base">Year - </p>
             <select
-              onChange={(e) => handleState(e)}
+              onChange={(e) => handleYear(e)}
               name=""
               id=""
-              className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
-              value={week}
+              className="ml-1 appearance-none w-auto bg-transparent text-white focus:text-black focus:bg-white "
             >
-              {weekNumbers}
+              <option value={2025}>2025</option>
+              <option value={0}>2024</option>
             </select>
           </div>
+          <p className="hidden md:flex text-white text-sm  mr-3">
+            Current Week - {getDateWeek(new Date())}
+          </p>
         </div>
 
         <div
@@ -95,6 +104,32 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
           )}
         </div>
       </div>
+      <div className="md:flex md:flex-row md:items-center">
+        <div className="hidden md:flex md:justify-center items-center">
+          <button
+            className=" items-center text-2xl text-white cursor-pointer hover:text-red-500 "
+            onClick={() => handleWeekChange(week - 1)}
+          >
+            <GrFormPrevious />
+          </button>
+          <p className="text-white text-sm md:text-base">Week-</p>
+          <select
+            onChange={(e) => handleState(e)}
+            name=""
+            id=""
+            className="appearance-none text-center w-auto ml-1 bg-transparent text-white focus:text-black focus:bg-white "
+            value={week}
+          >
+            {weekNumbers}
+          </select>
+        </div>
+        <button
+          onClick={() => handleWeekChange(week + 1)}
+          className="items-center w-6 text-2xl text-white cursor-pointer hover:text-red-500 "
+        >
+          <GrFormNext />
+        </button>
+      </div>
 
       {!isUserValid ? (
         <p></p>
@@ -103,7 +138,7 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
           <div
             className={`${
               toggleNav ? "flex" : "hidden"
-            } right-0 w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
+            } right-0 top-[60px] w-full pr-10 md:pr-0 h-full gap-5 md:justify-center md:items-center text-white  absolute md:static bg-opacity-90 bg-black  md:w-auto md:bg-transparent md:flex  `}
           >
             <div className="flex-col w-full ml-10 mt-10 md:mt-0 md:ml-0 md:flex-row flex gap-5 md:justify-center md:items-center">
               <div className="md:hidden flex items-center">
@@ -137,56 +172,87 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                   {weekNumbers}
                 </select>
               </div>
+              {edit ? (
+                // ---------------------When in order picking state------------------------------------
+                <div className="flex  gap-2">
+                  <Link
+                    className=""
+                    onClick={() => setEdit(!edit)}
+                    to="/trolley-mapper"
+                  >
+                    <button className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                      Create Run
+                    </button>
+                  </Link>
+                  <button
+                    onClick={() => setCustomerList([])}
+                    className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-orange-600 hover:outline transition-all duration-200 bg-orange-600  text-white"
+                  >
+                    Clear
+                  </button>
+                </div>
+              ) : (
+                // --------------------Normal state------------------------------------
+                <div className="flex flex-col md:flex-row md:items-center  gap-2">
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal"
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/search"
+                  >
+                    <FaSearch />
+                  </NavLink>
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal "
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/"
+                  >
+                    Home
+                  </NavLink>
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal"
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/collect"
+                  >
+                    Collects
+                  </NavLink>
 
-              <NavLink
-                // className="hover:text-secondary-colour  transition-all"
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal "
-                }
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/"
-              >
-                Whiteboard
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal"
-                }
-                // className="hover:text-secondary-colour  transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/collect"
-              >
-                Collects
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold  "
-                    : "text-white font-normal"
-                }
-                // className="hover:text-secondary-colour  transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/search"
-              >
-                Search
-              </NavLink>
-              <NavLink
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-secondary-colour font-bold md:w-full "
-                    : "text-white font-normal md:w-full"
-                }
-                // className="hover:text-secondary-colour md:w-full transition-all"
-                onClick={() => setToggleNav(!toggleNav)}
-                to="/holdingPage"
-              >
-                Holding
-              </NavLink>
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold md:w-full "
+                    //     : "text-white font-normal md:w-full"
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/holdingPage"
+                  >
+                    Holding
+                  </NavLink>
+                </div>
+              )}
+
               <div className="w-full flex flex-col md:flex-row md:gap-2 gap-5 justify-center items-center ">
+                <button
+                  className=" w-1/3 md:w-1/2  py-1 px-2 rounded-md hover:bg-regal-blue hover:text-blue-300 hover:outline transition-all duration-300 bg-blue-600  text-white"
+                  onClick={() => setEdit(!edit)}
+                >
+                  {toggleNav ? "Map" : "Map"}
+                </button>
                 <Link
                   className="w-full"
                   onClick={() => setToggleNav(!toggleNav)}
@@ -198,11 +264,10 @@ function Header({ setChosenWeek, setChosenYear, setRefresh }) {
                 </Link>
 
                 <button
-                  className=" w-1/3 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
+                  className=" w-10 md:w-1/2 md:mr-4 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-red-600 hover:outline transition-all duration-300 bg-red-600  text-white"
                   onClick={signout}
                 >
-                  {toggleNav ? "Signout" : <CiLogout fontSize="1.5rem" />}
-                  {/* Signout */}
+                  <CiLogout fontSize="1.5rem" />
                 </button>
               </div>
 
