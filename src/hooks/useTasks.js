@@ -17,33 +17,6 @@ export default function useTasks() {
 
     fetchData();
 
-    // const handleRealtimeUpdate = (e) => {
-    //   setRecords((prev) => {
-    //     switch (e.action) {
-    //       case "create":
-    //         return [e.record, ...prev];
-    //       case "update":
-    //         return prev.map((item) =>
-    //           item.id === e.record.id ? e.record : item
-    //         );
-    //       case "delete":
-    //         return prev.filter((item) => item.id !== e.record.id);
-    //       default:
-    //         return prev;
-    //     }
-    //   });
-
-    //   console.log(
-    //     `%c[Realtime %c${e.action.toUpperCase()}%c] ID: ${e.record.id}`,
-    //     "color: gray;",
-    //     e.action === "create"
-    //       ? "color: green;"
-    //       : e.action === "update"
-    //       ? "color: orange;"
-    //       : "color: red;",
-    //     "color: gray;"
-    //   );
-    // };
     const handleRealtimeUpdate = async (e) => {
       if (e.action === "update") {
         try {
