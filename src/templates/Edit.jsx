@@ -8,7 +8,7 @@ import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
 const realPass = "gilmore";
 
-export default function Edit({ records, setRefresh }) {
+export default function Edit({ records }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const loadingState = [
