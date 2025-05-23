@@ -2,8 +2,7 @@ import Header from "./Components/Header";
 import Body from "./Components/Body";
 
 import { Routes, Route } from "react-router-dom";
-import PocketBase from "pocketbase";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 
@@ -17,8 +16,6 @@ import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
 
 export default function App() {
-  const [refresh, setRefresh] = useState(1);
-  // const [rec, setRecords] = useState([]);
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
@@ -27,7 +24,6 @@ export default function App() {
   console.log(customerList);
 
   const rec = useTasks();
-  console.log(rec);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
@@ -52,7 +48,6 @@ export default function App() {
             <Header
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
-              setRefresh={setRefresh}
               setEdit={setEdit}
               edit={edit}
               setCustomerList={setCustomerList}
@@ -68,8 +63,6 @@ export default function App() {
                     records={rec}
                     chosenWeek={chosenWeek}
                     chosenYear={chosenYear}
-                    refresh={refresh}
-                    setRefresh={setRefresh}
                     edit={edit}
                     setCustomerList={setCustomerList}
                     customerList={customerList}
@@ -104,15 +97,10 @@ export default function App() {
                   />
                 }
               />
-              <Route
-                path="/edit/:id"
-                element={<Edit setRefresh={setRefresh} records={rec} />}
-              />
+              <Route path="/edit/:id" element={<Edit records={rec} />} />
               <Route
                 path="/createCustomer"
-                element={
-                  <CreateCustomer setRefresh={setRefresh}></CreateCustomer>
-                }
+                element={<CreateCustomer></CreateCustomer>}
               />
             </Routes>
           </div>

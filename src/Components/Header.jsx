@@ -12,7 +12,7 @@ import Edit from "../templates/Edit";
 function Header({
   setChosenWeek,
   setChosenYear,
-  setRefresh,
+  // setRefresh,
   setEdit,
   edit,
   setCustomerList,
@@ -38,7 +38,7 @@ function Header({
   function handleState(e) {
     setChosenWeek(e.target.value);
     setWeek(e.target.value);
-    setRefresh(Math.random());
+    // setRefresh(Math.random());
   }
 
   function handleWeekChange(num) {
@@ -55,7 +55,7 @@ function Header({
 
   function handleYear(e) {
     setChosenYear(Number(e.target.value));
-    setRefresh(Math.random());
+    // setRefresh(Math.random());
   }
 
   return (

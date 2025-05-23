@@ -68,7 +68,6 @@ export default function Edit({ records, setRefresh }) {
       return;
     }
     navigate(-1);
-    setRefresh(Math.random());
     updateTask(
       id,
       title,
@@ -269,7 +268,7 @@ export default function Edit({ records, setRefresh }) {
 
         <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 ">
           <div className="flex justify-center mb-4">
-            <FileUpload taskID={id} setRefresh={setRefresh} />
+            <FileUpload taskID={id} />
           </div>
           <div className="pb-5">
             <Pictures taskID={id} />

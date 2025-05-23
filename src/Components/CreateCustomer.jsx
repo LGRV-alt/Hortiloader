@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createTask, getDateWeek } from "./lib/pocketbase";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateCustomer({ setRefresh }) {
+export default function CreateCustomer() {
   const currentWeek = getDateWeek(new Date());
   const navigate = useNavigate();
   const status = null;
@@ -36,7 +36,7 @@ export default function CreateCustomer({ setRefresh }) {
       status,
       year
     );
-    setRefresh(Math.random());
+
     navigate(-1);
   };
   return (

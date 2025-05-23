@@ -48,8 +48,8 @@ export default function Body({
             day={"Monday"}
             route={"Glasgow Wholesale"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -63,8 +63,8 @@ export default function Body({
             day={"Tuesday"}
             route={"Edinburgh + Lanark"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -78,8 +78,8 @@ export default function Body({
             day={"Wednesday"}
             route={"Dumfries/South"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -93,8 +93,8 @@ export default function Body({
             day={"Thursday"}
             route={"North"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -108,8 +108,8 @@ export default function Body({
             day={"Friday"}
             route={"Ayrshire + Glasgow Retails"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -123,8 +123,8 @@ export default function Body({
             day={"Saturday"}
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -138,8 +138,8 @@ export default function Body({
             day={"Sunday"}
             route={"Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][6]}
-            refresh={refresh}
-            setRefresh={setRefresh}
+            // refresh={refresh}
+            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}

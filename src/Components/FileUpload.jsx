@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import pb from "./lib/pocketbase";
 
-const FileUpload = ({ taskID, setRefresh }) => {
+const FileUpload = ({ taskID }) => {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
