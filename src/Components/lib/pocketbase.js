@@ -4,6 +4,7 @@ import PocketBase from "pocketbase";
 // const client = new PocketBase("https://hortiloader.pockethost.io");
 const pb = new PocketBase("https://hortiloader.pockethost.io");
 export default pb;
+pb.autoCancellation(false);
 // client.autoCancellation(false);
 export const isUserValid = pb.authStore.isValid;
 // export async function getTasks() {

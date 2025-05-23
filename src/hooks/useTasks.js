@@ -16,6 +16,7 @@ export default function useTasks() {
     };
 
     const handleRealtimeUpdate = async (e) => {
+      console.log(e.action);
       if (e.action === "update") {
         try {
           const updated = await pb.collection("tasks").getOne(e.record.id);
