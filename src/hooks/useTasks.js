@@ -4,9 +4,9 @@ import PocketBase from "pocketbase";
 
 export default function useTasks() {
   const [records, setRecords] = useState([]);
-
+  const pb = new PocketBase("https://hortiloader.pockethost.io");
   useEffect(() => {
-    const pb = new PocketBase("https://hortiloader.pockethost.io");
+    let unsubscribe;
 
     const fetchData = async () => {
       const records = await pb
@@ -14,8 +14,6 @@ export default function useTasks() {
         .getFullList({ sort: "created" });
       setRecords(records);
     };
-
-    fetchData();
 
     const handleRealtimeUpdate = async (e) => {
       if (e.action === "update") {
@@ -33,7 +31,6 @@ export default function useTasks() {
         setRecords((prev) => prev.filter((item) => item.id !== e.record.id));
       }
     };
-    let unsubscribe;
 
     const initRealtime = async () => {
       try {
@@ -45,10 +42,13 @@ export default function useTasks() {
       }
     };
 
+    fetchData();
     initRealtime();
 
     return () => {
-      pb.collection("tasks").unsubscribe("*");
+      if (unsubscribe) {
+        unsubscribe(); // ✅ use stored unsubscribe function
+      }
     };
   }, []);
 
