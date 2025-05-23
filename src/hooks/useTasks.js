@@ -1,10 +1,10 @@
 // src/hooks/useTasks.js
 import { useEffect, useState } from "react";
-import PocketBase from "pocketbase";
+import pb from "../Components/lib/pocketbase";
 
 export default function useTasks() {
   const [records, setRecords] = useState([]);
-  const pb = new PocketBase("https://hortiloader.pockethost.io");
+  //   const pb = new PocketBase("https://hortiloader.pockethost.io");
   useEffect(() => {
     let unsubscribe;
 

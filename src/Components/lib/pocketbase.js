@@ -1,14 +1,14 @@
 import PocketBase from "pocketbase";
 
-// const url = `${import.meta.env.VITE_POCKETBASE}`;
-const client = new PocketBase("https://hortiloader.pockethost.io");
+// // const url = `${import.meta.env.VITE_POCKETBASE}`;
+// const client = new PocketBase("https://hortiloader.pockethost.io");
 const pb = new PocketBase("https://hortiloader.pockethost.io");
 export default pb;
-client.autoCancellation(false);
-export const isUserValid = client.authStore.isValid;
-export async function getTasks() {
-  return await client.collection("tasks").getFullList();
-}
+// client.autoCancellation(false);
+export const isUserValid = pb.authStore.isValid;
+// export async function getTasks() {
+//   return await client.collection("tasks").getFullList();
+// }
 
 // function to update the record from the edit section
 export async function updateTask(
@@ -36,13 +36,13 @@ export async function updateTask(
     status: status,
     year: year,
   };
-  await client.collection("tasks").update(id, data);
+  await pb.collection("tasks").update(id, data);
   // history.go(0);
 }
 
 export async function login(username, password) {
   try {
-    await client.collection("users").authWithPassword(username, password);
+    await pb.collection("users").authWithPassword(username, password);
     window.location.reload();
   } catch (error) {
     console.log(error);
@@ -54,7 +54,7 @@ export async function login(username, password) {
 }
 
 export function signout() {
-  client.authStore.clear();
+  pb.authStore.clear();
   window.location.reload();
 }
 export async function signup(username, password) {
@@ -64,7 +64,7 @@ export async function signup(username, password) {
     passwordConfirm: password,
   };
   try {
-    await client.collection("users").create(data);
+    await pb.collection("users").create(data);
     alert("User Created");
   } catch (error) {
     console.log("Error:", error);
@@ -78,7 +78,7 @@ export async function signup(username, password) {
 // ---------------------Brought Over----------------------
 
 export async function deleteTask(id) {
-  await client.collection("tasks").delete(id);
+  await pb.collection("tasks").delete(id);
 }
 
 export async function taskStatus(id, title, status) {
@@ -87,7 +87,7 @@ export async function taskStatus(id, title, status) {
     id: id,
     status: status,
   };
-  await client.collection("tasks").update(id, data);
+  await pb.collection("tasks").update(id, data);
 }
 
 export async function createTask(
@@ -108,14 +108,14 @@ export async function createTask(
     postcode: postcode,
     orderNumber: orderNumber,
     customerType: customerType,
-    user: client.authStore.model.id,
+    user: pb.authStore.model.id,
     other,
     weekNumber,
     orderInfo,
     status: status,
     year: year,
   };
-  await client.collection("tasks").create(data);
+  await pb.collection("tasks").create(data);
 }
 
 export function getDateWeek(d) {
