@@ -93,7 +93,7 @@ export default function SortableItem({
             className="w-1/3 border rounded text-center"
             value={formData.orderNumber}
             onChange={(e) => handleChange("orderNumber", e.target.value)}
-            placeholder="Order Number"
+            placeholder="Order No"
           />
           <input
             type="text"

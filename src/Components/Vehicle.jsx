@@ -1,15 +1,37 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function Vehicle({ title }) {
+export default function Vehicle() {
   const [trolleyNumber, setTrolleyNumber] = useState(0);
-  console.log(trolleyNumber);
+  const [vehicle, setVehicle] = useState("");
+  console.log("Trolley Number " + trolleyNumber);
+  console.log(vehicle);
 
   function handleTrolleyNumber(e) {
     setTrolleyNumber(e.target.value);
   }
 
+  function handleVehicleSelection(e) {
+    setVehicle(e.target.value);
+  }
+
   return (
-    <div className="h-full">
+    <div className="bg-red-500 grid grid-rows-[0.5fr_0.5fr_5fr] h-full">
+      <div className="flex gap-5 p-2 justify-center items-center">
+        <button
+          onClick={(e) => handleVehicleSelection(e)}
+          className="w-20 rounded-2xl border-black border-2 hover:border-blue-500 "
+          value="lorry"
+        >
+          Lorry
+        </button>{" "}
+        <button
+          onClick={(e) => handleVehicleSelection(e)}
+          className="w-20 rounded-2xl border-black border-2 hover:border-blue-500 "
+          value="trailer"
+        >
+          Trailer
+        </button>
+      </div>
       <div className="border-2 p-4">
         <ul className="flex gap-2 justify-center items-center">
           <button
@@ -55,6 +77,23 @@ export default function Vehicle({ title }) {
             24T
           </button>
         </ul>
+      </div>
+      <div className="bg-blue-500">
+        {vehicle === "trailer" ? (
+          <div className="bg-orange-500 h-full flex flex-col items-center p-2">
+            <div className="bg-green-500 border-black border-2 w-2/3 h-12">
+              Boot
+            </div>
+            <div className="bg-yellow-500 border-2 border-black w-1/4 h-16">
+              Triangle
+            </div>
+            <div className="bg-slate-500 border-2 border-black w-2/3 h-full">
+              Main
+            </div>
+          </div>
+        ) : (
+          <div>Im a lorry</div>
+        )}
       </div>
     </div>
   );

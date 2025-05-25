@@ -16,11 +16,11 @@ export default function TrolleyMapper({ records, customerList }) {
 
   console.log(tasks);
   return (
-    <div className="flex">
-      <div className="min-h-screen w-1/2 p-2 bg-gray-100">
+    <div className="flex h-full">
+      <div className=" w-1/2 p-2 bg-gray-100">
         <DragAndDropList items={tasks} onReorder={handleReorder} />
       </div>
-      <div className="min-h-full w-1/2  bg-gray-100 pt-2">
+      <div className="w-1/2  bg-gray-100 ">
         <Vehicle items={tasks} onReorder={handleReorder} />
       </div>
     </div>
