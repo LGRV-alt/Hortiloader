@@ -96,6 +96,13 @@ export default function SortableItem({
           <input
             type="text"
             className="w-1/3 border rounded text-center"
+            value={formData.postcode}
+            onChange={(e) => handleChange("postcode", e.target.value)}
+            placeholder="Postcode"
+          />
+          <input
+            type="text"
+            className="w-1/3 border rounded text-center"
             value={formData.trollies}
             onChange={(e) => handleChange("trollies", e.target.value)}
             placeholder="Trollies"

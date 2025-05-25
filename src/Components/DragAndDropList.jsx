@@ -21,6 +21,16 @@ export default function DragAndDropList({
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
+  let trolleyTotal = handleTotalTrollies(items);
+
+  function handleTotalTrollies(arr) {
+    let trolleyCount = 0;
+    arr.forEach((item) => {
+      const value = Number(item.trollies);
+      trolleyCount += isNaN(value) ? 0 : value;
+    });
+    return trolleyCount;
+  }
 
   const handleDelete = (id) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
@@ -62,8 +72,9 @@ export default function DragAndDropList({
           onClick={() => setIsEditing((prev) => !prev)}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          {isEditing ? "Finish Editing" : "Edit All"}
+          {isEditing ? "Finish Editing" : "Edit"}
         </button>
+        <p>Total Trollies-{trolleyTotal}</p>
         {isEditing && (
           <button
             onClick={handleAddTask}
