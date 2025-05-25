@@ -51,14 +51,10 @@ export default function SortableItem({
       {...(isEditing ? {} : attributes)}
       {...(isEditing ? {} : listeners)}
       style={style}
-      className={`p-4 bg-white rounded-xl shadow-md transition-all duration-200 cursor-move space-y-2 ${
+      className={`bg-slate-400 ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
     >
-      <div className="flex justify-between items-center">
-        <span className="text-gray-500 text-sm">{index + 1}.</span>
-      </div>
-
       {isEditing ? (
         <div className="space-y-2">
           <input
@@ -97,17 +93,19 @@ export default function SortableItem({
           </button>
         </div>
       ) : (
-        <div>
-          <div className="font-semibold text-lg">{item.title}</div>
-          <div className="text-sm text-gray-500">Postcode: {item.postcode}</div>
-          {item.trollies && (
-            <div className="text-sm text-gray-500">
-              Trollies: {item.trollies}
+        <div className="flex justify-between p-1">
+          <div className="flex gap-2 justify-start items-center">
+            <div className="flex justify-between items-center">
+              <span className="text-sm">{index + 1}.</span>
             </div>
-          )}
-          {item.extras && (
-            <div className="text-sm text-gray-500">Extras: {item.extras}</div>
-          )}
+            <div className="font-semibold text-lg">{item.title}</div>
+            <p>{item.orderNumber}</p>
+            <div className="text-sm ">{item.postcode}</div>
+          </div>
+          <div className="flex items-center gap-2">
+            {item.trollies && <div className="">{item.trollies}T</div>}
+            {item.extras && <div className="text-red-500">{item.extras}</div>}
+          </div>
         </div>
       )}
     </li>

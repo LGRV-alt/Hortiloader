@@ -56,7 +56,7 @@ export default function DragAndDropList({
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-6 space-y-4">
+    <div className="w-full">
       <div className="flex justify-between items-center">
         <button
           onClick={() => setIsEditing((prev) => !prev)}
