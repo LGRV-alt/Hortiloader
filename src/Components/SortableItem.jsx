@@ -52,12 +52,14 @@ export default function SortableItem({
   function sortPostCode(string) {
     if (string.length < 1) {
       return "";
-    } else {
+    } else if (/\d/.test(string)) {
       let reversePostCode = string.split("").reverse();
       let lastPart = reversePostCode.slice(0, 3).reverse().join("").toString();
       let firstPart = reversePostCode.slice(3).reverse().join("").toString();
       let newPostCode = `${firstPart} ${lastPart}`;
       return newPostCode.toUpperCase();
+    } else {
+      return string;
     }
   }
 
