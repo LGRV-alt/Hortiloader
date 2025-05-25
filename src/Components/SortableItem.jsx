@@ -39,6 +39,20 @@ export default function SortableItem({
     transition,
   };
 
+  function reduceOrderNumber(num) {
+    let newOrderNumber = num.toString().slice(-4);
+    return newOrderNumber;
+  }
+
+  function sortPostCode(string) {
+    let reversePostCode = string.split("").reverse();
+    let lastPart = reversePostCode.slice(0, 3).reverse().join("").toString();
+    let firstPart = reversePostCode.slice(3).reverse().join("").toString();
+    let newPostCode = `${firstPart} ${lastPart}`;
+    return newPostCode.toUpperCase();
+  }
+  sortPostCode("KA107AZ");
+
   const handleChange = (key, value) => {
     const updated = { ...formData, [key]: value };
     setFormData(updated);
@@ -99,8 +113,8 @@ export default function SortableItem({
               <span className="text-sm">{index + 1}.</span>
             </div>
             <div className="font-semibold text-lg">{item.title}</div>
-            <p>{item.orderNumber}</p>
-            <div className="text-sm ">{item.postcode}</div>
+            <p>{reduceOrderNumber(item.orderNumber)}</p>
+            <div className="text-sm ">{sortPostCode(item.postcode)}</div>
           </div>
           <div className="flex items-center gap-2">
             {item.trollies && <div className="">{item.trollies}T</div>}
