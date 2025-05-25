@@ -56,7 +56,7 @@ export default function DragAndDropList({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full border-black border-2 rounded-lg p-2">
       <div className="flex justify-between items-center">
         <button
           onClick={() => setIsEditing((prev) => !prev)}
@@ -83,7 +83,7 @@ export default function DragAndDropList({
           items={items.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          <ul className="space-y-3">
+          <ul className="space-y-1">
             {items.map((item, index) => (
               <SortableItem
                 key={item.id}

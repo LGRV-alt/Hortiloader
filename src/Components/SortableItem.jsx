@@ -29,6 +29,7 @@ export default function SortableItem({
     setFormData({
       title: item.title || "",
       postcode: item.postcode || "",
+      orderNumber: item.orderNumber || "",
       trollies: item.trollies || "",
       extras: item.extras || "",
     });
@@ -40,18 +41,25 @@ export default function SortableItem({
   };
 
   function reduceOrderNumber(num) {
-    let newOrderNumber = num.toString().slice(-4);
-    return newOrderNumber;
+    if (!num) {
+      return "";
+    } else {
+      let newOrderNumber = num.toString().slice(-4);
+      return newOrderNumber;
+    }
   }
 
   function sortPostCode(string) {
-    let reversePostCode = string.split("").reverse();
-    let lastPart = reversePostCode.slice(0, 3).reverse().join("").toString();
-    let firstPart = reversePostCode.slice(3).reverse().join("").toString();
-    let newPostCode = `${firstPart} ${lastPart}`;
-    return newPostCode.toUpperCase();
+    if (string.length < 1) {
+      return "";
+    } else {
+      let reversePostCode = string.split("").reverse();
+      let lastPart = reversePostCode.slice(0, 3).reverse().join("").toString();
+      let firstPart = reversePostCode.slice(3).reverse().join("").toString();
+      let newPostCode = `${firstPart} ${lastPart}`;
+      return newPostCode.toUpperCase();
+    }
   }
-  sortPostCode("KA107AZ");
 
   const handleChange = (key, value) => {
     const updated = { ...formData, [key]: value };
@@ -65,7 +73,7 @@ export default function SortableItem({
       {...(isEditing ? {} : attributes)}
       {...(isEditing ? {} : listeners)}
       style={style}
-      className={`bg-slate-400 ${
+      className={`border-b-2 border-black ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
     >
@@ -81,9 +89,9 @@ export default function SortableItem({
           <input
             type="text"
             className="w-1/3 border rounded text-center"
-            value={formData.postcode}
-            onChange={(e) => handleChange("postcode", e.target.value)}
-            placeholder="Postcode"
+            value={formData.orderNumber}
+            onChange={(e) => handleChange("orderNumber", e.target.value)}
+            placeholder="Order Number"
           />
           <input
             type="text"
