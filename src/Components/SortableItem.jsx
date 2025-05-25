@@ -56,38 +56,38 @@ export default function SortableItem({
       }`}
     >
       {isEditing ? (
-        <div className="space-y-2">
+        <div className="p-2 gap-2 flex items-center">
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-2/3 border rounded text-center"
             value={formData.title}
             onChange={(e) => handleChange("title", e.target.value)}
             placeholder="Title"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-1/3 border rounded text-center"
             value={formData.postcode}
             onChange={(e) => handleChange("postcode", e.target.value)}
             placeholder="Postcode"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-1/3 border rounded text-center"
             value={formData.trollies}
             onChange={(e) => handleChange("trollies", e.target.value)}
             placeholder="Trollies"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-full border rounded text-center"
             value={formData.extras}
             onChange={(e) => handleChange("extras", e.target.value)}
             placeholder="Extras"
           />
           <button
             onClick={() => onDelete(item.id)}
-            className="mt-2 text-red-600 hover:text-red-800 text-sm"
+            className=" text-red-600 hover:text-red-800 text-sm"
           >
             Delete
           </button>

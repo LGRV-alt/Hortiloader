@@ -16,7 +16,7 @@ export default function TrolleyMapper({ records, customerList }) {
   console.log(tasks);
   return (
     <div>
-      <div className="min-h-screen w-1/3 bg-gray-100">
+      <div className="min-h-screen w-1/2 bg-gray-100">
         <DragAndDropList items={tasks} onReorder={handleReorder} />
       </div>
     </div>
