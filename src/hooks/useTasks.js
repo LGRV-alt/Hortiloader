@@ -8,9 +8,26 @@ export default function useTasks() {
   useEffect(() => {
     let unsubscribe;
 
-    const init = async () => {
+    // apply a realtime event to local state
+    const applyEvent = (e) => {
+      setTasks((prev) => {
+        switch (e.action) {
+          case "create":
+            return [e.record, ...prev];
+          case "update":
+            return prev.map((t) => (t.id === e.record.id ? e.record : t));
+          case "delete":
+            return prev.filter((t) => t.id !== e.record.id);
+          default:
+            return prev;
+        }
+      });
+    };
+
+    // fetch + subscribe
+    (async () => {
       try {
-        // (Optional) refresh auth if needed
+        // (Optional) refresh auth if your collection is protected
         if (!pb.authStore.isValid) {
           await pb.collection("users").authRefresh();
         }
@@ -21,29 +38,14 @@ export default function useTasks() {
           .getFullList({ sort: "created" });
         setTasks(list);
 
-        // 2) subscribe to all create/update/delete events
-        unsubscribe = await pb.collection("tasks").subscribe("*", (event) => {
-          setTasks((prev) => {
-            switch (event.action) {
-              case "create":
-                return [event.record, ...prev];
-              case "update":
-                return prev.map((t) =>
-                  t.id === event.record.id ? event.record : t
-                );
-              case "delete":
-                return prev.filter((t) => t.id !== event.record.id);
-              default:
-                return prev;
-            }
-          });
-        });
+        // 2) subscribe — under the hood this does:
+        //    GET  /api/realtime        ← SSE connect
+        //    POST /api/realtime        ← register subscriptions
+        unsubscribe = await pb.collection("tasks").subscribe("*", applyEvent);
       } catch (err) {
         console.error("useTasks init error:", err);
       }
-    };
-
-    init();
+    })();
 
     return () => {
       if (typeof unsubscribe === "function") {
