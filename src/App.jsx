@@ -26,8 +26,8 @@ export default function App() {
 
   console.log(customerList);
 
-  // const rec = useTasks()
-  const rec = usePocketbaseRealtimeTasks();
+  const rec = useTasks();
+  // const rec = usePocketbaseRealtimeTasks();
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
