@@ -17,7 +17,7 @@ import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 
 export default function App() {
-  useAutoRefreshOnIdle();
+  // useAutoRefreshOnIdle();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);

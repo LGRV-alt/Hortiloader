@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import pb from "./lib/pocketbase";
+import pb from "./lib/pbConnect";
+
 Modal.setAppElement("#root");
 
 const Pictures = ({ taskID }) => {
