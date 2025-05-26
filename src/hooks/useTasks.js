@@ -57,23 +57,52 @@ export default function useTasks() {
     //   }
     // };
 
+    // const initRealtime = async () => {
+    //   try {
+    //     // First, wait for realtime to fully connect
+    //     await pb.realtime.subscribe("PB_CONNECT", async (e) => {
+    //       console.log("Realtime connected, clientId:", e.clientId);
+
+    //       // Now that it's connected, subscribe to your collection
+    //       unsubscribe = await pb
+    //         .collection("tasks")
+    //         .subscribe("*", handleRealtimeUpdate);
+
+    //       console.log("Subscribed to tasks collection.");
+    //     });
+    //   } catch (err) {
+    //     console.error("Realtime subscription failed:", err);
+    //   }
+    // };
+
     const initRealtime = async () => {
       try {
-        // First, wait for realtime to fully connect
+        // On connect
         await pb.realtime.subscribe("PB_CONNECT", async (e) => {
-          console.log("Realtime connected, clientId:", e.clientId);
+          console.log("📡 Connected to realtime:", e.clientId);
 
-          // Now that it's connected, subscribe to your collection
           unsubscribe = await pb
             .collection("tasks")
             .subscribe("*", handleRealtimeUpdate);
 
-          console.log("Subscribed to tasks collection.");
+          console.log("✅ Subscribed to 'tasks' collection");
+        });
+
+        // On disconnect
+        await pb.realtime.subscribe("PB_DISCONNECT", async () => {
+          console.warn("⚠️ Disconnected from realtime");
+
+          // Try reconnecting after a short delay
+          setTimeout(() => {
+            console.log("🔁 Attempting to reconnect...");
+            initRealtime(); // Recursively re-initialize
+          }, 3000); // 3-second delay before retry
         });
       } catch (err) {
         console.error("Realtime subscription failed:", err);
       }
     };
+
     fetchData();
     initRealtime();
 
