@@ -15,6 +15,7 @@ import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+import usePocketbaseRealtimeTasks from "./Components/lib/usePocketbaseRealtimeTasks";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -25,7 +26,8 @@ export default function App() {
 
   console.log(customerList);
 
-  const rec = useTasks();
+  // const rec = useTasks()
+  const rec = usePocketbaseRealtimeTasks();
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
