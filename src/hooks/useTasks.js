@@ -1,14 +1,12 @@
-// src/hooks/useTasks.js
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import pb from "../Components/lib/pbConnect";
 
 export default function useTasks() {
   const [tasks, setTasks] = useState([]);
+  const unsubscribeRef = useRef(null);
+  const isSubscribingRef = useRef(false);
 
   useEffect(() => {
-    let unsubscribe;
-
-    // apply a realtime event to local state
     const applyEvent = (e) => {
       setTasks((prev) => {
         switch (e.action) {
@@ -24,33 +22,55 @@ export default function useTasks() {
       });
     };
 
-    // fetch + subscribe
+    const subscribeTasks = async () => {
+      if (isSubscribingRef.current) return;
+      isSubscribingRef.current = true;
+      try {
+        if (typeof unsubscribeRef.current === "function") {
+          unsubscribeRef.current();
+        }
+        unsubscribeRef.current = await pb
+          .collection("tasks")
+          .subscribe("*", applyEvent);
+        console.log("✅ Subscribed to tasks realtime");
+      } catch (err) {
+        console.error("❌ subscribeTasks() failed:", err);
+      } finally {
+        isSubscribingRef.current = false;
+      }
+    };
+
     (async () => {
       try {
-        // (Optional) refresh auth if your collection is protected
+        // (optional) auth-refresh
         if (!pb.authStore.isValid) {
           await pb.collection("users").authRefresh();
         }
 
-        // 1) initial fetch
+        // initial fetch
         const list = await pb
           .collection("tasks")
           .getFullList({ sort: "created" });
         setTasks(list);
 
-        // 2) subscribe — under the hood this does:
-        //    GET  /api/realtime        ← SSE connect
-        //    POST /api/realtime        ← register subscriptions
-        unsubscribe = await pb.collection("tasks").subscribe("*", applyEvent);
+        // first subscription
+        await subscribeTasks();
+
+        // re-subscribe on disconnect
+        pb.realtime.onDisconnect = () => {
+          console.warn("⚠️ SSE disconnected, re-subscribing…");
+          subscribeTasks();
+        };
       } catch (err) {
-        console.error("useTasks init error:", err);
+        console.error("❌ useTasks init error:", err);
       }
     })();
 
     return () => {
-      if (typeof unsubscribe === "function") {
-        unsubscribe();
+      if (typeof unsubscribeRef.current === "function") {
+        unsubscribeRef.current();
       }
+      pb.realtime.onDisconnect = null;
     };
   }, []);
 

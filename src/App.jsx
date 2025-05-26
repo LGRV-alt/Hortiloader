@@ -15,7 +15,6 @@ import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
-import usePocketbaseRealtimeTasks from "./Components/lib/usePocketbaseRealtimeTasks";
 
 export default function App() {
   // useAutoRefreshOnIdle();
