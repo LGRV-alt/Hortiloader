@@ -1,183 +1,238 @@
-// import { useEffect, useState } from "react";
+// import { useEffect, useRef, useState } from "react";
 // import pb from "../Components/lib/pbConnect";
 
 // export default function useTasks() {
 //   const [records, setRecords] = useState([]);
 //   const [isSubscribed, setIsSubscribed] = useState(false);
 
-//   useEffect(() => {
-//     let unsubscribe;
-//     let watchdogInterval;
+//   const unsubscribeRef = useRef(null);
+//   const isConnecting = useRef(false);
+//   const watchdogInterval = useRef(null);
 
-//     const fetchData = async () => {
-//       const records = await pb
+//   const fetchData = async () => {
+//     try {
+//       const tasks = await pb
 //         .collection("tasks")
 //         .getFullList({ sort: "created" });
-//       setRecords(records);
-//     };
+//       setRecords(tasks);
+//     } catch (err) {
+//       console.error("❌ Failed to fetch tasks:", err);
+//     }
+//   };
 
-//     const handleRealtimeUpdate = (e) => {
-//       console.log("Realtime event:", e);
+//   const handleRealtimeUpdate = (e) => {
+//     console.log("📡 Realtime event:", e);
 
+//     setRecords((prev) => {
 //       if (e.action === "create") {
-//         setRecords((prev) => [e.record, ...prev]);
+//         return [e.record, ...prev];
 //       } else if (e.action === "update") {
-//         setRecords((prev) =>
-//           prev.map((item) => (item.id === e.record.id ? e.record : item))
-//         );
+//         return prev.map((item) => (item.id === e.record.id ? e.record : item));
 //       } else if (e.action === "delete") {
-//         setRecords((prev) => prev.filter((item) => item.id !== e.record.id));
+//         return prev.filter((item) => item.id !== e.record.id);
 //       }
-//     };
+//       return prev;
+//     });
+//   };
 
-//     const initRealtime = async () => {
-//       try {
-//         // Clean up existing subscription first
-//         if (unsubscribe) await unsubscribe();
+//   const initRealtime = async () => {
+//     if (isConnecting.current) return;
+//     isConnecting.current = true;
 
-//         unsubscribe = await pb
-//           .collection("tasks")
-//           .subscribe("*", handleRealtimeUpdate);
-//         console.log("✅ Subscribed to 'tasks' collection");
-//         setIsSubscribed(true);
-//       } catch (err) {
-//         console.error("Realtime subscription failed:", err);
-//         setIsSubscribed(false);
+//     try {
+//       // Always reset connection before subscribing
+//       await pb.realtime.disconnect(); // <- force disconnect stale socket
+//       await pb.realtime.connect(); // <- reconnect to get a fresh clientId
+
+//       // Unsubscribe previous if needed
+//       if (unsubscribeRef.current) {
+//         await unsubscribeRef.current();
 //       }
-//     };
 
+//       // Subscribe to the "tasks" collection
+//       unsubscribeRef.current = await pb
+//         .collection("tasks")
+//         .subscribe("*", handleRealtimeUpdate);
+
+//       console.log("✅ Realtime subscribed to 'tasks'");
+//       setIsSubscribed(true);
+//     } catch (err) {
+//       console.error("❌ Failed to subscribe to realtime:", err);
+//       setIsSubscribed(false);
+//     } finally {
+//       isConnecting.current = false;
+//     }
+//   };
+
+//   useEffect(() => {
 //     fetchData();
 //     initRealtime();
 
-//     watchdogInterval = setInterval(() => {
+//     // Watchdog to check connection every minute
+//     watchdogInterval.current = setInterval(() => {
 //       const socket = pb.realtime.client;
 //       if (!socket || socket.readyState !== 1) {
-//         console.warn("🔌 WebSocket not open. Reinitializing...");
+//         console.warn("👀 Watchdog: reconnecting...");
 //         initRealtime();
 //       }
-//     }, 60000); // Every 10 seconds
+//     }, 60000);
 
-//     // Optional: monitor PocketBase's connect/disconnect events
-//     pb.realtime.subscribe("PB_CONNECT", (e) => {
-//       console.log("📡 Connected to realtime:", e.clientId);
-//     });
+//     // Page becomes visible again
+//     const handleVisibility = () => {
+//       if (document.visibilityState === "visible") {
+//         const socket = pb.realtime.client;
+//         if (!socket || socket.readyState !== 1) {
+//           console.warn("👁️ Page visible, socket closed. Reconnecting...");
+//           initRealtime();
+//         }
+//       }
+//     };
+//     document.addEventListener("visibilitychange", handleVisibility);
 
-//     pb.realtime.subscribe("PB_DISCONNECT", () => {
-//       console.warn("⚠️ Disconnected from realtime");
-//       setIsSubscribed(false);
+//     // Optional: monitor auth expiration
+//     const authCleanup = pb.authStore.onChange(() => {
+//       if (!pb.authStore.isValid) {
+//         console.warn("🔐 Auth token expired. You may need to refresh.");
+//       }
 //     });
 
 //     return () => {
-//       if (unsubscribe) unsubscribe();
-//       if (watchdogInterval) clearInterval(watchdogInterval);
+//       if (unsubscribeRef.current) unsubscribeRef.current();
+//       if (watchdogInterval.current) clearInterval(watchdogInterval.current);
+//       document.removeEventListener("visibilitychange", handleVisibility);
+//       authCleanup(); // Unsubscribe auth listener
 //     };
 //   }, []);
 
 //   return records;
 // }
-import { useEffect, useState } from "react";
+// src/hooks/useTasks.js
+// src/hooks/useTasks.js
+import { useEffect, useRef, useState } from "react";
 import pb from "../Components/lib/pbConnect";
 
 export default function useTasks() {
   const [records, setRecords] = useState([]);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const unsubscribeRef = useRef(null);
+  const isConnecting = useRef(false);
+  const reconnectAttempts = useRef(0);
+  const watchdogInterval = useRef(null);
+
+  const MAX_RECONNECT_ATTEMPTS = 5;
+  const BASE_RECONNECT_DELAY = 1000;
+
+  const fetchData = async () => {
+    try {
+      const tasks = await pb
+        .collection("tasks")
+        .getFullList({ sort: "created" });
+      setRecords(tasks);
+    } catch (err) {
+      console.error("❌ Failed to fetch tasks:", err);
+    }
+  };
+
+  const handleRealtimeUpdate = (e) => {
+    setRecords((prev) => {
+      switch (e.action) {
+        case "create":
+          return [e.record, ...prev];
+        case "update":
+          return prev.map((item) =>
+            item.id === e.record.id ? e.record : item
+          );
+        case "delete":
+          return prev.filter((item) => item.id !== e.record.id);
+        default:
+          return prev;
+      }
+    });
+  };
+
+  const initRealtime = async () => {
+    if (isConnecting.current) return;
+    isConnecting.current = true;
+
+    try {
+      const socket = pb.realtime.client;
+
+      if (!socket || socket.readyState !== 1) {
+        await pb.realtime.disconnect();
+        await pb.realtime.connect();
+      }
+
+      if (unsubscribeRef.current) {
+        try {
+          await unsubscribeRef.current();
+        } catch (e) {
+          console.warn("⚠️ Unsubscribe failed:", e);
+        }
+      }
+
+      unsubscribeRef.current = await pb
+        .collection("tasks")
+        .subscribe("*", handleRealtimeUpdate);
+
+      reconnectAttempts.current = 0;
+    } catch (err) {
+      console.error("❌ Realtime error:", err);
+
+      if (reconnectAttempts.current < MAX_RECONNECT_ATTEMPTS) {
+        const delay = BASE_RECONNECT_DELAY * 2 ** reconnectAttempts.current;
+        reconnectAttempts.current++;
+        setTimeout(initRealtime, delay);
+      }
+    } finally {
+      isConnecting.current = false;
+    }
+  };
 
   useEffect(() => {
-    let unsubscribe;
-    let watchdogInterval;
-    let isConnecting = false;
+    fetchData();
+    initRealtime();
 
-    const fetchData = async () => {
-      try {
-        const records = await pb
-          .collection("tasks")
-          .getFullList({ sort: "created" });
-        setRecords(records);
-      } catch (err) {
-        console.error("Failed to fetch tasks:", err);
+    watchdogInterval.current = setInterval(() => {
+      const socket = pb.realtime.client;
+      if (!socket || socket.readyState !== 1) {
+        initRealtime();
       }
-    };
+    }, 15000);
 
-    const handleRealtimeUpdate = (e) => {
-      console.log("📡 Realtime event:", e);
-
-      if (e.action === "create") {
-        setRecords((prev) => [e.record, ...prev]);
-      } else if (e.action === "update") {
-        setRecords((prev) =>
-          prev.map((item) => (item.id === e.record.id ? e.record : item))
-        );
-      } else if (e.action === "delete") {
-        setRecords((prev) => prev.filter((item) => item.id !== e.record.id));
-      }
-    };
-
-    const initRealtime = async () => {
-      if (isConnecting) return;
-      isConnecting = true;
-
-      try {
-        if (unsubscribe) await unsubscribe(); // Clean up any existing sub
-        unsubscribe = await pb
-          .collection("tasks")
-          .subscribe("*", handleRealtimeUpdate);
-
-        console.log("✅ Subscribed to 'tasks' collection");
-        setIsSubscribed(true);
-      } catch (err) {
-        console.error("❌ Failed to subscribe to tasks:", err);
-        setIsSubscribed(false);
-      } finally {
-        isConnecting = false;
-      }
-    };
-
-    // Monitor visibility to restore dropped socket if needed
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
         const socket = pb.realtime.client;
         if (!socket || socket.readyState !== 1) {
-          console.warn("🔄 Page visible but socket closed. Reconnecting...");
           initRealtime();
         }
       }
     };
-
-    // Setup PB realtime connect/disconnect events
-    const handleConnect = (e) => {
-      console.log("🟢 Realtime connected:", e.clientId);
-    };
-    const handleDisconnect = () => {
-      console.warn("🔴 Realtime disconnected");
-      setIsSubscribed(false);
-    };
-
-    fetchData();
-    initRealtime();
-
-    // Watchdog to check every 10s
-    watchdogInterval = setInterval(() => {
-      const socket = pb.realtime.client;
-      if (!socket || socket.readyState !== 1) {
-        console.warn("🔌 Socket not open. Attempting to reconnect...");
-        initRealtime();
-      }
-    }, 60000);
-
-    // Add visibility watcher
     document.addEventListener("visibilitychange", handleVisibility);
 
-    // Add PB event listeners
-    pb.realtime.subscribe("PB_CONNECT", handleConnect);
-    pb.realtime.subscribe("PB_DISCONNECT", handleDisconnect);
+    const authCleanup = pb.authStore.onChange(() => {
+      if (!pb.authStore.isValid) {
+        console.warn("🔐 Auth expired");
+      }
+    });
 
-    // Cleanup
     return () => {
-      if (unsubscribe) unsubscribe();
-      if (watchdogInterval) clearInterval(watchdogInterval);
+      if (unsubscribeRef.current) {
+        try {
+          unsubscribeRef.current();
+        } catch (e) {
+          console.warn("⚠️ Unsubscribe cleanup error:", e);
+        }
+      }
+
+      clearInterval(watchdogInterval.current);
       document.removeEventListener("visibilitychange", handleVisibility);
-      pb.realtime.unsubscribe("PB_CONNECT", handleConnect);
-      pb.realtime.unsubscribe("PB_DISCONNECT", handleDisconnect);
+      authCleanup();
+
+      try {
+        pb.realtime.disconnect();
+      } catch (e) {
+        console.warn("⚠️ Disconnect error:", e);
+      }
     };
   }, []);
 
