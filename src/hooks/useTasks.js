@@ -8,10 +8,14 @@ export default function useTasks() {
 
   useEffect(() => {
     const applyEvent = (e) => {
+      console.log("📦 Realtime event:", e); // <-- add this line
+
       setTasks((prev) => {
         switch (e.action) {
           case "create":
-            return [e.record, ...prev];
+            return [...prev, e.record].sort(
+              (a, b) => new Date(a.created) - new Date(b.created)
+            );
           case "update":
             return prev.map((t) => (t.id === e.record.id ? e.record : t));
           case "delete":

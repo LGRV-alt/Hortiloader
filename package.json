@@ -18,7 +18,7 @@
     "@tanstack/react-query": "^5.51.23",
     "gh-pages": "^6.1.1",
     "nanoid": "^5.1.5",
-    "pocketbase": "^0.21.4",
+    "pocketbase": "^0.26.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.52.2",
