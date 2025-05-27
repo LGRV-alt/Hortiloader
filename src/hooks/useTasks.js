@@ -128,40 +128,40 @@ export default function useTasks() {
   // }
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const records = await pb.collection("tasks").getFullList({
-          sort: "-created",
+    let unsub;
+
+    const setup = async () => {
+      // 1) fetch initial tasks
+      const records = await pb
+        .collection("tasks")
+        .getFullList({ sort: "-created" });
+      setTasks(records);
+
+      // 2) ensure realtime connection is open
+      await pb.realtime.connect();
+      console.log("Hello");
+      console.log(pb.realtime.clientId);
+
+      // 3) subscribe—and grab the returned unsubscribe function
+      unsub = pb.collection("tasks").subscribe("*", (e) => {
+        setTasks((prev) => {
+          if (e.action === "create") return [e.record, ...prev];
+          if (e.action === "update")
+            return prev.map((t) => (t.id === e.record.id ? e.record : t));
+          if (e.action === "delete")
+            return prev.filter((t) => t.id !== e.record.id);
+          return prev;
         });
-        setTasks(records);
-      } catch (err) {
-        console.error("Error fetching tasks:", err);
-      }
-    };
-
-    fetchTasks();
-
-    const handleChange = (e) => {
-      setTasks((prevTasks) => {
-        switch (e.action) {
-          case "create":
-            return [e.record, ...prevTasks];
-          case "update":
-            return prevTasks.map((task) =>
-              task.id === e.record.id ? e.record : task
-            );
-          case "delete":
-            return prevTasks.filter((task) => task.id !== e.record.id);
-          default:
-            return prevTasks;
-        }
       });
     };
 
-    pb.collection("tasks").subscribe("*", handleChange);
+    setup().catch(console.error);
 
     return () => {
-      pb.collection("tasks").unsubscribe("*");
+      // 4) cleanup: call the unsubscribe function if we got one
+      if (unsub) unsub();
+      // 5) close the SSE connection
+      pb.realtime.disconnect();
     };
   }, []);
 
