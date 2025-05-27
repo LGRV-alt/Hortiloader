@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { getDateWeek, isUserValid, signout } from "./lib/pocketbase";
+import { getDateWeek, signout } from "./lib/pocketbase";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "./Hamburger";
 import LogoTree from "./LogoTree";
@@ -8,7 +8,8 @@ import CloseIcon from "./CloseIcon";
 import { CiLogout } from "react-icons/ci";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { FaSearch } from "react-icons/fa";
-import Edit from "../templates/Edit";
+import useAuth from "../hooks/useAuth";
+
 function Header({
   setChosenWeek,
   setChosenYear,
@@ -20,6 +21,8 @@ function Header({
   const [toggleNav, setToggleNav] = useState(false);
 
   const [week, setWeek] = useState(getDateWeek(new Date()));
+
+  const isAuthenticated = useAuth();
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -131,7 +134,7 @@ function Header({
         </button>
       </div>
 
-      {!isUserValid ? (
+      {!isAuthenticated ? (
         <p></p>
       ) : (
         <>

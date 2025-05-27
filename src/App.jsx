@@ -15,6 +15,7 @@ import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+import useAuth from "./hooks/useAuth";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -22,6 +23,8 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
+
+  const isAuthenticated = useAuth();
 
   console.log(customerList);
 
@@ -45,7 +48,7 @@ export default function App() {
 
   return (
     <>
-      {isUserValid ? (
+      {isAuthenticated ? (
         <div className="overflow-y-scroll grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
             <Header

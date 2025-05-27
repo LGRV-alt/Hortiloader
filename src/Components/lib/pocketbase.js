@@ -1,17 +1,7 @@
-import PocketBase from "pocketbase";
 import pb from "./pbConnect";
-
-// // const url = `${import.meta.env.VITE_POCKETBASE}`;
-// const client = new PocketBase("https://hortiloader.pockethost.io");
-// const pb = new PocketBase("https://hortiloader.pockethost.io");
-// export default pb;
-// pb.autoCancellation(false);
 
 // client.autoCancellation(false);
 export const isUserValid = pb.authStore.isValid;
-// export async function getTasks() {
-//   return await client.collection("tasks").getFullList();
-// }
 
 // function to update the record from the edit section
 export async function updateTask(
@@ -46,11 +36,11 @@ export async function updateTask(
 export async function login(username, password) {
   try {
     await pb.collection("users").authWithPassword(username, password);
-    window.location.reload();
+    // No reload
+    console.log("Logged in:", pb.authStore.model);
   } catch (error) {
     console.log(error);
-    console.log(error.data);
-    if (error.data.code) {
+    if (error.data?.code) {
       alert("Invalid username or password");
     }
   }
