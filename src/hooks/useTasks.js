@@ -89,38 +89,79 @@ import pb from "../Components/lib/pbConnect";
 
 export default function useTasks() {
   const [tasks, setTasks] = useState([]);
-  const unsubRef = useRef(null);
+  // const unsubRef = useRef(null);
+
+  //   useEffect(() => {
+  //     // Handler for realtime events
+  //     const handleEvent = (e) => {
+  //       setTasks((prev) => {
+  //         switch (e.action) {
+  //           case "create":
+  //             return [...prev, e.record];
+  //           case "update":
+  //             return prev.map((t) => (t.id === e.record.id ? e.record : t));
+  //           case "delete":
+  //             return prev.filter((t) => t.id !== e.record.id);
+  //           default:
+  //             return prev;
+  //         }
+  //       });
+  //     };
+
+  //     // Initial fetch
+  //     pb.collection("tasks").getFullList({ sort: "created" }).then(setTasks);
+
+  //     // Subscribe to realtime events (create/update/delete)
+  //     pb.collection("tasks")
+  //       .subscribe("*", handleEvent)
+  //       .then((unsub) => {
+  //         unsubRef.current = unsub;
+  //       });
+
+  //     // Cleanup on unmount
+  //     return () => {
+  //       if (typeof unsubRef.current === "function") unsubRef.current();
+  //     };
+  //   }, []);
+
+  //   return tasks;
+  // }
 
   useEffect(() => {
-    // Handler for realtime events
-    const handleEvent = (e) => {
-      setTasks((prev) => {
+    const fetchTasks = async () => {
+      try {
+        const records = await pb.collection("tasks").getFullList({
+          sort: "-created",
+        });
+        setTasks(records);
+      } catch (err) {
+        console.error("Error fetching tasks:", err);
+      }
+    };
+
+    fetchTasks();
+
+    const handleChange = (e) => {
+      setTasks((prevTasks) => {
         switch (e.action) {
           case "create":
-            return [...prev, e.record];
+            return [e.record, ...prevTasks];
           case "update":
-            return prev.map((t) => (t.id === e.record.id ? e.record : t));
+            return prevTasks.map((task) =>
+              task.id === e.record.id ? e.record : task
+            );
           case "delete":
-            return prev.filter((t) => t.id !== e.record.id);
+            return prevTasks.filter((task) => task.id !== e.record.id);
           default:
-            return prev;
+            return prevTasks;
         }
       });
     };
 
-    // Initial fetch
-    pb.collection("tasks").getFullList({ sort: "created" }).then(setTasks);
+    pb.collection("tasks").subscribe("*", handleChange);
 
-    // Subscribe to realtime events (create/update/delete)
-    pb.collection("tasks")
-      .subscribe("*", handleEvent)
-      .then((unsub) => {
-        unsubRef.current = unsub;
-      });
-
-    // Cleanup on unmount
     return () => {
-      if (typeof unsubRef.current === "function") unsubRef.current();
+      pb.collection("tasks").unsubscribe("*");
     };
   }, []);
 
