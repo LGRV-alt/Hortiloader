@@ -91,9 +91,7 @@ export default function useTasks() {
     if (!pb.authStore.isValid) return;
 
     try {
-      const all = await pb
-        .collection("tasks")
-        .getFullList({ sort: "-updated" });
+      const all = await pb.collection("tasks").getFullList({ sort: "created" });
 
       const hasChanged =
         all.length !== currentTasksRef.current.length ||
