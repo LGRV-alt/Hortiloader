@@ -62,13 +62,13 @@ export default function Edit({ records }) {
     );
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    navigate(-1);
-    updateTask(
+
+    await updateTask(
       id,
       title,
       other,
@@ -81,6 +81,7 @@ export default function Edit({ records }) {
       status,
       year
     );
+    navigate(-1);
   };
 
   const handleDelete = (id) => {

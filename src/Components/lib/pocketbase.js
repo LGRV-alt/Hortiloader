@@ -1,4 +1,5 @@
 import pb from "./pbConnect";
+import { emitRefetchTasks } from "./eventBus";
 
 // client.autoCancellation(false);
 export const isUserValid = pb.authStore.isValid;
@@ -30,6 +31,7 @@ export async function updateTask(
     year: year,
   };
   await pb.collection("tasks").update(id, data);
+  emitRefetchTasks();
   // history.go(0);
 }
 
@@ -72,6 +74,7 @@ export async function signup(username, password) {
 
 export async function deleteTask(id) {
   await pb.collection("tasks").delete(id);
+  emitRefetchTasks();
 }
 
 export async function taskStatus(id, title, status) {
@@ -81,6 +84,7 @@ export async function taskStatus(id, title, status) {
     status: status,
   };
   await pb.collection("tasks").update(id, data);
+  emitRefetchTasks();
 }
 
 export async function createTask(
@@ -109,6 +113,7 @@ export async function createTask(
     year: year,
   };
   await pb.collection("tasks").create(data);
+  emitRefetchTasks();
 }
 
 export function getDateWeek(d) {
