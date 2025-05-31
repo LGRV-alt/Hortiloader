@@ -29,7 +29,7 @@ export default function Vehicle({ customerName, setCustomerName }) {
   return (
     <div className="grid grid-rows-[0.5fr_5fr] h-full">
       {/* ------------------- Vehicle Selection ---------------------------- */}
-      <div className="flex justify-between items-center p-1">
+      <div className="flex justify-between items-center p-1 ">
         <div className="flex gap-1">
           <div className="border-black border-r-2 pr-2">
             <button
@@ -145,7 +145,7 @@ export default function Vehicle({ customerName, setCustomerName }) {
         )}
       </div>
       {/* --------------------Vehicle Map Section ---------------------------------- */}
-      <div className="p-1">
+      <div className="p-7">
         {/* --------------------Trailer--------------------------------------------- */}
         {vehicle === "trailer" ? (
           <div className="h-full flex flex-col items-center p-2">
