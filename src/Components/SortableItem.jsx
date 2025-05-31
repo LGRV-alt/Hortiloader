@@ -70,9 +70,22 @@ export default function SortableItem({
     onEdit(item.id, updated);
   };
 
+  function handleCustomerName(title, orderNumber) {
+    let customerName = "";
+    if (orderNumber == 0) {
+      customerName = title;
+    } else {
+      customerName = `${title} - ${orderNumber}`;
+    }
+    return customerName;
+  }
+
   return (
     <li
-      onClick={() => setCustomerName(item.title)}
+      // onClick={() => setCustomerName(`${item.title} - ${item.orderNumber}`)}
+      onClick={() =>
+        setCustomerName(handleCustomerName(item.title, item.orderNumber))
+      }
       style={style}
       className={`border-b-2 border-black ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"

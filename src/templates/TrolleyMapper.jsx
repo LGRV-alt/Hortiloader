@@ -30,6 +30,7 @@ export default function TrolleyMapper({ records, customerList }) {
           customerName={customerName}
           items={tasks}
           onReorder={handleReorder}
+          setCustomerName={setCustomerName}
         />
       </div>
     </div>
