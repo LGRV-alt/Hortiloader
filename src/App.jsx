@@ -17,6 +17,7 @@ import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
+import ViewExportPage from "./templates/ViewExportPage";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -83,7 +84,9 @@ export default function App() {
                 element={<HoldingPage records={rec} />}
               />
 
-              <Route path="/exports" element={<TrolleyExportsPage />} />
+              <Route path="/runs" element={<TrolleyExportsPage />} />
+
+              <Route path="/runs/view/:id" element={<ViewExportPage />} />
 
               <Route
                 path="/trolley-mapper"

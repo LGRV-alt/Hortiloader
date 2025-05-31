@@ -2,12 +2,15 @@
 import { useEffect, useState } from "react";
 import PocketBase from "pocketbase";
 import pb from "../Components/lib/pbConnect";
+import { useNavigate } from "react-router-dom";
 
 export default function TrolleyExportsPage() {
   const [exports, setExports] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const CORRECT_PASSWORD = "stan666"; // 🔐 Change this or get from secure source
 
@@ -49,12 +52,13 @@ export default function TrolleyExportsPage() {
 
   const handleClick = (record) => {
     console.log("Export record:", record);
+    navigate(`/runs/view/${record.id}`);
   };
 
   return (
     <div className="mx-5 mt-5 relative">
       {exports.length === 0 ? (
-        <p className="text-gray-500">No exports found.</p>
+        <p className="text-gray-500">No runs found.</p>
       ) : (
         exports.map((record) => (
           <div

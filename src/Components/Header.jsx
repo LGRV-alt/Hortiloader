@@ -241,9 +241,9 @@ function Header({
                     // }
                     className={"hover:text-blue-500"}
                     onClick={() => setToggleNav(!toggleNav)}
-                    to="/exports"
+                    to="/runs"
                   >
-                    Exports
+                    Runs
                   </NavLink>
 
                   <NavLink
