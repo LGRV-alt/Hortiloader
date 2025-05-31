@@ -4,9 +4,6 @@ export default function Vehicle({ customerName, setCustomerName }) {
   const [trolleyNumber, setTrolleyNumber] = useState(0);
   const [vehicle, setVehicle] = useState("");
   const [grid, setGridItems] = useState([]);
-  console.log(customerName);
-  // console.log("Trolley Number " + trolleyNumber);
-  // console.log(vehicle);
 
   function handleTrolleyNumber(e) {
     setTrolleyNumber(e.target.value);
@@ -30,42 +27,50 @@ export default function Vehicle({ customerName, setCustomerName }) {
     e.target.innerHTML = customerName;
   }
   return (
-    <div className="bg-red-500 grid grid-rows-[0.5fr_0.5fr_5fr] h-full">
+    <div className="grid grid-rows-[0.5fr_5fr] h-full">
       {/* ------------------- Vehicle Selection ---------------------------- */}
-      <div className="flex justify-between items-center p-2">
-        <div className="flex gap-4">
-          <button
-            onClick={(e) => handleVehicleSelection(e)}
-            className="w-auto p-2 rounded-2xl border-black border-2 hover:border-blue-500 "
-            value="lorry"
-          >
-            Lorry
-          </button>{" "}
-          <button
-            onClick={(e) => handleVehicleSelection(e)}
-            className="w-auto p-2 rounded-2xl border-black border-2 hover:border-blue-500 "
-            value="trailer"
-          >
-            Trailer
-          </button>
+      <div className="flex justify-between items-center p-1">
+        <div className="flex gap-1">
+          <div className="border-black border-r-2 pr-2">
+            <button
+              onClick={(e) => handleVehicleSelection(e)}
+              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+              value="lorry"
+            >
+              Lorry
+            </button>{" "}
+            <button
+              onClick={(e) => handleVehicleSelection(e)}
+              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+              value="trailer"
+            >
+              Trailer
+            </button>
+          </div>
+          <div className="pl-2 gap-1 flex">
+            <button
+              className="w-auto p-1  rounded-2xl border-black border-2 hover:border-blue-500 "
+              onClick={() => setCustomerName("Blank")}
+            >
+              Blank Trolley
+            </button>
+            <button
+              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+              onClick={() => setCustomerName("")}
+            >
+              Erase
+            </button>
+            <button
+              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+              onClick={() => setGridItems([])}
+            >
+              Clear All
+            </button>
+          </div>
         </div>
-        <div className="flex gap-4">
-          <button
-            className="w-auto p-2 rounded-2xl border-black border-2 hover:border-blue-500 "
-            onClick={() => setCustomerName("Blank")}
-          >
-            Blank Trolley
-          </button>
-          <button
-            className="w-auto p-2 rounded-2xl border-black border-2 hover:border-blue-500 "
-            onClick={() => setCustomerName("")}
-          >
-            Erase
-          </button>
-        </div>
-      </div>
-      {/*-------------------- Trolley Number Selector ------------------------- */}
-      <div className="border-2 p-4">
+        {/* </div> */}
+        {/*-------------------- Trolley Number Selector ------------------------- */}
+        {/* <div className="border-2 p-4"> */}
         {/* Trailer Numbers */}
         {vehicle === "trailer" ? (
           <ul className="flex gap-2 justify-center items-center">
@@ -93,7 +98,7 @@ export default function Vehicle({ customerName, setCustomerName }) {
           </ul>
         ) : (
           // Lorry Numbers
-          <ul className="flex gap-2 justify-center items-center">
+          <ul className="flex gap-1 justify-center items-center">
             <button
               onClick={(e) => handleTrolleyNumber(e)}
               value={4}
