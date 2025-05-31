@@ -21,6 +21,28 @@ export default function DragAndDropList({
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor));
+  let trolleyTotal = handleTotalTrollies(items);
+
+  function handleTotalTrollies(arr) {
+    let trolleyCount = 0;
+    arr.forEach((item) => {
+      const value = Number(item.trollies);
+      trolleyCount += isNaN(value) ? 0 : value;
+    });
+    return trolleyCount;
+  }
+
+  const [vehicleInfo, setVehicleInfo] = useState({
+    driver: "",
+    reg: "",
+    code: "",
+    date: "",
+  });
+
+  const handleVehicleChange = (e) => {
+    const { name, value } = e.target;
+    setVehicleInfo((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleDelete = (id) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
@@ -56,14 +78,15 @@ export default function DragAndDropList({
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-center">
+    <div className="w-full border-black border-2 rounded-lg p-2">
+      <div className="flex justify-between items-center border-black border-b-2 pb-2">
         <button
           onClick={() => setIsEditing((prev) => !prev)}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          {isEditing ? "Finish Editing" : "Edit All"}
+          {isEditing ? "Finish Editing" : "Edit"}
         </button>
+        <p>Total Trollies-{trolleyTotal}</p>
         {isEditing && (
           <button
             onClick={handleAddTask}
@@ -73,6 +96,44 @@ export default function DragAndDropList({
           </button>
         )}
       </div>
+      {isEditing ? (
+        <div className="flex p-2">
+          {" "}
+          <input
+            name="driver"
+            type="text"
+            placeholder="Driver"
+            value={vehicleInfo.driver}
+            onChange={handleVehicleChange}
+            className="border p-2 rounded w-full"
+          />
+          <input
+            name="reg"
+            type="text"
+            placeholder="Reg"
+            value={vehicleInfo.reg}
+            onChange={handleVehicleChange}
+            className="border p-2 rounded w-full"
+          />
+          <input
+            name="code"
+            type="text"
+            placeholder="Code"
+            value={vehicleInfo.code}
+            onChange={handleVehicleChange}
+            className="border p-2 rounded w-full"
+          />
+          <input
+            name="date"
+            type="date"
+            value={vehicleInfo.date}
+            onChange={handleVehicleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+      ) : (
+        ""
+      )}
 
       <DndContext
         sensors={sensors}
@@ -83,7 +144,7 @@ export default function DragAndDropList({
           items={items.map((item) => item.id)}
           strategy={verticalListSortingStrategy}
         >
-          <ul className="space-y-3">
+          <ul className="space-y-1">
             {items.map((item, index) => (
               <SortableItem
                 key={item.id}

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import DragAndDropList from "../Components/DragAndDropList";
+import Vehicle from "../Components/Vehicle";
 
 export default function TrolleyMapper({ records, customerList }) {
   const selectedRecords = records.filter((item) =>
@@ -15,9 +16,12 @@ export default function TrolleyMapper({ records, customerList }) {
 
   console.log(tasks);
   return (
-    <div>
-      <div className="min-h-screen w-1/3 bg-gray-100">
+    <div className="flex h-full">
+      <div className=" w-1/2 p-2 bg-gray-100">
         <DragAndDropList items={tasks} onReorder={handleReorder} />
+      </div>
+      <div className="w-1/2  bg-gray-100 ">
+        <Vehicle items={tasks} onReorder={handleReorder} />
       </div>
     </div>
   );

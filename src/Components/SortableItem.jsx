@@ -29,6 +29,7 @@ export default function SortableItem({
     setFormData({
       title: item.title || "",
       postcode: item.postcode || "",
+      orderNumber: item.orderNumber || "",
       trollies: item.trollies || "",
       extras: item.extras || "",
     });
@@ -38,6 +39,29 @@ export default function SortableItem({
     transform: CSS.Transform.toString(transform),
     transition,
   };
+
+  function reduceOrderNumber(num) {
+    if (!num) {
+      return "";
+    } else {
+      let newOrderNumber = num.toString().slice(-4);
+      return newOrderNumber;
+    }
+  }
+
+  function sortPostCode(string) {
+    if (string.length < 1) {
+      return "";
+    } else if (/\d/.test(string)) {
+      let reversePostCode = string.split("").reverse();
+      let lastPart = reversePostCode.slice(0, 3).reverse().join("").toString();
+      let firstPart = reversePostCode.slice(3).reverse().join("").toString();
+      let newPostCode = `${firstPart} ${lastPart}`;
+      return newPostCode.toUpperCase();
+    } else {
+      return string;
+    }
+  }
 
   const handleChange = (key, value) => {
     const updated = { ...formData, [key]: value };
@@ -51,43 +75,50 @@ export default function SortableItem({
       {...(isEditing ? {} : attributes)}
       {...(isEditing ? {} : listeners)}
       style={style}
-      className={`bg-slate-400 ${
+      className={`border-b-2 border-black ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
     >
       {isEditing ? (
-        <div className="space-y-2">
+        <div className="p-2 gap-2 flex items-center">
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-2/3 border rounded text-center"
             value={formData.title}
             onChange={(e) => handleChange("title", e.target.value)}
             placeholder="Title"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-1/3 border rounded text-center"
+            value={formData.orderNumber}
+            onChange={(e) => handleChange("orderNumber", e.target.value)}
+            placeholder="Order No"
+          />
+          <input
+            type="text"
+            className="w-1/3 border rounded text-center"
             value={formData.postcode}
             onChange={(e) => handleChange("postcode", e.target.value)}
             placeholder="Postcode"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-1/3 border rounded text-center"
             value={formData.trollies}
             onChange={(e) => handleChange("trollies", e.target.value)}
             placeholder="Trollies"
           />
           <input
             type="text"
-            className="w-full border rounded px-3 py-1"
+            className="w-full border rounded text-center"
             value={formData.extras}
             onChange={(e) => handleChange("extras", e.target.value)}
             placeholder="Extras"
           />
           <button
             onClick={() => onDelete(item.id)}
-            className="mt-2 text-red-600 hover:text-red-800 text-sm"
+            className=" text-red-600 hover:text-red-800 text-sm"
           >
             Delete
           </button>
@@ -99,8 +130,8 @@ export default function SortableItem({
               <span className="text-sm">{index + 1}.</span>
             </div>
             <div className="font-semibold text-lg">{item.title}</div>
-            <p>{item.orderNumber}</p>
-            <div className="text-sm ">{item.postcode}</div>
+            <p>{reduceOrderNumber(item.orderNumber)}</p>
+            <div className="text-sm ">{sortPostCode(item.postcode)}</div>
           </div>
           <div className="flex items-center gap-2">
             {item.trollies && <div className="">{item.trollies}T</div>}
