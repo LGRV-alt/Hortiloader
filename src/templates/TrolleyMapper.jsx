@@ -70,7 +70,8 @@ export default function TrolleyMapper({ records, customerList }) {
     // Upload to PocketBase before exporting
     try {
       await pb.collection("trolley_exports").create({
-        name: `Export ${new Date().toLocaleString()}`,
+        name: `${vehicleInfo.date.split("-").reverse().join("-")}-
+          ${vehicleInfo.driver}-${vehicleInfo.reg}`,
         data: tasks,
         user: pb.authStore.model.id,
       });

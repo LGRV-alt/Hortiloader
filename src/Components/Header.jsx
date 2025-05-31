@@ -233,6 +233,18 @@ function Header({
                   >
                     Collects
                   </NavLink>
+                  <NavLink
+                    // className={({ isActive }) =>
+                    //   isActive
+                    //     ? "text-secondary-colour font-bold  "
+                    //     : "text-white font-normal"
+                    // }
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/exports"
+                  >
+                    Exports
+                  </NavLink>
 
                   <NavLink
                     // className={({ isActive }) =>

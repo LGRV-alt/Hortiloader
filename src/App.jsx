@@ -16,6 +16,7 @@ import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import useAuth from "./hooks/useAuth";
+import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -29,6 +30,7 @@ export default function App() {
   console.log(customerList);
 
   // const rec = useTasks();
+  // const rec = usePocketbaseRealtimeTasks();
   const { tasks: rec, refetch } = useTasks();
 
   function getCurrentWeek(d) {
@@ -80,6 +82,8 @@ export default function App() {
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
               />
+
+              <Route path="/exports" element={<TrolleyExportsPage />} />
 
               <Route
                 path="/trolley-mapper"
