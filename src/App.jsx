@@ -2,7 +2,7 @@ import Header from "./Components/Header";
 import Body from "./Components/Body";
 
 import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 
@@ -30,11 +30,12 @@ export default function App() {
 
   const isAuthenticated = useAuth();
 
-  // DAILY AUTH CLEAR
-  if (pb.authStore.isValid && shouldClearAuthDaily()) {
-    pb.authStore.clear();
-    window.location.reload(); // force re-render to show login
-  }
+  useEffect(() => {
+    if (pb.authStore.isValid && shouldClearAuthDaily()) {
+      pb.authStore.clear();
+      window.location.reload(); // force re-render to show login
+    }
+  }, []);
 
   if (isAuthenticated) {
     setTodayAsLoginDate(); // store today's login
