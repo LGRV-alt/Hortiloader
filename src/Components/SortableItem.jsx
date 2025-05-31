@@ -8,6 +8,7 @@ export default function SortableItem({
   isEditing,
   onEdit,
   onDelete,
+  setCustomerName,
 }) {
   const {
     attributes,
@@ -69,11 +70,22 @@ export default function SortableItem({
     onEdit(item.id, updated);
   };
 
+  function handleCustomerName(title, orderNumber) {
+    let customerName = "";
+    if (orderNumber == 0) {
+      customerName = title;
+    } else {
+      customerName = `${title} - ${orderNumber}`;
+    }
+    return customerName;
+  }
+
   return (
     <li
-      ref={setNodeRef}
-      {...(isEditing ? {} : attributes)}
-      {...(isEditing ? {} : listeners)}
+      // onClick={() => setCustomerName(`${item.title} - ${item.orderNumber}`)}
+      onClick={() =>
+        setCustomerName(handleCustomerName(item.title, item.orderNumber))
+      }
       style={style}
       className={`border-b-2 border-black ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
@@ -125,9 +137,16 @@ export default function SortableItem({
         </div>
       ) : (
         <div className="flex justify-between p-1">
-          <div className="flex gap-2 justify-start items-center">
+          <div className=" flex gap-2 justify-start items-center">
             <div className="flex justify-between items-center">
-              <span className="text-sm">{index + 1}.</span>
+              <span
+                ref={setNodeRef}
+                {...attributes}
+                {...listeners}
+                className="text-sm"
+              >
+                {index + 1}.
+              </span>
             </div>
             <div className="font-semibold text-lg">{item.title}</div>
             <p>{reduceOrderNumber(item.orderNumber)}</p>

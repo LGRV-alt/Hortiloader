@@ -246,6 +246,13 @@ function Header({
                   >
                     Holding
                   </NavLink>
+                  <NavLink
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/runs"
+                  >
+                    Runs
+                  </NavLink>
                 </div>
               )}
 
