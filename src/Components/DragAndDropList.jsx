@@ -18,6 +18,11 @@ export default function DragAndDropList({
   items: initialItems = [],
   onReorder,
   setCustomerName,
+  export: exportToPDF,
+  readOnly,
+  isExporting,
+  vehicleInfo,
+  setVehicleInfo,
 }) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,13 +37,6 @@ export default function DragAndDropList({
     });
     return trolleyCount;
   }
-
-  const [vehicleInfo, setVehicleInfo] = useState({
-    driver: "",
-    reg: "",
-    code: "",
-    date: "",
-  });
 
   const handleVehicleChange = (e) => {
     const { name, value } = e.target;
@@ -77,26 +75,54 @@ export default function DragAndDropList({
     );
     setItems(updated);
   };
+  console.log(vehicleInfo);
 
   return (
     <div className="w-full border-black border-2 rounded-lg p-2">
-      <div className="flex justify-between items-center border-black border-b-2 pb-2">
-        <button
-          onClick={() => setIsEditing((prev) => !prev)}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          {isEditing ? "Finish Editing" : "Edit"}
-        </button>
-        <p>Total Trollies-{trolleyTotal}</p>
-        {isEditing && (
+      {/* This is the view when working on the page and not exporting the PDF */}
+      {!isExporting && (
+        <div className="flex justify-between items-center border-black border-b-2 pb-2">
           <button
-            onClick={handleAddTask}
-            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            onClick={() => setIsEditing((prev) => !prev)}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
-            + Add Task
+            {isEditing ? "Finish Editing" : "Edit"}
           </button>
-        )}
-      </div>
+          <p>Total Trollies-{trolleyTotal}</p>
+          {!isEditing && (
+            <button
+              onClick={exportToPDF}
+              className="px-4 py-2 bg-blue-600 text-white rounded"
+            >
+              Export to PDF
+            </button>
+          )}
+
+          {isEditing && (
+            <button
+              onClick={handleAddTask}
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              + Add Task
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* This is the view when exporting the page - Needs to display certain information */}
+      {isExporting && (
+        <div className="flex flex-col justify-between  border-black border-b-2 pb-2">
+          <div className="flex gap-2 justify-between">
+            <p>{`Driver - ${vehicleInfo.driver}`}</p>
+            <p>{`Reg - ${vehicleInfo.reg}`}</p>
+            <p>{`Date - ${vehicleInfo.date}`}</p>
+          </div>
+          <div className="flex justify-end items-center">
+            <p> Total Trollies-{trolleyTotal}</p>
+          </div>
+        </div>
+      )}
+
       {isEditing ? (
         <div className="flex p-2">
           {" "}

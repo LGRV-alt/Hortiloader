@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Vehicle({ customerName, setCustomerName }) {
+export default function Vehicle({ customerName, setCustomerName, readOnly }) {
   const [trolleyNumber, setTrolleyNumber] = useState(0);
   const [vehicle, setVehicle] = useState("");
   const [grid, setGridItems] = useState([]);
@@ -27,123 +27,130 @@ export default function Vehicle({ customerName, setCustomerName }) {
     e.target.innerHTML = customerName;
   }
   return (
-    <div className="grid grid-rows-[0.5fr_5fr] h-full">
+    <div
+      className={`grid h-full ${
+        readOnly ? "grid-rows-[1fr]" : "grid-rows-[0.5fr_5fr]"
+      }`}
+    >
       {/* ------------------- Vehicle Selection ---------------------------- */}
-      <div className="flex justify-between items-center p-1 ">
-        <div className="flex gap-1">
-          <div className="border-black border-r-2 pr-2">
-            <button
-              onClick={(e) => handleVehicleSelection(e)}
-              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
-              value="lorry"
-            >
-              Lorry
-            </button>{" "}
-            <button
-              onClick={(e) => handleVehicleSelection(e)}
-              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
-              value="trailer"
-            >
-              Trailer
-            </button>
+      {!readOnly && (
+        <div className="flex justify-between items-center p-1 ">
+          <div className="flex gap-1">
+            <div className="border-black border-r-2 pr-2">
+              <button
+                onClick={(e) => handleVehicleSelection(e)}
+                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+                value="lorry"
+              >
+                Lorry
+              </button>{" "}
+              <button
+                onClick={(e) => handleVehicleSelection(e)}
+                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+                value="trailer"
+              >
+                Trailer
+              </button>
+            </div>
+            <div className="pl-2 gap-1 flex">
+              <button
+                className="w-auto p-1  rounded-2xl border-black border-2 hover:border-blue-500 "
+                onClick={() => setCustomerName("Blank")}
+              >
+                Blank Trolley
+              </button>
+              <button
+                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+                onClick={() => setCustomerName("")}
+              >
+                Erase
+              </button>
+              <button
+                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
+                onClick={() => setGridItems([])}
+              >
+                Clear All
+              </button>
+            </div>
           </div>
-          <div className="pl-2 gap-1 flex">
-            <button
-              className="w-auto p-1  rounded-2xl border-black border-2 hover:border-blue-500 "
-              onClick={() => setCustomerName("Blank")}
-            >
-              Blank Trolley
-            </button>
-            <button
-              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
-              onClick={() => setCustomerName("")}
-            >
-              Erase
-            </button>
-            <button
-              className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500 "
-              onClick={() => setGridItems([])}
-            >
-              Clear All
-            </button>
-          </div>
+          {/* </div> */}
+          {/*-------------------- Trolley Number Selector ------------------------- */}
+          {/* <div className="border-2 p-4"> */}
+          {/* Trailer Numbers */}
+          {vehicle === "trailer" ? (
+            <ul className="flex gap-2 justify-center items-center">
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={3}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                3T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={6}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                6T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={7}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                7T
+              </button>
+            </ul>
+          ) : (
+            // Lorry Numbers
+            <ul className="flex gap-1 justify-center items-center">
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={4}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                4T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={8}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                8T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={12}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                12T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={16}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                16T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={20}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                20T
+              </button>
+              <button
+                onClick={(e) => handleTrolleyNumber(e)}
+                value={24}
+                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
+              >
+                24T
+              </button>
+            </ul>
+          )}
         </div>
-        {/* </div> */}
-        {/*-------------------- Trolley Number Selector ------------------------- */}
-        {/* <div className="border-2 p-4"> */}
-        {/* Trailer Numbers */}
-        {vehicle === "trailer" ? (
-          <ul className="flex gap-2 justify-center items-center">
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={3}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              3T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={6}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              6T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={7}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              7T
-            </button>
-          </ul>
-        ) : (
-          // Lorry Numbers
-          <ul className="flex gap-1 justify-center items-center">
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={4}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              4T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={8}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              8T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={12}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              12T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={16}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              16T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={20}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              20T
-            </button>
-            <button
-              onClick={(e) => handleTrolleyNumber(e)}
-              value={24}
-              className="w-12 rounded-2xl border-black border-2 hover:border-blue-500 "
-            >
-              24T
-            </button>
-          </ul>
-        )}
-      </div>
+      )}
+
       {/* --------------------Vehicle Map Section ---------------------------------- */}
       <div className="p-7">
         {/* --------------------Trailer--------------------------------------------- */}
