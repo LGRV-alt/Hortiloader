@@ -3,15 +3,30 @@ import { useState } from "react";
 export default function Vehicle() {
   const [trolleyNumber, setTrolleyNumber] = useState(0);
   const [vehicle, setVehicle] = useState("");
-  console.log("Trolley Number " + trolleyNumber);
-  console.log(vehicle);
+  const [grid, setGridItems] = useState([]);
+  // console.log("Trolley Number " + trolleyNumber);
+  // console.log(vehicle);
+  console.log(grid);
 
   function handleTrolleyNumber(e) {
     setTrolleyNumber(e.target.value);
+    generateGrid(trolleyNumber);
   }
 
   function handleVehicleSelection(e) {
     setVehicle(e.target.value);
+  }
+
+  function handleTrolleySelection(number) {
+    setGridItems(generateGrid(number));
+  }
+
+  function generateGrid(number) {
+    let arr = [];
+    for (let i = 0; i < number; i++) {
+      arr.push("");
+    }
+    setGridItems(arr);
   }
 
   return (
