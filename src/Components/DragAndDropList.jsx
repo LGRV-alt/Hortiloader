@@ -17,6 +17,7 @@ import SortableItem from "./SortableItem";
 export default function DragAndDropList({
   items: initialItems = [],
   onReorder,
+  setCustomerName,
 }) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
@@ -153,6 +154,7 @@ export default function DragAndDropList({
                 isEditing={isEditing}
                 onEdit={handleItemEdit}
                 onDelete={handleDelete}
+                setCustomerName={setCustomerName}
               />
             ))}
           </ul>
