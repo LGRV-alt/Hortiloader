@@ -43,11 +43,13 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DragAndDropList from "../Components/DragAndDropList";
 import Vehicle from "../Components/Vehicle";
+import pb from "../Components/lib/pbConnect";
 
 export default function TrolleyMapper({ records, customerList }) {
   const [tasks, setTasks] = useState(
     records.filter((item) => customerList.includes(item.id))
   );
+  console.log(tasks);
   const [customerName, setCustomerName] = useState("");
   const [isExporting, setIsExporting] = useState(false); // 👈 control what's shown
   const [vehicleInfo, setVehicleInfo] = useState({
@@ -64,6 +66,18 @@ export default function TrolleyMapper({ records, customerList }) {
   const exportToPDF = async () => {
     setIsExporting(true); // 🔒 Show/hide things based on this flag
     await new Promise((resolve) => setTimeout(resolve, 100)); // wait for DOM to update
+
+    // Upload to PocketBase before exporting
+    try {
+      await pb.collection("trolley_exports").create({
+        name: `Export ${new Date().toLocaleString()}`,
+        data: tasks,
+        user: pb.authStore.model.id,
+      });
+      console.log("Export data saved to PocketBase");
+    } catch (err) {
+      console.error("Error saving export to PocketBase:", err);
+    }
 
     const element = exportRef.current;
     const canvas = await html2canvas(element, {
@@ -91,7 +105,12 @@ export default function TrolleyMapper({ records, customerList }) {
     const y = 0; // Start at top of page
 
     pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
-    pdf.save("trolley-map.pdf");
+    // pdf.save("trolley-map.pdf");
+    pdf.save(
+      `${vehicleInfo.date.split("-").reverse().join("-")}_${
+        vehicleInfo.driver
+      }.pdf`
+    );
 
     setIsExporting(false); // 🔓 Restore full UI
   };
