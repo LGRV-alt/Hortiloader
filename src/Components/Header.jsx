@@ -233,18 +233,6 @@ function Header({
                   >
                     Collects
                   </NavLink>
-                  <NavLink
-                    // className={({ isActive }) =>
-                    //   isActive
-                    //     ? "text-secondary-colour font-bold  "
-                    //     : "text-white font-normal"
-                    // }
-                    className={"hover:text-blue-500"}
-                    onClick={() => setToggleNav(!toggleNav)}
-                    to="/runs"
-                  >
-                    Runs
-                  </NavLink>
 
                   <NavLink
                     // className={({ isActive }) =>
@@ -257,6 +245,13 @@ function Header({
                     to="/holdingPage"
                   >
                     Holding
+                  </NavLink>
+                  <NavLink
+                    className={"hover:text-blue-500"}
+                    onClick={() => setToggleNav(!toggleNav)}
+                    to="/runs"
+                  >
+                    Runs
                   </NavLink>
                 </div>
               )}

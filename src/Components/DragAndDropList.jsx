@@ -23,9 +23,12 @@ export default function DragAndDropList({
   isExporting,
   vehicleInfo,
   setVehicleInfo,
+  saveToPocketBase,
+  saveStatus,
 }) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
+
   const sensors = useSensors(useSensor(PointerSensor));
   let trolleyTotal = handleTotalTrollies(items);
 
@@ -84,18 +87,38 @@ export default function DragAndDropList({
         <div className="flex justify-between items-center border-black border-b-2 pb-2">
           <button
             onClick={() => setIsEditing((prev) => !prev)}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             {isEditing ? "Finish Editing" : "Edit"}
           </button>
           <p>Total Trollies-{trolleyTotal}</p>
           {!isEditing && (
-            <button
-              onClick={exportToPDF}
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-            >
-              Export to PDF
-            </button>
+            <div className="flex gap-2">
+              <div className="flex items-center">
+                {saveStatus === "saving" && (
+                  <p className="text-sm text-blue-600">Saving...</p>
+                )}
+                {saveStatus === "saved" && (
+                  <p className="text-sm text-green-600">Saved!</p>
+                )}
+                {saveStatus === "error" && (
+                  <p className="text-sm text-red-600">Error saving export.</p>
+                )}
+                <button
+                  onClick={saveToPocketBase}
+                  className="p-2 bg-green-600 text-white rounded hover:bg-green-700"
+                >
+                  Save
+                </button>
+              </div>
+
+              <button
+                onClick={exportToPDF}
+                className="p-2 bg-blue-600 text-white rounded"
+              >
+                Save + Print
+              </button>
+            </div>
           )}
 
           {isEditing && (

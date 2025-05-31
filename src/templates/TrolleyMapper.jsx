@@ -1,26 +1,66 @@
 /* eslint-disable react/prop-types */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import DragAndDropList from "../Components/DragAndDropList";
 import Vehicle from "../Components/Vehicle";
 import pb from "../Components/lib/pbConnect";
 
-export default function TrolleyMapper({ records, customerList }) {
+export default function TrolleyMapper({
+  records,
+  customerList,
+  vehicleInfoFromExport,
+}) {
   const [tasks, setTasks] = useState(
     records.filter((item) => customerList.includes(item.id))
   );
-  console.log(tasks);
+
   const [customerName, setCustomerName] = useState("");
+  const [saveStatus, setSaveStatus] = useState("idle");
   const [isExporting, setIsExporting] = useState(false); // 👈 control what's shown
+
   const [vehicleInfo, setVehicleInfo] = useState({
     driver: "",
     reg: "",
     code: "",
     date: "",
+    vehicleType: "",
+    trolleyNumber: 0,
+    grid: [], // <- array of customer names
   });
 
+  useEffect(() => {
+    if (vehicleInfoFromExport) {
+      setVehicleInfo(vehicleInfoFromExport);
+    }
+  }, [vehicleInfoFromExport]);
+
   const exportRef = useRef();
+
+  const saveToPocketBase = async () => {
+    setSaveStatus("saving");
+
+    try {
+      await pb.collection("trolley_exports").create({
+        name: `${vehicleInfo.date.split("-").reverse().join("-")}-${
+          vehicleInfo.driver
+        }-${vehicleInfo.reg}`,
+        data: tasks,
+        vehicleInfo: vehicleInfo,
+        user: pb.authStore.model.id,
+      });
+
+      setSaveStatus("saved");
+
+      // Optionally clear message after a few seconds
+      setTimeout(() => setSaveStatus("idle"), 3000);
+    } catch (err) {
+      console.error("Error saving export to PocketBase:", err);
+      setSaveStatus("error");
+
+      setTimeout(() => setSaveStatus("idle"), 4000);
+    }
+  };
 
   const handleReorder = (newOrder) => setTasks(newOrder);
 
@@ -34,6 +74,7 @@ export default function TrolleyMapper({ records, customerList }) {
         name: `${vehicleInfo.date.split("-").reverse().join("-")}-
           ${vehicleInfo.driver}-${vehicleInfo.reg}`,
         data: tasks,
+        vehicleInfo: vehicleInfo,
         user: pb.authStore.model.id,
       });
       console.log("Export data saved to PocketBase");
@@ -90,6 +131,7 @@ export default function TrolleyMapper({ records, customerList }) {
               {vehicleInfo.code}
             </div>
           )}
+
           <DragAndDropList
             setCustomerName={setCustomerName}
             items={tasks}
@@ -99,6 +141,8 @@ export default function TrolleyMapper({ records, customerList }) {
             isExporting={isExporting}
             setVehicleInfo={setVehicleInfo}
             vehicleInfo={vehicleInfo}
+            saveToPocketBase={saveToPocketBase}
+            saveStatus={saveStatus}
           />
         </div>
 
@@ -109,6 +153,8 @@ export default function TrolleyMapper({ records, customerList }) {
             onReorder={handleReorder}
             setCustomerName={setCustomerName}
             readOnly={isExporting} // 👈 optional: lock inputs or hide elements
+            vehicleInfo={vehicleInfo}
+            setVehicleInfo={setVehicleInfo}
           />
         </div>
       </div>
