@@ -62,13 +62,13 @@ export default function Edit({ records }) {
     );
   });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
-    navigate(-1);
-    updateTask(
+
+    await updateTask(
       id,
       title,
       other,
@@ -81,6 +81,7 @@ export default function Edit({ records }) {
       status,
       year
     );
+    navigate(-1);
   };
 
   const handleDelete = (id) => {
@@ -267,12 +268,12 @@ export default function Edit({ records }) {
         </div>
 
         <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 ">
-          <div className="flex justify-center mb-4">
+          {/* <div className="flex justify-center mb-4">
             <FileUpload taskID={id} />
           </div>
           <div className="pb-5">
             <Pictures taskID={id} />
-          </div>
+          </div> */}
         </div>
       </div>
     );

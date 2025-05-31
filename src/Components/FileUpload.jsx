@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import pb from "./lib/pocketbase";
+import pb from "./lib/pbConnect";
 
 const FileUpload = ({ taskID }) => {
   const [file, setFile] = useState(null);

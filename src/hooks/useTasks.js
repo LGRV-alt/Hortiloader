@@ -1,57 +1,127 @@
-// src/hooks/useTasks.js
-import { useEffect, useState } from "react";
-import pb from "../Components/lib/pocketbase";
+// -------------------------NOT USING REALTIME-----------------------------
+
+// import { useEffect, useState } from "react";
+// import pb from "../Components/lib/pbConnect";
+
+// export default function useTasks() {
+//   const [tasks, setTasks] = useState([]);
+
+//   useEffect(() => {
+//     let intervalId;
+
+//     const fetchTasks = async () => {
+//       if (!pb.authStore.isValid) return;
+//       const records = await pb
+//         .collection("tasks")
+//         .getFullList({ sort: "-created" });
+//       setTasks(records);
+//     };
+
+//     fetchTasks(); // initial load
+
+//     intervalId = setInterval(fetchTasks, 10000); // every 10 seconds
+
+//     return () => clearInterval(intervalId);
+//   }, []);
+
+//   return tasks;
+// }
+
+// --------------------------REALTIME--------------------------------
+// import { useEffect, useState } from "react";
+// import pb from "../Components/lib/pbConnect";
+
+// export default function useTasks() {
+//   console.log(pb.realtime.clientId);
+//   console.log(pb.authStore);
+//   const [tasks, setTasks] = useState([]);
+
+//   useEffect(() => {
+//     // don’t do anything until we’re authenticated
+//     if (!pb.authStore.isValid) return;
+
+//     let unsubscribe;
+
+//     // helper to update tasks based on action
+//     const handleRealtime = ({ action, record }) => {
+//       setTasks((prev) => {
+//         if (action === "create") return [record, ...prev];
+//         if (action === "update")
+//           return prev.map((t) => (t.id === record.id ? record : t));
+//         if (action === "delete") return prev.filter((t) => t.id !== record.id);
+//         return prev;
+//       });
+//     };
+
+//     // fetch once and subscribe
+//     (async () => {
+//       const all = await pb
+//         .collection("tasks")
+//         .getFullList({ sort: "-created" });
+//       setTasks(all);
+//       unsubscribe = await pb.collection("tasks").subscribe("*", handleRealtime);
+//     })();
+
+//     return () => {
+//       unsubscribe?.();
+//     };
+//   }, [pb.authStore.isValid]);
+
+//   return tasks;
+// }
+
+import { useEffect, useRef, useState } from "react";
+import pb from "../Components/lib/pbConnect";
+import { onRefetchTasks } from "../Components/lib/eventBus";
 
 export default function useTasks() {
-  const [records, setRecords] = useState([]);
-  //   const pb = new PocketBase("https://hortiloader.pockethost.io");
+  const [tasks, setTasks] = useState([]);
+  const currentTasksRef = useRef([]);
+
   useEffect(() => {
-    let unsubscribe;
-
-    const fetchData = async () => {
-      const records = await pb
-        .collection("tasks")
-        .getFullList({ sort: "created" });
-      setRecords(records);
-    };
-
-    const handleRealtimeUpdate = async (e) => {
-      console.log(e.action);
-      if (e.action === "update") {
-        try {
-          const updated = await pb.collection("tasks").getOne(e.record.id);
-          setRecords((prev) =>
-            prev.map((item) => (item.id === updated.id ? updated : item))
-          );
-        } catch (err) {
-          console.error("Failed to fetch updated record:", err);
-        }
-      } else if (e.action === "create") {
-        setRecords((prev) => [e.record, ...prev]);
-      } else if (e.action === "delete") {
-        setRecords((prev) => prev.filter((item) => item.id !== e.record.id));
-      }
-    };
-
-    const initRealtime = async () => {
-      try {
-        unsubscribe = await pb
-          .collection("tasks")
-          .subscribe("*", handleRealtimeUpdate);
-      } catch (err) {
-        console.error("Realtime subscription failed:", err);
-      }
-    };
-
-    fetchData();
-    initRealtime();
-
-    return () => {
-      if (unsubscribe) {
-        unsubscribe(); // ✅ use stored unsubscribe function
-      }
-    };
+    const stopListening = onRefetchTasks(() => {
+      console.log("Manual refetch triggered from event");
+      fetchTasks();
+    });
+    return () => stopListening();
   }, []);
 
-  return records;
+  // Helper to fetch and update only if tasks changed
+  const fetchTasks = async () => {
+    if (!pb.authStore.isValid) return;
+
+    try {
+      const all = await pb.collection("tasks").getFullList({ sort: "created" });
+
+      const hasChanged =
+        all.length !== currentTasksRef.current.length ||
+        all.some(
+          (item, i) =>
+            item.id !== currentTasksRef.current[i]?.id ||
+            item.updated !== currentTasksRef.current[i]?.updated
+        );
+
+      if (hasChanged) {
+        setTasks(all);
+        currentTasksRef.current = all;
+        console.log("Tasks updated");
+      } else {
+        console.log("No task change detected");
+      }
+    } catch (err) {
+      console.error("Failed to fetch tasks:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (!pb.authStore.isValid) return;
+
+    fetchTasks(); // Initial load
+
+    const interval = setInterval(fetchTasks, 60000); // Poll every 60s
+
+    return () => clearInterval(interval);
+  }, [pb.authStore.isValid]);
+
+  return { tasks, refetch: fetchTasks };
 }
