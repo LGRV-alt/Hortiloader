@@ -78,7 +78,6 @@ export default function DragAndDropList({
     );
     setItems(updated);
   };
-  console.log(vehicleInfo);
 
   return (
     <div className="w-full border-black border-2 rounded-lg p-2">

@@ -18,6 +18,8 @@ import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
+import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
+import pb from "./Components/lib/pbConnect";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -28,7 +30,15 @@ export default function App() {
 
   const isAuthenticated = useAuth();
 
-  console.log(customerList);
+  // DAILY AUTH CLEAR
+  if (pb.authStore.isValid && shouldClearAuthDaily()) {
+    pb.authStore.clear();
+    window.location.reload(); // force re-render to show login
+  }
+
+  if (isAuthenticated) {
+    setTodayAsLoginDate(); // store today's login
+  }
 
   // const rec = useTasks();
   // const rec = usePocketbaseRealtimeTasks();
