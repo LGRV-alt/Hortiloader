@@ -9,8 +9,8 @@ test("Login Page", async ({ page }) => {
   await expect(title).toBeVisible();
 
   // Fill out login section
-  await usernameInput.fill("Playwright");
-  await passwordInput.fill("Password1");
+  await usernameInput.fill("Spencer222");
+  await passwordInput.fill("Spencer222");
 
   // Hit Sign in button
   await page.getByRole("button", { name: "Sign in" }).click({ timeout: 10000 });
