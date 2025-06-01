@@ -12,6 +12,8 @@
   background-color: white;
 }
 .body--dragging {
-  touch-action: none;
-  overflow: hidden;
+  touch-action: none !important;
+  overflow: hidden !important;
+  position: fixed; /* Prevents scrolling on some iOS Safari cases */
+  width: 100%;
 }

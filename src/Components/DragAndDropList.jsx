@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import {
   DndContext,
@@ -14,6 +14,11 @@ import {
   arrayMove,
 } from "@dnd-kit/sortable";
 import SortableItem from "./SortableItem";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from "body-scroll-lock";
 
 export default function DragAndDropList({
   items: initialItems = [],
@@ -35,8 +40,8 @@ export default function DragAndDropList({
     useSensor(PointerSensor),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 250,
-        tolerance: 5,
+        delay: 250, // Require a 250ms hold
+        tolerance: 5, // User can move finger 5px before cancel
       },
     })
   );
@@ -74,12 +79,18 @@ export default function DragAndDropList({
     if (onReorder) onReorder(updated); // Notify parent
   };
 
+  useEffect(() => {
+    return () => {
+      clearAllBodyScrollLocks(); // Clean up if the component unmounts
+    };
+  }, []);
+
   const handleDragStart = () => {
-    document.body.classList.add("body--dragging");
+    disableBodyScroll(document.body); // lock scrolling
   };
 
   const handleDragEnd = (event) => {
-    document.body.classList.remove("body--dragging");
+    enableBodyScroll(document.body); // unlock scrolling
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 

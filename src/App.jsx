@@ -63,7 +63,7 @@ export default function App() {
   return (
     <>
       {isAuthenticated ? (
-        <div className="overflow-y-scroll grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+        <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
             <Header
               setChosenWeek={setChosenWeek}
