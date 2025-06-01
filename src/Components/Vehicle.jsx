@@ -58,8 +58,8 @@ export default function Vehicle({
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
         <div className="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
-          <div className="flex gap-1">
-            <div className="border-black md:border-r-2 md:pr-2 gap-1 flex">
+          <div className="flex justify-center items-center gap-1">
+            <div className="border-black md:border-r-2 md:pr-2 gap-1 flex ">
               <button
                 onClick={handleVehicleSelection}
                 className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"

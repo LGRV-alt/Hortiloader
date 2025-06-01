@@ -5,6 +5,7 @@ import {
   closestCenter,
   PointerSensor,
   useSensor,
+  TouchSensor,
   useSensors,
 } from "@dnd-kit/core";
 import {
@@ -29,7 +30,16 @@ export default function DragAndDropList({
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
 
-  const sensors = useSensors(useSensor(PointerSensor));
+  // const sensors = useSensors(useSensor(PointerSensor));
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250,
+        tolerance: 5,
+      },
+    })
+  );
   let trolleyTotal = handleTotalTrollies(items);
 
   function handleTotalTrollies(arr) {
@@ -64,7 +74,12 @@ export default function DragAndDropList({
     if (onReorder) onReorder(updated); // Notify parent
   };
 
+  const handleDragStart = () => {
+    document.body.classList.add("body--dragging");
+  };
+
   const handleDragEnd = (event) => {
+    document.body.classList.remove("body--dragging");
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
@@ -201,6 +216,7 @@ export default function DragAndDropList({
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
+        onDragStart={handleDragStart}
       >
         <SortableContext
           items={items.map((item) => item.id)}
