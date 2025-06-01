@@ -87,7 +87,7 @@ export default function SortableItem({
         setCustomerName(handleCustomerName(item.title, item.orderNumber))
       }
       style={style}
-      className={`border-b-2 border-black ${
+      className={`border-b-2 border-black h-12 ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
     >
@@ -137,7 +137,7 @@ export default function SortableItem({
         </div>
       ) : (
         <div className="flex justify-between p-1">
-          <div className=" flex gap-2 justify-start items-center">
+          <div className=" flex gap-2">
             <div className="flex justify-between items-center">
               <span
                 ref={setNodeRef}
@@ -148,11 +148,13 @@ export default function SortableItem({
                 {index + 1}.
               </span>
             </div>
-            <div className="font-semibold text-lg">{item.title}</div>
-            <p>{reduceOrderNumber(item.orderNumber)}</p>
-            <div className="text-sm ">{sortPostCode(item.postcode)}</div>
+            <div className="flex gap-2 items-center">
+              <div className="font-semibold text-2xl">{item.title}</div>
+              <p className="text-xl">{reduceOrderNumber(item.orderNumber)}</p>
+              <div className="text-sm ">{sortPostCode(item.postcode)}</div>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-2xl">
             {item.trollies && <div className="">{item.trollies}T</div>}
             {item.extras && <div className="text-red-500">{item.extras}</div>}
           </div>

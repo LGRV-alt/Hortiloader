@@ -47,9 +47,10 @@ export default function DragAndDropList({
   };
 
   const handleDelete = (id) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+    const updated = items.filter((item) => item.id !== id);
+    setItems(updated);
+    if (onReorder) onReorder(updated); // Notify parent
   };
-
   const handleAddTask = () => {
     const newTask = {
       id: nanoid(),
@@ -58,7 +59,9 @@ export default function DragAndDropList({
       trollies: "",
       extras: "",
     };
-    setItems((prev) => [...prev, newTask]);
+    const updated = [...items, newTask];
+    setItems(updated);
+    if (onReorder) onReorder(updated); // Notify parent
   };
 
   const handleDragEnd = (event) => {
@@ -77,6 +80,7 @@ export default function DragAndDropList({
       item.id === id ? { ...item, ...newData } : item
     );
     setItems(updated);
+    if (onReorder) onReorder(updated); // sync back to parent
   };
 
   return (
@@ -115,7 +119,7 @@ export default function DragAndDropList({
                 onClick={exportToPDF}
                 className="p-2 bg-blue-600 text-white rounded"
               >
-                Save + Print
+                Print
               </button>
             </div>
           )}

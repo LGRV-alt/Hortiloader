@@ -10,9 +10,10 @@ export default function TrolleyMapper({
   records,
   customerList,
   vehicleInfoFromExport,
+  initialTasks,
 }) {
   const [tasks, setTasks] = useState(
-    records.filter((item) => customerList.includes(item.id))
+    initialTasks ?? records.filter((item) => customerList.includes(item.id))
   );
 
   const [customerName, setCustomerName] = useState("");
@@ -69,18 +70,18 @@ export default function TrolleyMapper({
     await new Promise((resolve) => setTimeout(resolve, 100)); // wait for DOM to update
 
     // Upload to PocketBase before exporting
-    try {
-      await pb.collection("trolley_exports").create({
-        name: `${vehicleInfo.date.split("-").reverse().join("-")}-
-          ${vehicleInfo.driver}-${vehicleInfo.reg}`,
-        data: tasks,
-        vehicleInfo: vehicleInfo,
-        user: pb.authStore.model.id,
-      });
-      console.log("Export data saved to PocketBase");
-    } catch (err) {
-      console.error("Error saving export to PocketBase:", err);
-    }
+    // try {
+    //   await pb.collection("trolley_exports").create({
+    //     name: `${vehicleInfo.date.split("-").reverse().join("-")}-
+    //       ${vehicleInfo.driver}-${vehicleInfo.reg}`,
+    //     data: tasks,
+    //     vehicleInfo: vehicleInfo,
+    //     user: pb.authStore.model.id,
+    //   });
+    //   console.log("Export data saved to PocketBase");
+    // } catch (err) {
+    //   console.error("Error saving export to PocketBase:", err);
+    // }
 
     const element = exportRef.current;
     const canvas = await html2canvas(element, {
@@ -96,10 +97,8 @@ export default function TrolleyMapper({
     const pxPerMm = 3.779528;
     const canvasWidthMm = canvas.width / pxPerMm;
     const canvasHeightMm = canvas.height / pxPerMm;
-    const scale = Math.min(
-      pdfWidth / canvasWidthMm,
-      pdfHeight / canvasHeightMm
-    );
+    const scale =
+      Math.min(pdfWidth / canvasWidthMm, pdfHeight / canvasHeightMm) * 0.95;
 
     const imgWidth = canvasWidthMm * scale;
     const imgHeight = canvasHeightMm * scale;

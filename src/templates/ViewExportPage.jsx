@@ -26,8 +26,7 @@ export default function ViewExportPage() {
 
   return (
     <TrolleyMapper
-      records={exportData.data}
-      customerList={exportData.data.map((item) => item.id)} // reuse filtering logic
+      initialTasks={exportData.data} // pass full saved object
       vehicleInfoFromExport={exportData.vehicleInfo}
     />
   );
