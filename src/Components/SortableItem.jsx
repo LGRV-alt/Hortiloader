@@ -87,15 +87,15 @@ export default function SortableItem({
         setCustomerName(handleCustomerName(item.title, item.orderNumber))
       }
       style={style}
-      className={`border-b-2 border-black h-12 ${
+      className={`border-b-2 border-black md:h-12 ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
     >
       {isEditing ? (
-        <div className="p-2 gap-2 flex items-center">
+        <div className="p-2 gap-2 flex items-center text-xs md:text-base">
           <input
             type="text"
-            className="w-2/3 border rounded text-center"
+            className="w-2/3  border rounded text-center"
             value={formData.title}
             onChange={(e) => handleChange("title", e.target.value)}
             placeholder="Title"
@@ -132,7 +132,7 @@ export default function SortableItem({
             onClick={() => onDelete(item.id)}
             className=" text-red-600 hover:text-red-800 text-sm"
           >
-            Delete
+            X
           </button>
         </div>
       ) : (
@@ -148,13 +148,15 @@ export default function SortableItem({
                 {index + 1}.
               </span>
             </div>
-            <div className="flex gap-2 items-center">
-              <div className="font-semibold text-2xl">{item.title}</div>
-              <p className="text-xl">{reduceOrderNumber(item.orderNumber)}</p>
-              <div className="text-sm ">{sortPostCode(item.postcode)}</div>
+            <div className="flex gap-2 text-sm items-center">
+              <div className="font-semibold md:text-2xl">{item.title}</div>
+              <p className="text-xs md:text-xl">
+                {reduceOrderNumber(item.orderNumber)}
+              </p>
+              <div className="text-xs ">{sortPostCode(item.postcode)}</div>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-2xl">
+          <div className="flex items-center gap-2 text-sm md:text-2xl">
             {item.trollies && <div className="">{item.trollies}T</div>}
             {item.extras && <div className="text-red-500">{item.extras}</div>}
           </div>

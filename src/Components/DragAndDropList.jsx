@@ -88,15 +88,16 @@ export default function DragAndDropList({
       {/* This is the view when working on the page and not exporting the PDF */}
       {!isExporting && (
         <div className="flex justify-between items-center border-black border-b-2 pb-2">
-          <button
-            onClick={() => setIsEditing((prev) => !prev)}
-            className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
-            {isEditing ? "Finish Editing" : "Edit"}
-          </button>
-          <p>Total Trollies-{trolleyTotal}</p>
+          <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
+
           {!isEditing && (
             <div className="flex gap-2">
+              <button
+                onClick={() => setIsEditing((prev) => !prev)}
+                className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                {isEditing ? "Finish Editing" : "Edit"}
+              </button>
               <div className="flex items-center">
                 {saveStatus === "saving" && (
                   <p className="text-sm text-blue-600">Saving...</p>
@@ -109,7 +110,7 @@ export default function DragAndDropList({
                 )}
                 <button
                   onClick={saveToPocketBase}
-                  className="p-2 bg-green-600 text-white rounded hover:bg-green-700"
+                  className="md:p-2 p-1 text-sm md:text-base bg-green-600 text-white rounded hover:bg-green-700"
                 >
                   Save
                 </button>
@@ -117,7 +118,7 @@ export default function DragAndDropList({
 
               <button
                 onClick={exportToPDF}
-                className="p-2 bg-blue-600 text-white rounded"
+                className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded"
               >
                 Print
               </button>
@@ -125,32 +126,40 @@ export default function DragAndDropList({
           )}
 
           {isEditing && (
-            <button
-              onClick={handleAddTask}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-            >
-              + Add Task
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setIsEditing((prev) => !prev)}
+                className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                {isEditing ? "Finish Editing" : "Edit"}
+              </button>
+              <button
+                onClick={handleAddTask}
+                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              >
+                + Add
+              </button>
+            </div>
           )}
         </div>
       )}
 
       {/* This is the view when exporting the page - Needs to display certain information */}
       {isExporting && (
-        <div className="flex justify-between  border-black border-b-2 pb-2">
-          <div className="flex gap-8 text-lg justify-between">
-            <p>{`Driver - ${vehicleInfo.driver.toUpperCase()}`}</p>
-            <p>{`Reg - ${vehicleInfo.reg.toUpperCase()}`}</p>
-            <p>{`Date - ${vehicleInfo.date.split("-").reverse().join("-")}`}</p>
+        <div className="flex justify-between  border-black border-b-2 md:pb-2">
+          <div className="flex gap-2 md:gap-8 md:text-lg text-xs md:justify-between">
+            <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>
+            <p>{`${vehicleInfo.reg.toUpperCase()}`}</p>
+            <p>{`${vehicleInfo.date.split("-").reverse().join("-")}`}</p>
           </div>
-          <div className="flex justify-end items-center text-lg">
+          <div className="flex justify-end items-center text-xs md:text-lg">
             <p> Total Trollies-{trolleyTotal}</p>
           </div>
         </div>
       )}
 
       {isEditing ? (
-        <div className="flex p-2">
+        <div className="flex p-2 text-xs md:text-base">
           {" "}
           <input
             name="driver"

@@ -38,31 +38,6 @@ export default function TrolleyMapper({
 
   const exportRef = useRef();
 
-  // const saveToPocketBase = async () => {
-  //   setSaveStatus("saving");
-
-  //   try {
-  //     await pb.collection("trolley_exports").create({
-  //       name: `${vehicleInfo.date.split("-").reverse().join("-")}-${
-  //         vehicleInfo.driver
-  //       }-${vehicleInfo.reg}`,
-  //       data: tasks,
-  //       vehicleInfo: vehicleInfo,
-  //       user: pb.authStore.model.id,
-  //     });
-
-  //     setSaveStatus("saved");
-
-  //     // Optionally clear message after a few seconds
-  //     setTimeout(() => setSaveStatus("idle"), 3000);
-  //   } catch (err) {
-  //     console.error("Error saving export to PocketBase:", err);
-  //     setSaveStatus("error");
-
-  //     setTimeout(() => setSaveStatus("idle"), 4000);
-  //   }
-  // };
-
   const saveToPocketBase = async () => {
     setSaveStatus("saving");
 
@@ -193,8 +168,11 @@ export default function TrolleyMapper({
       {/* Export button (not shown during export) */}
 
       {/* Exportable content */}
-      <div ref={exportRef} className="flex flex-grow h-full">
-        <div className="w-1/2 p-2">
+      <div
+        ref={exportRef}
+        className="flex md:flex-row flex-col flex-grow h-full"
+      >
+        <div className="w-full md:w-1/2 p-2">
           {isExporting && (
             <div className="mt-4 text-base text-gray-600 italic pb-4">
               Created with Hortiloader.com •{" "}
