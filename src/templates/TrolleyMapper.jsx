@@ -38,51 +38,124 @@ export default function TrolleyMapper({
 
   const exportRef = useRef();
 
+  // const saveToPocketBase = async () => {
+  //   setSaveStatus("saving");
+
+  //   try {
+  //     await pb.collection("trolley_exports").create({
+  //       name: `${vehicleInfo.date.split("-").reverse().join("-")}-${
+  //         vehicleInfo.driver
+  //       }-${vehicleInfo.reg}`,
+  //       data: tasks,
+  //       vehicleInfo: vehicleInfo,
+  //       user: pb.authStore.model.id,
+  //     });
+
+  //     setSaveStatus("saved");
+
+  //     // Optionally clear message after a few seconds
+  //     setTimeout(() => setSaveStatus("idle"), 3000);
+  //   } catch (err) {
+  //     console.error("Error saving export to PocketBase:", err);
+  //     setSaveStatus("error");
+
+  //     setTimeout(() => setSaveStatus("idle"), 4000);
+  //   }
+  // };
+
   const saveToPocketBase = async () => {
     setSaveStatus("saving");
 
+    const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
+      vehicleInfo.driver
+    }-${vehicleInfo.reg}`;
+
     try {
-      await pb.collection("trolley_exports").create({
-        name: `${vehicleInfo.date.split("-").reverse().join("-")}-${
-          vehicleInfo.driver
-        }-${vehicleInfo.reg}`,
+      // Check if a record with this name already exists
+      const existing = await pb
+        .collection("trolley_exports")
+        .getFirstListItem(`name="${name}"`);
+
+      // If it exists, update it
+      await pb.collection("trolley_exports").update(existing.id, {
+        name,
         data: tasks,
-        vehicleInfo: vehicleInfo,
+        vehicleInfo,
         user: pb.authStore.model.id,
       });
 
-      setSaveStatus("saved");
-
-      // Optionally clear message after a few seconds
-      setTimeout(() => setSaveStatus("idle"), 3000);
-    } catch (err) {
-      console.error("Error saving export to PocketBase:", err);
-      setSaveStatus("error");
-
-      setTimeout(() => setSaveStatus("idle"), 4000);
+      setSaveStatus("updated");
+    } catch (error) {
+      if (error.status === 404) {
+        // If not found, create a new record
+        try {
+          await pb.collection("trolley_exports").create({
+            name,
+            data: tasks,
+            vehicleInfo,
+            user: pb.authStore.model.id,
+          });
+          setSaveStatus("saved");
+        } catch (createErr) {
+          console.error("Error creating export in PocketBase:", createErr);
+          setSaveStatus("error");
+        }
+      } else {
+        console.error("Error checking for existing export:", error);
+        setSaveStatus("error");
+      }
     }
+
+    // Reset status after a short delay
+    setTimeout(() => setSaveStatus("idle"), 3000);
   };
 
   const handleReorder = (newOrder) => setTasks(newOrder);
 
   const exportToPDF = async () => {
-    setIsExporting(true); // 🔒 Show/hide things based on this flag
-    await new Promise((resolve) => setTimeout(resolve, 100)); // wait for DOM to update
+    setIsExporting(true);
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
-    // Upload to PocketBase before exporting
-    // try {
-    //   await pb.collection("trolley_exports").create({
-    //     name: `${vehicleInfo.date.split("-").reverse().join("-")}-
-    //       ${vehicleInfo.driver}-${vehicleInfo.reg}`,
-    //     data: tasks,
-    //     vehicleInfo: vehicleInfo,
-    //     user: pb.authStore.model.id,
-    //   });
-    //   console.log("Export data saved to PocketBase");
-    // } catch (err) {
-    //   console.error("Error saving export to PocketBase:", err);
-    // }
+    const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
+      vehicleInfo.driver
+    }-${vehicleInfo.reg}`;
 
+    // Save/update in PocketBase before exporting PDF
+    try {
+      try {
+        const existing = await pb
+          .collection("trolley_exports")
+          .getFirstListItem(`name="${name}"`);
+
+        // Update existing record
+        await pb.collection("trolley_exports").update(existing.id, {
+          name,
+          data: tasks,
+          vehicleInfo,
+          user: pb.authStore.model.id,
+        });
+
+        console.log("Export data updated in PocketBase");
+      } catch (error) {
+        if (error.status === 404) {
+          // Record doesn't exist, create new
+          await pb.collection("trolley_exports").create({
+            name,
+            data: tasks,
+            vehicleInfo,
+            user: pb.authStore.model.id,
+          });
+
+          console.log("Export data saved to PocketBase");
+        } else {
+          throw error;
+        }
+      }
+    } catch (err) {
+      console.error("Error saving/updating export to PocketBase:", err);
+    }
+
+    // PDF generation and download
     const element = exportRef.current;
     const canvas = await html2canvas(element, {
       scale: 3,
@@ -90,8 +163,8 @@ export default function TrolleyMapper({
     });
 
     const imgData = canvas.toDataURL("image/png");
-
     const pdf = new jsPDF("landscape", "mm", "a4");
+
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
     const pxPerMm = 3.779528;
@@ -102,19 +175,17 @@ export default function TrolleyMapper({
 
     const imgWidth = canvasWidthMm * scale;
     const imgHeight = canvasHeightMm * scale;
-
     const x = (pdfWidth - imgWidth) / 2;
-    const y = 0; // Start at top of page
+    const y = 0;
 
     pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
-    // pdf.save("trolley-map.pdf");
     pdf.save(
       `${vehicleInfo.date.split("-").reverse().join("-")}_${
         vehicleInfo.driver
       }.pdf`
     );
 
-    setIsExporting(false); // 🔓 Restore full UI
+    setIsExporting(false);
   };
 
   return (
@@ -125,8 +196,9 @@ export default function TrolleyMapper({
       <div ref={exportRef} className="flex flex-grow h-full">
         <div className="w-1/2 p-2">
           {isExporting && (
-            <div className="mt-4 text-sm text-gray-600 italic pb-4">
-              Exported by Hortiloader • {new Date().toLocaleDateString()} /{" "}
+            <div className="mt-4 text-base text-gray-600 italic pb-4">
+              Created with Hortiloader.com •{" "}
+              {new Date().toLocaleDateString().split("-").reverse().join("-")} /{" "}
               {vehicleInfo.code}
             </div>
           )}

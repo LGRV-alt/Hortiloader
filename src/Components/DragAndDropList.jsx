@@ -138,12 +138,12 @@ export default function DragAndDropList({
       {/* This is the view when exporting the page - Needs to display certain information */}
       {isExporting && (
         <div className="flex justify-between  border-black border-b-2 pb-2">
-          <div className="flex gap-8 justify-between">
+          <div className="flex gap-8 text-lg justify-between">
             <p>{`Driver - ${vehicleInfo.driver.toUpperCase()}`}</p>
             <p>{`Reg - ${vehicleInfo.reg.toUpperCase()}`}</p>
-            <p>{`Date - ${vehicleInfo.date}`}</p>
+            <p>{`Date - ${vehicleInfo.date.split("-").reverse().join("-")}`}</p>
           </div>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end items-center text-lg">
             <p> Total Trollies-{trolleyTotal}</p>
           </div>
         </div>
