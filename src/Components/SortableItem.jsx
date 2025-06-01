@@ -138,22 +138,22 @@ export default function SortableItem({
       ) : (
         <div className="flex justify-between p-1">
           <div className=" flex gap-2">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-end">
               <span
                 ref={setNodeRef}
                 {...attributes}
                 {...listeners}
-                className="text-sm"
+                className=" "
               >
                 {index + 1}.
               </span>
             </div>
             <div className="flex gap-2 text-sm items-center">
-              <div className="font-semibold md:text-2xl">{item.title}</div>
+              <p className="font-semibold md:text-2xl">{item.title}</p>
               <p className="text-xs md:text-xl">
                 {reduceOrderNumber(item.orderNumber)}
               </p>
-              <div className="text-xs ">{sortPostCode(item.postcode)}</div>
+              <div className="text-xs">{sortPostCode(item.postcode)}</div>
             </div>
           </div>
           <div className="flex items-center gap-2 text-sm md:text-2xl">

@@ -57,9 +57,9 @@ export default function Vehicle({
     >
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
-        <div className="flex justify-between items-center p-1">
+        <div className="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
           <div className="flex gap-1">
-            <div className="border-black border-r-2 pr-2 gap-1 flex">
+            <div className="border-black md:border-r-2 md:pr-2 gap-1 flex">
               <button
                 onClick={handleVehicleSelection}
                 className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
@@ -180,12 +180,12 @@ export default function Vehicle({
             </div>
           </div>
         ) : (
-          <div className="border-4 border-black h-full grid grid-cols-4 grid-rows-6">
+          <div className="md:border-4 border-2 border-black h-full grid grid-cols-4 grid-rows-6 md:text-base text-xs">
             {grid.map((item, index) => (
               <p
                 key={index}
                 onClick={(e) => handleTrolleyName(e, index)}
-                className="h-full w-full p-2 text-center border-2 border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
+                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
               >
                 {item}
               </p>

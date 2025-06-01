@@ -195,7 +195,7 @@ export default function TrolleyMapper({
           />
         </div>
 
-        <div className="w-1/2 p-2">
+        <div className="w-full md:w-1/2 p-2">
           <Vehicle
             customerName={customerName}
             items={tasks}
