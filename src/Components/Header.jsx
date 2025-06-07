@@ -338,26 +338,46 @@ export default function Header({
   };
 
   return (
-    <header className="bg-regal-blue text-white px-4 py-2 flex justify-between items-center relative shadow">
+    <header className="border-b-2 border-slate-200 bg-regal-blue text-white px-4 py-2 flex justify-between items-center relative shadow">
       {/* Left: Logo and Title */}
       <div className="flex items-center gap-2">
         <LogoTree height="40px" width="40px" />
         <Link to="/">
-          <h1 className="text-2xl font-bold font-display">HortiLoader</h1>
+          <h1 className="text-4xl font-display">HortiLoader</h1>
         </Link>
+        {/* Year Selection and Current Week */}
+        <div className="flex flex-col">
+          <div>
+            <span className="pr-1">Year</span>
+            <select
+              onChange={handleYearChange}
+              className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
+            >
+              <option value={2025}>2025</option>
+              <option value={2024}>2024</option>
+            </select>
+          </div>
+          <p className="hidden md:flex mr-3">
+            Current Week - {getDateWeek(new Date())}
+          </p>
+        </div>
       </div>
 
       {/* Center: Week/Year controls */}
-      <div className="flex items-center gap-4">
+      {/* <div className="flex items-center gap-4"> */}
+      <div className="absolute left-1/2 transform -translate-x-1/2">
         <div className="flex items-center gap-1">
-          <button onClick={() => handleWeekChange(week - 1)}>
+          <button
+            className="text-2xl hover:text-blue-500"
+            onClick={() => handleWeekChange(week - 1)}
+          >
             <GrFormPrevious />
           </button>
           <span>Week</span>
           <select
             value={week}
             onChange={(e) => handleWeekChange(Number(e.target.value))}
-            className="bg-transparent border-b border-white focus:outline-none focus:bg-white focus:text-black"
+            className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
           >
             {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => (
               <option key={w} value={w}>
@@ -365,20 +385,12 @@ export default function Header({
               </option>
             ))}
           </select>
-          <button onClick={() => handleWeekChange(week + 1)}>
+          <button
+            className="text-2xl hover:text-blue-500"
+            onClick={() => handleWeekChange(week + 1)}
+          >
             <GrFormNext />
           </button>
-        </div>
-
-        <div className="flex items-center gap-1">
-          <span>Year</span>
-          <select
-            onChange={handleYearChange}
-            className="bg-transparent border-b border-white focus:outline-none focus:bg-white focus:text-black"
-          >
-            <option value={2025}>2025</option>
-            <option value={2024}>2024</option>
-          </select>
         </div>
       </div>
 
