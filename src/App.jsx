@@ -7,6 +7,7 @@ import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 
 import Edit from "./templates/Edit";
+import SettingsPage from "./templates/SettingsPage";
 import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
 import SearchPage from "./templates/SearchPage";
@@ -96,6 +97,8 @@ export default function App() {
               />
 
               <Route path="/runs" element={<TrolleyExportsPage />} />
+
+              <Route path="/settings" element={<SettingsPage />} />
 
               <Route path="/runs/view/:id" element={<ViewExportPage />} />
 
