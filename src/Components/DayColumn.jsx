@@ -41,7 +41,7 @@ export default function DayColumn({
     <>
       {/* Whole column */}
       <div className="bg-neutral-200 flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ">
           {/* Title of column */}
           <h5 className="text-lg font-bold" onClick={() => console.log(arr)}>
             {day}

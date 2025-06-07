@@ -34,14 +34,16 @@ export default function Header({
   }
 
   return (
-    <header className="border-b-2 border-slate-200 bg-regal-blue text-white px-4 py-2 flex justify-between items-center relative shadow">
+    <header className=" bg-regal-blue text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div className="flex items-center gap-2">
         <Link to="/">
           <LogoTree height="40px" width="40px" />
         </Link>
         <Link to="/">
-          <h1 className="text-4xl font-display hidden md:flex">HortiLoader</h1>
+          <h1 className="text-4xl font-display hidden md:flex pr-4">
+            HortiLoader
+          </h1>
         </Link>
         {/* Year Selection and Current Week */}
         <div className=" flex-col hidden md:flex">
@@ -157,7 +159,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="text-center absolute top-full right-0  bg-black bg-opacity-95 text-white shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-1/2 md:w-1/6">
+        <div className="text-center absolute top-full right-0 bg-black bg-opacity-95  text-white shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-1/2 md:w-1/6">
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}

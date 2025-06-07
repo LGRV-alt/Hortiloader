@@ -26,8 +26,6 @@ export default function Body({
     );
   };
 
-  console.log(userSettings);
-
   const monday = filterUsersByDay("monday");
   const tuesday = filterUsersByDay("tuesday");
   const wednesday = filterUsersByDay("wednesday");
@@ -44,8 +42,8 @@ export default function Body({
     );
   } else {
     return (
-      <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 md:outline h-full">
-        <div className=" mb-10 border-t-2 md:border-t-0 md:mb-0  md:border-r-2 row-span-2 border-black">
+      <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2  h-full">
+        <div className=" mb-10 md:border-t-0 md:mb-0  md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={monday}
             day={"Monday"}
