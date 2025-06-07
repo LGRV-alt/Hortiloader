@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useUserSettings } from "../hooks/useUserSettings";
 
 export default function SettingsPage() {
-  const { settings, updateSettings, loading } = useUserSettings();
+  const { settings, updateSettings, fetchSettings, loading } =
+    useUserSettings(); // include fetchSettings
   const [form, setForm] = useState({});
 
   useEffect(() => {
@@ -18,9 +19,12 @@ export default function SettingsPage() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateSettings(form);
+
+    await updateSettings(form); // update backend + localStorage
+    await fetchSettings(); // now reload the latest data into state (triggers re-render)
+    window.location.reload(); // ← force full page refresh
   };
 
   if (loading) return <div className="p-4">Loading settings...</div>;

@@ -49,7 +49,8 @@ export default function Body({
           <DayColumn
             arr={monday}
             day={"Monday"}
-            route={"Glasgow Wholesale"}
+            // route={"Glasgow Wholesale"}
+            route={userSettings?.friday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
             // refresh={refresh}
             // setRefresh={setRefresh}

@@ -8,7 +8,9 @@ export function useUserSettings() {
   const [loading, setLoading] = useState(true);
 
   const fetchSettings = async () => {
-    // Try localStorage first
+    setLoading(true);
+
+    // Try loading from localStorage
     const cached = localStorage.getItem(SETTINGS_KEY);
     if (cached) {
       try {
@@ -19,29 +21,27 @@ export function useUserSettings() {
       }
     }
 
-    // Fetch from PocketBase
+    // Then fetch from PocketBase if logged in
     if (pb.authStore.isValid) {
       try {
+        const userId = pb.authStore.model.id;
         const records = await pb.collection("user_settings").getFullList({
-          filter: `user="${pb.authStore.model.id}"`,
+          filter: `user="${userId}"`,
         });
 
         let record;
         if (records.length > 0) {
           record = records[0];
         } else {
-          // Create default if none exists
           record = await pb.collection("user_settings").create({
-            user: pb.authStore.model.id,
+            user: userId,
             settings_json: {},
           });
         }
 
-        localStorage.setItem(
-          SETTINGS_KEY,
-          JSON.stringify(record.settings_json)
-        );
-        setSettings(record.settings_json);
+        const freshSettings = { ...record.settings_json }; // clone for reactivity
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(freshSettings));
+        setSettings(freshSettings);
       } catch (err) {
         console.error("Failed to fetch settings", err);
       }
@@ -64,13 +64,19 @@ export function useUserSettings() {
       settings_json: newSettings,
     });
 
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(updated.settings_json));
-    setSettings(updated.settings_json);
+    const freshSettings = { ...updated.settings_json }; // clone again
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(freshSettings));
+    setSettings(freshSettings);
   };
 
   useEffect(() => {
     fetchSettings();
   }, []);
 
-  return { settings, updateSettings, loading };
+  return {
+    settings,
+    updateSettings,
+    fetchSettings, // expose it as `refetchSettings` if preferred
+    loading,
+  };
 }
