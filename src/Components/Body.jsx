@@ -50,10 +50,8 @@ export default function Body({
             arr={monday}
             day={"Monday"}
             // route={"Glasgow Wholesale"}
-            route={userSettings?.friday_heading || "Misc"}
+            route={userSettings?.monday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -65,10 +63,8 @@ export default function Body({
           <DayColumn
             arr={tuesday}
             day={"Tuesday"}
-            route={"Edinburgh + Lanark"}
+            route={userSettings?.tuesday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -80,10 +76,8 @@ export default function Body({
           <DayColumn
             arr={wednesday}
             day={"Wednesday"}
-            route={"Dumfries/South"}
+            route={userSettings?.wednesday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -95,10 +89,8 @@ export default function Body({
           <DayColumn
             arr={thursday}
             day={"Thursday"}
-            route={"North"}
+            route={userSettings?.thursday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -110,10 +102,8 @@ export default function Body({
           <DayColumn
             arr={friday}
             day={"Friday"}
-            route={"Ayrshire + Glasgow Retails"}
+            route={userSettings?._heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -125,10 +115,8 @@ export default function Body({
           <DayColumn
             arr={saturday}
             day={"Saturday"}
-            route={"Misc"}
+            route={userSettings?.saturday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -140,10 +128,8 @@ export default function Body({
           <DayColumn
             arr={sunday}
             day={"Sunday"}
-            route={"Misc"}
+            route={userSettings?.sunday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][6]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
