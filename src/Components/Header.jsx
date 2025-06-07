@@ -30,13 +30,16 @@ export default function Header({
 
   function handleMapClick() {
     setEdit((prev) => !prev);
-    setMenuOpen(!menuOpen);
+    setMenuOpen(false);
   }
 
   return (
     <header className=" bg-regal-blue text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
-      <div className="flex items-center gap-2">
+      <div
+        onClick={() => setMenuOpen(false)}
+        className="flex items-center gap-2"
+      >
         <Link to="/">
           <LogoTree height="40px" width="40px" />
         </Link>
@@ -211,7 +214,10 @@ export default function Header({
           </button>
 
           <Link to="/createCustomer">
-            <button className="bg-green-600 justify-center px-2 w-full py-1 rounded hover:bg-green-700 flex md:hidden">
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="bg-green-600 justify-center px-2 w-full py-1 rounded hover:bg-green-700 flex md:hidden"
+            >
               Add Order
             </button>
           </Link>
