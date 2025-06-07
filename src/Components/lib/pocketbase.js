@@ -49,6 +49,7 @@ export async function login(username, password) {
 }
 
 export function signout() {
+  localStorage.removeItem("user_settings_cache");
   pb.authStore.clear();
   window.location.reload();
 }

@@ -21,6 +21,7 @@ import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
 import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
+import { useUserSettings } from "./hooks/useUserSettings";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -28,6 +29,11 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
+  const {
+    settings,
+    updateSettings,
+    loading: settingsLoading,
+  } = useUserSettings();
 
   const isAuthenticated = useAuth();
 
@@ -42,8 +48,6 @@ export default function App() {
     setTodayAsLoginDate(); // store today's login
   }
 
-  // const rec = useTasks();
-  // const rec = usePocketbaseRealtimeTasks();
   const { tasks: rec, refetch } = useTasks();
 
   function getCurrentWeek(d) {
@@ -87,6 +91,7 @@ export default function App() {
                     edit={edit}
                     setCustomerList={setCustomerList}
                     customerList={customerList}
+                    userSettings={settings}
                   ></Body>
                 }
               />

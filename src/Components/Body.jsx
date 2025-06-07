@@ -12,6 +12,7 @@ export default function Body({
   edit,
   setCustomerList,
   customerList,
+  userSettings,
 }) {
   refresh;
   const filterUsersByDay = (day) => {
@@ -24,6 +25,8 @@ export default function Body({
         (record.year === chosenYear)
     );
   };
+
+  console.log(userSettings);
 
   const monday = filterUsersByDay("monday");
   const tuesday = filterUsersByDay("tuesday");

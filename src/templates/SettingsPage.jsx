@@ -30,7 +30,15 @@ export default function SettingsPage() {
     <div className="max-w-md mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Settings</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {["monday", "tuesday", "wednesday"].map((day) => (
+        {[
+          "monday",
+          "tuesday",
+          "wednesday",
+          "thursday",
+          "friday",
+          "saturday",
+          "sunday",
+        ].map((day) => (
           <div key={day}>
             <label className="block font-medium capitalize mb-1">
               {day} Heading
