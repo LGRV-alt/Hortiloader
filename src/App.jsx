@@ -81,7 +81,7 @@ export default function App() {
             ></Header>
           </div>
 
-          <div className="bg-surface col-start-1 col-end-4 row-start-2 row-end-3">
+          <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               <Route
                 path="/"

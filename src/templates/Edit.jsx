@@ -116,8 +116,8 @@ export default function Edit({ records }) {
     }
   } else {
     return (
-      <div className="p-1 md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
-        <div className="bg-white border-black  border-2 grid md:grid-cols-2 h-auto p-4 md:p-8 rounded-2xl ">
+      <div className="p-1 bg-surface h-full md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
+        <div className="bg-white border-black  border-2 grid md:grid-cols-2 md:h-4/5 p-4 md:p-8 rounded-2xl ">
           <div className=" flex flex-col gap-2 w-full md:px-10">
             <div className=" flex justify-between pt-2">
               <div className="flex items-center gap-2 ">
