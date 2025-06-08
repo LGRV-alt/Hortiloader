@@ -34,7 +34,7 @@ export default function Header({
   }
 
   return (
-    <header className=" bg-regal-blue text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="border-b-2 border-black bg-regal-blue text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -44,7 +44,7 @@ export default function Header({
           <LogoTree height="40px" width="40px" />
         </Link>
         <Link to="/">
-          <h1 className="text-4xl font-display hidden md:flex pr-4">
+          <h1 className="text-4xl font-display hidden lg:flex pr-4">
             HortiLoader
           </h1>
         </Link>
@@ -137,7 +137,7 @@ export default function Header({
 
                 <Link to="/createCustomer">
                   <button
-                    onClick={() => setMenuOpen((prev) => !prev)}
+                    onClick={() => setMenuOpen(false)}
                     className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex"
                   >
                     Add Order
