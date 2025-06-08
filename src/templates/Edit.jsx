@@ -109,16 +109,16 @@ export default function Edit({ records }) {
   if (records.length < 1) {
     {
       return (
-        <div className="flex justify-center items-center h-full bg-regal-blue ">
+        <div className="flex justify-center items-center h-full">
           <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
         </div>
       );
     }
   } else {
     return (
-      <div className="h-full pt-5 md:pt-16 bg-surface grid md:grid-cols-2 grid-cols-1 ">
-        <div className=" flex justify-center h-auto pb-2 ">
-          <div className=" flex flex-col gap-2 w-full px-10 md:px-2 md:w-2/3">
+      <div className="p-2 grid md:grid-cols-2 grid-cols-1 gap-4 ">
+        <div className="bg-white border-black  border-2 flex justify-center h-auto p-16 rounded-2xl ">
+          <div className=" flex flex-col gap-2 w-full px-10 md:px-2 ">
             <div className=" flex justify-between pt-2">
               <div className="flex items-center gap-2 ">
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
@@ -257,7 +257,7 @@ export default function Edit({ records }) {
           </div>
         </div>
         {/* -------------------- Info Section-------------------- */}
-        <div>
+        <div className="bg-white border-black  border-2 p-16 rounded-2xl">
           <label
             className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
             htmlFor=""

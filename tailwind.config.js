@@ -6,7 +6,7 @@ export default {
     extend: {
       colors: {
         "regal-blue": "#3C5B6F",
-        primary: "#0F62FE", // buttons/accents
+        // primary: "#0F62FE", // buttons/accents
         secondary: "#EA8966", // warm buttons
         base: "#365766", // background
         surface: "#F8F9FA", // form cards
