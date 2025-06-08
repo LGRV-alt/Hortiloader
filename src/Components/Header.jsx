@@ -162,7 +162,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="text-center absolute top-full right-0 bg-white border-2 border-black  text-black shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-1/2 md:w-1/6">
+        <div className="text-center absolute top-full right-0 bg-white border-2 border-black  text-black shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-full md:w-1/6">
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}
@@ -208,7 +208,7 @@ export default function Header({
           </NavLink>
           <button
             onClick={() => handleMapClick()}
-            className="bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden"
+            className="bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
           >
             Map
           </button>
@@ -216,7 +216,7 @@ export default function Header({
           <Link to="/createCustomer">
             <button
               onClick={() => setMenuOpen(false)}
-              className="bg-green-600 justify-center px-2 w-full py-1 rounded hover:bg-green-700 flex md:hidden"
+              className="bg-green-600 justify-center px-2 w-full py-1 rounded hover:bg-green-700 flex md:hidden text-white"
             >
               Add Order
             </button>

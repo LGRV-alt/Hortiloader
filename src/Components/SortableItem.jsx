@@ -140,7 +140,7 @@ export default function SortableItem({
             <span
               {...attributes}
               {...listeners}
-              className="cursor-grab select-none touch-none text-xl"
+              className="cursor-grab select-none touch-none md:text-xl"
               title="Drag"
             >
               {/* <GripVertical size={16} /> */}
