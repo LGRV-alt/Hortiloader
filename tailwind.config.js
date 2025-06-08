@@ -6,8 +6,12 @@ export default {
     extend: {
       colors: {
         "regal-blue": "#3C5B6F",
-        // "regal-blue": "#7C9082",
-        // "secondary-colour": "#E88D67",
+        primary: "#0F62FE", // buttons/accents
+        secondary: "#EA8966", // warm buttons
+        base: "#365766", // background
+        surface: "#F8F9FA", // form cards
+        textDark: "#212529", // dark text on light
+        textLight: "#FFFFFF", // light text on dark
         "secondary-colour": "#E88D67",
       },
       fontFamily: {

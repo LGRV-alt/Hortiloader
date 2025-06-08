@@ -34,7 +34,7 @@ export default function Header({
   }
 
   return (
-    <header className="border-b-2 border-black bg-regal-blue text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="border-b-2 border-black bg-base text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}

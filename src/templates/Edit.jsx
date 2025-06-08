@@ -116,17 +116,17 @@ export default function Edit({ records }) {
     }
   } else {
     return (
-      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid md:grid-cols-2 grid-cols-1 ">
-        <div className="flex justify-center h-full pb-2 ">
-          <div className="  flex flex-col  gap-2 w-full px-10 md:px-2 md:w-2/3">
-            <div className="flex justify-between pt-2 ">
+      <div className="h-full pt-5 md:pt-16 bg-surface grid md:grid-cols-2 grid-cols-1 ">
+        <div className=" flex justify-center h-auto pb-2 ">
+          <div className=" flex flex-col gap-2 w-full px-10 md:px-2 md:w-2/3">
+            <div className=" flex justify-between pt-2">
               <div className="flex items-center gap-2 ">
-                <h2 className="text-xl md:text-2xl font-medium text-secondary-colour ">
+                <h2 className="text-xl md:text-2xl font-medium text-secondary">
                   Edit Order -{" "}
                 </h2>{" "}
                 <select
                   value={status}
-                  className="cursor-pointer bg-transparent text-input text-lg  focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+                  className="cursor-pointer bg-transparent text-input text-lg  focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value=""></option>
@@ -146,7 +146,7 @@ export default function Edit({ records }) {
               </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              className="pl-1 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
@@ -154,13 +154,13 @@ export default function Edit({ records }) {
               required
             />
             <label
-              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
+              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
               htmlFor=""
             >
               {" "}
               Postcode -
               <input
-                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Postcode"
                 onChange={(e) => setPostcode(e.target.value)}
@@ -169,13 +169,13 @@ export default function Edit({ records }) {
               />
             </label>
             <label
-              className="flex justify-between w-full md:w-[250px] pl-1 text-lg text-white"
+              className="flex justify-between w-full md:w-[250px] pl-1 text-lg "
               htmlFor=""
             >
               {" "}
               Order Number -
               <input
-                className=" pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                className=" pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
                 type="text"
                 placeholder="Order No."
                 onChange={(e) => setOrderNumber(e.target.value)}
@@ -184,7 +184,7 @@ export default function Edit({ records }) {
               />
             </label>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -199,7 +199,7 @@ export default function Edit({ records }) {
               <option value="other">Other</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               onChange={(e) => setDay(e.target.value)}
@@ -215,7 +215,7 @@ export default function Edit({ records }) {
               <option value="sunday">Sunday</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               value={other ? other : []}
@@ -228,11 +228,11 @@ export default function Edit({ records }) {
             </select>
 
             {/* ----------------Week Select ------------------- */}
-            <div className="flex gap-2 pl-1 text-lg text-white">
+            <div className="flex gap-2 pl-1 text-lg ">
               <p>Week Number</p>
               <select
                 value={weekNumber}
-                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white  border-2"
                 onChange={(e) => setWeekNumber(e.target.value)}
                 name=""
                 id=""
@@ -241,7 +241,7 @@ export default function Edit({ records }) {
               </select>
             </div>
             {/* -------------- Year Select -------------------- */}
-            <div className="flex gap-2 pl-1 text-lg text-white ">
+            <div className="flex gap-2 pl-1 text-lg  ">
               <p>Year</p>
               <select
                 value={year}
@@ -254,68 +254,44 @@ export default function Edit({ records }) {
                 <option value="2025">2025</option>
               </select>
             </div>
-            <label
-              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
-              htmlFor=""
-            >
-              {" "}
-              Trollies -
-              <input
-                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-                type="text"
-                placeholder="Trollies"
-                onChange={(e) => setTrollies(e.target.value)}
-                value={trollies}
-                required
-              />
-            </label>
-            <label
-              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
-              htmlFor=""
-            >
-              {" "}
-              Extras
-              <input
-                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-                type="text"
-                placeholder="Extras"
-                onChange={(e) => setExtras(e.target.value)}
-                value={extras}
-                required
-              />
-            </label>
-            {/* -------------------- Info Section-------------------- */}
-            {/* <div className="w-full flex-col items-center flex p-2">
-              <h3 className="pb-2 text-lg font-medium text-white ">
-                Additional Info
-              </h3>
-              <textarea
-                className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-                type="text"
-                placeholder="Issues/Load information"
-                onChange={(e) => setOrderInfo(e.target.value)}
-                value={orderInfo}
-                required
-              />
-            </div>
-            <div className="flex justify-center items-start w-full">
-              <button
-                className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
-                onClick={handleSubmit}
-              >
-                <p className="">Save</p>
-              </button>
-            </div> */}
           </div>
         </div>
-
+        {/* -------------------- Info Section-------------------- */}
         <div>
+          <label
+            className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
+            htmlFor=""
+          >
+            {" "}
+            Trollies -
+            <input
+              className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              type="text"
+              placeholder="Trollies"
+              onChange={(e) => setTrollies(e.target.value)}
+              value={trollies}
+              required
+            />
+          </label>
+          <label
+            className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg "
+            htmlFor=""
+          >
+            {" "}
+            Extras
+            <input
+              className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              type="text"
+              placeholder="Extras"
+              onChange={(e) => setExtras(e.target.value)}
+              value={extras}
+              required
+            />
+          </label>
           <div className="w-full flex-col items-center flex p-2">
-            <h3 className="pb-2 text-lg font-medium text-white ">
-              Additional Info
-            </h3>
+            <h3 className="pb-2 text-lg font-medium  ">Additional Info</h3>
             <textarea
-              className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
               type="text"
               placeholder="Issues/Load information"
               onChange={(e) => setOrderInfo(e.target.value)}
@@ -325,7 +301,7 @@ export default function Edit({ records }) {
           </div>
           <div className="flex justify-center items-start w-full">
             <button
-              className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
+              className="bg-secondary-colour  py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
               onClick={handleSubmit}
             >
               <p className="">Save</p>
