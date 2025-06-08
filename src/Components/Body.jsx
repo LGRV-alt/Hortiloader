@@ -100,7 +100,7 @@ export default function Body({
           <DayColumn
             arr={friday}
             day={"Friday"}
-            route={userSettings?._heading || "Misc"}
+            route={userSettings?.friday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
