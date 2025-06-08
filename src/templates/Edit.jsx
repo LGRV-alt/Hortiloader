@@ -6,6 +6,7 @@ import { deleteTask, updateTask } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
+import toast from "react-hot-toast";
 const realPass = "gilmore";
 
 export default function Edit({ records }) {
@@ -20,7 +21,8 @@ export default function Edit({ records }) {
       customerType: "Wholesale",
     },
   ];
-
+  const [formError, setFormError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(loadingState);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function Edit({ records }) {
     setTrollies(record.trollies);
     setExtras(record.extras);
   }, [records, id]);
-
+  // Form Data
   const [title, setTitle] = useState();
   const [day, setDay] = useState();
   const [postcode, setPostcode] = useState();
@@ -52,6 +54,10 @@ export default function Edit({ records }) {
   const [year, setYear] = useState();
   const [trollies, setTrollies] = useState();
   const [extras, setExtras] = useState();
+
+  // Delete modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -68,35 +74,35 @@ export default function Edit({ records }) {
 
   const handleSubmit = async () => {
     if (!title) {
-      window.alert("Please enter a title");
+      toast.error("Task needs a title");
       return;
     }
 
-    await updateTask(
-      id,
-      title,
-      other,
-      weekNumber,
-      day,
-      postcode,
-      orderNumber,
-      customerType,
-      orderInfo,
-      status,
-      year,
-      trollies,
-      extras
-    );
-    navigate(-1);
-  };
+    setIsSaving(true);
 
-  const handleDelete = (id) => {
-    const pass = prompt("Enter Password").toLocaleLowerCase();
-    if (pass === realPass) {
+    try {
+      await updateTask(
+        id,
+        title,
+        other,
+        weekNumber,
+        day,
+        postcode,
+        orderNumber,
+        customerType,
+        orderInfo,
+        status,
+        year,
+        trollies,
+        extras
+      );
+      toast.success("Order updated successfully!");
       navigate(-1);
-      deleteTask(id);
-    } else {
-      alert("Wrong Password");
+    } catch (err) {
+      console.error("Error updating task:", err);
+      toast.error("Something went wrong while saving.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -110,7 +116,7 @@ export default function Edit({ records }) {
     }
   } else {
     return (
-      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr] md:grid-cols-2  ">
+      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid md:grid-cols-2 grid-cols-1 ">
         <div className="flex justify-center h-full pb-2 ">
           <div className="  flex flex-col  gap-2 w-full px-10 md:px-2 md:w-2/3">
             <div className="flex justify-between pt-2 ">
@@ -133,7 +139,7 @@ export default function Edit({ records }) {
               <div className="items-center flex justify-center">
                 <button
                   className="ml-1 bg-red-500 rounded-md w-12 h-7 text-white px-2 hover:bg-red-600"
-                  onClick={() => handleDelete(id)}
+                  onClick={() => setShowDeleteModal(true)}
                 >
                   <span className="material-symbols-outlined">X</span>
                 </button>
@@ -279,7 +285,7 @@ export default function Edit({ records }) {
               />
             </label>
             {/* -------------------- Info Section-------------------- */}
-            <div className="w-full flex-col items-center flex p-2">
+            {/* <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2 text-lg font-medium text-white ">
                 Additional Info
               </h3>
@@ -299,18 +305,77 @@ export default function Edit({ records }) {
               >
                 <p className="">Save</p>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 ">
-          {/* <div className="flex justify-center mb-4">
-            <FileUpload taskID={id} />
+        <div>
+          <div className="w-full flex-col items-center flex p-2">
+            <h3 className="pb-2 text-lg font-medium text-white ">
+              Additional Info
+            </h3>
+            <textarea
+              className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              type="text"
+              placeholder="Issues/Load information"
+              onChange={(e) => setOrderInfo(e.target.value)}
+              value={orderInfo}
+              required
+            />
           </div>
-          <div className="pb-5">
-            <Pictures taskID={id} />
-          </div> */}
+          <div className="flex justify-center items-start w-full">
+            <button
+              className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
+              onClick={handleSubmit}
+            >
+              <p className="">Save</p>
+            </button>
+          </div>
         </div>
+
+        {/* <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 "></div> */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
+              <h2 className="text-xl font-semibold mb-4 text-red-600">
+                Confirm Delete
+              </h2>
+              <p className="mb-2 text-black">
+                Enter password to delete this task:
+              </p>
+              <input
+                type="password"
+                className="w-full border px-3 py-2 mb-4 rounded text-black"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+              />
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (deletePassword.toLowerCase() === realPass) {
+                      deleteTask(id);
+                      toast.success("Task deleted.");
+                      navigate(-1);
+                    } else {
+                      toast.error("Incorrect password.");
+                    }
+                    setShowDeleteModal(false);
+                    setDeletePassword("");
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                >
+                  Confirm Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

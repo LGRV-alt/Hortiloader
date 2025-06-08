@@ -22,6 +22,7 @@ import ViewExportPage from "./templates/ViewExportPage";
 import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
 import { useUserSettings } from "./hooks/useUserSettings";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -67,6 +68,7 @@ export default function App() {
 
   return (
     <>
+      <Toaster position="top-center" />
       {isAuthenticated ? (
         <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
