@@ -162,7 +162,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="text-center absolute top-full right-0 bg-black bg-opacity-95  text-white shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-1/2 md:w-1/6">
+        <div className="text-center absolute top-full right-0 bg-white border-2 border-black  text-black shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-1/2 md:w-1/6">
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}

@@ -117,8 +117,8 @@ export default function Edit({ records }) {
   } else {
     return (
       <div className="p-2 grid md:grid-cols-2 grid-cols-1 gap-4 ">
-        <div className="bg-white border-black  border-2 flex justify-center h-auto p-16 rounded-2xl ">
-          <div className=" flex flex-col gap-2 w-full px-10 md:px-2 ">
+        <div className="bg-white border-black  border-2 flex justify-center h-auto p-4 md:p-16 rounded-2xl ">
+          <div className=" flex flex-col gap-2 w-full md:px-10 md:px-2 ">
             <div className=" flex justify-between pt-2">
               <div className="flex items-center gap-2 ">
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
@@ -257,7 +257,7 @@ export default function Edit({ records }) {
           </div>
         </div>
         {/* -------------------- Info Section-------------------- */}
-        <div className="bg-white border-black  border-2 p-16 rounded-2xl">
+        <div className="bg-white border-black flex flex-col justify-between items-center border-2 p-4 md:p-16 rounded-2xl">
           <label
             className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
             htmlFor=""
@@ -299,9 +299,9 @@ export default function Edit({ records }) {
               required
             />
           </div>
-          <div className="flex justify-center items-start w-full">
+          <div className="flex justify-center w-full">
             <button
-              className="bg-secondary-colour  py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
+              className="bg-secondary py-2 px-4 rounded-md m-1 hover:text-white  transition-all hover:outline w-full md:w-1/2"
               onClick={handleSubmit}
             >
               <p className="">Save</p>
