@@ -116,9 +116,9 @@ export default function Edit({ records }) {
     }
   } else {
     return (
-      <div className="p-2 grid md:grid-cols-2 grid-cols-1 gap-4 ">
-        <div className="bg-white border-black  border-2 flex justify-center h-auto p-4 md:p-16 rounded-2xl ">
-          <div className=" flex flex-col gap-2 w-full md:px-10 md:px-2 ">
+      <div className="p-1 md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
+        <div className="bg-white border-black  border-2 grid md:grid-cols-2 h-auto p-4 md:p-8 rounded-2xl ">
+          <div className=" flex flex-col gap-2 w-full md:px-10">
             <div className=" flex justify-between pt-2">
               <div className="flex items-center gap-2 ">
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
@@ -126,7 +126,7 @@ export default function Edit({ records }) {
                 </h2>{" "}
                 <select
                   value={status}
-                  className="cursor-pointer bg-transparent text-input text-lg  focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                  className="cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                   onChange={(e) => setStatus(e.target.value)}
                 >
                   <option value=""></option>
@@ -136,55 +136,34 @@ export default function Edit({ records }) {
                   <option value="missed">Missed</option>
                 </select>
               </div>
-              <div className="items-center flex justify-center">
-                <button
-                  className="ml-1 bg-red-500 rounded-md w-12 h-7 text-white px-2 hover:bg-red-600"
-                  onClick={() => setShowDeleteModal(true)}
-                >
-                  <span className="material-symbols-outlined">X</span>
-                </button>
-              </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
-            <label
-              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
-              htmlFor=""
-            >
-              {" "}
-              Postcode -
-              <input
-                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-                type="text"
-                placeholder="Postcode"
-                onChange={(e) => setPostcode(e.target.value)}
-                value={postcode}
-                required
-              />
-            </label>
-            <label
-              className="flex justify-between w-full md:w-[250px] pl-1 text-lg "
-              htmlFor=""
-            >
-              {" "}
-              Order Number -
-              <input
-                className=" pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
-                type="text"
-                placeholder="Order No."
-                onChange={(e) => setOrderNumber(e.target.value)}
-                value={orderNumber}
-                required
-              />
-            </label>
+            <input
+              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              type="text"
+              placeholder="Postcode"
+              onChange={(e) => setPostcode(e.target.value)}
+              value={postcode}
+              required
+            />
+            <input
+              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              type="text"
+              placeholder="Order No."
+              onChange={(e) => setOrderNumber(e.target.value)}
+              value={orderNumber}
+              required
+            />
+
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -199,7 +178,7 @@ export default function Edit({ records }) {
               <option value="other">Other</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               onChange={(e) => setDay(e.target.value)}
@@ -215,7 +194,7 @@ export default function Edit({ records }) {
               <option value="sunday">Sunday</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               value={other ? other : []}
@@ -228,11 +207,11 @@ export default function Edit({ records }) {
             </select>
 
             {/* ----------------Week Select ------------------- */}
-            <div className="flex gap-2 pl-1 text-lg ">
+            <div className="flex gap-2 pl-1  ">
               <p>Week Number</p>
               <select
                 value={weekNumber}
-                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white  border-2"
+                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setWeekNumber(e.target.value)}
                 name=""
                 id=""
@@ -241,11 +220,11 @@ export default function Edit({ records }) {
               </select>
             </div>
             {/* -------------- Year Select -------------------- */}
-            <div className="flex gap-2 pl-1 text-lg  ">
+            <div className="flex gap-2 pl-1 ">
               <p>Year</p>
               <select
                 value={year}
-                className="cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+                className="cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setYear(e.target.value)}
                 name=""
                 id=""
@@ -255,57 +234,55 @@ export default function Edit({ records }) {
               </select>
             </div>
           </div>
-        </div>
-        {/* -------------------- Info Section-------------------- */}
-        <div className="bg-white border-black flex flex-col justify-between items-center border-2 p-4 md:p-16 rounded-2xl">
-          <label
-            className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg"
-            htmlFor=""
-          >
-            {" "}
-            Trollies -
-            <input
-              className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
-              type="text"
-              placeholder="Trollies"
-              onChange={(e) => setTrollies(e.target.value)}
-              value={trollies}
-              required
-            />
-          </label>
-          <label
-            className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg "
-            htmlFor=""
-          >
-            {" "}
-            Extras
-            <input
-              className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-              type="text"
-              placeholder="Extras"
-              onChange={(e) => setExtras(e.target.value)}
-              value={extras}
-              required
-            />
-          </label>
-          <div className="w-full flex-col items-center flex p-2">
-            <h3 className="pb-2 text-lg font-medium  ">Additional Info</h3>
-            <textarea
-              className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-              type="text"
-              placeholder="Issues/Load information"
-              onChange={(e) => setOrderInfo(e.target.value)}
-              value={orderInfo}
-              required
-            />
-          </div>
-          <div className="flex justify-center w-full">
-            <button
-              className="bg-secondary py-2 px-4 rounded-md m-1 hover:text-white  transition-all hover:outline w-full md:w-1/2"
-              onClick={handleSubmit}
-            >
-              <p className="">Save</p>
-            </button>
+          {/* -------------Right hand side------------------ */}
+          <div className="flex flex-col justify-end items-start">
+            <div className="grid grid-cols-[1fr_2fr] p-1 md:p-8">
+              <label className="">Trollies - </label>
+              <input
+                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+                type="text"
+                placeholder="Trollies"
+                onChange={(e) => setTrollies(e.target.value)}
+                value={trollies}
+                required
+              />
+              <label className="">Extras - </label>
+              <input
+                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                type="text"
+                placeholder="Extras"
+                onChange={(e) => setExtras(e.target.value)}
+                value={extras}
+                required
+              />
+            </div>
+
+            <div className="w-full flex-col items-center flex p-2">
+              <h3 className="pb-2  font-medium  ">Additional Info</h3>
+              <textarea
+                className=" p-2 h-32 w-full text-center  bg-transparent border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                type="text"
+                placeholder="Issues/Load information"
+                onChange={(e) => setOrderInfo(e.target.value)}
+                value={orderInfo}
+                required
+              />
+            </div>
+            <div className="grid grid-cols-[4fr_1fr] items-center w-full gap-8 p-2">
+              <button
+                className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
+                onClick={handleSubmit}
+              >
+                <p>Save</p>
+              </button>
+
+              <button
+                className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
+                onClick={() => setShowDeleteModal(true)}
+              >
+                <p>Delete</p>
+              </button>
+            </div>
           </div>
         </div>
 
