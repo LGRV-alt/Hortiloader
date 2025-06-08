@@ -34,7 +34,7 @@ export default function Header({
   }
 
   return (
-    <header className="border-b-2 border-black bg-base text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="border-b-2 border-black bg-main text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -223,7 +223,7 @@ export default function Header({
           </Link>
           <button
             onClick={signout}
-            className="bg-red-600 px-2 py-1 rounded hover:bg-red-700"
+            className="bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
           >
             {/* <CiLogout fontSize="1.3rem" /> This is the logo for signout */}
             Logout

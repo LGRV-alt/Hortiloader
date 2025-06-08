@@ -140,7 +140,7 @@ export default function SortableItem({
             <span
               {...attributes}
               {...listeners}
-              className="cursor-grab select-none touch-none text-gray-500"
+              className="cursor-grab select-none touch-none text-xl"
               title="Drag"
             >
               {/* <GripVertical size={16} /> */}
@@ -151,12 +151,12 @@ export default function SortableItem({
               <p className="text-xs md:text-xl">
                 {reduceOrderNumber(item.orderNumber)}
               </p>
-              <div className="text-xs">{sortPostCode(item.postcode)}</div>
+              <p className="">{sortPostCode(item.postcode)}</p>
             </div>
           </div>
           <div className="flex items-center gap-2 text-sm md:text-2xl">
-            {item.trollies && <div>{item.trollies}T</div>}
-            {item.extras && <div className="text-red-500">{item.extras}</div>}
+            {item.trollies && <p>{item.trollies}T</p>}
+            {item.extras && <p className="text-red-500">{item.extras}</p>}
           </div>
         </div>
       )}

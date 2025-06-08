@@ -72,7 +72,7 @@ export default function WeekdayPage({ records }) {
           {arr.map((record) => (
             <div
               key={record.id}
-              className="flex justify-between items-center border-b-2 p-3 border-black  md:pl-16 "
+              className="flex justify-between items-center border-b-2 p-3 pt-12 border-black  md:pl-16 "
             >
               <Link to={`/edit/${record.id}`}>
                 <div className="flex hover:border-black hover:border-b-2 gap-1 md:gap-4">
