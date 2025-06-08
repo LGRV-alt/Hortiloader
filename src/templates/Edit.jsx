@@ -120,21 +120,33 @@ export default function Edit({ records }) {
         <div className="bg-white border-black  border-2 grid md:grid-cols-2 md:h-4/5 p-4 md:p-8 rounded-2xl ">
           <div className=" flex flex-col gap-2 w-full md:px-10">
             <div className=" flex justify-between pt-2">
-              <div className="flex items-center gap-2 ">
+              <div className="flex w-full items-center justify-between gap-2 ">
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
                   Edit Order -{" "}
                 </h2>{" "}
-                <select
-                  value={status}
-                  className="cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="working">Working</option>
-                  <option value="pulled">Pulled</option>
-                  <option value="loaded">Loaded</option>
-                  <option value="missed">Missed</option>
-                </select>
+                <div className="flex font-semibold gap-1">
+                  <p>Week</p>
+                  <select
+                    value={weekNumber}
+                    className="cursor-pointer appearance-none w-auto bg-transparent focus:text-black focus:bg-white "
+                    onChange={(e) => setWeekNumber(e.target.value)}
+                    name=""
+                    id=""
+                  >
+                    {weekNumbers}
+                  </select>
+
+                  <select
+                    value={year}
+                    className="pl-2 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
+                    onChange={(e) => setYear(e.target.value)}
+                    name=""
+                    id=""
+                  >
+                    <option value="0">2024</option>
+                    <option value="2025">2025</option>
+                  </select>
+                </div>
               </div>
             </div>
             <input
@@ -207,24 +219,24 @@ export default function Edit({ records }) {
             </select>
 
             {/* ----------------Week Select ------------------- */}
-            <div className="flex gap-2 pl-1  ">
+            {/* <div className="flex gap-2 pl-1  ">
               <p>Week Number</p>
               <select
                 value={weekNumber}
-                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white "
+                className="cursor-pointer appearance-none w-12 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setWeekNumber(e.target.value)}
                 name=""
                 id=""
               >
                 {weekNumbers}
               </select>
-            </div>
+            </div> */}
             {/* -------------- Year Select -------------------- */}
-            <div className="flex gap-2 pl-1 ">
+            {/* <div className="flex gap-2 pl-1 ">
               <p>Year</p>
               <select
                 value={year}
-                className="cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
+                className="appearance-none cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setYear(e.target.value)}
                 name=""
                 id=""
@@ -232,11 +244,23 @@ export default function Edit({ records }) {
                 <option value="0">2024</option>
                 <option value="2025">2025</option>
               </select>
-            </div>
+            </div> */}
           </div>
           {/* -------------Right hand side------------------ */}
           <div className="flex flex-col justify-end items-start">
-            <div className="grid grid-cols-[1fr_2fr] p-1 md:p-8">
+            <div className="grid grid-cols-[1fr_4fr] p-1 md:p-8 w-full">
+              <label className="">Status - </label>
+              <select
+                value={status}
+                className="w-24 md:w-28 cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="working">Working</option>
+                <option value="pulled">Pulled</option>
+                <option value="loaded">Loaded</option>
+                <option value="missed">Missed</option>
+              </select>
               <label className="">Trollies - </label>
               <input
                 className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
