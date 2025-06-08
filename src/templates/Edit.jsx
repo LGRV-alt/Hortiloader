@@ -36,6 +36,8 @@ export default function Edit({ records }) {
     setOrderInfo(record.orderInfo);
     setStatus(record.status);
     setYear(record.year);
+    setTrollies(record.trollies);
+    setExtras(record.extras);
   }, [records, id]);
 
   const [title, setTitle] = useState();
@@ -48,6 +50,8 @@ export default function Edit({ records }) {
   const [orderInfo, setOrderInfo] = useState();
   const [status, setStatus] = useState();
   const [year, setYear] = useState();
+  const [trollies, setTrollies] = useState();
+  const [extras, setExtras] = useState();
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -79,7 +83,9 @@ export default function Edit({ records }) {
       customerType,
       orderInfo,
       status,
-      year
+      year,
+      trollies,
+      extras
     );
     navigate(-1);
   };
@@ -242,6 +248,36 @@ export default function Edit({ records }) {
                 <option value="2025">2025</option>
               </select>
             </div>
+            <label
+              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
+              htmlFor=""
+            >
+              {" "}
+              Trollies -
+              <input
+                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                type="text"
+                placeholder="Trollies"
+                onChange={(e) => setTrollies(e.target.value)}
+                value={trollies}
+                required
+              />
+            </label>
+            <label
+              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
+              htmlFor=""
+            >
+              {" "}
+              Extras
+              <input
+                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                type="text"
+                placeholder="Extras"
+                onChange={(e) => setExtras(e.target.value)}
+                value={extras}
+                required
+              />
+            </label>
             {/* -------------------- Info Section-------------------- */}
             <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2 text-lg font-medium text-white ">

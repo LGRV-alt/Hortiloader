@@ -16,7 +16,9 @@ export async function updateTask(
   customerType,
   orderInfo,
   status,
-  year
+  year,
+  trollies,
+  extras
 ) {
   const data = {
     title: title,
@@ -29,6 +31,8 @@ export async function updateTask(
     orderInfo: orderInfo,
     status: status,
     year: year,
+    trollies: trollies,
+    extras: extras,
   };
   await pb.collection("tasks").update(id, data);
   emitRefetchTasks();
