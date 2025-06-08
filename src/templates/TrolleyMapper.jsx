@@ -133,11 +133,11 @@ export default function TrolleyMapper({
     // PDF generation and download
     const element = exportRef.current;
     const canvas = await html2canvas(element, {
-      scale: 3,
+      scale: 1,
       useCORS: true,
     });
 
-    const imgData = canvas.toDataURL("image/png");
+    const imgData = canvas.toDataURL("image/png", 1);
     const pdf = new jsPDF("landscape", "mm", "a4");
 
     const pdfWidth = pdf.internal.pageSize.getWidth();

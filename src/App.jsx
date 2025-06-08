@@ -7,6 +7,7 @@ import Login from "./Login";
 import { isUserValid } from "./Components/lib/pocketbase";
 
 import Edit from "./templates/Edit";
+import SettingsPage from "./templates/SettingsPage";
 import HoldingPage from "./templates/HoldingPage";
 import Collect from "./templates/Collect";
 import SearchPage from "./templates/SearchPage";
@@ -20,6 +21,8 @@ import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
 import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
+import { useUserSettings } from "./hooks/useUserSettings";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -27,6 +30,11 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
+  const {
+    settings,
+    updateSettings,
+    loading: settingsLoading,
+  } = useUserSettings();
 
   const isAuthenticated = useAuth();
 
@@ -41,8 +49,6 @@ export default function App() {
     setTodayAsLoginDate(); // store today's login
   }
 
-  // const rec = useTasks();
-  // const rec = usePocketbaseRealtimeTasks();
   const { tasks: rec, refetch } = useTasks();
 
   function getCurrentWeek(d) {
@@ -62,6 +68,7 @@ export default function App() {
 
   return (
     <>
+      <Toaster position="top-center" />
       {isAuthenticated ? (
         <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
@@ -74,7 +81,7 @@ export default function App() {
             ></Header>
           </div>
 
-          <div className="col-start-1 col-end-4 row-start-2 row-end-3">
+          <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               <Route
                 path="/"
@@ -86,6 +93,7 @@ export default function App() {
                     edit={edit}
                     setCustomerList={setCustomerList}
                     customerList={customerList}
+                    userSettings={settings}
                   ></Body>
                 }
               />
@@ -96,6 +104,8 @@ export default function App() {
               />
 
               <Route path="/runs" element={<TrolleyExportsPage />} />
+
+              <Route path="/settings" element={<SettingsPage />} />
 
               <Route path="/runs/view/:id" element={<ViewExportPage />} />
 

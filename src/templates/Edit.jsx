@@ -6,6 +6,7 @@ import { deleteTask, updateTask } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
+import toast from "react-hot-toast";
 const realPass = "gilmore";
 
 export default function Edit({ records }) {
@@ -20,7 +21,8 @@ export default function Edit({ records }) {
       customerType: "Wholesale",
     },
   ];
-
+  const [formError, setFormError] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
   const [selectedRecord, setSelectedRecord] = useState(loadingState);
 
   useEffect(() => {
@@ -36,8 +38,10 @@ export default function Edit({ records }) {
     setOrderInfo(record.orderInfo);
     setStatus(record.status);
     setYear(record.year);
+    setTrollies(record.trollies);
+    setExtras(record.extras);
   }, [records, id]);
-
+  // Form Data
   const [title, setTitle] = useState();
   const [day, setDay] = useState();
   const [postcode, setPostcode] = useState();
@@ -48,6 +52,12 @@ export default function Edit({ records }) {
   const [orderInfo, setOrderInfo] = useState();
   const [status, setStatus] = useState();
   const [year, setYear] = useState();
+  const [trollies, setTrollies] = useState();
+  const [extras, setExtras] = useState();
+
+  // Delete modal
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState("");
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -64,115 +74,108 @@ export default function Edit({ records }) {
 
   const handleSubmit = async () => {
     if (!title) {
-      window.alert("Please enter a title");
+      toast.error("Task needs a title");
       return;
     }
 
-    await updateTask(
-      id,
-      title,
-      other,
-      weekNumber,
-      day,
-      postcode,
-      orderNumber,
-      customerType,
-      orderInfo,
-      status,
-      year
-    );
-    navigate(-1);
-  };
+    setIsSaving(true);
 
-  const handleDelete = (id) => {
-    const pass = prompt("Enter Password").toLocaleLowerCase();
-    if (pass === realPass) {
+    try {
+      await updateTask(
+        id,
+        title,
+        other,
+        weekNumber,
+        day,
+        postcode,
+        orderNumber,
+        customerType,
+        orderInfo,
+        status,
+        year,
+        trollies,
+        extras
+      );
+      toast.success("Order updated successfully!");
       navigate(-1);
-      deleteTask(id);
-    } else {
-      alert("Wrong Password");
+    } catch (err) {
+      console.error("Error updating task:", err);
+      toast.error("Something went wrong while saving.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
   if (records.length < 1) {
     {
       return (
-        <div className="flex justify-center items-center h-full bg-regal-blue ">
+        <div className="flex justify-center items-center h-full">
           <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
         </div>
       );
     }
   } else {
     return (
-      <div className="h-full pt-5 md:pt-16 bg-regal-blue grid grid-cols-1 grid-rows-[4.5fr] md:grid-cols-2  ">
-        <div className="flex justify-center h-full pb-2 ">
-          <div className="  flex flex-col  gap-2 w-full px-10 md:px-2 md:w-2/3">
-            <div className="flex justify-between pt-2 ">
-              <div className="flex items-center gap-2 ">
-                <h2 className="text-xl md:text-2xl font-medium text-secondary-colour ">
+      <div className="p-1 bg-surface h-full md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
+        <div className="bg-white border-black  border-2 grid md:grid-cols-2 md:h-4/5 p-4 md:p-8 rounded-2xl ">
+          <div className=" flex flex-col gap-2 w-full md:px-10">
+            <div className=" flex justify-between pt-2">
+              <div className="flex w-full items-center justify-between gap-2 ">
+                <h2 className="text-xl md:text-2xl font-medium text-secondary">
                   Edit Order -{" "}
                 </h2>{" "}
-                <select
-                  value={status}
-                  className="cursor-pointer bg-transparent text-input text-lg  focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value=""></option>
-                  <option value="working">Working</option>
-                  <option value="pulled">Pulled</option>
-                  <option value="loaded">Loaded</option>
-                  <option value="missed">Missed</option>
-                </select>
-              </div>
-              <div className="items-center flex justify-center">
-                <button
-                  className="ml-1 bg-red-500 rounded-md w-12 h-7 text-white px-2 hover:bg-red-600"
-                  onClick={() => handleDelete(id)}
-                >
-                  <span className="material-symbols-outlined">X</span>
-                </button>
+                <div className="flex font-semibold gap-1">
+                  <p>Week</p>
+                  <select
+                    value={weekNumber}
+                    className="cursor-pointer appearance-none w-auto bg-transparent focus:text-black focus:bg-white "
+                    onChange={(e) => setWeekNumber(e.target.value)}
+                    name=""
+                    id=""
+                  >
+                    {weekNumbers}
+                  </select>
+
+                  <select
+                    value={year}
+                    className="pl-2 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
+                    onChange={(e) => setYear(e.target.value)}
+                    name=""
+                    id=""
+                  >
+                    <option value="0">2024</option>
+                    <option value="2025">2025</option>
+                  </select>
+                </div>
               </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
             />
-            <label
-              className=" flex justify-between w-full md:w-[250px]  pl-1 text-lg text-white"
-              htmlFor=""
-            >
-              {" "}
-              Postcode -
-              <input
-                className="pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-                type="text"
-                placeholder="Postcode"
-                onChange={(e) => setPostcode(e.target.value)}
-                value={postcode}
-                required
-              />
-            </label>
-            <label
-              className="flex justify-between w-full md:w-[250px] pl-1 text-lg text-white"
-              htmlFor=""
-            >
-              {" "}
-              Order Number -
-              <input
-                className=" pl-1 w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
-                type="text"
-                placeholder="Order No."
-                onChange={(e) => setOrderNumber(e.target.value)}
-                value={orderNumber}
-                required
-              />
-            </label>
+            <input
+              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              type="text"
+              placeholder="Postcode"
+              onChange={(e) => setPostcode(e.target.value)}
+              value={postcode}
+              required
+            />
+            <input
+              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              type="text"
+              placeholder="Order No."
+              onChange={(e) => setOrderNumber(e.target.value)}
+              value={orderNumber}
+              required
+            />
+
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -187,7 +190,7 @@ export default function Edit({ records }) {
               <option value="other">Other</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               onChange={(e) => setDay(e.target.value)}
@@ -203,7 +206,7 @@ export default function Edit({ records }) {
               <option value="sunday">Sunday</option>
             </select>
             <select
-              className="cursor-pointer bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               value={other ? other : []}
@@ -216,24 +219,24 @@ export default function Edit({ records }) {
             </select>
 
             {/* ----------------Week Select ------------------- */}
-            <div className="flex gap-2 pl-1 text-lg text-white">
+            {/* <div className="flex gap-2 pl-1  ">
               <p>Week Number</p>
               <select
                 value={weekNumber}
-                className="cursor-pointer w-12 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+                className="cursor-pointer appearance-none w-12 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setWeekNumber(e.target.value)}
                 name=""
                 id=""
               >
                 {weekNumbers}
               </select>
-            </div>
+            </div> */}
             {/* -------------- Year Select -------------------- */}
-            <div className="flex gap-2 pl-1 text-lg text-white ">
+            {/* <div className="flex gap-2 pl-1 ">
               <p>Year</p>
               <select
                 value={year}
-                className="cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white  border-white border-2"
+                className="appearance-none cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
                 onChange={(e) => setYear(e.target.value)}
                 name=""
                 id=""
@@ -241,14 +244,47 @@ export default function Edit({ records }) {
                 <option value="0">2024</option>
                 <option value="2025">2025</option>
               </select>
+            </div> */}
+          </div>
+          {/* -------------Right hand side------------------ */}
+          <div className="flex flex-col justify-end items-start">
+            <div className="grid grid-cols-[1fr_4fr] p-1 md:p-8 w-full">
+              <label className="">Status - </label>
+              <select
+                value={status}
+                className="w-24 md:w-28 cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value=""></option>
+                <option value="working">Working</option>
+                <option value="pulled">Pulled</option>
+                <option value="loaded">Loaded</option>
+                <option value="missed">Missed</option>
+              </select>
+              <label className="">Trollies - </label>
+              <input
+                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+                type="text"
+                placeholder="Trollies"
+                onChange={(e) => setTrollies(e.target.value)}
+                value={trollies}
+                required
+              />
+              <label className="">Extras - </label>
+              <input
+                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                type="text"
+                placeholder="Extras"
+                onChange={(e) => setExtras(e.target.value)}
+                value={extras}
+                required
+              />
             </div>
-            {/* -------------------- Info Section-------------------- */}
+
             <div className="w-full flex-col items-center flex p-2">
-              <h3 className="pb-2 text-lg font-medium text-white ">
-                Additional Info
-              </h3>
+              <h3 className="pb-2  font-medium  ">Additional Info</h3>
               <textarea
-                className=" p-2 h-32 w-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+                className=" p-2 h-32 w-full text-center  bg-transparent border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Issues/Load information"
                 onChange={(e) => setOrderInfo(e.target.value)}
@@ -256,25 +292,67 @@ export default function Edit({ records }) {
                 required
               />
             </div>
-            <div className="flex justify-center items-start w-full">
+            <div className="grid grid-cols-[4fr_1fr] items-center w-full gap-8 p-2">
               <button
-                className="bg-secondary-colour  text-white py-2 px-4 rounded-md m-1 hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline w-full md:w-1/2"
+                className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
                 onClick={handleSubmit}
               >
-                <p className="">Save</p>
+                <p>Save</p>
+              </button>
+
+              <button
+                className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
+                onClick={() => setShowDeleteModal(true)}
+              >
+                <p>Delete</p>
               </button>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 ">
-          {/* <div className="flex justify-center mb-4">
-            <FileUpload taskID={id} />
+        {/* <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 "></div> */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+            <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
+              <h2 className="text-xl font-semibold mb-4 text-red-600">
+                Confirm Delete
+              </h2>
+              <p className="mb-2 text-black">
+                Enter password to delete this task:
+              </p>
+              <input
+                type="password"
+                className="w-full border px-3 py-2 mb-4 rounded text-black"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+              />
+              <div className="flex justify-end space-x-2">
+                <button
+                  onClick={() => setShowDeleteModal(false)}
+                  className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    if (deletePassword.toLowerCase() === realPass) {
+                      deleteTask(id);
+                      toast.success("Task deleted.");
+                      navigate(-1);
+                    } else {
+                      toast.error("Incorrect password.");
+                    }
+                    setShowDeleteModal(false);
+                    setDeletePassword("");
+                  }}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+                >
+                  Confirm Delete
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="pb-5">
-            <Pictures taskID={id} />
-          </div> */}
-        </div>
+        )}
       </div>
     );
   }

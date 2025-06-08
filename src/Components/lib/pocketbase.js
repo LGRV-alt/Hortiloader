@@ -16,7 +16,9 @@ export async function updateTask(
   customerType,
   orderInfo,
   status,
-  year
+  year,
+  trollies,
+  extras
 ) {
   const data = {
     title: title,
@@ -29,6 +31,8 @@ export async function updateTask(
     orderInfo: orderInfo,
     status: status,
     year: year,
+    trollies: trollies,
+    extras: extras,
   };
   await pb.collection("tasks").update(id, data);
   emitRefetchTasks();
@@ -49,6 +53,7 @@ export async function login(username, password) {
 }
 
 export function signout() {
+  localStorage.removeItem("user_settings_cache");
   pb.authStore.clear();
   window.location.reload();
 }

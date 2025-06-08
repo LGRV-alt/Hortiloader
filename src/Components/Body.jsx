@@ -12,6 +12,7 @@ export default function Body({
   edit,
   setCustomerList,
   customerList,
+  userSettings,
 }) {
   refresh;
   const filterUsersByDay = (day) => {
@@ -41,15 +42,14 @@ export default function Body({
     );
   } else {
     return (
-      <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 md:outline h-full">
-        <div className=" mb-10 border-t-2 md:border-t-0 md:mb-0  md:border-r-2 row-span-2 border-black">
+      <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2  h-full">
+        <div className=" mb-10 md:border-t-0 md:mb-0  md:border-r-2 row-span-2 border-black">
           <DayColumn
             arr={monday}
             day={"Monday"}
-            route={"Glasgow Wholesale"}
+            // route={"Glasgow Wholesale"}
+            route={userSettings?.monday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -61,10 +61,8 @@ export default function Body({
           <DayColumn
             arr={tuesday}
             day={"Tuesday"}
-            route={"Edinburgh + Lanark"}
+            route={userSettings?.tuesday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -76,10 +74,8 @@ export default function Body({
           <DayColumn
             arr={wednesday}
             day={"Wednesday"}
-            route={"Dumfries/South"}
+            route={userSettings?.wednesday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -91,10 +87,8 @@ export default function Body({
           <DayColumn
             arr={thursday}
             day={"Thursday"}
-            route={"North"}
+            route={userSettings?.thursday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -106,10 +100,8 @@ export default function Body({
           <DayColumn
             arr={friday}
             day={"Friday"}
-            route={"Ayrshire + Glasgow Retails"}
+            route={userSettings?._heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -121,10 +113,8 @@ export default function Body({
           <DayColumn
             arr={saturday}
             day={"Saturday"}
-            route={"Misc"}
+            route={userSettings?.saturday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}
@@ -136,10 +126,8 @@ export default function Body({
           <DayColumn
             arr={sunday}
             day={"Sunday"}
-            route={"Misc"}
+            route={userSettings?.sunday_heading || "Misc"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][6]}
-            // refresh={refresh}
-            // setRefresh={setRefresh}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
             edit={edit}

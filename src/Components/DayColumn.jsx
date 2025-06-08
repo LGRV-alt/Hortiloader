@@ -23,11 +23,6 @@ export default function DayColumn({
   customerList,
 }) {
   const array = arr;
-
-  // const handleCustomerList = (string) => {
-  //   customerList.push(string);
-  //   console.log(customerList);
-  // };
   const handleCustomerList = (id) => {
     setCustomerList(
       (prevSelected) =>
@@ -43,7 +38,7 @@ export default function DayColumn({
       <div className="bg-neutral-200 flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2">
           {/* Title of column */}
-          <h5 className="text-lg font-bold" onClick={() => console.log(arr)}>
+          <h5 className="font-bold" onClick={() => console.log(arr)}>
             {day}
           </h5>
           <p className="font-bold"> {numberOfDay}</p>
@@ -106,7 +101,7 @@ export default function DayColumn({
                   data-tooltip-content={record.orderInfo}
                 >
                   <Tooltip id={`my-tooltip-${record.id}`} />
-                  <div className="flex">
+                  <div className="flex text-sm">
                     {record.customerType === "retail" ? (
                       <p className="text-blue-700 ">
                         {record.title} {record.postcode.toUpperCase()}{" "}
