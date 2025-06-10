@@ -1,18 +1,38 @@
 import { useState } from "react";
 import { login, signup } from "./Components/lib/pocketbase";
 import LogoTree from "./Components/LogoTree";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [toggle, setToggle] = useState(true);
+  const [loginStatus, setLoginStatus] = useState("Sign In");
 
-  const handleLogin = () => {
+  // const handleLogin = () => {
+  //   if (!username || !password) {
+  //     toast.error("Invalid Login credentials");
+  //     return;
+  //   }
+  //   setLoginStatus("Logging in");
+  //   login(username, password);
+  // };
+
+  const handleLogin = async () => {
     if (!username || !password) {
-      window.alert("Invalid Login credentials");
+      toast.error("Please enter both username and password");
       return;
     }
-    login(username, password);
+    setLoginStatus("Logging In");
+    const result = await login(username, password);
+    setLoginStatus("Sign In");
+
+    if (!result.success) {
+      toast.error(result.message);
+      return;
+    }
+
+    toast.success("Login successful!");
   };
 
   const handleSignup = () => {
@@ -74,7 +94,7 @@ export default function Login() {
               className=" w-1/2 mt-10 bg-green-500 text-white py-2 px-4 rounded-md text-base  hover:bg-green-600"
               onClick={handleLogin}
             >
-              <span className="">Sign in</span>
+              <span className="">{loginStatus}</span>
             </button>
             <button onClick={handleToggle}>Create an account</button>
           </div>{" "}

@@ -39,16 +39,31 @@ export async function updateTask(
   // history.go(0);
 }
 
+// export async function login(username, password) {
+//   try {
+//     await pb.collection("users").authWithPassword(username, password);
+//     console.log("Logged in:", pb.authStore.model);
+//   } catch (error) {
+//     console.log(error);
+//     if (error.data?.code) {
+//       alert("Invalid username or password");
+//     }
+//   }
+// }
+
 export async function login(username, password) {
   try {
     await pb.collection("users").authWithPassword(username, password);
-    // No reload
-    console.log("Logged in:", pb.authStore.model);
+    return { success: true };
   } catch (error) {
-    console.log(error);
-    if (error.data?.code) {
-      alert("Invalid username or password");
+    const errorCode = error?.data?.code || error?.status;
+
+    // Return specific error messages
+    if (errorCode === "invalid_username_or_password" || error.status === 400) {
+      return { success: false, message: "Incorrect username or password." };
     }
+
+    return { success: false, message: "Unexpected error occurred." };
   }
 }
 
