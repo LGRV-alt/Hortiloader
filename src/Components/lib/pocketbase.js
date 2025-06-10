@@ -72,21 +72,48 @@ export function signout() {
   pb.authStore.clear();
   window.location.reload();
 }
-export async function signup(username, password) {
+// export async function signup(username, password, email) {
+//   const data = {
+//     username: username,
+//     password: password,
+//     passwordConfirm: password,
+//     email: email,
+//   };
+//   try {
+//     await pb.collection("users").create(data);
+//     alert("User Created");
+//   } catch (error) {
+//     console.log("Error:", error);
+//     console.log(error.data);
+//     if (error.data.data.username.code) {
+//       alert("user already exist");
+//     }
+//   }
+// }
+export async function signup(username, password, email) {
   const data = {
-    username: username,
-    password: password,
+    username,
+    password,
     passwordConfirm: password,
+    email,
   };
+
   try {
     await pb.collection("users").create(data);
-    alert("User Created");
+    return { success: true };
   } catch (error) {
-    console.log("Error:", error);
-    console.log(error.data);
-    if (error.data.data.username.code) {
-      alert("user already exist");
+    console.error("Signup error:", error);
+
+    let message = "Something went wrong. Please try again.";
+
+    // Handle duplicate username/email error
+    if (error?.data?.data?.username?.code === "validation_error") {
+      message = "Username already exists.";
+    } else if (error?.data?.data?.email?.code === "validation_error") {
+      message = "Email is already in use.";
     }
+
+    return { success: false, message };
   }
 }
 

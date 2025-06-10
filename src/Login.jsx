@@ -6,17 +6,10 @@ import toast from "react-hot-toast";
 export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [email, setEmail] = useState(null);
   const [toggle, setToggle] = useState(true);
   const [loginStatus, setLoginStatus] = useState("Sign In");
-
-  // const handleLogin = () => {
-  //   if (!username || !password) {
-  //     toast.error("Invalid Login credentials");
-  //     return;
-  //   }
-  //   setLoginStatus("Logging in");
-  //   login(username, password);
-  // };
+  const [signUpStatus, setSignUpStatus] = useState("Sign up");
 
   const handleLogin = async () => {
     if (!username || !password) {
@@ -35,19 +28,33 @@ export default function Login() {
     toast.success("Login successful!");
   };
 
-  const handleSignup = () => {
-    if (!username || !password) {
-      window.alert("Invalid Login credentials");
+  const handleSignup = async () => {
+    if (!username || !password || !email) {
+      toast.error("Please fill in all fields");
       return;
     }
-    signup(username, password);
+
+    setSignUpStatus("Creating...");
+
+    const result = await signup(username, password, email);
+
+    if (!result.success) {
+      toast.error(result.message);
+      setSignUpStatus("Sign up");
+      return;
+    }
+    toast.success("User created successfully!");
+    setToggle(!toggle);
+    setSignUpStatus("Sign up");
     setUsername("");
+    setEmail("");
     setPassword("");
   };
 
   const handleToggle = () => {
     setUsername("");
     setPassword("");
+    setEmail("");
     setToggle(!toggle);
   };
   return (
@@ -104,6 +111,20 @@ export default function Login() {
           <div className="bg-white flex flex-col  items-center pt-10 h-full md:justify-center">
             <h2 className="text-2xl  font-semibold  mb-10">Sign up</h2>
             <div className="grid gap-6 mt-4 text-base">
+              <div className="w-72 ">
+                <div className=" flex flex-col w-full min-w-[200px] h-10">
+                  <label className="font-thin">Email</label>
+                  <input
+                    className=" text-input text-lg border-b-2 focus:outline-none focus:border-green-600"
+                    placeholder="  "
+                    type="text"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
               <div className="w-72">
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
                   <label className="font-thin">Username</label>
@@ -137,7 +158,7 @@ export default function Login() {
               className=" w-1/2 mt-10 bg-green-500 text-white py-2 px-4 rounded-md text-base  hover:bg-green-600"
               onClick={handleSignup}
             >
-              <span className="">Create User</span>
+              <span className="">{signUpStatus}</span>
             </button>
             <button onClick={handleToggle}>Continue to log in</button>
           </div>{" "}
