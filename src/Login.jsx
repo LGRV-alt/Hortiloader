@@ -140,7 +140,7 @@ export default function Login() {
                   <input
                     className=" text-input border-b-2 focus:outline-none focus:border-green-600"
                     placeholder="  "
-                    type="text"
+                    type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
