@@ -2,6 +2,7 @@ import { useState } from "react";
 import { login, signup } from "./Components/lib/pocketbase";
 import LogoTree from "./Components/LogoTree";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState(null);
@@ -16,7 +17,7 @@ export default function Login() {
       toast.error("Please enter both username and password");
       return;
     }
-    setLoginStatus("Logging In");
+    setLoginStatus("Logging In...");
     const result = await login(username, password);
     setLoginStatus("Sign In");
 
@@ -105,6 +106,14 @@ export default function Login() {
             </button>
             <button onClick={handleToggle}>Create an account</button>
           </div>{" "}
+          <div className="text-sm mt-2 mb-4">
+            <Link
+              to="/forgot-password"
+              className="text-blue-600 hover:underline"
+            >
+              Forgot your password?
+            </Link>
+          </div>
         </div>
       ) : (
         <div className=" flex flex-col justify-evenly items-center">

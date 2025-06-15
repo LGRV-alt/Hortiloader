@@ -23,6 +23,8 @@ import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
 import { useUserSettings } from "./hooks/useUserSettings";
 import { Toaster } from "react-hot-toast";
+import ForgotPassword from "./templates/ForgotPassword";
+import ResetPassword from "./templates/ResetPassword";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -67,18 +69,101 @@ export default function App() {
   }
 
   return (
+    // <>
+    //   <Toaster position="top-center" />
+    //   {isAuthenticated ? (
+    //     <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
+    //       <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
+    //         <Header
+    //           setChosenWeek={setChosenWeek}
+    //           setChosenYear={setChosenYear}
+    //           setEdit={setEdit}
+    //           edit={edit}
+    //           setCustomerList={setCustomerList}
+    //         ></Header>
+    //       </div>
+
+    //       <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
+    //         <Routes>
+    //           <Route
+    //             path="/"
+    //             element={
+    //               <Body
+    //                 records={rec}
+    //                 chosenWeek={chosenWeek}
+    //                 chosenYear={chosenYear}
+    //                 edit={edit}
+    //                 setCustomerList={setCustomerList}
+    //                 customerList={customerList}
+    //                 userSettings={settings}
+    //               ></Body>
+    //             }
+    //           />
+
+    //           <Route
+    //             path="/holdingPage"
+    //             element={<HoldingPage records={rec} />}
+    //           />
+
+    //           <Route path="/runs" element={<TrolleyExportsPage />} />
+
+    //           <Route path="/settings" element={<SettingsPage />} />
+
+    //           <Route path="/runs/view/:id" element={<ViewExportPage />} />
+
+    //           <Route
+    //             path="/trolley-mapper"
+    //             element={
+    //               <TrolleyMapper records={rec} customerList={customerList} />
+    //             }
+    //           />
+    //           <Route
+    //             path="/weekday/:year/:week/:day/:number"
+    //             element={<WeekdayPage records={rec} />}
+    //           />
+    //           <Route path="/search" element={<SearchPage records={rec} />} />
+
+    //           <Route
+    //             path="/collect"
+    //             element={
+    //               <Collect
+    //                 records={rec}
+    //                 chosenWeek={chosenWeek}
+    //                 chosenYear={chosenYear}
+    //               />
+    //             }
+    //           />
+    //           <Route path="/edit/:id" element={<Edit records={rec} />} />
+    //           <Route
+    //             path="/createCustomer"
+    //             element={<CreateCustomer></CreateCustomer>}
+    //           />
+    //         </Routes>
+    //       </div>
+    //     </div>
+    //   ) : (
+    //     <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
+    //       <Login></Login>
+    //       <Routes>
+    //         <Route path="/forgot-password" element={<ForgotPassword />} />
+    //         <Route path="/reset-password" element={<ResetPassword />} />
+    //       </Routes>
+    //     </div>
+    //   )}
+    // </>
     <>
       <Toaster position="top-center" />
+
       {isAuthenticated ? (
-        <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
-          <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
+        <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
+          <div className="col-start-1 col-end-6 row-start-1 row-end-2">
             <Header
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
               setEdit={setEdit}
               edit={edit}
               setCustomerList={setCustomerList}
-            ></Header>
+            />
           </div>
 
           <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
@@ -94,21 +179,16 @@ export default function App() {
                     setCustomerList={setCustomerList}
                     customerList={customerList}
                     userSettings={settings}
-                  ></Body>
+                  />
                 }
               />
-
               <Route
                 path="/holdingPage"
                 element={<HoldingPage records={rec} />}
               />
-
               <Route path="/runs" element={<TrolleyExportsPage />} />
-
               <Route path="/settings" element={<SettingsPage />} />
-
               <Route path="/runs/view/:id" element={<ViewExportPage />} />
-
               <Route
                 path="/trolley-mapper"
                 element={
@@ -120,7 +200,6 @@ export default function App() {
                 element={<WeekdayPage records={rec} />}
               />
               <Route path="/search" element={<SearchPage records={rec} />} />
-
               <Route
                 path="/collect"
                 element={
@@ -132,16 +211,25 @@ export default function App() {
                 }
               />
               <Route path="/edit/:id" element={<Edit records={rec} />} />
-              <Route
-                path="/createCustomer"
-                element={<CreateCustomer></CreateCustomer>}
-              />
+              <Route path="/createCustomer" element={<CreateCustomer />} />
+              {/* You may want to add a catch-all route here */}
             </Routes>
           </div>
         </div>
       ) : (
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
-          <Login></Login>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+              path="*"
+              element={
+                // Default fallback for unauthenticated users
+                <Login />
+              }
+            />
+          </Routes>
         </div>
       )}
     </>
