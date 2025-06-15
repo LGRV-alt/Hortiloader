@@ -1,57 +1,93 @@
+// import { useSearchParams } from "react-router-dom";
+// import { useState } from "react";
+// import pb from "../Components/lib/pbConnect";
+
+// export default function ResetPassword() {
+//   const { token } = useParams();
+//   const [password, setPassword] = useState("");
+//   const [confirm, setConfirm] = useState("");
+
+//   const handleReset = async () => {
+//     try {
+//       await pb
+//         .collection("users")
+//         .confirmPasswordReset(token, password, confirm);
+//       alert("Password reset successful");
+//     } catch (err) {
+//       alert("Reset failed");
+//       console.error(err);
+//     }
+//   };
+
+//   return (
+//     <div className="p-4 max-w-md mx-auto">
+//       <h2 className="text-xl font-bold mb-4">Reset Password</h2>
+//       <input
+//         className="mb-2 p-2 border w-full"
+//         type="password"
+//         placeholder="New Password"
+//         value={password}
+//         onChange={(e) => setPassword(e.target.value)}
+//       />
+//       <input
+//         className="mb-4 p-2 border w-full"
+//         type="password"
+//         placeholder="Confirm Password"
+//         value={confirm}
+//         onChange={(e) => setConfirm(e.target.value)}
+//       />
+//       <button
+//         onClick={handleReset}
+//         className="bg-blue-600 text-white px-4 py-2 rounded"
+//       >
+//         Reset
+//       </button>
+//     </div>
+//   );
+// }
 import { useState } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import pb from "../Components/lib/pbConnect";
 
 export default function ResetPassword() {
-  const [searchParams] = useSearchParams();
-  const token = searchParams.get("token");
+  const { token } = useParams();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const navigate = useNavigate();
 
   const handleReset = async () => {
-    if (!token) {
-      alert("Missing token.");
-      return;
-    }
-    if (password !== confirm) {
-      alert("Passwords do not match.");
-      return;
-    }
     try {
       await pb
         .collection("users")
         .confirmPasswordReset(token, password, confirm);
-      alert("Password reset successful!");
-      navigate("/login");
+      alert("Password reset successful");
     } catch (err) {
+      alert("Reset failed");
       console.error(err);
-      alert("Reset failed. Token may be expired or invalid.");
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-20 p-4 bg-white shadow rounded">
+    <div className="p-4 max-w-md mx-auto">
       <h2 className="text-xl font-bold mb-4">Reset Password</h2>
       <input
+        className="mb-2 p-2 border w-full"
         type="password"
-        placeholder="New password"
-        className="w-full p-2 border rounded mb-4"
+        placeholder="New Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <input
+        className="mb-4 p-2 border w-full"
         type="password"
-        placeholder="Confirm new password"
-        className="w-full p-2 border rounded mb-4"
+        placeholder="Confirm Password"
         value={confirm}
         onChange={(e) => setConfirm(e.target.value)}
       />
       <button
         onClick={handleReset}
-        className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+        className="bg-blue-600 text-white px-4 py-2 rounded"
       >
-        Reset Password
+        Reset
       </button>
     </div>
   );

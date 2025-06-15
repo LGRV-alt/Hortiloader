@@ -25,6 +25,7 @@ import { useUserSettings } from "./hooks/useUserSettings";
 import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
+import AuthRedirect from "./Components/AuthRedirect";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -219,9 +220,14 @@ export default function App() {
       ) : (
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
           <Routes>
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+              path="/auth/confirm-password-reset/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="/_/" element={<AuthRedirect />} />
+
             <Route
               path="*"
               element={
