@@ -26,6 +26,7 @@ import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
 import AuthRedirect from "./Components/AuthRedirect";
+import VerifyEmail from "./templates/VerifyEmail";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -70,88 +71,6 @@ export default function App() {
   }
 
   return (
-    // <>
-    //   <Toaster position="top-center" />
-    //   {isAuthenticated ? (
-    //     <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
-    //       <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
-    //         <Header
-    //           setChosenWeek={setChosenWeek}
-    //           setChosenYear={setChosenYear}
-    //           setEdit={setEdit}
-    //           edit={edit}
-    //           setCustomerList={setCustomerList}
-    //         ></Header>
-    //       </div>
-
-    //       <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
-    //         <Routes>
-    //           <Route
-    //             path="/"
-    //             element={
-    //               <Body
-    //                 records={rec}
-    //                 chosenWeek={chosenWeek}
-    //                 chosenYear={chosenYear}
-    //                 edit={edit}
-    //                 setCustomerList={setCustomerList}
-    //                 customerList={customerList}
-    //                 userSettings={settings}
-    //               ></Body>
-    //             }
-    //           />
-
-    //           <Route
-    //             path="/holdingPage"
-    //             element={<HoldingPage records={rec} />}
-    //           />
-
-    //           <Route path="/runs" element={<TrolleyExportsPage />} />
-
-    //           <Route path="/settings" element={<SettingsPage />} />
-
-    //           <Route path="/runs/view/:id" element={<ViewExportPage />} />
-
-    //           <Route
-    //             path="/trolley-mapper"
-    //             element={
-    //               <TrolleyMapper records={rec} customerList={customerList} />
-    //             }
-    //           />
-    //           <Route
-    //             path="/weekday/:year/:week/:day/:number"
-    //             element={<WeekdayPage records={rec} />}
-    //           />
-    //           <Route path="/search" element={<SearchPage records={rec} />} />
-
-    //           <Route
-    //             path="/collect"
-    //             element={
-    //               <Collect
-    //                 records={rec}
-    //                 chosenWeek={chosenWeek}
-    //                 chosenYear={chosenYear}
-    //               />
-    //             }
-    //           />
-    //           <Route path="/edit/:id" element={<Edit records={rec} />} />
-    //           <Route
-    //             path="/createCustomer"
-    //             element={<CreateCustomer></CreateCustomer>}
-    //           />
-    //         </Routes>
-    //       </div>
-    //     </div>
-    //   ) : (
-    //     <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
-    //       <Login></Login>
-    //       <Routes>
-    //         <Route path="/forgot-password" element={<ForgotPassword />} />
-    //         <Route path="/reset-password" element={<ResetPassword />} />
-    //       </Routes>
-    //     </div>
-    //   )}
-    // </>
     <>
       <Toaster position="top-center" />
 
@@ -190,6 +109,7 @@ export default function App() {
               <Route path="/runs" element={<TrolleyExportsPage />} />
               <Route path="/settings" element={<SettingsPage />} />
               <Route path="/runs/view/:id" element={<ViewExportPage />} />
+
               <Route
                 path="/trolley-mapper"
                 element={
@@ -225,6 +145,10 @@ export default function App() {
             <Route
               path="/auth/confirm-password-reset/:token"
               element={<ResetPassword />}
+            />
+            <Route
+              path="/auth/confirm-verification/:token"
+              element={<VerifyEmail />}
             />
             <Route path="/_/" element={<AuthRedirect />} />
 
