@@ -36,70 +36,7 @@ export async function updateTask(
   };
   await pb.collection("tasks").update(id, data);
   emitRefetchTasks();
-  // history.go(0);
 }
-
-// export async function login(username, password) {
-//   try {
-//     await pb.collection("users").authWithPassword(username, password);
-//     console.log("Logged in:", pb.authStore.model);
-//   } catch (error) {
-//     console.log(error);
-//     if (error.data?.code) {
-//       alert("Invalid username or password");
-//     }
-//   }
-// }
-
-// export async function login(username, password) {
-//   try {
-//     await pb.collection("users").authWithPassword(username, password);
-//     return { success: true };
-//   } catch (error) {
-//     const errorCode = error?.data?.code || error?.status;
-
-//     // Return specific error messages
-//     if (errorCode === "invalid_username_or_password" || error.status === 400) {
-//       return { success: false, message: "Incorrect username or password." };
-//     }
-
-//     return { success: false, message: "Unexpected error occurred." };
-//   }
-// }
-
-// export async function login(username, password) {
-//   try {
-//     await pb.collection("users").authWithPassword(username, password);
-
-//     // Check if email is verified
-//     if (!pb.authStore.model?.verified) {
-//       pb.authStore.clear(); // Prevent login session for unverified users
-//       return {
-//         success: false,
-//         message: "Please verify your email before logging in.",
-//       };
-//     }
-
-//     return { success: true };
-//   } catch (error) {
-//     console.log(error);
-//     const errorCode = error?.data?.code || error?.status;
-
-//     if (errorCode === "invalid_username_or_password" || error?.status === 400) {
-//       return { success: false, message: "Incorrect username or password." };
-//     }
-
-//     // Check if the error is specifically due to unverified email
-//     if (error?.data?.email?.code === "email_not_verified") {
-//       return {
-//         success: false,
-//         message: "Please verify your email before logging in.",
-//       };
-//     }
-
-//     return { success: false, message: "Unexpected error occurred." };
-//   }
-// }
 
 export async function login(username, password) {
   try {

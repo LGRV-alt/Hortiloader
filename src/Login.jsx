@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
+  const [confirmPassword, setConfirmPassword] = useState(null);
   const [email, setEmail] = useState(null);
   const [toggle, setToggle] = useState(true);
   const [loginStatus, setLoginStatus] = useState("Sign In");
@@ -35,6 +36,11 @@ export default function Login() {
       return;
     }
 
+    if (password !== confirmPassword) {
+      toast.error("Password does not match");
+      return;
+    }
+
     setSignUpStatus("Creating...");
 
     const result = await signup(username, password, email);
@@ -45,16 +51,19 @@ export default function Login() {
       return;
     }
     toast.success("User created successfully!");
+    toast("Please check your email to verify your account before logging in.");
     setToggle(!toggle);
     setSignUpStatus("Sign up");
     setUsername("");
     setEmail("");
     setPassword("");
+    setConfirmPassword("");
   };
 
   const handleToggle = () => {
     setUsername("");
     setPassword("");
+    setConfirmPassword("");
     setEmail("");
     setToggle(!toggle);
   };
@@ -64,54 +73,59 @@ export default function Login() {
         <div className=" flex flex-col justify-evenly items-center">
           <div className="bg-white flex flex-col  items-center pt-10  h-full md:justify-center">
             <h2 className="text-2xl  font-semibold  mb-10">Welcome</h2>
-            <div className="grid gap-6 mt-4 text-base">
+            <div className=" grid gap-6 mt-4">
               <div className="w-72">
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
-                  <label className="font-thin">
-                    Username
-                    <input
-                      className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
-                      placeholder=""
-                      type="text"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
-                      required
-                    />
-                  </label>
+                  <label className="font-thin">Username</label>
+                  <input
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
+                    placeholder=""
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
                 </div>
               </div>
 
               <div className="w-72 ">
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
-                  <label className="font-thin">
-                    Password
-                    <input
-                      className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
-                      placeholder="  "
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </label>
+                  <label className="font-thin">Password</label>
+                  <input
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
+                    placeholder="  "
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                 </div>
               </div>
             </div>
 
             <button
-              className=" w-1/2 mt-10 bg-green-500 text-white py-2 px-4 rounded-md text-base  hover:bg-green-600"
+              // className=" w-1/2 mt-10 bg-green-500 text-white py-2 px-4 rounded-md text-base  hover:bg-green-600 "
+              className={`w-1/2 mt-10 bg-green-500 text-white py-2 px-4 rounded-md text-base hover:bg-green-600 ${
+                loginStatus !== "Sign In" ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               onClick={handleLogin}
             >
               <span className="">{loginStatus}</span>
             </button>
             <button onClick={handleToggle}>Create an account</button>
           </div>{" "}
-          <div className="text-sm mt-2 mb-4">
+          <div className="text-sm mt-2 mb-4 text-center">
             <Link
               to="/forgot-password"
               className="text-blue-600 hover:underline"
             >
               Forgot your password?
+            </Link>
+            <Link
+              to="/resend-verification"
+              className="text-blue-600 hover:underline block mt-2"
+            >
+              Didn’t get a verification email?
             </Link>
           </div>
         </div>
@@ -119,12 +133,12 @@ export default function Login() {
         <div className=" flex flex-col justify-evenly items-center">
           <div className="bg-white flex flex-col  items-center pt-10 h-full md:justify-center">
             <h2 className="text-2xl  font-semibold  mb-10">Sign up</h2>
-            <div className="grid gap-6 mt-4 text-base">
+            <div className="grid gap-6 mt-4">
               <div className="w-72 ">
                 <div className=" flex flex-col w-full min-w-[200px] h-10">
                   <label className="font-thin">Email</label>
                   <input
-                    className=" text-input text-lg border-b-2 focus:outline-none focus:border-green-600"
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
                     placeholder="  "
                     type="text"
                     value={email}
@@ -138,7 +152,7 @@ export default function Login() {
                 <div className=" mb-2 flex flex-col w-full min-w-[200px] h-10">
                   <label className="font-thin">Username</label>
                   <input
-                    className="font-semibold text-xl text-input border-b-2 focus:outline-none focus:border-green-600"
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
                     placeholder=""
                     type="text"
                     value={username}
@@ -152,11 +166,25 @@ export default function Login() {
                 <div className=" flex flex-col w-full min-w-[200px] h-10">
                   <label className="font-thin">Password</label>
                   <input
-                    className=" text-input text-lg border-b-2 focus:outline-none focus:border-green-600"
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
                     placeholder="  "
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="w-72 ">
+                <div className=" flex flex-col w-full min-w-[200px] h-10">
+                  <label className="font-thin">Confirm Password</label>
+                  <input
+                    className=" text-input border-b-2 focus:outline-none focus:border-green-600"
+                    placeholder="  "
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                     required
                   />
                 </div>

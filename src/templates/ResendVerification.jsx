@@ -1,19 +1,19 @@
+// templates/ResendVerification.jsx
 import { useState } from "react";
 import pb from "../Components/lib/pbConnect";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-export default function ForgotPassword() {
+export default function ResendVerification() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  const handleResetRequest = async () => {
+  const handleResend = async () => {
     try {
-      await pb.collection("users").requestPasswordReset(email);
-      toast.success("Password reset email sent!");
-      navigate("/");
+      await pb.collection("users").requestVerification(email);
+      toast.success("Verification email sent!");
     } catch (error) {
-      toast.error("Error sending reset email.");
+      toast.error("Failed to send verification.");
       console.error(error);
     }
   };
@@ -22,7 +22,9 @@ export default function ForgotPassword() {
     <div className="p-4 bg-main shadow rounded flex flex-col justify-center items-center">
       <div className="gap-6 w-full h-3/4 md:w-1/3 md:h-2/3 bg-white flex justify-center items-center rounded-3xl ">
         <div className="w-3/4 h-full flex-col flex justify-center text-center ">
-          <h2 className="text-xl font-bold mb-14 md:mb-4">Forgot Password</h2>
+          <h2 className="text-xl font-bold mb-14 md:mb-4">
+            Resend Verification Email
+          </h2>
           <input
             type="email"
             placeholder="Enter your email"
@@ -31,10 +33,10 @@ export default function ForgotPassword() {
             onChange={(e) => setEmail(e.target.value)}
           />
           <button
-            onClick={handleResetRequest}
+            onClick={handleResend}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
-            Send Reset Link
+            Resend Verification
           </button>
           <button
             className="text-blue-500 hover:underline"

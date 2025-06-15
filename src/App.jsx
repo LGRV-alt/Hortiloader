@@ -27,6 +27,7 @@ import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
 import AuthRedirect from "./Components/AuthRedirect";
 import VerifyEmail from "./templates/VerifyEmail";
+import ResendVerification from "./templates/ResendVerification";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -138,10 +139,10 @@ export default function App() {
           </div>
         </div>
       ) : (
-        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
+        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden">
           <Routes>
             {/* <Route path="/login" element={<Login />} /> */}
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} /> qw
             <Route
               path="/auth/confirm-password-reset/:token"
               element={<ResetPassword />}
@@ -150,8 +151,11 @@ export default function App() {
               path="/auth/confirm-verification/:token"
               element={<VerifyEmail />}
             />
+            <Route
+              path="/resend-verification"
+              element={<ResendVerification />}
+            />
             <Route path="/_/" element={<AuthRedirect />} />
-
             <Route
               path="*"
               element={
