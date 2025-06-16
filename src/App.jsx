@@ -27,6 +27,8 @@ import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
 import AuthRedirect from "./Components/AuthRedirect";
 import VerifyEmail from "./templates/VerifyEmail";
+import Terms from "./templates/Terms";
+import Privacy from "./templates/Privacy";
 import ResendVerification from "./templates/ResendVerification";
 
 export default function App() {
@@ -156,6 +158,8 @@ export default function App() {
               element={<ResendVerification />}
             />
             <Route path="/_/" element={<AuthRedirect />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route
               path="*"
               element={

@@ -12,6 +12,7 @@ export default function Login() {
   const [toggle, setToggle] = useState(true);
   const [loginStatus, setLoginStatus] = useState("Sign In");
   const [signUpStatus, setSignUpStatus] = useState("Sign up");
+  const [agreed, setAgreed] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -41,6 +42,11 @@ export default function Login() {
 
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
+      return;
+    }
+
+    if (!agreed) {
+      toast.error("You must agree to the Terms and Privacy Policy.");
       return;
     }
 
@@ -138,9 +144,9 @@ export default function Login() {
         ) : (
           <form
             onSubmit={handleSignup}
-            className="bg-white p-6 rounded shadow-md w-80"
+            className="bg-white p-6 rounded shadow-xl w-80"
           >
-            <h2 className="text-2xl font-semibold mb-6">Sign up</h2>
+            <h2 className="text-2xl text-center font-semibold mb-6">Sign up</h2>
             <div className="space-y-4">
               <label className="block text-sm">
                 Email
@@ -194,6 +200,32 @@ export default function Login() {
             >
               {signUpStatus}
             </button>
+            <label className="flex items-start gap-2 text-sm mt-4">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                required
+              />
+              <span>
+                I agree to the{" "}
+                <Link
+                  to="/terms"
+                  target="_blank"
+                  className="text-blue-600 underline"
+                >
+                  Terms and Conditions
+                </Link>{" "}
+                and{" "}
+                <Link
+                  to="/privacy"
+                  target="_blank"
+                  className="text-blue-600 underline"
+                >
+                  Privacy Policy
+                </Link>
+              </span>
+            </label>
             <div className="text-center mt-4">
               <button
                 type="button"
@@ -214,7 +246,7 @@ export default function Login() {
             <LogoTree height="200px" />
           </div>
           <h2 className="text-5xl font-display text-white mt-4">HortiLoader</h2>
-          <p className="text-lg text-white">Create and track orders</p>
+          <p className="text-lg text-white">create and track orders</p>
         </div>
       </div>
     </div>
