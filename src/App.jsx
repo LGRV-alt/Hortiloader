@@ -15,14 +15,14 @@ import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
-import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+
 import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
 import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
 import { useUserSettings } from "./hooks/useUserSettings";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
 import AuthRedirect from "./Components/AuthRedirect";
@@ -32,9 +32,10 @@ import Privacy from "./templates/Privacy";
 import ResendVerification from "./templates/ResendVerification";
 import AcceptTerms from "./templates/AcceptTerms";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 
 export default function App() {
-  // useAutoRefreshOnIdle();
+  useAutoRefreshOnIdle();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
@@ -48,15 +49,15 @@ export default function App() {
   const isAuthenticated = useAuth();
 
   useEffect(() => {
+    // Check for daily logout
     if (pb.authStore.isValid && shouldClearAuthDaily()) {
       pb.authStore.clear();
-      window.location.reload(); // force re-render to show login
+      toast("You've been logged out due to inactivity.");
+      window.location.reload();
+    } else if (pb.authStore.isValid) {
+      setTodayAsLoginDate();
     }
   }, []);
-
-  if (isAuthenticated) {
-    setTodayAsLoginDate(); // store today's login
-  }
 
   const { tasks: rec, refetch } = useTasks();
 
@@ -209,7 +210,7 @@ export default function App() {
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden">
           <Routes>
             {/* <Route path="/login" element={<Login />} /> */}
-            <Route path="/forgot-password" element={<ForgotPassword />} /> qw
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/auth/confirm-password-reset/:token"
               element={<ResetPassword />}

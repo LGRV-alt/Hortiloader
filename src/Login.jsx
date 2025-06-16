@@ -15,25 +15,6 @@ export default function Login() {
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  //   if (!username || !password) {
-  //     toast.error("Please enter both username and password");
-  //     return;
-  //   }
-
-  //   setLoginStatus("Logging In...");
-  //   const result = await login(username, password);
-  //   setLoginStatus("Sign In");
-
-  //   if (!result.success) {
-  //     toast.error(result.message);
-  //     return;
-  //   }
-
-  //   toast.success("Login successful!");
-  // };
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -49,15 +30,15 @@ export default function Login() {
     if (!result.success) {
       toast.error(result.message);
 
-      // 🟨 If they haven’t accepted terms before (older account)
+      // If they haven’t accepted terms before (older account)
       if (result.reason === "no_terms") {
-        navigate("/accept-terms"); // 👈 create this route/page separately
+        navigate("/accept-terms");
       }
 
       return;
     }
 
-    // ✅ Fully authenticated
+    //Fully authenticated
     toast.success("Login successful!");
   };
 
@@ -118,22 +99,22 @@ export default function Login() {
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
             <div className="space-y-4">
-              <label className="block text-sm">
+              <label className="block text-sm font-light">
                 Username
                 <input
                   type="text"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="text-lg font-medium w-full border-b-2 outline-none focus:border-green-600"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
                   required
                 />
               </label>
-              <label className="block text-sm">
+              <label className="font-thin block text-sm">
                 Password
                 <input
                   type="password"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -180,44 +161,44 @@ export default function Login() {
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Sign up</h2>
             <div className="space-y-4">
-              <label className="block text-sm">
+              <label className="block text-sm font-thin">
                 Email
                 <input
                   type="email"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   required
                 />
               </label>
-              <label className="block text-sm">
+              <label className="font-thin block text-sm">
                 Username
                 <input
                   type="text"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
                   required
                 />
               </label>
-              <label className="block text-sm">
+              <label className="font-thin block text-sm">
                 Password
                 <input
                   type="password"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
                   required
                 />
               </label>
-              <label className="block text-sm">
+              <label className="font-thin block text-sm">
                 Confirm Password
                 <input
                   type="password"
-                  className="w-full border-b-2 outline-none focus:border-green-600"
+                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   autoComplete="new-password"

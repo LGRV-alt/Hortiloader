@@ -38,38 +38,6 @@ export async function updateTask(
   emitRefetchTasks();
 }
 
-// export async function login(username, password) {
-//   try {
-//     await pb.collection("users").authWithPassword(username, password);
-
-//     // Manually check for verification
-//     if (!pb.authStore.model?.verified) {
-//       pb.authStore.clear();
-//       return {
-//         success: false,
-//         message: "Please verify your email before logging in.",
-//       };
-//     }
-//     return { success: true };
-//   } catch (error) {
-//     const status = error?.status;
-
-//     // 403 = Forbidden due to collection rule (e.g. email not verified)
-//     if (status === 403) {
-//       return {
-//         success: false,
-//         message: "Email not verified. Please check your inbox.",
-//       };
-//     }
-
-//     if (status === 400) {
-//       return { success: false, message: "Incorrect username or password." };
-//     }
-
-//     return { success: false, message: "Unexpected error occurred." };
-//   }
-// }
-
 export async function login(username, password) {
   try {
     // 1) Attempt to authenticate
@@ -132,34 +100,6 @@ export function signout() {
   window.location.reload();
 }
 
-// export async function signup(username, password, email) {
-//   const data = {
-//     username,
-//     password,
-//     passwordConfirm: password,
-//     email,
-//   };
-
-//   try {
-//     await pb.collection("users").create(data);
-//     await pb.collection("users").requestVerification(email);
-//     return { success: true };
-//   } catch (error) {
-//     console.error("Signup error:", error);
-
-//     let message = "Something went wrong. Please try again.";
-
-//     // Handle duplicate username/email error
-//     if (error?.data?.data?.username?.code === "validation_error") {
-//       message = "Username already exists.";
-//     } else if (error?.data?.data?.email?.code === "validation_error") {
-//       message = "Email is already in use.";
-//     }
-
-//     return { success: false, message };
-//   }
-// }
-
 export async function signup(username, password, email, termsAgreement) {
   try {
     const data = {
@@ -179,6 +119,17 @@ export async function signup(username, password, email, termsAgreement) {
   } catch (error) {
     return { success: false, message: error.message || "Signup failed." };
   }
+}
+
+export function setTodayAsLoginDate() {
+  const today = new Date().toISOString().slice(0, 10); // e.g., "2025-06-16"
+  localStorage.setItem("lastLoginDate", today);
+}
+
+export function shouldClearAuthDaily() {
+  const last = localStorage.getItem("lastLoginDate");
+  const today = new Date().toISOString().slice(0, 10);
+  return last && last !== today;
 }
 
 // ---------------------Brought Over----------------------
