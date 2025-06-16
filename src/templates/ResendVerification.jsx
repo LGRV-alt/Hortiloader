@@ -19,7 +19,7 @@ export default function ResendVerification() {
   };
 
   return (
-    <div className="p-4 bg-main shadow rounded flex flex-col justify-center items-center">
+    <div className="p-4 bg-main shadow  flex flex-col justify-center items-center">
       <div className="gap-6 w-full h-3/4 md:w-1/3 md:h-2/3 bg-white flex justify-center items-center rounded-3xl ">
         <div className="w-3/4 h-full flex-col flex justify-center text-center ">
           <h2 className="text-xl font-bold mb-14 md:mb-4">
