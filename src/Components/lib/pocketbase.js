@@ -38,36 +38,91 @@ export async function updateTask(
   emitRefetchTasks();
 }
 
+// export async function login(username, password) {
+//   try {
+//     await pb.collection("users").authWithPassword(username, password);
+
+//     // Manually check for verification
+//     if (!pb.authStore.model?.verified) {
+//       pb.authStore.clear();
+//       return {
+//         success: false,
+//         message: "Please verify your email before logging in.",
+//       };
+//     }
+//     return { success: true };
+//   } catch (error) {
+//     const status = error?.status;
+
+//     // 403 = Forbidden due to collection rule (e.g. email not verified)
+//     if (status === 403) {
+//       return {
+//         success: false,
+//         message: "Email not verified. Please check your inbox.",
+//       };
+//     }
+
+//     if (status === 400) {
+//       return { success: false, message: "Incorrect username or password." };
+//     }
+
+//     return { success: false, message: "Unexpected error occurred." };
+//   }
+// }
+
 export async function login(username, password) {
   try {
+    // 1) Attempt to authenticate
     await pb.collection("users").authWithPassword(username, password);
 
-    // Manually check for verification
+    // 2) Check email-verified
     if (!pb.authStore.model?.verified) {
       pb.authStore.clear();
       return {
         success: false,
+        reason: "unverified",
         message: "Please verify your email before logging in.",
       };
     }
 
+    // 3) Check terms agreement
+    const agreement = pb.authStore.model?.termsAgreement;
+    if (!agreement?.agreed) {
+      // Don't clear auth store – let them continue to /accept-terms
+      return {
+        success: false,
+        reason: "no_terms",
+        message:
+          "You must agree to the Terms and Privacy Policy before logging in.",
+      };
+    }
+
+    // 4) All good
     return { success: true };
   } catch (error) {
     const status = error?.status;
 
-    // 403 = Forbidden due to collection rule (e.g. email not verified)
     if (status === 403) {
       return {
         success: false,
-        message: "Email not verified. Please check your inbox.",
+        reason: "forbidden",
+        message: "Access denied. Please check your email or account status.",
       };
     }
 
     if (status === 400) {
-      return { success: false, message: "Incorrect username or password." };
+      return {
+        success: false,
+        reason: "credentials",
+        message: "Incorrect username or password.",
+      };
     }
 
-    return { success: false, message: "Unexpected error occurred." };
+    return {
+      success: false,
+      reason: "unknown",
+      message: "Unexpected error occurred.",
+    };
   }
 }
 
@@ -76,49 +131,53 @@ export function signout() {
   pb.authStore.clear();
   window.location.reload();
 }
+
 // export async function signup(username, password, email) {
 //   const data = {
-//     username: username,
-//     password: password,
+//     username,
+//     password,
 //     passwordConfirm: password,
-//     email: email,
+//     email,
 //   };
+
 //   try {
 //     await pb.collection("users").create(data);
-//     alert("User Created");
+//     await pb.collection("users").requestVerification(email);
+//     return { success: true };
 //   } catch (error) {
-//     console.log("Error:", error);
-//     console.log(error.data);
-//     if (error.data.data.username.code) {
-//       alert("user already exist");
+//     console.error("Signup error:", error);
+
+//     let message = "Something went wrong. Please try again.";
+
+//     // Handle duplicate username/email error
+//     if (error?.data?.data?.username?.code === "validation_error") {
+//       message = "Username already exists.";
+//     } else if (error?.data?.data?.email?.code === "validation_error") {
+//       message = "Email is already in use.";
 //     }
+
+//     return { success: false, message };
 //   }
 // }
-export async function signup(username, password, email) {
-  const data = {
-    username,
-    password,
-    passwordConfirm: password,
-    email,
-  };
 
+export async function signup(username, password, email, termsAgreement) {
   try {
-    await pb.collection("users").create(data);
+    const data = {
+      username,
+      password,
+      passwordConfirm: password,
+      email,
+      termsAgreement,
+    };
+
+    const createdUser = await pb.collection("users").create(data);
+
+    // Optional: Trigger verification email
     await pb.collection("users").requestVerification(email);
-    return { success: true };
+
+    return { success: true, user: createdUser };
   } catch (error) {
-    console.error("Signup error:", error);
-
-    let message = "Something went wrong. Please try again.";
-
-    // Handle duplicate username/email error
-    if (error?.data?.data?.username?.code === "validation_error") {
-      message = "Username already exists.";
-    } else if (error?.data?.data?.email?.code === "validation_error") {
-      message = "Email is already in use.";
-    }
-
-    return { success: false, message };
+    return { success: false, message: error.message || "Signup failed." };
   }
 }
 

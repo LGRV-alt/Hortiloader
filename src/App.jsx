@@ -30,6 +30,8 @@ import VerifyEmail from "./templates/VerifyEmail";
 import Terms from "./templates/Terms";
 import Privacy from "./templates/Privacy";
 import ResendVerification from "./templates/ResendVerification";
+import AcceptTerms from "./templates/AcceptTerms";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 export default function App() {
   // useAutoRefreshOnIdle();
@@ -91,52 +93,115 @@ export default function App() {
 
           <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
+              {/* Main Page */}
               <Route
                 path="/"
                 element={
-                  <Body
-                    records={rec}
-                    chosenWeek={chosenWeek}
-                    chosenYear={chosenYear}
-                    edit={edit}
-                    setCustomerList={setCustomerList}
-                    customerList={customerList}
-                    userSettings={settings}
-                  />
+                  <ProtectedRoute>
+                    <Body
+                      records={rec}
+                      chosenWeek={chosenWeek}
+                      chosenYear={chosenYear}
+                      edit={edit}
+                      setCustomerList={setCustomerList}
+                      customerList={customerList}
+                      userSettings={settings}
+                    />
+                  </ProtectedRoute>
                 }
               />
+              {/* Holding Page */}
               <Route
                 path="/holdingPage"
-                element={<HoldingPage records={rec} />}
+                element={
+                  <ProtectedRoute>
+                    <HoldingPage records={rec} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/runs" element={<TrolleyExportsPage />} />
+
+              <Route
+                path="/runs"
+                element={
+                  <ProtectedRoute>
+                    <TrolleyExportsPage />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route path="/settings" element={<SettingsPage />} />
-              <Route path="/runs/view/:id" element={<ViewExportPage />} />
+
+              <Route
+                path="/runs/view/:id"
+                element={
+                  <ProtectedRoute>
+                    <ViewExportPage />
+                  </ProtectedRoute>
+                }
+              />
 
               <Route
                 path="/trolley-mapper"
                 element={
-                  <TrolleyMapper records={rec} customerList={customerList} />
+                  <ProtectedRoute>
+                    <TrolleyMapper records={rec} customerList={customerList} />
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/weekday/:year/:week/:day/:number"
-                element={<WeekdayPage records={rec} />}
+                element={
+                  <ProtectedRoute>
+                    <WeekdayPage records={rec} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/search" element={<SearchPage records={rec} />} />
+
+              <Route
+                path="/search"
+                element={
+                  <ProtectedRoute>
+                    <SearchPage records={rec} />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="/accept-terms" element={<AcceptTerms />} />
+
               <Route
                 path="/collect"
                 element={
-                  <Collect
-                    records={rec}
-                    chosenWeek={chosenWeek}
-                    chosenYear={chosenYear}
-                  />
+                  <ProtectedRoute>
+                    <Collect
+                      records={rec}
+                      chosenWeek={chosenWeek}
+                      chosenYear={chosenYear}
+                    />
+                  </ProtectedRoute>
                 }
               />
-              <Route path="/edit/:id" element={<Edit records={rec} />} />
-              <Route path="/createCustomer" element={<CreateCustomer />} />
-              {/* You may want to add a catch-all route here */}
+
+              <Route
+                path="/edit/:id"
+                element={
+                  <ProtectedRoute>
+                    <Edit records={rec} />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/createCustomer"
+                element={
+                  <ProtectedRoute>
+                    <CreateCustomer />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/terms" element={<Terms />} />
+
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
           </div>
         </div>
@@ -160,6 +225,7 @@ export default function App() {
             <Route path="/_/" element={<AuthRedirect />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/accept-terms" element={<AcceptTerms />} />
             <Route
               path="*"
               element={

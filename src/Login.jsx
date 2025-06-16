@@ -2,7 +2,7 @@ import { useState } from "react";
 import { login, signup } from "./Components/lib/pocketbase";
 import LogoTree from "./Components/LogoTree";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -13,9 +13,30 @@ export default function Login() {
   const [loginStatus, setLoginStatus] = useState("Sign In");
   const [signUpStatus, setSignUpStatus] = useState("Sign up");
   const [agreed, setAgreed] = useState(false);
+  const navigate = useNavigate();
+
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   if (!username || !password) {
+  //     toast.error("Please enter both username and password");
+  //     return;
+  //   }
+
+  //   setLoginStatus("Logging In...");
+  //   const result = await login(username, password);
+  //   setLoginStatus("Sign In");
+
+  //   if (!result.success) {
+  //     toast.error(result.message);
+  //     return;
+  //   }
+
+  //   toast.success("Login successful!");
+  // };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     if (!username || !password) {
       toast.error("Please enter both username and password");
       return;
@@ -27,9 +48,16 @@ export default function Login() {
 
     if (!result.success) {
       toast.error(result.message);
+
+      // 🟨 If they haven’t accepted terms before (older account)
+      if (result.reason === "no_terms") {
+        navigate("/accept-terms"); // 👈 create this route/page separately
+      }
+
       return;
     }
 
+    // ✅ Fully authenticated
     toast.success("Login successful!");
   };
 
@@ -51,7 +79,11 @@ export default function Login() {
     }
 
     setSignUpStatus("Creating...");
-    const result = await signup(username, password, email);
+    const result = await signup(username, password, email, {
+      agreed: true,
+      timestamp: new Date().toISOString(),
+      version: "v1.0",
+    });
 
     if (!result.success) {
       toast.error(result.message);
