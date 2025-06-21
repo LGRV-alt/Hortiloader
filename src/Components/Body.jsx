@@ -2,6 +2,7 @@
 
 import DayColumn from "./DayColumn";
 import { daysOfWeek } from "./lib/pocketbase";
+import DanishTrolleyLoader from "./DanishTrolleyLoader";
 
 export default function Body({
   records,
@@ -34,10 +35,15 @@ export default function Body({
   const saturday = filterUsersByDay("saturday");
   const sunday = filterUsersByDay("sunday");
 
-  if (records.length < 1) {
+  if (!records) {
     return (
-      <div className="flex justify-center items-center h-full bg-regal-blue ">
-        <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+      <div className="relative h-full w-full overflow-hidden">
+        <div className="flex justify-center mt-28 ">
+          <h2 className="text-4xl font-bold">Loading...</h2>
+        </div>
+        <div className="absolute left-0 top-1/3 -translate-y-1/2">
+          <DanishTrolleyLoader />
+        </div>
       </div>
     );
   } else {
