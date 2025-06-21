@@ -18,11 +18,11 @@ export default {
       keyframes: {
         trolley: {
           "0%": { transform: "translateX(0)" },
-          "25%": { transform: "translateX(calc(100vw - 15rem))" },
+          // "25%": { transform: "translateX(calc(100vw - 15rem))" },
           "50%": {
             transform: "translateX(calc(100vw - 15rem))",
           },
-          "75%": { transform: "translateX(0)" },
+          // "75%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(0)" },
         },
       },

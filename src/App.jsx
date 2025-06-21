@@ -33,6 +33,7 @@ import ResendVerification from "./templates/ResendVerification";
 import AcceptTerms from "./templates/AcceptTerms";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -59,7 +60,7 @@ export default function App() {
     }
   }, []);
 
-  const { tasks: rec, refetch } = useTasks();
+  const { tasks: rec, refetch, loading } = useTasks();
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
@@ -79,7 +80,6 @@ export default function App() {
   return (
     <>
       <Toaster position="top-center" />
-
       {isAuthenticated ? (
         <div className="grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           <div className="col-start-1 col-end-6 row-start-1 row-end-2">
@@ -91,7 +91,6 @@ export default function App() {
               setCustomerList={setCustomerList}
             />
           </div>
-
           <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               {/* Main Page */}
@@ -107,6 +106,7 @@ export default function App() {
                       setCustomerList={setCustomerList}
                       customerList={customerList}
                       userSettings={settings}
+                      loading={loading}
                     />
                   </ProtectedRoute>
                 }
@@ -209,7 +209,6 @@ export default function App() {
       ) : (
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden">
           <Routes>
-            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route
               path="/auth/confirm-password-reset/:token"
@@ -240,4 +239,3 @@ export default function App() {
     </>
   );
 }
-// export default App;

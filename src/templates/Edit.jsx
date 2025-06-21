@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
 import toast from "react-hot-toast";
+import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
+
 const realPass = "gilmore";
 
 export default function Edit({ records }) {
@@ -109,8 +111,13 @@ export default function Edit({ records }) {
   if (records.length < 1) {
     {
       return (
-        <div className="flex justify-center items-center h-full">
-          <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+        <div className="relative h-full w-full overflow-hidden">
+          <div className="flex justify-center mt-28 ">
+            <h2 className="text-4xl font-bold">Loading...</h2>
+          </div>
+          <div className="absolute left-0 top-1/3 -translate-y-1/2">
+            <DanishTrolleyLoader />
+          </div>
         </div>
       );
     }

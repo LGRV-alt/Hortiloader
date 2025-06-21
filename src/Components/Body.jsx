@@ -14,6 +14,7 @@ export default function Body({
   setCustomerList,
   customerList,
   userSettings,
+  loading,
 }) {
   refresh;
   const filterUsersByDay = (day) => {
@@ -35,7 +36,7 @@ export default function Body({
   const saturday = filterUsersByDay("saturday");
   const sunday = filterUsersByDay("sunday");
 
-  if (!records) {
+  if (loading) {
     return (
       <div className="relative h-full w-full overflow-hidden">
         <div className="flex justify-center mt-28 ">
