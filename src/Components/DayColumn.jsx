@@ -102,25 +102,30 @@ export default function DayColumn({
                 >
                   <Tooltip id={`my-tooltip-${record.id}`} />
                   <div className="flex text-sm">
-                    {record.customerType === "retail" ? (
-                      <p className="text-blue-700 ">
+                    {record.other === "collect" ? (
+                      <p className="text-orange-500">
                         {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
+                      </p>
+                    ) : record.customerType === "retail" ? (
+                      <p className="text-blue-700">
+                        {record.title} {record.postcode.toUpperCase()}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
                       </p>
                     ) : record.customerType === "other" ? (
-                      <p className="text-red-500 ">
+                      <p className="text-green-500">
                         {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
                       </p>
                     ) : record.customerType === "missed" ? (
                       <p className="text-fuchsia-600">
                         {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
                       </p>
                     ) : (
-                      <p className="">
+                      <p>
                         {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
                       </p>
                     )}
                   </div>

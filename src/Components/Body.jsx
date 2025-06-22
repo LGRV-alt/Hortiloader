@@ -23,7 +23,7 @@ export default function Body({
       (record) =>
         (record.day == day) &
         (record.weekNumber == chosenWeek) &
-        (record.other == "none") &
+        (record.other === "none" || record.other === "collect") &
         (record.year === chosenYear)
     );
   };
