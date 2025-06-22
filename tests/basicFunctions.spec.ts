@@ -9,8 +9,8 @@ test("Login Page", async ({ page }) => {
   await expect(title).toBeVisible();
 
   // Fill out login section
-  await usernameInput.fill("Spencer222");
-  await passwordInput.fill("Spencer222");
+  await usernameInput.fill("lewisgirvan@hotmail.co.uk");
+  await passwordInput.fill("Password1");
 
   // Hit Sign in button
   await page.getByRole("button", { name: "Sign in" }).click({ timeout: 10000 });
@@ -34,7 +34,7 @@ test.describe("Testing all the pages", () => {
     const passwordInput = page.getByLabel("Password");
     await expect(title).toBeVisible();
     // Fill out login section
-    await usernameInput.fill("Playwright");
+    await usernameInput.fill("lewisgirvan@hotmail.co.uk");
     await passwordInput.fill("Password1");
     // Hit Sign in button
     const signInButton = page.getByRole("button", { name: "Sign in" });
