@@ -106,7 +106,7 @@ export default function useTasks() {
 
     fetchTasks(); // initial load
 
-    const interval = setInterval(fetchTasks, 60000); // poll every 60s
+    const interval = setInterval(fetchTasks, 120000); // poll every 60s
 
     return () => clearInterval(interval);
   }, [pb.authStore.isValid]);

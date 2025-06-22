@@ -60,6 +60,7 @@ export default function Edit({ records }) {
   // Delete modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
+  const [savingState, setSavingState] = useState("Save");
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -81,7 +82,7 @@ export default function Edit({ records }) {
     }
 
     setIsSaving(true);
-
+    setSavingState("Saving...");
     try {
       await updateTask(
         id,
@@ -98,11 +99,13 @@ export default function Edit({ records }) {
         trollies,
         extras
       );
+      setSavingState("Save");
       toast.success("Order updated successfully!");
       navigate(-1);
     } catch (err) {
       console.error("Error updating task:", err);
       toast.error("Something went wrong while saving.");
+      setSavingState("Save");
     } finally {
       setIsSaving(false);
     }
@@ -224,34 +227,6 @@ export default function Edit({ records }) {
               <option value="holding">Holding</option>
               <option value="collect">Collect</option>
             </select>
-
-            {/* ----------------Week Select ------------------- */}
-            {/* <div className="flex gap-2 pl-1  ">
-              <p>Week Number</p>
-              <select
-                value={weekNumber}
-                className="cursor-pointer appearance-none w-12 bg-transparent focus:text-black focus:bg-white "
-                onChange={(e) => setWeekNumber(e.target.value)}
-                name=""
-                id=""
-              >
-                {weekNumbers}
-              </select>
-            </div> */}
-            {/* -------------- Year Select -------------------- */}
-            {/* <div className="flex gap-2 pl-1 ">
-              <p>Year</p>
-              <select
-                value={year}
-                className="appearance-none cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
-                onChange={(e) => setYear(e.target.value)}
-                name=""
-                id=""
-              >
-                <option value="0">2024</option>
-                <option value="2025">2025</option>
-              </select>
-            </div> */}
           </div>
           {/* -------------Right hand side------------------ */}
           <div className="flex flex-col justify-end items-start">
@@ -264,9 +239,9 @@ export default function Edit({ records }) {
               >
                 <option value=""></option>
                 <option value="working">Working</option>
+                <option value="missed">Query</option>
                 <option value="pulled">Pulled</option>
                 <option value="loaded">Loaded</option>
-                <option value="missed">Missed</option>
               </select>
               <label className="">Trollies - </label>
               <input
@@ -304,7 +279,7 @@ export default function Edit({ records }) {
                 className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
                 onClick={handleSubmit}
               >
-                <p>Save</p>
+                <p>{savingState}</p>
               </button>
 
               <button

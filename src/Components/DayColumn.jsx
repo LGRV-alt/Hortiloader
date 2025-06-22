@@ -7,7 +7,9 @@ import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaExclamation } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { MdPresentToAll } from "react-icons/md";
+import { MdOutlineQuestionMark } from "react-icons/md";
 import { useState } from "react";
+import toast from "react-hot-toast";
 // import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
@@ -24,12 +26,17 @@ export default function DayColumn({
 }) {
   const array = arr;
   const handleCustomerList = (id) => {
-    setCustomerList(
-      (prevSelected) =>
-        prevSelected.includes(id)
-          ? prevSelected.filter((itemId) => itemId !== id) // remove
-          : [...prevSelected, id] // add
-    );
+    setCustomerList((prevSelected) => {
+      const isRemoving = prevSelected.includes(id);
+
+      if (isRemoving) {
+        toast.error("Order Removed");
+        return prevSelected.filter((itemId) => itemId !== id); // remove
+      } else {
+        toast.success("Order Added");
+        return [...prevSelected, id]; // add
+      }
+    });
   };
 
   return (
@@ -58,7 +65,11 @@ export default function DayColumn({
           key={record.id}
         >
           {/* Working on this section - Toggle switch to remove linking to the edit page so the orders can be added to an array */}
-          <div className="flex justify-between w-full   hover:bg-slate-300  hover:border-black  transition-all">
+          <div
+            className={`${
+              !edit && "hover:bg-slate-300"
+            } flex justify-between w-full  hover:border-black  transition-all`}
+          >
             {edit ? (
               <a
                 className={`hover:bg-slate-300  border rounded cursor-pointer transition ${
@@ -66,7 +77,6 @@ export default function DayColumn({
                 }`}
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}
-                // onClick={(e) => handleCustomerList(e.target.textContent)}
                 onClick={() => handleCustomerList(record.id)}
               >
                 <Tooltip id={`my-tooltip-${record.id}`} />
@@ -151,7 +161,7 @@ export default function DayColumn({
                     <TiSpanner fontSize="1.5em" />
                   ) : record.status === "missed" ? (
                     // <p>Missed</p>
-                    <FaExclamation color="red" fontSize="1em" />
+                    <MdOutlineQuestionMark color="red" fontSize="1.5em" />
                   ) : (
                     <FaExclamation color="black" fontSize="1em" />
                   )}
