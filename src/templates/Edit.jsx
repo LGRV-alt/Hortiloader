@@ -160,7 +160,7 @@ export default function Edit({ records }) {
               </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
@@ -168,7 +168,7 @@ export default function Edit({ records }) {
               required
             />
             <input
-              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
               type="text"
               placeholder="Postcode"
               onChange={(e) => setPostcode(e.target.value)}
@@ -176,7 +176,7 @@ export default function Edit({ records }) {
               required
             />
             <input
-              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Order No."
               onChange={(e) => setOrderNumber(e.target.value)}
@@ -185,7 +185,7 @@ export default function Edit({ records }) {
             />
 
             <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -200,7 +200,7 @@ export default function Edit({ records }) {
               <option value="other">Other</option>
             </select>
             <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               onChange={(e) => setDay(e.target.value)}
@@ -216,7 +216,7 @@ export default function Edit({ records }) {
               <option value="sunday">Sunday</option>
             </select>
             <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               value={other ? other : []}
@@ -234,7 +234,7 @@ export default function Edit({ records }) {
               <label className="">Status - </label>
               <select
                 value={status}
-                className="w-24 md:w-28 cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                className="w-24 md:w-28 cursor-pointer bg-transparent text-input border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value=""></option>
@@ -245,7 +245,7 @@ export default function Edit({ records }) {
               </select>
               <label className="">Trollies - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+                className="pl-1 w-24 bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
                 type="text"
                 placeholder="Trollies"
                 onChange={(e) => setTrollies(e.target.value)}
@@ -254,7 +254,7 @@ export default function Edit({ records }) {
               />
               <label className="">Extras - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                className="pl-1 w-24 bg-transparent text-input border-b-2  border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Extras"
                 onChange={(e) => setExtras(e.target.value)}
@@ -266,7 +266,7 @@ export default function Edit({ records }) {
             <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2  font-medium  ">Additional Info</h3>
               <textarea
-                className=" p-2 h-32 w-full text-center  bg-transparent border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                className=" p-2 h-32 w-full text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Issues/Load information"
                 onChange={(e) => setOrderInfo(e.target.value)}
