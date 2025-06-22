@@ -37,8 +37,8 @@ export default function SettingsPage() {
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-2 p-4 bg-surface">
       <div className="flex flex-col items-center">
-        <h1 className="text-2xl font-bold mb-4">Settings</h1>
-        <div className="bg-white w-1/2 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10">
+        {/* <h1 className="text-2xl font-bold mb-4">Settings</h1> */}
+        <div className="bg-white w-1/2 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">
           <h3>Account Info</h3>
           <p>Username - {currentUser.username}</p>
           <Link
@@ -48,7 +48,7 @@ export default function SettingsPage() {
             Change Password
           </Link>
         </div>
-        <div className="bg-white p-4 w-1/2 gap-4 rounded-2xl flex flex-col justify-center items-center">
+        <div className="bg-white p-4 w-1/2 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10">
           <h3>User Agreement</h3>
           <Link to="/terms" className="text-blue-600 hover:underline text-sm">
             Terms and Conditions
@@ -56,6 +56,22 @@ export default function SettingsPage() {
           <Link to="/privacy" className="text-blue-600 hover:underline text-sm">
             Privacy Policy
           </Link>
+        </div>
+        <div className="bg-white p-4 w-1/2 gap-4 rounded-2xl flex flex-col justify-center items-center">
+          <h3> Contact & Feedback</h3>
+          <p className="text-sm text-gray-600">
+            We'd love to hear from you. If you have any questions, suggestions
+            or problems, feel free to reach out.
+          </p>
+          <div>
+            <span className="">Email:</span>{" "}
+            <a
+              href="mailto:support@hortiloader.com"
+              className="text-blue-600 underline"
+            >
+              support@hortiloader.com
+            </a>
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-center md:pt-0 pt-10">

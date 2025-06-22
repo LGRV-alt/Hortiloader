@@ -136,7 +136,7 @@ export default function Edit({ records }) {
                 </h2>{" "}
                 <div className="flex font-semibold gap-1 border-b-2 border-black">
                   <select
-                    className="w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                    className="text-center w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                     name="day"
                     id="day"
                     onChange={(e) => setDay(e.target.value)}
@@ -163,7 +163,7 @@ export default function Edit({ records }) {
                   </select>
                   <select
                     value={year}
-                    className="pl-2 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
+                    className="pl-2 pr-5 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
                     onChange={(e) => setYear(e.target.value)}
                     name=""
                     id=""
