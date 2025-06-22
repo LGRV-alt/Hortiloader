@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function useAutoRefreshOnIdle(timeoutMs = 5 * 60 * 1000) {
+export default function useAutoRefreshOnIdle(timeoutMs = 6 * 60 * 60 * 1000) {
   const timeoutRef = useRef();
 
   useEffect(() => {

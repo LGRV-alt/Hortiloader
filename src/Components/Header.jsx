@@ -57,7 +57,7 @@ export default function Header({
               className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
             >
               <option value={2025}>2025</option>
-              <option value={2024}>2024</option>
+              <option value={0}>2024</option>
             </select>
           </div>
           <p className=" mr-3">Current Week - {getDateWeek(new Date())}</p>

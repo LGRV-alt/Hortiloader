@@ -125,20 +125,11 @@ export default function DragAndDropList({
                 {isEditing ? "Finish Editing" : "Edit"}
               </button>
               <div className="flex items-center">
-                {saveStatus === "saving" && (
-                  <p className="text-sm text-blue-600">Saving...</p>
-                )}
-                {saveStatus === "saved" && (
-                  <p className="text-sm text-green-600">Saved!</p>
-                )}
-                {saveStatus === "error" && (
-                  <p className="text-sm text-red-600">Error saving export.</p>
-                )}
                 <button
                   onClick={saveToPocketBase}
                   className="md:p-2 p-1 text-sm md:text-base bg-green-600 text-white rounded hover:bg-green-700"
                 >
-                  Save
+                  {saveStatus}
                 </button>
               </div>
 

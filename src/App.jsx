@@ -15,17 +15,28 @@ import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
 import useTasks from "./hooks/useTasks";
-import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+
 import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
 import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
 import pb from "./Components/lib/pbConnect";
 import { useUserSettings } from "./hooks/useUserSettings";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import ForgotPassword from "./templates/ForgotPassword";
+import ResetPassword from "./templates/ResetPassword";
+import AuthRedirect from "./Components/AuthRedirect";
+import VerifyEmail from "./templates/VerifyEmail";
+import Terms from "./templates/Terms";
+import Privacy from "./templates/Privacy";
+import ResendVerification from "./templates/ResendVerification";
+import AcceptTerms from "./templates/AcceptTerms";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
+import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
 export default function App() {
-  // useAutoRefreshOnIdle();
+  useAutoRefreshOnIdle();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
@@ -38,18 +49,19 @@ export default function App() {
 
   const isAuthenticated = useAuth();
 
-  useEffect(() => {
-    if (pb.authStore.isValid && shouldClearAuthDaily()) {
-      pb.authStore.clear();
-      window.location.reload(); // force re-render to show login
-    }
-  }, []);
+  // -----Check this logic for forcing daily signin - check local storage-----
+  // useEffect(() => {
+  //   // Check for daily logout
+  //   if (pb.authStore.isValid && shouldClearAuthDaily()) {
+  //     pb.authStore.clear();
+  //     toast("You've been logged out due to inactivity.");
+  //     window.location.reload();
+  //   } else if (pb.authStore.isValid) {
+  //     setTodayAsLoginDate();
+  //   }
+  // }, []);
 
-  if (isAuthenticated) {
-    setTodayAsLoginDate(); // store today's login
-  }
-
-  const { tasks: rec, refetch } = useTasks();
+  const { tasks: rec, refetch, loading } = useTasks();
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
@@ -68,83 +80,183 @@ export default function App() {
 
   return (
     <>
-      <Toaster position="top-center" />
+      <Toaster
+        position="bottom-center"
+        containerStyle={{
+          top: 80,
+        }}
+      />
       {isAuthenticated ? (
-        <div className=" grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden ">
-          <div className="col-start-1 col-end-6 row-start-1 row-end-2 ">
+        <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
+          {loading && (
+            <div className="absolute inset-0 bg-white/60 z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
+              <h2 className="text-4xl font-bold mb-8">Fetching Orders...</h2>
+              <div className="relative w-full h-full overflow-hidden">
+                <div className="absolute left-0  -translate-y-1/2">
+                  <DanishTrolleyLoader />
+                </div>
+              </div>
+            </div>
+          )}
+          {/* <div className="col-start-1 col-end-6 row-start-1 row-end-2"> */}
+          <div className="sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
             <Header
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
               setEdit={setEdit}
               edit={edit}
               setCustomerList={setCustomerList}
-            ></Header>
+            />
           </div>
-
           <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
+              {/* Main Page */}
               <Route
                 path="/"
                 element={
-                  <Body
-                    records={rec}
-                    chosenWeek={chosenWeek}
-                    chosenYear={chosenYear}
-                    edit={edit}
-                    setCustomerList={setCustomerList}
-                    customerList={customerList}
-                    userSettings={settings}
-                  ></Body>
+                  <ProtectedRoute>
+                    <Body
+                      records={rec}
+                      chosenWeek={chosenWeek}
+                      chosenYear={chosenYear}
+                      edit={edit}
+                      setCustomerList={setCustomerList}
+                      customerList={customerList}
+                      userSettings={settings}
+                      loading={loading}
+                    />
+                  </ProtectedRoute>
+                }
+              />
+              {/* Holding Page */}
+              <Route
+                path="/holdingPage"
+                element={
+                  <ProtectedRoute>
+                    <HoldingPage records={rec} />
+                  </ProtectedRoute>
                 }
               />
 
               <Route
-                path="/holdingPage"
-                element={<HoldingPage records={rec} />}
+                path="/runs"
+                element={
+                  <ProtectedRoute>
+                    <TrolleyExportsPage />
+                  </ProtectedRoute>
+                }
               />
-
-              <Route path="/runs" element={<TrolleyExportsPage />} />
 
               <Route path="/settings" element={<SettingsPage />} />
 
-              <Route path="/runs/view/:id" element={<ViewExportPage />} />
+              <Route
+                path="/runs/view/:id"
+                element={
+                  <ProtectedRoute>
+                    <ViewExportPage />
+                  </ProtectedRoute>
+                }
+              />
 
               <Route
                 path="/trolley-mapper"
                 element={
-                  <TrolleyMapper records={rec} customerList={customerList} />
+                  <ProtectedRoute>
+                    <TrolleyMapper records={rec} customerList={customerList} />
+                  </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/weekday/:year/:week/:day/:number"
-                element={<WeekdayPage records={rec} />}
+                element={
+                  <ProtectedRoute>
+                    <WeekdayPage records={rec} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/search" element={<SearchPage records={rec} />} />
+
+              <Route
+                path="/search"
+                element={
+                  <ProtectedRoute>
+                    <SearchPage records={rec} />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="/accept-terms" element={<AcceptTerms />} />
 
               <Route
                 path="/collect"
                 element={
-                  <Collect
-                    records={rec}
-                    chosenWeek={chosenWeek}
-                    chosenYear={chosenYear}
-                  />
+                  <ProtectedRoute>
+                    <Collect
+                      records={rec}
+                      chosenWeek={chosenWeek}
+                      chosenYear={chosenYear}
+                    />
+                  </ProtectedRoute>
                 }
               />
-              <Route path="/edit/:id" element={<Edit records={rec} />} />
+
+              <Route
+                path="/edit/:id"
+                element={
+                  <ProtectedRoute>
+                    <Edit records={rec} />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/createCustomer"
-                element={<CreateCustomer></CreateCustomer>}
+                element={
+                  <ProtectedRoute>
+                    <CreateCustomer />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/auth/confirm-password-reset/:token"
+                element={<ResetPassword />}
               />
             </Routes>
           </div>
         </div>
       ) : (
-        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden ">
-          <Login></Login>
+        <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden">
+          <Routes>
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/auth/confirm-password-reset/:token"
+              element={<ResetPassword />}
+            />
+            <Route
+              path="/auth/confirm-verification/:token"
+              element={<VerifyEmail />}
+            />
+            <Route
+              path="/resend-verification"
+              element={<ResendVerification />}
+            />
+            <Route path="/_/" element={<AuthRedirect />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/accept-terms" element={<AcceptTerms />} />
+            <Route
+              path="*"
+              element={
+                // Default fallback for unauthenticated users
+                <Login />
+              }
+            />
+          </Routes>
         </div>
       )}
     </>
   );
 }
-// export default App;

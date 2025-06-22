@@ -16,9 +16,11 @@ export default function WeekdayPage({ records }) {
       record.weekNumber == week &&
       record.year == year &&
       record.other === "none" &&
-      record.day[0] === day.toLowerCase()
+      record.day[0] === day.toLowerCase() &&
+      ["wholesale", "retail"].includes(record.customerType)
   );
 
+  console.log(arr);
   const exportToPDF = async () => {
     setIsExporting(true);
     await new Promise((res) => setTimeout(res, 100)); // allow DOM to update

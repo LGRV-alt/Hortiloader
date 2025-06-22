@@ -7,6 +7,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
 import toast from "react-hot-toast";
+import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
+
 const realPass = "gilmore";
 
 export default function Edit({ records }) {
@@ -58,6 +60,7 @@ export default function Edit({ records }) {
   // Delete modal
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
+  const [savingState, setSavingState] = useState("Save");
 
   const weeks = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
@@ -79,7 +82,7 @@ export default function Edit({ records }) {
     }
 
     setIsSaving(true);
-
+    setSavingState("Saving...");
     try {
       await updateTask(
         id,
@@ -96,11 +99,13 @@ export default function Edit({ records }) {
         trollies,
         extras
       );
+      setSavingState("Save");
       toast.success("Order updated successfully!");
       navigate(-1);
     } catch (err) {
       console.error("Error updating task:", err);
       toast.error("Something went wrong while saving.");
+      setSavingState("Save");
     } finally {
       setIsSaving(false);
     }
@@ -109,8 +114,13 @@ export default function Edit({ records }) {
   if (records.length < 1) {
     {
       return (
-        <div className="flex justify-center items-center h-full">
-          <div className="border-gray-300 h-20 w-20 animate-spin rounded-full border-8 border-t-blue-600" />
+        <div className="relative h-full w-full overflow-hidden">
+          <div className="flex justify-center mt-28 ">
+            <h2 className="text-4xl font-bold">Loading...</h2>
+          </div>
+          <div className="absolute left-0 top-1/3 -translate-y-1/2">
+            <DanishTrolleyLoader />
+          </div>
         </div>
       );
     }
@@ -124,7 +134,23 @@ export default function Edit({ records }) {
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
                   Edit Order -{" "}
                 </h2>{" "}
-                <div className="flex font-semibold gap-1">
+                <div className="flex font-semibold gap-1 border-b-2 border-black">
+                  <select
+                    className="text-center w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                    name="day"
+                    id="day"
+                    onChange={(e) => setDay(e.target.value)}
+                    value={day ? day : []}
+                  >
+                    <option disabled>Day Required</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                  </select>
                   <p>Week</p>
                   <select
                     value={weekNumber}
@@ -135,10 +161,9 @@ export default function Edit({ records }) {
                   >
                     {weekNumbers}
                   </select>
-
                   <select
                     value={year}
-                    className="pl-2 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
+                    className="pl-2 pr-5 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
                     onChange={(e) => setYear(e.target.value)}
                     name=""
                     id=""
@@ -150,7 +175,7 @@ export default function Edit({ records }) {
               </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className="bg-transparent w-2/3 md:w-1/3  text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
@@ -158,7 +183,7 @@ export default function Edit({ records }) {
               required
             />
             <input
-              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
               type="text"
               placeholder="Postcode"
               onChange={(e) => setPostcode(e.target.value)}
@@ -166,7 +191,7 @@ export default function Edit({ records }) {
               required
             />
             <input
-              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Order No."
               onChange={(e) => setOrderNumber(e.target.value)}
@@ -175,7 +200,7 @@ export default function Edit({ records }) {
             />
 
             <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -189,24 +214,9 @@ export default function Edit({ records }) {
               <option value="missed">Missed</option>
               <option value="other">Other</option>
             </select>
+
             <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-              name="day"
-              id="day"
-              onChange={(e) => setDay(e.target.value)}
-              value={day ? day : []}
-            >
-              <option disabled>Day Required</option>
-              <option value="monday">Monday</option>
-              <option value="tuesday">Tuesday</option>
-              <option value="wednesday">Wednesday</option>
-              <option value="thursday">Thursday</option>
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
-            </select>
-            <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
               value={other ? other : []}
@@ -217,34 +227,6 @@ export default function Edit({ records }) {
               <option value="holding">Holding</option>
               <option value="collect">Collect</option>
             </select>
-
-            {/* ----------------Week Select ------------------- */}
-            {/* <div className="flex gap-2 pl-1  ">
-              <p>Week Number</p>
-              <select
-                value={weekNumber}
-                className="cursor-pointer appearance-none w-12 bg-transparent focus:text-black focus:bg-white "
-                onChange={(e) => setWeekNumber(e.target.value)}
-                name=""
-                id=""
-              >
-                {weekNumbers}
-              </select>
-            </div> */}
-            {/* -------------- Year Select -------------------- */}
-            {/* <div className="flex gap-2 pl-1 ">
-              <p>Year</p>
-              <select
-                value={year}
-                className="appearance-none cursor-pointer w-16 bg-transparent focus:text-black focus:bg-white "
-                onChange={(e) => setYear(e.target.value)}
-                name=""
-                id=""
-              >
-                <option value="0">2024</option>
-                <option value="2025">2025</option>
-              </select>
-            </div> */}
           </div>
           {/* -------------Right hand side------------------ */}
           <div className="flex flex-col justify-end items-start">
@@ -252,18 +234,18 @@ export default function Edit({ records }) {
               <label className="">Status - </label>
               <select
                 value={status}
-                className="w-24 md:w-28 cursor-pointer bg-transparent text-input focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                className="w-24 md:w-28 cursor-pointer bg-transparent text-input border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value=""></option>
                 <option value="working">Working</option>
+                <option value="missed">Query</option>
                 <option value="pulled">Pulled</option>
                 <option value="loaded">Loaded</option>
-                <option value="missed">Missed</option>
               </select>
               <label className="">Trollies - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+                className="pl-1 w-24 bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
                 type="text"
                 placeholder="Trollies"
                 onChange={(e) => setTrollies(e.target.value)}
@@ -272,7 +254,7 @@ export default function Edit({ records }) {
               />
               <label className="">Extras - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                className="pl-1 w-24 bg-transparent text-input border-b-2  border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Extras"
                 onChange={(e) => setExtras(e.target.value)}
@@ -284,7 +266,7 @@ export default function Edit({ records }) {
             <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2  font-medium  ">Additional Info</h3>
               <textarea
-                className=" p-2 h-32 w-full text-center  bg-transparent border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                className=" p-2 h-32 w-full text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
                 placeholder="Issues/Load information"
                 onChange={(e) => setOrderInfo(e.target.value)}
@@ -297,7 +279,7 @@ export default function Edit({ records }) {
                 className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
                 onClick={handleSubmit}
               >
-                <p>Save</p>
+                <p>{savingState}</p>
               </button>
 
               <button

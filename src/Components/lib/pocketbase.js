@@ -36,19 +36,61 @@ export async function updateTask(
   };
   await pb.collection("tasks").update(id, data);
   emitRefetchTasks();
-  // history.go(0);
 }
 
 export async function login(username, password) {
   try {
+    // 1) Attempt to authenticate
     await pb.collection("users").authWithPassword(username, password);
-    // No reload
-    console.log("Logged in:", pb.authStore.model);
-  } catch (error) {
-    console.log(error);
-    if (error.data?.code) {
-      alert("Invalid username or password");
+
+    // 2) Check email-verified
+    if (!pb.authStore.model?.verified) {
+      pb.authStore.clear();
+      return {
+        success: false,
+        reason: "unverified",
+        message: "Please verify your email before logging in.",
+      };
     }
+
+    // 3) Check terms agreement
+    const agreement = pb.authStore.model?.termsAgreement;
+    if (!agreement?.agreed) {
+      // Don't clear auth store – let them continue to /accept-terms
+      return {
+        success: false,
+        reason: "no_terms",
+        message:
+          "You must agree to the Terms and Privacy Policy before logging in.",
+      };
+    }
+
+    // 4) All good
+    return { success: true };
+  } catch (error) {
+    const status = error?.status;
+
+    if (status === 403) {
+      return {
+        success: false,
+        reason: "forbidden",
+        message: "Access denied. Please check your email or account status.",
+      };
+    }
+
+    if (status === 400) {
+      return {
+        success: false,
+        reason: "credentials",
+        message: "Incorrect username or password.",
+      };
+    }
+
+    return {
+      success: false,
+      reason: "unknown",
+      message: "Unexpected error occurred.",
+    };
   }
 }
 
@@ -57,22 +99,37 @@ export function signout() {
   pb.authStore.clear();
   window.location.reload();
 }
-export async function signup(username, password) {
-  const data = {
-    username: username,
-    password: password,
-    passwordConfirm: password,
-  };
+
+export async function signup(username, password, email, termsAgreement) {
   try {
-    await pb.collection("users").create(data);
-    alert("User Created");
+    const data = {
+      username,
+      password,
+      passwordConfirm: password,
+      email,
+      termsAgreement,
+    };
+
+    const createdUser = await pb.collection("users").create(data);
+
+    // Optional: Trigger verification email
+    await pb.collection("users").requestVerification(email);
+
+    return { success: true, user: createdUser };
   } catch (error) {
-    console.log("Error:", error);
-    console.log(error.data);
-    if (error.data.data.username.code) {
-      alert("user already exist");
-    }
+    return { success: false, message: error.message || "Signup failed." };
   }
+}
+
+export function setTodayAsLoginDate() {
+  const today = new Date().toISOString().slice(0, 10); // e.g., "2025-06-16"
+  localStorage.setItem("lastLoginDate", today);
+}
+
+export function shouldClearAuthDaily() {
+  const last = localStorage.getItem("lastLoginDate");
+  const today = new Date().toISOString().slice(0, 10);
+  return last && last !== today;
 }
 
 // ---------------------Brought Over----------------------
