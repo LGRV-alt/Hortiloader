@@ -81,7 +81,7 @@ export default function App() {
   return (
     <>
       <Toaster
-        position="top-center"
+        position="bottom-center"
         containerStyle={{
           top: 80,
         }}
@@ -218,8 +218,12 @@ export default function App() {
                 }
               />
               <Route path="/terms" element={<Terms />} />
-
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route
+                path="/auth/confirm-password-reset/:token"
+                element={<ResetPassword />}
+              />
             </Routes>
           </div>
         </div>

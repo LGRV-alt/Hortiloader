@@ -46,9 +46,10 @@ export default function Terms() {
         <p>
           By creating an account, you confirm that you agree to these Terms and
           our{" "}
-          <a href="/privacy" className="text-blue-600 underline">
+          <Link className="text-blue-600 underline" to="/privacy">
+            {" "}
             Privacy Policy
-          </a>
+          </Link>
           .
         </p>
         <p>Your agreement is recorded with a timestamp in our system.</p>
@@ -125,7 +126,7 @@ export default function Terms() {
           Please contact us at{" "}
           <span>
             <a
-              href="mailto:support@yourdomain.com"
+              href="mailto:support@hortiloader.com"
               className="text-blue-600 underline"
             >
               support@hortiloader.com

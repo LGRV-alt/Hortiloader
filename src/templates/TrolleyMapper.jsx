@@ -5,6 +5,7 @@ import html2canvas from "html2canvas";
 import DragAndDropList from "../Components/DragAndDropList";
 import Vehicle from "../Components/Vehicle";
 import pb from "../Components/lib/pbConnect";
+import toast from "react-hot-toast";
 
 export default function TrolleyMapper({
   records,
@@ -17,7 +18,7 @@ export default function TrolleyMapper({
   );
 
   const [customerName, setCustomerName] = useState("");
-  const [saveStatus, setSaveStatus] = useState("idle");
+  const [saveStatus, setSaveStatus] = useState("Save");
   const [isExporting, setIsExporting] = useState(false); // 👈 control what's shown
 
   const [vehicleInfo, setVehicleInfo] = useState({
@@ -30,6 +31,10 @@ export default function TrolleyMapper({
     grid: [], // <- array of customer names
   });
 
+  const isVehicleInfoComplete = () => {
+    return vehicleInfo.driver && vehicleInfo.reg && vehicleInfo.date;
+  };
+
   useEffect(() => {
     if (vehicleInfoFromExport) {
       setVehicleInfo(vehicleInfoFromExport);
@@ -39,7 +44,12 @@ export default function TrolleyMapper({
   const exportRef = useRef();
 
   const saveToPocketBase = async () => {
-    setSaveStatus("saving");
+    if (!isVehicleInfoComplete()) {
+      toast.error("Please enter driver, registration and date before saving.");
+      return;
+    }
+
+    setSaveStatus("Saving...");
 
     const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
       vehicleInfo.driver
@@ -59,7 +69,7 @@ export default function TrolleyMapper({
         user: pb.authStore.model.id,
       });
 
-      setSaveStatus("updated");
+      setSaveStatus("Save");
     } catch (error) {
       if (error.status === 404) {
         // If not found, create a new record
@@ -70,19 +80,19 @@ export default function TrolleyMapper({
             vehicleInfo,
             user: pb.authStore.model.id,
           });
-          setSaveStatus("saved");
+          setSaveStatus("Save");
         } catch (createErr) {
           console.error("Error creating export in PocketBase:", createErr);
-          setSaveStatus("error");
+          toast.error("error");
         }
       } else {
         console.error("Error checking for existing export:", error);
-        setSaveStatus("error");
+        toast.error("error");
       }
     }
 
     // Reset status after a short delay
-    setTimeout(() => setSaveStatus("idle"), 3000);
+    setTimeout(() => setSaveStatus("Save"), 3000);
   };
 
   const handleReorder = (newOrder) => setTasks(newOrder);

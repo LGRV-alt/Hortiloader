@@ -134,7 +134,23 @@ export default function Edit({ records }) {
                 <h2 className="text-xl md:text-2xl font-medium text-secondary">
                   Edit Order -{" "}
                 </h2>{" "}
-                <div className="flex font-semibold gap-1">
+                <div className="flex font-semibold gap-1 border-b-2 border-black">
+                  <select
+                    className="w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                    name="day"
+                    id="day"
+                    onChange={(e) => setDay(e.target.value)}
+                    value={day ? day : []}
+                  >
+                    <option disabled>Day Required</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                  </select>
                   <p>Week</p>
                   <select
                     value={weekNumber}
@@ -145,7 +161,6 @@ export default function Edit({ records }) {
                   >
                     {weekNumbers}
                   </select>
-
                   <select
                     value={year}
                     className="pl-2 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
@@ -160,7 +175,7 @@ export default function Edit({ records }) {
               </div>
             </div>
             <input
-              className="pl-1 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
+              className="bg-transparent w-2/3 md:w-1/3  text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               value={title}
@@ -199,22 +214,7 @@ export default function Edit({ records }) {
               <option value="missed">Missed</option>
               <option value="other">Other</option>
             </select>
-            <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-              name="day"
-              id="day"
-              onChange={(e) => setDay(e.target.value)}
-              value={day ? day : []}
-            >
-              <option disabled>Day Required</option>
-              <option value="monday">Monday</option>
-              <option value="tuesday">Tuesday</option>
-              <option value="wednesday">Wednesday</option>
-              <option value="thursday">Thursday</option>
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
-            </select>
+
             <select
               className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"

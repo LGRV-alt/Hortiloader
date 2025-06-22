@@ -10,12 +10,12 @@ export default function Privacy() {
         </Link>
       </div>
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
-      <p className="text-sm text-gray-500 mb-10">Last updated 2025-06-21</p>
+      <p className="text-sm text-gray-500 mb-10">Last updated 21/6/2025</p>
 
       <section className="mb-8">
         <p>
           Welcome to <strong>HortiLoader</strong>. This Privacy Policy explains
-          how we collect, use, and protect your information when you use our web
+          how we collect, use and protect your information when you use our web
           application ("the App"). The App allows users to manage orders, tasks
           and customer-related information.
         </p>
