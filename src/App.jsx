@@ -49,18 +49,6 @@ export default function App() {
 
   const isAuthenticated = useAuth();
 
-  // -----Check this logic for forcing daily signin - check local storage-----
-  // useEffect(() => {
-  //   // Check for daily logout
-  //   if (pb.authStore.isValid && shouldClearAuthDaily()) {
-  //     pb.authStore.clear();
-  //     toast("You've been logged out due to inactivity.");
-  //     window.location.reload();
-  //   } else if (pb.authStore.isValid) {
-  //     setTodayAsLoginDate();
-  //   }
-  // }, []);
-
   const { tasks: rec, refetch, loading } = useTasks();
 
   function getCurrentWeek(d) {

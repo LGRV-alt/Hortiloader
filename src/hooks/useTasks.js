@@ -1,9 +1,12 @@
+//------------------- Polling method ---------------
+
 // import { useEffect, useRef, useState } from "react";
 // import pb from "../Components/lib/pbConnect";
 // import { onRefetchTasks } from "../Components/lib/eventBus";
 
 // export default function useTasks() {
 //   const [tasks, setTasks] = useState([]);
+//   const [loading, setLoading] = useState(true); // ✅ new loading state
 //   const currentTasksRef = useRef([]);
 
 //   useEffect(() => {
@@ -14,9 +17,10 @@
 //     return () => stopListening();
 //   }, []);
 
-//   // Helper to fetch and update only if tasks changed
 //   const fetchTasks = async () => {
 //     if (!pb.authStore.isValid) return;
+
+//     setLoading(true); // ✅ start loading
 
 //     try {
 //       const all = await pb.collection("tasks").getFullList({ sort: "created" });
@@ -38,82 +42,100 @@
 //       }
 //     } catch (err) {
 //       console.error("Failed to fetch tasks:", err);
+//     } finally {
+//       setLoading(false); // ✅ end loading
 //     }
 //   };
 
 //   useEffect(() => {
 //     if (!pb.authStore.isValid) return;
 
-//     fetchTasks(); // Initial load
+//     fetchTasks(); // initial load
 
-//     const interval = setInterval(fetchTasks, 60000); // Poll every 60s
+//     const interval = setInterval(fetchTasks, 300000); // poll every 60s
 
 //     return () => clearInterval(interval);
 //   }, [pb.authStore.isValid]);
 
-//   return { tasks, refetch: fetchTasks };
+//   return {
+//     tasks,
+//     refetch: fetchTasks,
+//     loading, // ✅ expose loading state
+//   };
 // }
 
-import { useEffect, useRef, useState } from "react";
-import pb from "../Components/lib/pbConnect";
-import { onRefetchTasks } from "../Components/lib/eventBus";
+import { useEffect, useState } from "react";
+import pb from "../Components/lib/pbConnect"; // your existing PocketBase instance
+import useAuth from "./useAuth";
 
 export default function useTasks() {
   const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ new loading state
-  const currentTasksRef = useRef([]);
-
-  useEffect(() => {
-    const stopListening = onRefetchTasks(() => {
-      console.log("Manual refetch triggered from event");
-      fetchTasks();
-    });
-    return () => stopListening();
-  }, []);
+  const [loading, setLoading] = useState(true);
+  const isAuthenticated = useAuth();
 
   const fetchTasks = async () => {
-    if (!pb.authStore.isValid) return;
-
-    setLoading(true); // ✅ start loading
-
     try {
-      const all = await pb.collection("tasks").getFullList({ sort: "created" });
-
-      const hasChanged =
-        all.length !== currentTasksRef.current.length ||
-        all.some(
-          (item, i) =>
-            item.id !== currentTasksRef.current[i]?.id ||
-            item.updated !== currentTasksRef.current[i]?.updated
-        );
-
-      if (hasChanged) {
-        setTasks(all);
-        currentTasksRef.current = all;
-        console.log("Tasks updated");
-      } else {
-        console.log("No task change detected");
-      }
+      setLoading(true);
+      const result = await pb.collection("tasks").getFullList({
+        sort: "+created",
+      });
+      setTasks(result);
     } catch (err) {
       console.error("Failed to fetch tasks:", err);
     } finally {
-      setLoading(false); // ✅ end loading
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!pb.authStore.isValid) return;
+    if (!isAuthenticated) return;
 
-    fetchTasks(); // initial load
+    let unsubscribeFunc;
 
-    const interval = setInterval(fetchTasks, 120000); // poll every 60s
+    const setupSubscription = async () => {
+      await fetchTasks(); // Ensure tasks are fetched before subscribing
 
-    return () => clearInterval(interval);
-  }, [pb.authStore.isValid]);
+      try {
+        unsubscribeFunc = await pb.collection("tasks").subscribe("*", (e) => {
+          console.log("Realtime task update:", e);
+
+          setTasks((prev) => {
+            const { action, record } = e;
+
+            if (action === "create") {
+              return [...prev, record]; // add to end
+            }
+
+            if (action === "update") {
+              return prev.map((item) =>
+                item.id === record.id ? record : item
+              );
+            }
+
+            if (action === "delete") {
+              return prev.filter((item) => item.id !== record.id);
+            }
+
+            return prev;
+          });
+        });
+      } catch (err) {
+        console.error("Failed to subscribe to tasks:", err);
+      }
+    };
+
+    setupSubscription();
+
+    return () => {
+      if (unsubscribeFunc) {
+        unsubscribeFunc(); // Clean up properly
+      }
+    };
+  }, [isAuthenticated]);
 
   return {
     tasks,
     refetch: fetchTasks,
-    loading, // ✅ expose loading state
+    loading,
   };
 }

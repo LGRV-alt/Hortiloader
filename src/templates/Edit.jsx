@@ -8,8 +8,9 @@ import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
 import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
+import pb from "../Components/lib/pbConnect";
 
-const realPass = "gilmore";
+const userName = pb.authStore.model?.username?.toLowerCase() || "";
 
 export default function Edit({ records }) {
   const { id } = useParams();
@@ -300,10 +301,11 @@ export default function Edit({ records }) {
                 Confirm Delete
               </h2>
               <p className="mb-2 text-black">
-                Enter password to delete this task:
+                Enter username to delete this task:{" "}
+                <span className="font-bold">{userName}</span>
               </p>
               <input
-                type="password"
+                type="text"
                 className="w-full border px-3 py-2 mb-4 rounded text-black"
                 value={deletePassword}
                 onChange={(e) => setDeletePassword(e.target.value)}
@@ -317,12 +319,12 @@ export default function Edit({ records }) {
                 </button>
                 <button
                   onClick={() => {
-                    if (deletePassword.toLowerCase() === realPass) {
+                    if (deletePassword.toLowerCase() === userName) {
                       deleteTask(id);
                       toast.success("Task deleted.");
                       navigate(-1);
                     } else {
-                      toast.error("Incorrect password.");
+                      toast.error("Incorrect username.");
                     }
                     setShowDeleteModal(false);
                     setDeletePassword("");

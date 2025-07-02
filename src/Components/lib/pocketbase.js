@@ -136,7 +136,7 @@ export function shouldClearAuthDaily() {
 
 export async function deleteTask(id) {
   await pb.collection("tasks").delete(id);
-  emitRefetchTasks();
+  // emitRefetchTasks();
 }
 
 export async function taskStatus(id, title, status) {
