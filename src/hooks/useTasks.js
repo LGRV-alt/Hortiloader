@@ -103,7 +103,7 @@ export default function useTasks() {
             const { action, record } = e;
 
             if (action === "create") {
-              return [record, ...prev];
+              return [...prev, record]; // add to end
             }
 
             if (action === "update") {
