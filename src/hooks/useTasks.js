@@ -1,59 +1,3 @@
-// import { useEffect, useRef, useState } from "react";
-// import pb from "../Components/lib/pbConnect";
-// import { onRefetchTasks } from "../Components/lib/eventBus";
-
-// export default function useTasks() {
-//   const [tasks, setTasks] = useState([]);
-//   const currentTasksRef = useRef([]);
-
-//   useEffect(() => {
-//     const stopListening = onRefetchTasks(() => {
-//       console.log("Manual refetch triggered from event");
-//       fetchTasks();
-//     });
-//     return () => stopListening();
-//   }, []);
-
-//   // Helper to fetch and update only if tasks changed
-//   const fetchTasks = async () => {
-//     if (!pb.authStore.isValid) return;
-
-//     try {
-//       const all = await pb.collection("tasks").getFullList({ sort: "created" });
-
-//       const hasChanged =
-//         all.length !== currentTasksRef.current.length ||
-//         all.some(
-//           (item, i) =>
-//             item.id !== currentTasksRef.current[i]?.id ||
-//             item.updated !== currentTasksRef.current[i]?.updated
-//         );
-
-//       if (hasChanged) {
-//         setTasks(all);
-//         currentTasksRef.current = all;
-//         console.log("Tasks updated");
-//       } else {
-//         console.log("No task change detected");
-//       }
-//     } catch (err) {
-//       console.error("Failed to fetch tasks:", err);
-//     }
-//   };
-
-//   useEffect(() => {
-//     if (!pb.authStore.isValid) return;
-
-//     fetchTasks(); // Initial load
-
-//     const interval = setInterval(fetchTasks, 60000); // Poll every 60s
-
-//     return () => clearInterval(interval);
-//   }, [pb.authStore.isValid]);
-
-//   return { tasks, refetch: fetchTasks };
-// }
-
 import { useEffect, useRef, useState } from "react";
 import pb from "../Components/lib/pbConnect";
 import { onRefetchTasks } from "../Components/lib/eventBus";
@@ -106,7 +50,7 @@ export default function useTasks() {
 
     fetchTasks(); // initial load
 
-    const interval = setInterval(fetchTasks, 120000); // poll every 60s
+    const interval = setInterval(fetchTasks, 300000); // poll every 60s
 
     return () => clearInterval(interval);
   }, [pb.authStore.isValid]);

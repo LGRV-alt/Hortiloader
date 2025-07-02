@@ -14,6 +14,8 @@ export default function TrolleyExportsPage() {
 
   const CORRECT_PASSWORD = "stan666"; // 🔐 Change this or get from secure source
 
+  const userName = pb.authStore.model.username.toLowerCase();
+
   useEffect(() => {
     const fetchExports = async () => {
       try {
@@ -36,7 +38,7 @@ export default function TrolleyExportsPage() {
   };
 
   const confirmDelete = async () => {
-    if (password !== CORRECT_PASSWORD) {
+    if (password !== userName) {
       alert("Incorrect password.");
       return;
     }
@@ -92,13 +94,16 @@ export default function TrolleyExportsPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
             <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
-            <p className="mb-2 text-sm">Enter password to delete export:</p>
+            <p className="mb-2 text-sm">
+              Enter username to delete export:{" "}
+              <span className="font-bold">{userName}</span>
+            </p>
             <input
-              type="password"
+              type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border px-3 py-2 mb-4 rounded"
-              placeholder="Password"
+              placeholder=""
             />
             <div className="flex justify-end gap-2">
               <button
