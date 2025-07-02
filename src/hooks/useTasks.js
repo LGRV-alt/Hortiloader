@@ -1,3 +1,5 @@
+//------------------- Polling method ---------------
+
 // import { useEffect, useRef, useState } from "react";
 // import pb from "../Components/lib/pbConnect";
 // import { onRefetchTasks } from "../Components/lib/eventBus";
@@ -64,16 +66,18 @@
 
 import { useEffect, useState } from "react";
 import pb from "../Components/lib/pbConnect"; // your existing PocketBase instance
+import useAuth from "./useAuth";
 
 export default function useTasks() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const isAuthenticated = useAuth();
 
   const fetchTasks = async () => {
     try {
       setLoading(true);
       const result = await pb.collection("tasks").getFullList({
-        sort: "-created",
+        sort: "+created",
       });
       setTasks(result);
     } catch (err) {
@@ -84,35 +88,50 @@ export default function useTasks() {
   };
 
   useEffect(() => {
-    fetchTasks();
+    if (!isAuthenticated) return;
 
-    // Subscribe to changes in the 'tasks' collection
-    const unsubscribe = pb.collection("tasks").subscribe("*", (e) => {
-      console.log("Realtime task update:", e);
+    let unsubscribeFunc;
 
-      setTasks((prev) => {
-        const { action, record } = e;
+    const setupSubscription = async () => {
+      await fetchTasks(); // Ensure tasks are fetched before subscribing
 
-        if (action === "create") {
-          return [record, ...prev];
-        }
+      try {
+        unsubscribeFunc = await pb.collection("tasks").subscribe("*", (e) => {
+          console.log("Realtime task update:", e);
 
-        if (action === "update") {
-          return prev.map((item) => (item.id === record.id ? record : item));
-        }
+          setTasks((prev) => {
+            const { action, record } = e;
 
-        if (action === "delete") {
-          return prev.filter((item) => item.id !== record.id);
-        }
+            if (action === "create") {
+              return [record, ...prev];
+            }
 
-        return prev;
-      });
-    });
+            if (action === "update") {
+              return prev.map((item) =>
+                item.id === record.id ? record : item
+              );
+            }
+
+            if (action === "delete") {
+              return prev.filter((item) => item.id !== record.id);
+            }
+
+            return prev;
+          });
+        });
+      } catch (err) {
+        console.error("Failed to subscribe to tasks:", err);
+      }
+    };
+
+    setupSubscription();
 
     return () => {
-      unsubscribe(); // clean up on unmount
+      if (unsubscribeFunc) {
+        unsubscribeFunc(); // Clean up properly
+      }
     };
-  }, []);
+  }, [isAuthenticated]);
 
   return {
     tasks,

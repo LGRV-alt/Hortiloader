@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../Components/lib/pbConnect";
 
-const userName = pb.authStore.model.username.toLowerCase();
+const userName = pb.authStore.model?.username?.toLowerCase() || "";
 
 export default function Edit({ records }) {
   const { id } = useParams();
@@ -324,7 +324,7 @@ export default function Edit({ records }) {
                       toast.success("Task deleted.");
                       navigate(-1);
                     } else {
-                      toast.error("Incorrect password.");
+                      toast.error("Incorrect username.");
                     }
                     setShowDeleteModal(false);
                     setDeletePassword("");
