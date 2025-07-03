@@ -53,13 +53,13 @@ export default function App() {
 
   // const { tasks: rec, refetch } = useTasks();
 
-  const { tasks, loading, subscribeToTasks } = useTaskStore();
+  const { tasks, loading, startPollingWithImmediateFetch, stopPolling } =
+    useTaskStore();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      subscribeToTasks();
-    }
-  }, [isAuthenticated, subscribeToTasks]);
+    startPollingWithImmediateFetch();
+    return () => stopPolling();
+  }, []);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
