@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import { useTaskStore } from "../hooks/useTaskStore";
 
-export default function HoldingPage({ records }) {
+export default function HoldingPage() {
+  const records = useTaskStore((state) => state.tasks);
   const holding = records.filter((record) => record.other == "holding");
 
   return (

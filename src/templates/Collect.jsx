@@ -2,8 +2,11 @@
 
 import DayColumn from "../Components/DayColumn";
 import { daysOfWeek } from "../Components/lib/pocketbase";
+import { useTaskStore } from "../hooks/useTaskStore";
 
-export default function Collect({ records, chosenWeek, chosenYear }) {
+export default function Collect({ chosenWeek, chosenYear }) {
+  const records = useTaskStore((state) => state.tasks);
+
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(

@@ -20,7 +20,7 @@ export default function Body({
   // refresh;
 
   const records = useTaskStore((state) => state.tasks);
-  console.log(records);
+
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(

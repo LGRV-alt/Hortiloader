@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import FileUpload from "../Components/FileUpload";
 import Pictures from "../Components/Pictures";
+import { useTaskStore } from "../hooks/useTaskStore";
 
-export default function searchPage({ records }) {
+export default function searchPage() {
+  const records = useTaskStore((state) => state.tasks);
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation(); // Get the current location
   const navigate = useNavigate();
