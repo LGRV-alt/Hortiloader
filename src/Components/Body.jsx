@@ -3,9 +3,10 @@
 import DayColumn from "./DayColumn";
 import { daysOfWeek } from "./lib/pocketbase";
 import DanishTrolleyLoader from "./DanishTrolleyLoader";
+import { useTaskStore } from "../hooks/useTaskStore";
 
 export default function Body({
-  records,
+  // records,
   chosenWeek,
   chosenYear,
   refresh,
@@ -17,6 +18,9 @@ export default function Body({
   loading,
 }) {
   // refresh;
+
+  const records = useTaskStore((state) => state.tasks);
+  console.log(records);
   const filterUsersByDay = (day) => {
     // eslint-disable-next-line react/prop-types
     return records.filter(

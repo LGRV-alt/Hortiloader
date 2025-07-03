@@ -35,7 +35,7 @@ export async function updateTask(
     extras: extras,
   };
   await pb.collection("tasks").update(id, data);
-  emitRefetchTasks();
+  // emitRefetchTasks();
 }
 
 export async function login(username, password) {

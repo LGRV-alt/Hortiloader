@@ -35,6 +35,8 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
+import { useTaskStore } from "./hooks/useTaskStore";
+
 export default function App() {
   useAutoRefreshOnIdle();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
@@ -49,7 +51,15 @@ export default function App() {
 
   const isAuthenticated = useAuth();
 
-  const { tasks: rec, refetch, loading } = useTasks();
+  // const { tasks: rec, refetch } = useTasks();
+
+  const { tasks, loading, subscribeToTasks } = useTaskStore();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      subscribeToTasks();
+    }
+  }, [isAuthenticated, subscribeToTasks]);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
@@ -104,7 +114,7 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <Body
-                      records={rec}
+                      // records={rec}
                       chosenWeek={chosenWeek}
                       chosenYear={chosenYear}
                       edit={edit}
@@ -121,7 +131,7 @@ export default function App() {
                 path="/holdingPage"
                 element={
                   <ProtectedRoute>
-                    <HoldingPage records={rec} />
+                    <HoldingPage />
                   </ProtectedRoute>
                 }
               />
@@ -150,7 +160,7 @@ export default function App() {
                 path="/trolley-mapper"
                 element={
                   <ProtectedRoute>
-                    <TrolleyMapper records={rec} customerList={customerList} />
+                    <TrolleyMapper customerList={customerList} />
                   </ProtectedRoute>
                 }
               />
@@ -159,7 +169,7 @@ export default function App() {
                 path="/weekday/:year/:week/:day/:number"
                 element={
                   <ProtectedRoute>
-                    <WeekdayPage records={rec} />
+                    <WeekdayPage />
                   </ProtectedRoute>
                 }
               />
@@ -168,7 +178,7 @@ export default function App() {
                 path="/search"
                 element={
                   <ProtectedRoute>
-                    <SearchPage records={rec} />
+                    <SearchPage />
                   </ProtectedRoute>
                 }
               />
@@ -179,11 +189,7 @@ export default function App() {
                 path="/collect"
                 element={
                   <ProtectedRoute>
-                    <Collect
-                      records={rec}
-                      chosenWeek={chosenWeek}
-                      chosenYear={chosenYear}
-                    />
+                    <Collect chosenWeek={chosenWeek} chosenYear={chosenYear} />
                   </ProtectedRoute>
                 }
               />
@@ -192,7 +198,7 @@ export default function App() {
                 path="/edit/:id"
                 element={
                   <ProtectedRoute>
-                    <Edit records={rec} />
+                    <Edit />
                   </ProtectedRoute>
                 }
               />

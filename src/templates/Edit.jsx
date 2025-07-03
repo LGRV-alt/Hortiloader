@@ -9,10 +9,15 @@ import FileUpload from "../Components/FileUpload";
 import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../Components/lib/pbConnect";
+import { useTaskStore } from "../hooks/useTaskStore";
 
 const userName = pb.authStore.model?.username?.toLowerCase() || "";
 
-export default function Edit({ records }) {
+export default function Edit() {
+  const records = useTaskStore((state) => state.tasks);
+  const optimisticDeleteTask = useTaskStore((state) => state.deleteTask);
+  const optimisticUpdateTask = useTaskStore((state) => state.updateTask);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const loadingState = [
@@ -85,8 +90,7 @@ export default function Edit({ records }) {
     setIsSaving(true);
     setSavingState("Saving...");
     try {
-      await updateTask(
-        id,
+      await optimisticUpdateTask(id, {
         title,
         other,
         weekNumber,
@@ -98,8 +102,8 @@ export default function Edit({ records }) {
         status,
         year,
         trollies,
-        extras
-      );
+        extras,
+      });
       setSavingState("Save");
       toast.success("Order updated successfully!");
       navigate(-1);
@@ -318,11 +322,16 @@ export default function Edit({ records }) {
                   Cancel
                 </button>
                 <button
-                  onClick={() => {
+                  onClick={async () => {
                     if (deletePassword.toLowerCase() === userName) {
-                      deleteTask(id);
-                      toast.success("Task deleted.");
-                      navigate(-1);
+                      try {
+                        await optimisticDeleteTask(id);
+                        toast.success("Task deleted.");
+                        navigate(-1);
+                      } catch (err) {
+                        toast.error("Failed to delete task.");
+                        console.error(err);
+                      }
                     } else {
                       toast.error("Incorrect username.");
                     }

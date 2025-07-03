@@ -1,12 +1,56 @@
-/* eslint-disable react/prop-types */
+// /* eslint-disable react/prop-types */
+// import { useState } from "react";
+// import { createTask, getDateWeek } from "./lib/pocketbase";
+// import { useNavigate } from "react-router-dom";
+
+// export default function CreateCustomer() {
+//   const currentWeek = getDateWeek(new Date());
+//   const navigate = useNavigate();
+//   const status = null;
+
+//   const [title, setTitle] = useState(null);
+//   const [day, setDay] = useState("monday");
+//   const [postcode, setPostcode] = useState(null);
+//   const [orderNumber, setOrderNumber] = useState(null);
+//   const [customerType, setCustomerType] = useState("wholesale");
+//   const [other, setOther] = useState("none");
+//   const [weekNumber, setWeekNumber] = useState(currentWeek);
+//   const [orderInfo, setOrderInfo] = useState("");
+//   const [year, setYear] = useState(2025);
+
+//   const handleSubmit = () => {
+//     if (!title) {
+//       window.alert("Please enter a title");
+//       return;
+//     }
+
+//     createTask(
+//       title,
+//       day,
+//       postcode,
+//       orderNumber,
+//       customerType,
+//       other,
+//       weekNumber,
+//       orderInfo,
+//       status,
+//       year
+//     );
+
+//     navigate(-1);
+//   };
+
 import { useState } from "react";
-import { createTask, getDateWeek } from "./lib/pocketbase";
+import { getDateWeek } from "./lib/pocketbase";
 import { useNavigate } from "react-router-dom";
+import { useTaskStore } from "../hooks/useTaskStore"; // ✅ Import Zustand store
+import pb from "./lib/pbConnect";
 
 export default function CreateCustomer() {
   const currentWeek = getDateWeek(new Date());
   const navigate = useNavigate();
-  const status = null;
+
+  const createTask = useTaskStore((state) => state.createTask); // ✅ Zustand create
 
   const [title, setTitle] = useState(null);
   const [day, setDay] = useState("monday");
@@ -18,26 +62,31 @@ export default function CreateCustomer() {
   const [orderInfo, setOrderInfo] = useState("");
   const [year, setYear] = useState(2025);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title) {
       window.alert("Please enter a title");
       return;
     }
 
-    createTask(
-      title,
-      day,
-      postcode,
-      orderNumber,
-      customerType,
-      other,
-      weekNumber,
-      orderInfo,
-      status,
-      year
-    );
-
-    navigate(-1);
+    try {
+      await createTask({
+        title,
+        day,
+        postcode,
+        orderNumber,
+        customerType,
+        other,
+        weekNumber,
+        orderInfo,
+        status: null,
+        year,
+        user: pb.authStore.model.id, // ✅ Add correct user ID
+      });
+      navigate(-1);
+    } catch (err) {
+      console.error("Failed to create task:", err);
+      window.alert("Failed to create task. Please try again.");
+    }
   };
   return (
     <div className="flex flex-col items-center w-full  h-full  justify-start bg-regal-blue pb-2 ">
