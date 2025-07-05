@@ -6,13 +6,14 @@ import DragAndDropList from "../Components/DragAndDropList";
 import Vehicle from "../Components/Vehicle";
 import pb from "../Components/lib/pbConnect";
 import toast from "react-hot-toast";
+import { useTaskStore } from "../hooks/useTaskStore";
 
 export default function TrolleyMapper({
-  records,
   customerList,
   vehicleInfoFromExport,
   initialTasks,
 }) {
+  const records = useTaskStore((state) => state.tasks);
   const [tasks, setTasks] = useState(
     initialTasks ?? records.filter((item) => customerList.includes(item.id))
   );

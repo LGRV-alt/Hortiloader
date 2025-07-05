@@ -3,11 +3,13 @@ import { useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { useTaskStore } from "../hooks/useTaskStore";
 
-export default function WeekdayPage({ records }) {
+export default function WeekdayPage() {
   const [extras, setExtras] = useState(false);
   const exportRef = useRef();
   const [isExporting, setIsExporting] = useState(false);
+  const records = useTaskStore((state) => state.tasks);
 
   const { year, day, week, number } = useParams();
 
