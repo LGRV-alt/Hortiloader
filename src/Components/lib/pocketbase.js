@@ -1,5 +1,4 @@
 import pb from "./pbConnect";
-import { emitRefetchTasks } from "./eventBus";
 
 // client.autoCancellation(false);
 export const isUserValid = pb.authStore.isValid;
@@ -121,22 +120,10 @@ export async function signup(username, password, email, termsAgreement) {
   }
 }
 
-export function setTodayAsLoginDate() {
-  const today = new Date().toISOString().slice(0, 10); // e.g., "2025-06-16"
-  localStorage.setItem("lastLoginDate", today);
-}
-
-export function shouldClearAuthDaily() {
-  const last = localStorage.getItem("lastLoginDate");
-  const today = new Date().toISOString().slice(0, 10);
-  return last && last !== today;
-}
-
 // ---------------------Brought Over----------------------
 
 export async function deleteTask(id) {
   await pb.collection("tasks").delete(id);
-  // emitRefetchTasks();
 }
 
 export async function taskStatus(id, title, status) {
@@ -146,7 +133,6 @@ export async function taskStatus(id, title, status) {
     status: status,
   };
   await pb.collection("tasks").update(id, data);
-  emitRefetchTasks();
 }
 
 export async function createTask(
@@ -175,7 +161,7 @@ export async function createTask(
     year: year,
   };
   await pb.collection("tasks").create(data);
-  emitRefetchTasks();
+  // emitRefetchTasks();
 }
 
 export function getDateWeek(d) {

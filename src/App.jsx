@@ -1,8 +1,6 @@
+// ---------------Pages---------------------
 import Header from "./Components/Header";
 import Body from "./Components/Body";
-
-import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Login from "./Login";
 import Edit from "./templates/Edit";
 import SettingsPage from "./templates/SettingsPage";
@@ -12,23 +10,26 @@ import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
-import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
-import { useUserSettings } from "./hooks/useUserSettings";
-import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
-import AuthRedirect from "./Components/AuthRedirect";
 import VerifyEmail from "./templates/VerifyEmail";
 import Terms from "./templates/Terms";
 import Privacy from "./templates/Privacy";
 import ResendVerification from "./templates/ResendVerification";
 import AcceptTerms from "./templates/AcceptTerms";
+import AuthRedirect from "./Components/AuthRedirect";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
+// -------------------Functions ------------------
+import { Routes, Route } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useAuth from "./hooks/useAuth";
+import { useUserSettings } from "./hooks/useUserSettings";
+import { Toaster } from "react-hot-toast";
+import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import { useTaskStore } from "./hooks/useTaskStore";
 import { getCurrentWeek } from "./Components/lib/dateUtils";
 
@@ -39,11 +40,7 @@ export default function App() {
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
   const { settings } = useUserSettings();
-
   const isAuthenticated = useAuth();
-
-  // const { tasks: rec, refetch } = useTasks();
-
   const { loading, startPollingWithImmediateFetch, stopPolling } =
     useTaskStore();
 
@@ -76,7 +73,6 @@ export default function App() {
               </div>
             </div>
           )}
-          {/* <div className="col-start-1 col-end-6 row-start-1 row-end-2"> */}
           <div className="sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
             <Header
               setChosenWeek={setChosenWeek}
@@ -106,7 +102,6 @@ export default function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* Holding Page */}
               <Route
                 path="/holdingPage"
                 element={
