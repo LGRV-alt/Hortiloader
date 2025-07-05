@@ -1,34 +1,24 @@
 /* eslint-disable react/prop-types */
-
 import DayColumn from "./DayColumn";
 import { daysOfWeek } from "./lib/pocketbase";
-import DanishTrolleyLoader from "./DanishTrolleyLoader";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 export default function Body({
-  // records,
   chosenWeek,
   chosenYear,
-  refresh,
-  setRefresh,
   edit,
   setCustomerList,
   customerList,
   userSettings,
-  loading,
 }) {
-  // refresh;
-
   const records = useTaskStore((state) => state.tasks);
-
   const filterUsersByDay = (day) => {
-    // eslint-disable-next-line react/prop-types
     return records.filter(
       (record) =>
-        (record.day == day) &
-        (record.weekNumber == chosenWeek) &
-        (record.other === "none" || record.other === "collect") &
-        (record.year === chosenYear)
+        record.day == day &&
+        record.weekNumber == chosenWeek &&
+        (record.other === "none" || record.other === "collect") &&
+        record.year === chosenYear
     );
   };
 
@@ -42,18 +32,6 @@ export default function Body({
 
   return (
     <div className="relative h-full">
-      {/* Overlay Loader */}
-      {/* {loading && (
-        <div className="absolute inset-0 bg-white/60 z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
-          <h2 className="text-4xl font-bold mb-8">Fetching Orders...</h2>
-          <div className="relative w-full h-full overflow-hidden">
-            <div className="absolute left-0  -translate-y-1/2">
-              <DanishTrolleyLoader />
-            </div>
-          </div>
-        </div>
-      )} */}
-
       {/* Actual Day Grid Layout */}
       <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 h-full">
         <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2">
