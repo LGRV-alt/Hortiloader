@@ -1,16 +1,17 @@
 /* eslint-disable react/prop-types */
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
+
+// -----------------Icons------------------------
 import { FaSearchPlus } from "react-icons/fa";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaExclamation } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
 import { MdPresentToAll } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
-import { useState } from "react";
+
+import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 import toast from "react-hot-toast";
-// import { deleteTask } from "./lib/pocketbase";
 
 // eslint-disable-next-line react/prop-types
 export default function DayColumn({
@@ -24,7 +25,6 @@ export default function DayColumn({
   setCustomerList,
   customerList,
 }) {
-  const array = arr;
   const handleCustomerList = (id) => {
     setCustomerList((prevSelected) => {
       const isRemoving = prevSelected.includes(id);
@@ -37,6 +37,37 @@ export default function DayColumn({
         return [...prevSelected, id]; // add
       }
     });
+  };
+
+  // ----------------------Order Colour----------------------------
+  const getCustomerTextColor = (record) => {
+    if (record.other === "collect") return "text-orange-500";
+    switch (record.customerType) {
+      case "retail":
+        return "text-blue-700";
+      case "other":
+        return "text-green-500";
+      case "missed":
+        return "text-fuchsia-600";
+      default:
+        return "";
+    }
+  };
+
+  // -----------------------Order Symbol----------------------------
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case "pulled":
+        return <IoCheckmarkSharp color="green" fontSize="1.5em" />;
+      case "loaded":
+        return <MdPresentToAll color="green" fontSize="1.5em" />;
+      case "working":
+        return <TiSpanner fontSize="1.5em" />;
+      case "missed":
+        return <MdOutlineQuestionMark color="red" fontSize="1.5em" />;
+      default:
+        return <FaExclamation color="black" fontSize="1em" />;
+    }
   };
 
   return (
@@ -59,12 +90,11 @@ export default function DayColumn({
       </div>
 
       {/* Data in the column */}
-      {array.map((record) => (
+      {arr.map((record) => (
         <div
           className="flex justify-between items-center px-1 pt-1 "
           key={record.id}
         >
-          {/* Working on this section - Toggle switch to remove linking to the edit page so the orders can be added to an array */}
           <div
             className={`${
               !edit && "hover:bg-slate-300"
@@ -81,65 +111,25 @@ export default function DayColumn({
               >
                 <Tooltip id={`my-tooltip-${record.id}`} />
                 <div className="flex">
-                  {record.customerType === "retail" ? (
-                    <p className="text-blue-700 ">
-                      {record.title} {record.postcode.toUpperCase()}{" "}
-                      {record.orderNumber ? record.orderNumber : ""}{" "}
-                    </p>
-                  ) : record.customerType === "other" ? (
-                    <p className="text-red-500 ">
-                      {record.title} {record.postcode.toUpperCase()}{" "}
-                      {record.orderNumber ? record.orderNumber : ""}{" "}
-                    </p>
-                  ) : record.customerType === "missed" ? (
-                    <p className="text-fuchsia-600">
-                      {record.title} {record.postcode.toUpperCase()}{" "}
-                      {record.orderNumber ? record.orderNumber : ""}{" "}
-                    </p>
-                  ) : (
-                    <p className="">
-                      {record.title} {record.postcode.toUpperCase()}{" "}
-                      {record.orderNumber ? record.orderNumber : ""}{" "}
-                    </p>
-                  )}
+                  <p className={getCustomerTextColor(record)}>
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber || ""}
+                  </p>
                 </div>
               </a>
             ) : (
-              <Link to={`/edit/${record.id}`}>
-                <a
-                  data-tooltip-id={`my-tooltip-${record.id}`}
-                  data-tooltip-content={record.orderInfo}
-                >
-                  <Tooltip id={`my-tooltip-${record.id}`} />
-                  <div className="flex text-sm">
-                    {record.other === "collect" ? (
-                      <p className="text-orange-500">
-                        {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    ) : record.customerType === "retail" ? (
-                      <p className="text-blue-700">
-                        {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    ) : record.customerType === "other" ? (
-                      <p className="text-green-500">
-                        {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    ) : record.customerType === "missed" ? (
-                      <p className="text-fuchsia-600">
-                        {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    ) : (
-                      <p>
-                        {record.title} {record.postcode.toUpperCase()}{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    )}
-                  </div>
-                </a>
+              <Link
+                to={`/edit/${record.id}`}
+                data-tooltip-id={`my-tooltip-${record.id}`}
+                data-tooltip-content={record.orderInfo}
+              >
+                <Tooltip id={`my-tooltip-${record.id}`} />
+                <div className="flex text-sm">
+                  <p className={getCustomerTextColor(record)}>
+                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.orderNumber || ""}
+                  </p>
+                </div>
               </Link>
             )}
             {edit ? (
@@ -150,21 +140,7 @@ export default function DayColumn({
                 to={`/edit/${record.id}`}
               >
                 <div className="flex justify-center items-center">
-                  {record.status === "pulled" ? (
-                    // <p>Pulled</p>
-                    <IoCheckmarkSharp color="green" fontSize="1.5em" />
-                  ) : record.status === "loaded" ? (
-                    // <p>Loaded</p>
-                    <MdPresentToAll color="green" fontSize="1.5em" />
-                  ) : record.status === "working" ? (
-                    // <p>Working</p>
-                    <TiSpanner fontSize="1.5em" />
-                  ) : record.status === "missed" ? (
-                    // <p>Missed</p>
-                    <MdOutlineQuestionMark color="red" fontSize="1.5em" />
-                  ) : (
-                    <FaExclamation color="black" fontSize="1em" />
-                  )}
+                  {getStatusIcon(record.status)}
                 </div>
               </Link>
             )}

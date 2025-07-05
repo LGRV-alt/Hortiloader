@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { CiLogout } from "react-icons/ci";
-import { FaBars, FaSearch, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
 import LogoTree from "./LogoTree";
 import { getDateWeek, signout } from "./lib/pocketbase";
