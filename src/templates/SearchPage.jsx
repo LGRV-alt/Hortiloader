@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import FileUpload from "../Components/FileUpload";
-import Pictures from "../Components/Pictures";
 import { useTaskStore } from "../hooks/useTaskStore";
 
-export default function searchPage() {
+export default function SearchPage() {
   const records = useTaskStore((state) => state.tasks);
   const [searchTerm, setSearchTerm] = useState("");
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
   const navigate = useNavigate();
 
   // Update searchTerm based on URL when on the search page
@@ -35,23 +33,13 @@ export default function searchPage() {
   };
 
   const filteredEntry =
-    searchTerm.length < 1
-      ? records.filter((val) => val.title.includes("xxxxxxx"))
+    searchTerm.trim() === ""
+      ? []
       : records.filter(
           (val) =>
             val.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             val.orderNumber.toString().includes(searchTerm)
         );
-
-  // function compare(a, b) {
-  //   if (a.weekNumber > b.weekNumber) {
-  //     return -1;
-  //   }
-  //   if (a.weekNumber < b.weekNumber) {
-  //     return 1;
-  //   }
-  //   return 0;
-  // }
 
   function compareYear(a, b) {
     if (a.created > b.created) {
@@ -64,7 +52,6 @@ export default function searchPage() {
   }
 
   filteredEntry.sort(compareYear);
-  // filteredEntry.sort(compare);
 
   return (
     <div>
@@ -79,6 +66,9 @@ export default function searchPage() {
             value={searchTerm}
           />
         </div>
+        {filteredEntry.length === 0 && searchTerm.trim() !== "" && (
+          <p className="text-center text-gray-500">No results found.</p>
+        )}
 
         {filteredEntry.map((record) => (
           <div
@@ -104,7 +94,7 @@ export default function searchPage() {
                 )}
 
                 <p className="font-medium md:text-lg mr-2">
-                  {record.postcode.toUpperCase()}
+                  {record.postcode ? record.postcode.toUpperCase() : ""}
                 </p>
                 <p className=" ">
                   {record.orderNumber ? record.orderNumber : ""}

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 export default function Vehicle({
   customerName,
   setCustomerName,
@@ -101,17 +99,6 @@ export default function Vehicle({
           {/* --- Trolley Count Buttons --- */}
           {vehicle === "trailer" ? (
             <ul className="flex gap-2 justify-center items-center">
-              {/* {[3, 6, 7].map((val) => (
-                <button
-                  key={val}
-                  onClick={handleTrolleyNumber}
-                  value={val}
-                  className="w-12 rounded-2xl border-black border-2 hover:border-blue-500"
-                >
-                  {val}T
-                </button>
-                
-              ))} */}
               <button
                 onClick={handleTrolleyNumber}
                 value={5}

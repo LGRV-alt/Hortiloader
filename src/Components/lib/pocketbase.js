@@ -1,9 +1,7 @@
 import pb from "./pbConnect";
-
-// client.autoCancellation(false);
 export const isUserValid = pb.authStore.isValid;
 
-// function to update the record from the edit section
+// function to update the record
 export async function updateTask(
   id,
   title,
@@ -34,7 +32,6 @@ export async function updateTask(
     extras: extras,
   };
   await pb.collection("tasks").update(id, data);
-  // emitRefetchTasks();
 }
 
 export async function login(username, password) {
@@ -161,7 +158,6 @@ export async function createTask(
     year: year,
   };
   await pb.collection("tasks").create(data);
-  // emitRefetchTasks();
 }
 
 export function getDateWeek(d) {
