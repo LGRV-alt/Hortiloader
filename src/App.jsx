@@ -7,7 +7,7 @@ import SettingsPage from "./pages/SettingsPage";
 import HoldingPage from "./pages/HoldingPage";
 import Collect from "./pages/Collect";
 import SearchPage from "./pages/SearchPage";
-import CreateCustomer from "./Components/CreateCustomer";
+
 import WeekdayPage from "./pages/Weekday";
 import TrolleyMapper from "./pages/TrolleyMapper";
 import TrolleyExportsPage from "./pages/TrolleyExportsPage";
@@ -35,6 +35,7 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import VerifyEmail from "./pages/auth/VerifyEmail";
 import ResendVerification from "./pages/auth/ResendVerification";
 import AcceptTerms from "./pages/auth/AcceptTerms";
+import CreateCustomer from "./pages/CreateCustomer";
 
 export default function App() {
   useAutoRefreshOnIdle();
