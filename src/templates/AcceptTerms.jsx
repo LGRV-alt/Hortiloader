@@ -40,7 +40,7 @@ export default function AcceptTerms() {
       });
 
       toast.success("Terms accepted. Redirecting...");
-      navigate("/"); // or wherever you want to send them
+      navigate("/");
     } catch (err) {
       toast.error("Something went wrong. Try again.");
       console.error(err);

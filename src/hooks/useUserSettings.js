@@ -76,7 +76,7 @@ export function useUserSettings() {
   return {
     settings,
     updateSettings,
-    fetchSettings, // expose it as `refetchSettings` if preferred
+    fetchSettings,
     loading,
   };
 }

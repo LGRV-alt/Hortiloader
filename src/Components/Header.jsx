@@ -195,7 +195,6 @@ export default function Header({
             onClick={() => setMenuOpen(false)}
             to="/search"
           >
-            {/* <FaSearch /> */}
             Search
           </NavLink>
           <NavLink
@@ -224,7 +223,6 @@ export default function Header({
             onClick={signout}
             className="bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
           >
-            {/* <CiLogout fontSize="1.3rem" /> This is the logo for signout */}
             Logout
           </button>
         </div>

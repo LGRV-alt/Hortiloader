@@ -2,10 +2,11 @@
 /* eslint-disable no-undef */
 
 import { useEffect, useState } from "react";
-import { deleteTask, updateTask } from "../Components/lib/pocketbase";
 import { useNavigate, useParams } from "react-router-dom";
+// -----------------Maybe add this in later--------------
 import Pictures from "../Components/Pictures";
 import FileUpload from "../Components/FileUpload";
+// ------------------------------------------------------
 import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../Components/lib/pbConnect";
@@ -17,76 +18,54 @@ export default function Edit() {
   const records = useTaskStore((state) => state.tasks);
   const optimisticDeleteTask = useTaskStore((state) => state.deleteTask);
   const optimisticUpdateTask = useTaskStore((state) => state.updateTask);
-
   const { id } = useParams();
   const navigate = useNavigate();
-  const loadingState = [
-    {
-      title: "loading",
-      day: "Monday",
-      postcode: "loading",
-      orderNumber: "0000",
-      customerType: "Wholesale",
-    },
-  ];
-  const [formError, setFormError] = useState("");
+
   const [isSaving, setIsSaving] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(loadingState);
+  const weekNumbers = Array.from({ length: 52 }, (_, i) => i + 1);
 
-  useEffect(() => {
-    const record = records.find((r) => r.id === id) || loadingState[0];
-    setSelectedRecord(record);
-    setTitle(record.title);
-    setDay(record.day);
-    setPostcode(record.postcode);
-    setOrderNumber(record.orderNumber);
-    setCustomerType(record.customerType);
-    setOther(record.other);
-    setWeekNumber(record.weekNumber);
-    setOrderInfo(record.orderInfo);
-    setStatus(record.status);
-    setYear(record.year);
-    setTrollies(record.trollies);
-    setExtras(record.extras);
-  }, [records, id]);
-  // Form Data
-  const [title, setTitle] = useState();
-  const [day, setDay] = useState();
-  const [postcode, setPostcode] = useState();
-  const [orderNumber, setOrderNumber] = useState();
-  const [customerType, setCustomerType] = useState();
-  const [other, setOther] = useState();
-  const [weekNumber, setWeekNumber] = useState();
-  const [orderInfo, setOrderInfo] = useState();
-  const [status, setStatus] = useState();
-  const [year, setYear] = useState();
-  const [trollies, setTrollies] = useState();
-  const [extras, setExtras] = useState();
+  // --------------------Form Data---------------------------
+  const [title, setTitle] = useState("");
+  const [day, setDay] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
+  const [customerType, setCustomerType] = useState("");
+  const [other, setOther] = useState("");
+  const [weekNumber, setWeekNumber] = useState("");
+  const [orderInfo, setOrderInfo] = useState("");
+  const [status, setStatus] = useState("");
+  const [year, setYear] = useState("");
+  const [trollies, setTrollies] = useState("");
+  const [extras, setExtras] = useState("");
 
-  // Delete modal
+  // --------------------Delete modal----------------------------
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [savingState, setSavingState] = useState("Save");
 
-  const weeks = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
-  ];
-  let weekNumbers = weeks.map((item) => {
-    return (
-      <option key={item} value={item}>
-        {item}
-      </option>
-    );
-  });
+  useEffect(() => {
+    const record = records.find((r) => r.id === id);
+    if (record) {
+      setTitle(record.title ?? "");
+      setDay(record.day ?? "");
+      setPostcode(record.postcode ?? "");
+      setOrderNumber(record.orderNumber ?? "");
+      setCustomerType(record.customerType ?? "");
+      setOther(record.other ?? "");
+      setWeekNumber(record.weekNumber ?? "");
+      setOrderInfo(record.orderInfo ?? "");
+      setStatus(record.status ?? "");
+      setYear(record.year ?? "");
+      setTrollies(record.trollies ?? "");
+      setExtras(record.extras ?? "");
+    }
+  }, [records, id]);
 
   const handleSubmit = async () => {
     if (!title) {
       toast.error("Task needs a title");
       return;
     }
-
     setIsSaving(true);
     setSavingState("Saving...");
     try {
@@ -116,7 +95,26 @@ export default function Edit() {
     }
   };
 
-  if (records.length < 1) {
+  const handleDelete = async () => {
+    if (deletePassword.toLowerCase() !== userName) {
+      toast.error("Incorrect username.");
+      return;
+    }
+
+    try {
+      await optimisticDeleteTask(id);
+      toast.success("Task deleted.");
+      navigate(-1);
+    } catch (err) {
+      toast.error("Failed to delete task.");
+      console.error(err);
+    } finally {
+      setShowDeleteModal(false);
+      setDeletePassword("");
+    }
+  };
+
+  if (!records || records.length === 0) {
     {
       return (
         <div className="relative h-full w-full overflow-hidden">
@@ -145,7 +143,7 @@ export default function Edit() {
                     name="day"
                     id="day"
                     onChange={(e) => setDay(e.target.value)}
-                    value={day ? day : []}
+                    value={day}
                   >
                     <option disabled>Day Required</option>
                     <option value="monday">Monday</option>
@@ -164,7 +162,11 @@ export default function Edit() {
                     name=""
                     id=""
                   >
-                    {weekNumbers}
+                    {weekNumbers.map((w) => (
+                      <option key={w} value={w}>
+                        {w}
+                      </option>
+                    ))}
                   </select>
                   <select
                     value={year}
@@ -209,7 +211,7 @@ export default function Edit() {
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
-              value={customerType ? customerType : []}
+              value={customerType}
             >
               <option value=" " disabled>
                 Customer Type
@@ -224,7 +226,7 @@ export default function Edit() {
               className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
               name="day"
               id="day"
-              value={other ? other : []}
+              value={other}
               onChange={(e) => setOther(e.target.value)}
             >
               <option disabled>Type</option>
@@ -297,7 +299,6 @@ export default function Edit() {
           </div>
         </div>
 
-        {/* <div className="grid grid-cols-1 grid-rows-[0.5fr_2fr] md:grid-cols-1 "></div> */}
         {showDeleteModal && (
           <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
@@ -322,22 +323,7 @@ export default function Edit() {
                   Cancel
                 </button>
                 <button
-                  onClick={async () => {
-                    if (deletePassword.toLowerCase() === userName) {
-                      try {
-                        await optimisticDeleteTask(id);
-                        toast.success("Task deleted.");
-                        navigate(-1);
-                      } catch (err) {
-                        toast.error("Failed to delete task.");
-                        console.error(err);
-                      }
-                    } else {
-                      toast.error("Incorrect username.");
-                    }
-                    setShowDeleteModal(false);
-                    setDeletePassword("");
-                  }}
+                  onClick={() => handleDelete()}
                   className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
                 >
                   Confirm Delete
