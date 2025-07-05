@@ -4,8 +4,6 @@ import Body from "./Components/Body";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Login from "./Login";
-import { isUserValid } from "./Components/lib/pocketbase";
-
 import Edit from "./templates/Edit";
 import SettingsPage from "./templates/SettingsPage";
 import HoldingPage from "./templates/HoldingPage";
@@ -14,15 +12,11 @@ import SearchPage from "./templates/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
 import WeekdayPage from "./templates/Weekday";
 import TrolleyMapper from "./templates/TrolleyMapper";
-import useTasks from "./hooks/useTasks";
-
 import useAuth from "./hooks/useAuth";
 import TrolleyExportsPage from "./templates/TrolleyExportsPage";
 import ViewExportPage from "./templates/ViewExportPage";
-import { setTodayAsLoginDate, shouldClearAuthDaily } from "./hooks/authHelpers";
-import pb from "./Components/lib/pbConnect";
 import { useUserSettings } from "./hooks/useUserSettings";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import ForgotPassword from "./templates/ForgotPassword";
 import ResetPassword from "./templates/ResetPassword";
 import AuthRedirect from "./Components/AuthRedirect";
@@ -36,6 +30,7 @@ import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
 import { useTaskStore } from "./hooks/useTaskStore";
+import { getCurrentWeek } from "./Components/lib/dateUtils";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -43,17 +38,13 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
-  const {
-    settings,
-    updateSettings,
-    loading: settingsLoading,
-  } = useUserSettings();
+  const { settings } = useUserSettings();
 
   const isAuthenticated = useAuth();
 
   // const { tasks: rec, refetch } = useTasks();
 
-  const { tasks, loading, startPollingWithImmediateFetch, stopPolling } =
+  const { loading, startPollingWithImmediateFetch, stopPolling } =
     useTaskStore();
 
   // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
@@ -64,21 +55,6 @@ export default function App() {
       stopPolling(); //user logged out, stop polling
     }
   }, [isAuthenticated]);
-
-  function getCurrentWeek(d) {
-    // Copy date so don't modify original
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    // Set to nearest Thursday: current date + 4 - current day number
-    // Make Sunday's day number 7
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
-    // Get first day of year
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-    // Calculate full weeks to nearest Thursday
-    var weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-    // Return array of year and week number
-    return weekNo;
-    // return [d.getUTCFullYear(), weekNo];
-  }
 
   return (
     <>
@@ -91,7 +67,7 @@ export default function App() {
       {isAuthenticated ? (
         <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           {loading && (
-            <div className="absolute inset-0 bg-white/60 z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
+            <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
               <h2 className="text-4xl font-bold mb-8">Fetching Orders...</h2>
               <div className="relative w-full h-full overflow-hidden">
                 <div className="absolute left-0  -translate-y-1/2">
