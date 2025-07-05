@@ -57,7 +57,7 @@ export default function TrolleyExportsPage() {
   return (
     <div className="mx-5 mt-5 relative">
       {exports.length === 0 ? (
-        <p className="text-gray-500">No runs found.</p>
+        <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
         exports.map((record) => (
           <div

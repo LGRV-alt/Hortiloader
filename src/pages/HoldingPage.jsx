@@ -10,6 +10,9 @@ export default function HoldingPage() {
     <div>
       <div className="hidden md:block"></div>
       <div className="flex justify-start flex-col mx-5 mt-5 ">
+        {holding.length === 0 && (
+          <p className="text-center text-gray-500">No results found.</p>
+        )}
         {holding.map((record) => (
           <div
             className="flex  items-center border-b-2 border-slate-300 mb-5 "
