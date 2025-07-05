@@ -1,61 +1,21 @@
-// /* eslint-disable react/prop-types */
-// import { useState } from "react";
-// import { createTask, getDateWeek } from "./lib/pocketbase";
-// import { useNavigate } from "react-router-dom";
-
-// export default function CreateCustomer() {
-//   const currentWeek = getDateWeek(new Date());
-//   const navigate = useNavigate();
-//   const status = null;
-
-//   const [title, setTitle] = useState(null);
-//   const [day, setDay] = useState("monday");
-//   const [postcode, setPostcode] = useState(null);
-//   const [orderNumber, setOrderNumber] = useState(null);
-//   const [customerType, setCustomerType] = useState("wholesale");
-//   const [other, setOther] = useState("none");
-//   const [weekNumber, setWeekNumber] = useState(currentWeek);
-//   const [orderInfo, setOrderInfo] = useState("");
-//   const [year, setYear] = useState(2025);
-
-//   const handleSubmit = () => {
-//     if (!title) {
-//       window.alert("Please enter a title");
-//       return;
-//     }
-
-//     createTask(
-//       title,
-//       day,
-//       postcode,
-//       orderNumber,
-//       customerType,
-//       other,
-//       weekNumber,
-//       orderInfo,
-//       status,
-//       year
-//     );
-
-//     navigate(-1);
-//   };
-
 import { useState } from "react";
 import { getDateWeek } from "./lib/pocketbase";
 import { useNavigate } from "react-router-dom";
-import { useTaskStore } from "../hooks/useTaskStore"; // ✅ Import Zustand store
+import { useTaskStore } from "../hooks/useTaskStore";
 import pb from "./lib/pbConnect";
+import toast from "react-hot-toast";
 
 export default function CreateCustomer() {
   const currentWeek = getDateWeek(new Date());
   const navigate = useNavigate();
+  const createTask = useTaskStore((state) => state.createTask);
+  const [saving, setSaving] = useState(false);
 
-  const createTask = useTaskStore((state) => state.createTask); // ✅ Zustand create
-
-  const [title, setTitle] = useState(null);
+  // -----------Form Data-----------------------
+  const [title, setTitle] = useState("");
   const [day, setDay] = useState("monday");
-  const [postcode, setPostcode] = useState(null);
-  const [orderNumber, setOrderNumber] = useState(null);
+  const [postcode, setPostcode] = useState("");
+  const [orderNumber, setOrderNumber] = useState("");
   const [customerType, setCustomerType] = useState("wholesale");
   const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
@@ -64,11 +24,11 @@ export default function CreateCustomer() {
 
   const handleSubmit = async () => {
     if (!title) {
-      window.alert("Please enter a title");
+      toast.error("Order needs a customer name");
       return;
     }
-
     try {
+      setSaving(true);
       await createTask({
         title,
         day,
@@ -80,12 +40,14 @@ export default function CreateCustomer() {
         orderInfo,
         status: null,
         year,
-        user: pb.authStore.model.id, // ✅ Add correct user ID
+        user: pb.authStore.model.id,
       });
+      setSaving(false);
+      toast.success("Order Created");
       navigate(-1);
     } catch (err) {
-      console.error("Failed to create task:", err);
-      window.alert("Failed to create task. Please try again.");
+      toast.error("Failed to create task:", err);
+      toast.error("Failed to create task. Please try again.");
     }
   };
   return (
@@ -199,9 +161,10 @@ export default function CreateCustomer() {
         <button
           className="bg-secondary-colour md:w-auto w-2/3 text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
           onClick={handleSubmit}
+          disabled={saving}
         >
-          <div className="">
-            <p className="">Save</p>
+          <div>
+            <p> {saving ? "Saving..." : "Save"}</p>
           </div>
         </button>
       </div>
