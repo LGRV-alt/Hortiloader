@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import TrolleyMapper from "./TrolleyMapper";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 
 export default function ViewExportPage() {
   const { id } = useParams();

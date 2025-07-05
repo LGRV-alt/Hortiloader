@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import DayColumn from "../Components/DayColumn";
-import { daysOfWeek } from "../Components/lib/pocketbase";
+import { daysOfWeek } from "../api/pocketbase";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 export default function Collect({ chosenWeek, chosenYear }) {

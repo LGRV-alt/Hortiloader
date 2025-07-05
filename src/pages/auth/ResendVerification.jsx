@@ -1,8 +1,8 @@
 // templates/ResendVerification.jsx
 import { useState } from "react";
-import pb from "../Components/lib/pbConnect";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import pb from "../../api/pbConnect";
 
 export default function ResendVerification() {
   const [email, setEmail] = useState("");

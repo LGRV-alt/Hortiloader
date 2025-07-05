@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 
 export default function useAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(pb.authStore.isValid);

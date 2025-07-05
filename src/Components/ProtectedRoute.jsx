@@ -1,6 +1,6 @@
 // src/Components/ProtectedRoute.jsx
 import { Navigate } from "react-router-dom";
-import pb from "./lib/pbConnect";
+import pb from "../api/pbConnect";
 
 const REQUIRED_TERMS_VERSION = "v1.0"; // match your latest terms version
 

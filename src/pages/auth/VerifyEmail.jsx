@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import pb from "../Components/lib/pbConnect";
+import pb from "../../api/pbConnect";
 
 export default function VerifyEmail() {
   const { token } = useParams();

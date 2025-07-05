@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { login, signup } from "./Components/lib/pocketbase";
-import LogoTree from "./Components/LogoTree";
+import { login, signup } from "../api/pocketbase";
+import LogoTree from "../Components/svg/LogoTree";
 import toast from "react-hot-toast";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 

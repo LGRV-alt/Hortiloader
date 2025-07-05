@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import pb from "../Components/lib/pbConnect";
+import pb from "../../api/pbConnect";
 
 export default function AcceptTerms() {
   const [agreed, setAgreed] = useState(false);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import pb from "../Components/lib/pbConnect";
+import pb from "../../api/pbConnect";
 
 export default function ResetPassword() {
   const { token } = useParams();

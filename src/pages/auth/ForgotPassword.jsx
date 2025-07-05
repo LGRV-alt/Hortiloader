@@ -1,7 +1,7 @@
 import { useState } from "react";
-import pb from "../Components/lib/pbConnect";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import pb from "../../api/pbConnect";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");

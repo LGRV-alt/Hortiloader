@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { FaBars, FaTimes } from "react-icons/fa";
-import useAuth from "../hooks/useAuth";
-import LogoTree from "./LogoTree";
-import { getDateWeek, signout } from "./lib/pocketbase";
+import useAuth from "../../hooks/useAuth";
+import LogoTree from "../svg/LogoTree";
+import { getDateWeek, signout } from "../../api/pocketbase";
 
 export default function Header({
   setChosenWeek,

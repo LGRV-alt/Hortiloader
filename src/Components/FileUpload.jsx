@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import pb from "./lib/pbConnect";
+import pb from "../api/pbConnect";
 
 const FileUpload = ({ taskID }) => {
   const [file, setFile] = useState(null);

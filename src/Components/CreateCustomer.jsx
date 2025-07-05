@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { getDateWeek } from "./lib/pocketbase";
+import { getDateWeek } from "../api/pocketbase";
 import { useNavigate } from "react-router-dom";
 import { useTaskStore } from "../hooks/useTaskStore";
-import pb from "./lib/pbConnect";
+import pb from "../api/pbConnect";
 import toast from "react-hot-toast";
 
 export default function CreateCustomer() {

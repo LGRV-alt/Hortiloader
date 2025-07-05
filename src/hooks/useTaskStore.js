@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 
 export const useTaskStore = create((set, get) => ({
   tasks: [],

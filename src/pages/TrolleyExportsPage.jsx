@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
-import PocketBase from "pocketbase";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 import { useNavigate } from "react-router-dom";
 
 export default function TrolleyExportsPage() {
@@ -11,8 +10,6 @@ export default function TrolleyExportsPage() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-
-  const CORRECT_PASSWORD = "stan666"; // 🔐 Change this or get from secure source
 
   const userName = pb.authStore.model.username.toLowerCase();
 

@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useUserSettings } from "../hooks/useUserSettings";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
-export default function SettingsPage() {
-  const { settings, updateSettings, fetchSettings, loading } =
-    useUserSettings(); // include fetchSettings
+export default function SettingsPage({ onSettingsChange }) {
+  const { settings, updateSettings, fetchSettings } = useUserSettings(); // include fetchSettings
   const [form, setForm] = useState({});
+  const [save, setSave] = useState(false);
 
   const currentUser = pb.authStore.model;
 
@@ -25,14 +26,13 @@ export default function SettingsPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await updateSettings(form); // update backend + localStorage
-    await fetchSettings(); // now reload the latest data into state (triggers re-render)
-    window.location.reload(); // ← force full page refresh
+    setSave(true);
+    await updateSettings(form);
+    onSettingsChange(); // Notify App
+    await fetchSettings();
+    toast.success("Settings saved!");
+    setSave(false);
   };
-
-  // if (loading) return <div className="p-4">Loading settings...</div>;
-  // if (!settings) return <div className="p-4">No settings found.</div>;
 
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-2 p-4 bg-surface">
@@ -102,7 +102,7 @@ export default function SettingsPage() {
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 rounded"
             >
-              Save Settings
+              {!save ? "Save Settings" : "Saving..."}
             </button>
           </form>
         </div>

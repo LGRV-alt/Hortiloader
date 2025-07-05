@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import DayColumn from "./DayColumn";
-import { daysOfWeek } from "./lib/pocketbase";
+import DayColumn from "../Components/DayColumn";
+import { daysOfWeek } from "../api/pocketbase";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 export default function Body({

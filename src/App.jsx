@@ -1,24 +1,22 @@
 // ---------------Pages---------------------
-import Header from "./Components/Header";
-import Body from "./Components/Body";
-import Login from "./Login";
-import Edit from "./templates/Edit";
-import SettingsPage from "./templates/SettingsPage";
-import HoldingPage from "./templates/HoldingPage";
-import Collect from "./templates/Collect";
-import SearchPage from "./templates/SearchPage";
+import Header from "./Components/layout/Header";
+import Body from "./pages/Body";
+import Login from "./pages/Login";
+import Edit from "./pages/Edit";
+import SettingsPage from "./pages/SettingsPage";
+import HoldingPage from "./pages/HoldingPage";
+import Collect from "./pages/Collect";
+import SearchPage from "./pages/SearchPage";
 import CreateCustomer from "./Components/CreateCustomer";
-import WeekdayPage from "./templates/Weekday";
-import TrolleyMapper from "./templates/TrolleyMapper";
-import TrolleyExportsPage from "./templates/TrolleyExportsPage";
-import ViewExportPage from "./templates/ViewExportPage";
-import ForgotPassword from "./templates/ForgotPassword";
-import ResetPassword from "./templates/ResetPassword";
-import VerifyEmail from "./templates/VerifyEmail";
-import Terms from "./templates/Terms";
-import Privacy from "./templates/Privacy";
-import ResendVerification from "./templates/ResendVerification";
-import AcceptTerms from "./templates/AcceptTerms";
+import WeekdayPage from "./pages/Weekday";
+import TrolleyMapper from "./pages/TrolleyMapper";
+import TrolleyExportsPage from "./pages/TrolleyExportsPage";
+
+import ResetPassword from "./pages/auth/ResetPassword";
+
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+
 import AuthRedirect from "./Components/AuthRedirect";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
@@ -31,7 +29,12 @@ import { useUserSettings } from "./hooks/useUserSettings";
 import { Toaster } from "react-hot-toast";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import { useTaskStore } from "./hooks/useTaskStore";
-import { getCurrentWeek } from "./Components/lib/dateUtils";
+import { getCurrentWeek } from "./utilis/dateUtils";
+import ViewExportPage from "./pages/ViewExportPage";
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import VerifyEmail from "./pages/auth/VerifyEmail";
+import ResendVerification from "./pages/auth/ResendVerification";
+import AcceptTerms from "./pages/auth/AcceptTerms";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -39,7 +42,8 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
-  const { settings } = useUserSettings();
+  const [settingsChanged, setSettingsChanged] = useState(false);
+  const { settings, fetchSettings } = useUserSettings();
   const isAuthenticated = useAuth();
   const { loading, startPollingWithImmediateFetch, stopPolling } =
     useTaskStore();
@@ -52,6 +56,12 @@ export default function App() {
       stopPolling(); //user logged out, stop polling
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (settingsChanged) {
+      fetchSettings().then(() => setSettingsChanged(false));
+    }
+  }, [settingsChanged]);
 
   return (
     <>
@@ -120,7 +130,14 @@ export default function App() {
                 }
               />
 
-              <Route path="/settings" element={<SettingsPage />} />
+              <Route
+                path="/settings"
+                element={
+                  <SettingsPage
+                    onSettingsChange={() => setSettingsChanged(true)}
+                  />
+                }
+              />
 
               <Route
                 path="/runs/view/:id"

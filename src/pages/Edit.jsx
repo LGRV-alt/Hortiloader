@@ -9,7 +9,7 @@ import FileUpload from "../Components/FileUpload";
 // ------------------------------------------------------
 import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 const userName = pb.authStore.model?.username?.toLowerCase() || "";

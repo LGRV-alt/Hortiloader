@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import pb from "./lib/pbConnect";
+import pb from "../api/pbConnect";
 
 Modal.setAppElement("#root");
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import pb from "../Components/lib/pbConnect";
+import pb from "../api/pbConnect";
 
 const SETTINGS_KEY = "user_settings_cache";
 

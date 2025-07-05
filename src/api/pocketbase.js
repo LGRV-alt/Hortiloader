@@ -1,4 +1,5 @@
 import pb from "./pbConnect";
+
 export const isUserValid = pb.authStore.isValid;
 
 // function to update the record
