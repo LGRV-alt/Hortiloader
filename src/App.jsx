@@ -56,10 +56,14 @@ export default function App() {
   const { tasks, loading, startPollingWithImmediateFetch, stopPolling } =
     useTaskStore();
 
+  // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
   useEffect(() => {
-    startPollingWithImmediateFetch();
-    return () => stopPolling();
-  }, []);
+    if (isAuthenticated) {
+      startPollingWithImmediateFetch();
+    } else {
+      stopPolling(); //user logged out, stop polling
+    }
+  }, [isAuthenticated]);
 
   function getCurrentWeek(d) {
     // Copy date so don't modify original
