@@ -5,6 +5,7 @@ export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
   pollingIntervalId: null,
+  lastFetched: null,
 
   fetchTasks: async () => {
     const isInitialLoad = get().tasks.length === 0;
@@ -14,7 +15,7 @@ export const useTaskStore = create((set, get) => ({
       const tasks = await pb
         .collection("tasks")
         .getFullList({ sort: "+created" });
-      set({ tasks });
+      set({ tasks, lastFetched: new Date().toISOString() });
       if (isInitialLoad) {
         console.log("[PocketBase] Initial load complete.");
       }

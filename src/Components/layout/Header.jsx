@@ -5,6 +5,9 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import LogoTree from "../svg/LogoTree";
 import { getDateWeek, signout } from "../../api/pocketbase";
+import { useTaskStore } from "../../hooks/useTaskStore";
+import { IoIosRefresh } from "react-icons/io";
+import toast from "react-hot-toast";
 
 export default function Header({
   setChosenWeek,
@@ -16,6 +19,21 @@ export default function Header({
   const [week, setWeek] = useState(getDateWeek(new Date()));
   const [menuOpen, setMenuOpen] = useState(false);
   const isAuthenticated = useAuth();
+  const { lastFetched, fetchTasks } = useTaskStore();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleManualRefresh = async () => {
+    setRefreshing(true);
+    try {
+      await fetchTasks();
+      toast.success("Tasks Updated");
+    } catch (err) {
+      console.error("Manual refresh failed:", err);
+      toast.error("Manual refresh failed");
+    } finally {
+      setRefreshing(false);
+    }
+  };
 
   const handleWeekChange = (num) => {
     const clamped = Math.min(Math.max(num, 1), 52);
@@ -68,31 +86,49 @@ export default function Header({
         ""
       ) : (
         <div className="absolute left-1/2 transform -translate-x-1/2">
-          <div className="flex items-center gap-1">
-            <button
-              className="text-2xl hover:text-blue-500"
-              onClick={() => handleWeekChange(week - 1)}
-            >
-              <GrFormPrevious />
-            </button>
-            <span>Week</span>
-            <select
-              value={week}
-              onChange={(e) => handleWeekChange(Number(e.target.value))}
-              className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
-            >
-              {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
-            <button
-              className="text-2xl hover:text-blue-500"
-              onClick={() => handleWeekChange(week + 1)}
-            >
-              <GrFormNext />
-            </button>
+          <div className="flex flex-col justify-center items-center ">
+            <div className="flex items-center gap-2 text-xs md:text-sm">
+              <span>
+                Last Fetched:{" "}
+                {lastFetched
+                  ? new Date(lastFetched).toLocaleTimeString()
+                  : "Never"}
+              </span>
+              <button
+                onClick={handleManualRefresh}
+                disabled={refreshing}
+                className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 disabled:opacity-50"
+              >
+                {/* {refreshing ? "Refreshing..." : "Refresh"} */}
+                <IoIosRefresh />
+              </button>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                className="text-2xl hover:text-blue-500"
+                onClick={() => handleWeekChange(week - 1)}
+              >
+                <GrFormPrevious />
+              </button>
+              <span>Week</span>
+              <select
+                value={week}
+                onChange={(e) => handleWeekChange(Number(e.target.value))}
+                className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
+              >
+                {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => (
+                  <option key={w} value={w}>
+                    {w}
+                  </option>
+                ))}
+              </select>
+              <button
+                className="text-2xl hover:text-blue-500"
+                onClick={() => handleWeekChange(week + 1)}
+              >
+                <GrFormNext />
+              </button>
+            </div>
           </div>
         </div>
       )}
