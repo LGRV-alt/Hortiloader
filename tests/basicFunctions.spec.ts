@@ -35,7 +35,7 @@ test.describe("Testing all the pages", () => {
     await expect(title).toBeVisible();
     // Fill out login section
     await usernameInput.fill("lewisgirvan@hotmail.co.uk");
-    await passwordInput.fill("Password1");
+    await passwordInput.fill("Password2");
     // Hit Sign in button
     const signInButton = page.getByRole("button", { name: "Sign in" });
     await signInButton.click({ force: true });
