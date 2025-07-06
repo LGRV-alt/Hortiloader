@@ -10,6 +10,17 @@ export default function WeekdayPage() {
   const exportRef = useRef();
   const [isExporting, setIsExporting] = useState(false);
   const records = useTaskStore((state) => state.tasks);
+  const [selectedTypes, setSelectedTypes] = useState([
+    "wholesale",
+    "retail",
+    "missed",
+    "other",
+  ]);
+  const handleTypeToggle = (type) => {
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  };
 
   const { year, day, week, number } = useParams();
 
@@ -19,7 +30,8 @@ export default function WeekdayPage() {
       record.year == year &&
       record.other === "none" &&
       record.day[0] === day.toLowerCase() &&
-      ["wholesale", "retail"].includes(record.customerType)
+      // ["wholesale", "retail", "missed", "other"].includes(record.customerType)
+      selectedTypes.includes(record.customerType)
   );
 
   console.log(arr);
@@ -68,8 +80,22 @@ export default function WeekdayPage() {
         className="m-0 p-0 w-full h-full bg-white"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="w-full md:h-36 h-16 flex justify-center items-center bg-slate-300 text-center  border-b-2 border-black">
+        <div className="w-full md:h-36 h-16 flex justify-center flex-col items-center bg-slate-300 text-center  border-b-2 border-black">
           <h3 className="md:text-3xl text-xl font-bold">{`${day}-${number} ${year}`}</h3>
+          {!isExporting && (
+            <div className="flex flex-wrap gap-4 justify-center mt-4">
+              {["wholesale", "retail", "missed", "other"].map((type) => (
+                <label key={type} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedTypes.includes(type)}
+                    onChange={() => handleTypeToggle(type)}
+                  />
+                  <span className="capitalize">{type}</span>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col justify-center ">

@@ -97,7 +97,8 @@ export default function Header({
               <button
                 onClick={handleManualRefresh}
                 disabled={refreshing}
-                className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 disabled:opacity-50"
+                className="hover:text-blue-500 text-base"
+                // className="bg-secondary-colour text-white px-2 py-1 rounded hover:bg-orange-400 disabled:opacity-50"
               >
                 <IoIosRefresh />
               </button>
