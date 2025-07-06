@@ -51,29 +51,29 @@ export default function CreateCustomer() {
     }
   };
   return (
-    <div className="grid grid-cols-2 h-full bg-surface p-11 gap-6 ">
-      <div className="w-full md:justify-center  flex gap-2 items-center bg-white">
-        <div className="flex-col">
-          <h2 className="text-lg md:text-base md:pt-0 pt-4 font-medium">
-            Create Order
-          </h2>
-          <div className=" flex-col w-2/3 md:w-auto  flex gap-2">
+    <div className="h-full bg-surface md:p-11 p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 h-full md:p-11 p-4 rounded-3xl bg-white border-black border-2">
+        <div className="flex justify-center md:justify-start">
+          <div className="flex-col w-2/3 flex gap-2">
+            <h2 className="text-xl md:text-start text-center md:text-2xl font-medium text-secondary-colour">
+              Create Order
+            </h2>
             <input
-              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
               type="text"
               placeholder="Customer Name"
               onChange={(e) => setTitle(e.target.value)}
               required
             />
             <input
-              className=" md:w-24 w-full bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className=" w-auto  bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               type="text"
               placeholder="Postcode"
               onChange={(e) => setPostcode(e.target.value)}
               required
             />
             <input
-              className=" w-24 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className=" w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               type="text"
               placeholder="Order No."
               onChange={(e) => setOrderNumber(e.target.value)}
@@ -81,7 +81,7 @@ export default function CreateCustomer() {
             />
 
             <select
-              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               name="customerType"
               id="customerType"
               onChange={(e) => setCustomerType(e.target.value)}
@@ -96,7 +96,21 @@ export default function CreateCustomer() {
             </select>
 
             <select
-              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour "
+              name="day"
+              id="boardPage"
+              onChange={(e) => setOther(e.target.value)}
+            >
+              <option value="" disabled>
+                Type
+              </option>
+              <option value="none">Whiteboard</option>
+              <option value="holding">Holding</option>
+              <option value="collect">Collect</option>
+            </select>
+
+            <select
+              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               name="day"
               id="day"
               onChange={(e) => setDay(e.target.value)}
@@ -113,21 +127,8 @@ export default function CreateCustomer() {
               <option value="sunday">Sunday</option>
             </select>
 
-            <select
-              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour "
-              name="day"
-              id="boardPage"
-              onChange={(e) => setOther(e.target.value)}
-            >
-              <option value="" disabled>
-                Type
-              </option>
-              <option value="none">Whiteboard</option>
-              <option value="holding">Holding</option>
-              <option value="collect">Collect</option>
-            </select>
             <input
-              className=" w-16 bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              className=" w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 text-white"
               type="number"
               min={currentWeek}
               max={52}
@@ -136,7 +137,7 @@ export default function CreateCustomer() {
               required
             />
             <select
-              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white focus-within:text-black"
+              className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               name="day"
               id="yearSelector"
               onChange={(e) => setYear(e.target.value)}
@@ -148,11 +149,13 @@ export default function CreateCustomer() {
               <option value="0">2024</option>
             </select>
           </div>
-          <h3 className="md:hidden pt-2 text-lg font-medium text-white ">
+        </div>
+        <div className="h-full w-full p-2 flex flex-col items-center bg-white">
+          <h3 className="hidden md:block pb-2 text-lg font-medium">
             Additional Info
           </h3>
           <textarea
-            className="md:hidden p-2 w-3/4 h-full text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 text-white"
+            className="rounded-3xl p-2 w-full h-1/2 text-center border-black bg-transparent text-lg border-2 focus:border-secondary-colour placeholder:text-gray-400 "
             type="text"
             placeholder="Issues/Load information"
             onChange={(e) => setOrderInfo(e.target.value)}
@@ -160,7 +163,7 @@ export default function CreateCustomer() {
             required
           />
           <button
-            className="bg-secondary-colour md:w-auto w-2/3 text-white py-2 px-4 rounded-md m-1 transition-all hover:outline hover:text-secondary-colour hover:bg-regal-blue "
+            className="bg-secondary-colour w-1/2 text-white py-2 px-4 rounded-md mt-4 transition-all border-black border-2 hover:bg-orange-400"
             onClick={handleSubmit}
             disabled={saving}
           >
@@ -169,21 +172,6 @@ export default function CreateCustomer() {
             </div>
           </button>
         </div>
-      </div>
-
-      {/* --------------Desktop Info section ----------------- */}
-      <div className="h-full w-full p-2 flex flex-col items-center bg-white">
-        <h3 className="hidden md:block pb-2 text-lg font-medium">
-          Additional Info
-        </h3>
-        <textarea
-          className="hidden md:flex p-2 w-full h-1/2 text-center outline bg-transparent  text-lg border-2 focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-          type="text"
-          placeholder="Issues/Load information"
-          onChange={(e) => setOrderInfo(e.target.value)}
-          value={orderInfo}
-          required
-        />
       </div>
     </div>
   );
