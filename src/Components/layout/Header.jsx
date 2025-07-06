@@ -26,7 +26,7 @@ export default function Header({
     setRefreshing(true);
     try {
       await fetchTasks();
-      toast.success("Tasks Updated");
+      toast.success("Board Synced");
     } catch (err) {
       console.error("Manual refresh failed:", err);
       toast.error("Manual refresh failed");
@@ -89,7 +89,7 @@ export default function Header({
           <div className="flex flex-col justify-center items-center ">
             <div className="flex items-center gap-2 text-xs md:text-sm">
               <span>
-                Last Fetched:{" "}
+                Sync -{" "}
                 {lastFetched
                   ? new Date(lastFetched).toLocaleTimeString()
                   : "Never"}
@@ -99,7 +99,6 @@ export default function Header({
                 disabled={refreshing}
                 className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 disabled:opacity-50"
               >
-                {/* {refreshing ? "Refreshing..." : "Refresh"} */}
                 <IoIosRefresh />
               </button>
             </div>
