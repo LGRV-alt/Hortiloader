@@ -80,7 +80,7 @@ export default function WeekdayPage() {
         className="m-0 p-0 w-full h-full bg-white"
         style={{ margin: 0, padding: 0 }}
       >
-        <div className="w-full md:h-36 h-16 flex justify-center flex-col items-center bg-slate-300 text-center  border-b-2 border-black">
+        <div className="w-full h-36 flex justify-center flex-col items-center bg-slate-300 text-center  border-b-2 border-black">
           <h3 className="md:text-3xl text-xl font-bold">{`${day}-${number} ${year}`}</h3>
           {!isExporting && (
             <div className="w-full flex flex-wrap gap-4 justify-center mt-4">
@@ -94,16 +94,16 @@ export default function WeekdayPage() {
                   <span className="capitalize">{type}</span>
                 </label>
               ))}
-              <div className=" w-full flex justify-center">
+              <div className=" w-full text-sm md:text-base flex justify-center">
                 <button
-                  className="w-1/6 mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
+                  className="w-auto mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
                   onClick={() => setExtras(!extras)}
                 >
                   Show Extras
                 </button>
                 <button
                   onClick={exportToPDF}
-                  className="w-1/6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+                  className="w-1/4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
                 >
                   Print
                 </button>
