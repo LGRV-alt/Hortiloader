@@ -130,146 +130,143 @@ export default function Edit() {
   } else {
     return (
       <div className="p-1 bg-surface h-full md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
-        <div className="bg-white border-black  border-2 grid md:grid-cols-2 md:h-4/5 p-4 md:p-8 rounded-2xl ">
-          <div className=" flex flex-col gap-2 w-full md:px-10">
-            <div className=" flex justify-between pt-2">
-              <div className="flex w-full items-center justify-between gap-2 ">
-                <h2 className="text-xl md:text-2xl font-medium text-secondary">
-                  Edit Order -{" "}
-                </h2>{" "}
-                <div className="flex font-semibold gap-1 border-b-2 border-black">
-                  <select
-                    className="text-center w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-                    name="day"
-                    id="day"
-                    onChange={(e) => setDay(e.target.value)}
-                    value={day}
-                  >
-                    <option disabled>Day Required</option>
-                    <option value="monday">Monday</option>
-                    <option value="tuesday">Tuesday</option>
-                    <option value="wednesday">Wednesday</option>
-                    <option value="thursday">Thursday</option>
-                    <option value="friday">Friday</option>
-                    <option value="saturday">Saturday</option>
-                    <option value="sunday">Sunday</option>
-                  </select>
-                  <p>Week</p>
-                  <select
-                    value={weekNumber}
-                    className="cursor-pointer appearance-none w-auto bg-transparent focus:text-black focus:bg-white "
-                    onChange={(e) => setWeekNumber(e.target.value)}
-                    name=""
-                    id=""
-                  >
-                    {weekNumbers.map((w) => (
-                      <option key={w} value={w}>
-                        {w}
-                      </option>
-                    ))}
-                  </select>
-                  <select
-                    value={year}
-                    className="pl-2 pr-5 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
-                    onChange={(e) => setYear(e.target.value)}
-                    name=""
-                    id=""
-                  >
-                    <option value="0">2024</option>
-                    <option value="2025">2025</option>
-                  </select>
-                </div>
+        <div className="bg-white border-black  border-2 grid md:grid-cols-2 rounded-2xl p-8">
+          <div className=" flex flex-col gap-2 w-full ">
+            <div className="flex w-full items-center justify-between gap-2 ">
+              <h2 className="text-xl md:text-2xl font-medium text-secondary">
+                Edit Order
+              </h2>
+              <div className="flex font-semibold gap-1 border-b-2 border-black">
+                <select
+                  className="text-center w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                  name="day"
+                  id="day"
+                  onChange={(e) => setDay(e.target.value)}
+                  value={day}
+                >
+                  <option disabled>Day Required</option>
+                  <option value="monday">Monday</option>
+                  <option value="tuesday">Tuesday</option>
+                  <option value="wednesday">Wednesday</option>
+                  <option value="thursday">Thursday</option>
+                  <option value="friday">Friday</option>
+                  <option value="saturday">Saturday</option>
+                  <option value="sunday">Sunday</option>
+                </select>
+                <p>Week</p>
+                <select
+                  value={weekNumber}
+                  className="cursor-pointer appearance-none w-auto bg-transparent focus:text-black focus:bg-white "
+                  onChange={(e) => setWeekNumber(e.target.value)}
+                  name=""
+                  id=""
+                >
+                  {weekNumbers.map((w) => (
+                    <option key={w} value={w}>
+                      {w}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  value={year}
+                  className="pl-2 pr-5 appearance-none cursor-pointer w-auto bg-transparent focus:text-black focus:bg-white "
+                  onChange={(e) => setYear(e.target.value)}
+                  name=""
+                  id=""
+                >
+                  <option value="0">2024</option>
+                  <option value="2025">2025</option>
+                </select>
               </div>
             </div>
-            <input
-              className="bg-transparent w-2/3 md:w-1/3  text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
-              type="text"
-              placeholder="Customer Name"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-            />
-            <input
-              className="bg-transparent w-2/3 md:w-1/3 text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-              type="text"
-              placeholder="Postcode"
-              onChange={(e) => setPostcode(e.target.value)}
-              value={postcode}
-              required
-            />
-            <input
-              className="w-2/3 md:w-1/3 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
-              type="text"
-              placeholder="Order No."
-              onChange={(e) => setOrderNumber(e.target.value)}
-              value={orderNumber}
-              required
-            />
+            <div className="flex flex-col w-1/2 gap-2">
+              <input
+                className="pl-1 bg-transparent  text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
+                type="text"
+                placeholder="Customer Name"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+              />
+              <input
+                className="pl-1 bg-transparent  text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                type="text"
+                placeholder="Postcode"
+                onChange={(e) => setPostcode(e.target.value)}
+                value={postcode}
+                required
+              />
+              <input
+                className="pl-1 bg-transparent text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
+                type="text"
+                placeholder="Order No."
+                onChange={(e) => setOrderNumber(e.target.value)}
+                value={orderNumber}
+                required
+              />
 
-            <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
-              name="customerType"
-              id="customerType"
-              onChange={(e) => setCustomerType(e.target.value)}
-              value={customerType}
-            >
-              <option value=" " disabled>
-                Customer Type
-              </option>
-              <option value="wholesale">Wholesale</option>
-              <option value="retail">Retail</option>
-              <option value="missed">Missed</option>
-              <option value="other">Other</option>
-            </select>
+              <select
+                className="cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 focus-within:text-black"
+                name="customerType"
+                id="customerType"
+                onChange={(e) => setCustomerType(e.target.value)}
+                value={customerType}
+              >
+                <option value=" " disabled>
+                  Customer Type
+                </option>
+                <option value="wholesale">Wholesale</option>
+                <option value="retail">Retail</option>
+                <option value="missed">Missed</option>
+                <option value="other">Other</option>
+              </select>
 
-            <select
-              className="w-1/2 md:w-1/4 cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-              name="day"
-              id="day"
-              value={other}
-              onChange={(e) => setOther(e.target.value)}
-            >
-              <option disabled>Type</option>
-              <option value="none">Whiteboard</option>
-              <option value="holding">Holding</option>
-              <option value="collect">Collect</option>
-            </select>
-          </div>
-          {/* -------------Right hand side------------------ */}
-          <div className="flex flex-col justify-end items-start">
-            <div className="grid grid-cols-[1fr_4fr] p-1 md:p-8 w-full">
-              <label className="">Status - </label>
+              <select
+                className="cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                name="day"
+                id="day"
+                value={other}
+                onChange={(e) => setOther(e.target.value)}
+              >
+                <option disabled>Type</option>
+                <option value="none">Whiteboard</option>
+                <option value="holding">Holding</option>
+                <option value="collect">Collect</option>
+              </select>
+
               <select
                 value={status}
-                className="w-24 md:w-28 cursor-pointer bg-transparent text-input border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
+                className="cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
                 onChange={(e) => setStatus(e.target.value)}
               >
-                <option value=""></option>
+                <option disabled value="">
+                  Order Status
+                </option>
                 <option value="working">Working</option>
                 <option value="missed">Query</option>
                 <option value="pulled">Pulled</option>
                 <option value="loaded">Loaded</option>
               </select>
-              <label className="">Trollies - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
+                className="pl-1 bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400"
                 type="text"
                 placeholder="Trollies"
                 onChange={(e) => setTrollies(e.target.value)}
                 value={trollies}
                 required
               />
-              <label className="">Extras - </label>
               <input
-                className="pl-1 w-24 bg-transparent text-input border-b-2  border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                className="pl-1 bg-transparent text-input border-b-2  border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
-                placeholder="Extras"
+                placeholder="Extras Items"
                 onChange={(e) => setExtras(e.target.value)}
                 value={extras}
                 required
               />
             </div>
-
+          </div>
+          {/* -------------Right hand side------------------ */}
+          <div className="flex flex-col justify-end items-start">
             <div className="w-full flex-col items-center flex p-2">
               <h3 className="pb-2  font-medium  ">Additional Info</h3>
               <textarea
