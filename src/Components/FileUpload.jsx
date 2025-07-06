@@ -46,10 +46,10 @@ const FileUpload = ({ taskID, onUpload }) => {
   };
 
   return (
-    <div className="justify-center flex text-base border-2 border-black rounded-xl px-10">
+    <div className="justify-center flex md:text-base border-2 border-black rounded-xl p-2 md:px-10">
       <form onSubmit={handleSubmit} className="">
         <div className="flex flex-col gap-2 pt-4 ">
-          <h3 className="text-center font-bold">Upload PDF/Pictures</h3>
+          <h3 className="text-center  font-bold">Upload PDF/Pictures</h3>
           <div className="flex gap-1">
             <input
               className="text-black w-full"

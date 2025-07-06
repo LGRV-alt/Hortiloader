@@ -71,7 +71,7 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
               key={picture.id}
               style={{ width: "180px", minHeight: "200px" }}
             >
-              <p className="text-lg border-b-2 w-full border-black text-center mb-2">
+              <p className="md:text-lg border-b-2 w-full border-black text-center mb-2">
                 {picture.title}
               </p>
               {isPDF ? (
@@ -84,7 +84,7 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
                   <div
                     style={{
                       width: "150px",
-                      height: "200px",
+                      height: "150px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -103,7 +103,7 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
                   alt={picture.title || "Uploaded image"}
                   style={{
                     width: "150px",
-                    height: "200px",
+                    height: "150px",
                     objectFit: "cover",
                     borderRadius: "8px",
                     cursor: "pointer",

@@ -130,11 +130,11 @@ export default function Edit() {
     }
   } else {
     return (
-      <div className="p-2 bg-surface h-full  grid grid-cols-1 gap-4 md:text-lg ">
-        <div className="bg-white border-black  gap-10 border-2 grid md:grid-cols-2 rounded-2xl p-8">
-          <div className=" flex flex-col gap-2 w-full ">
-            <div className="flex w-full items-center justify-between gap-2 ">
-              <h2 className="text-xl md:text-2xl font-medium text-secondary">
+      <div className="p-2 bg-surface grid grid-cols-1 gap-4 text-sm md:text-lg h-full ">
+        <div className="bg-white  border-black gap-5 md:gap-10 border-2 grid md:grid-cols-2 rounded-2xl p-8">
+          <div className=" flex flex-col gap-2">
+            <div className="flex items-center justify-center md:justify-between gap-2 ">
+              <h2 className="text-sm md:text-2xl font-medium text-secondary">
                 Edit Order
               </h2>
               <div className="flex font-semibold gap-1 border-b-2 border-black">
@@ -180,7 +180,7 @@ export default function Edit() {
                 </select>
               </div>
             </div>
-            <div className="flex flex-col w-1/2 gap-2">
+            <div className="flex flex-col  gap-2">
               <input
                 className="pl-1 bg-transparent  text-input border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400"
                 type="text"
@@ -265,7 +265,7 @@ export default function Edit() {
                 required
               />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <div className="w-full flex-col items-center flex p-2">
                 <h3 className="pb-2  font-medium  ">Additional Info</h3>
                 <textarea
@@ -277,7 +277,7 @@ export default function Edit() {
                   required
                 />
               </div>
-              <div className="grid grid-cols-[4fr_1fr] items-center w-full gap-8 p-2">
+              <div className="grid grid-cols-[4fr_1fr] items-center md:gap-8 gap-2 md:p-2">
                 <button
                   className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
                   onClick={handleSubmit}
@@ -295,7 +295,7 @@ export default function Edit() {
             </div>
           </div>
           {/* -------------Right hand side------------------ */}
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center w-full">
             <div className="">
               <FileUpload taskID={id} onUpload={setPictures} />
             </div>
