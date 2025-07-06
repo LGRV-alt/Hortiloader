@@ -19,6 +19,11 @@ const FileUpload = ({ taskID, onUpload }) => {
       return;
     }
 
+    if (title.length < 1) {
+      toast.error("Please enter a title");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);
@@ -41,13 +46,13 @@ const FileUpload = ({ taskID, onUpload }) => {
   };
 
   return (
-    <div className="flex text-base justify-center border-2 border-black rounded-xl">
+    <div className="justify-center flex text-base border-2 border-black rounded-xl px-10">
       <form onSubmit={handleSubmit} className="">
         <div className="flex flex-col gap-2 pt-4 ">
           <h3 className="text-center font-bold">Upload Picklist/Pictures</h3>
           <div className="flex gap-1">
             <input
-              className="text-black"
+              className="text-black w-full"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -57,10 +62,10 @@ const FileUpload = ({ taskID, onUpload }) => {
           <div className="flex gap-2">
             <input type="file" onChange={handleFileChange} />
           </div>
-          <div className="flex justify-center pb-2">
+          <div className="flex justify-center  pb-2">
             <button
               type="submit"
-              className="bg-green-500  text-white py-2 px-4 rounded-md  hover:bg-regal-blue hover:text-secondary-colour transition-all hover:outline "
+              className="w-full bg-green-500  text-white py-2 px-4 rounded-md  hover:bg-green-400 transition-all border-2 border-black "
             >
               {upload ? "Uploading..." : "Upload"}
             </button>

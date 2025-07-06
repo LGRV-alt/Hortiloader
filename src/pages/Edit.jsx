@@ -296,7 +296,7 @@ export default function Edit() {
           </div>
           {/* -------------Right hand side------------------ */}
           <div className="flex flex-col items-center">
-            <div className="w-2/3">
+            <div className="">
               <FileUpload taskID={id} onUpload={setPictures} />
             </div>
             <Pictures

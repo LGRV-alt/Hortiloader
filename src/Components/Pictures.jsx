@@ -15,11 +15,9 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
         const records = await pb
           .collection("files")
           .getList(1, 50, { filter: `taskID = "${projectID}"` }); // Fetch up to 50 pictures
-        //   .getList(1, 50); // Fetch up to 50 pictures
         setPictures(records.items);
       } catch (err) {
         console.error("Error fetching pictures:", err);
-        // setError("Failed to load pictures.");
       }
     };
 
@@ -59,16 +57,23 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
       <div className="flex justify-center gap-2 flex-wrap">
         {pictures.map((picture) => (
           <div
-            className="text-center border-4 border-white hover:border-orange-600 hover:bg-gray-200 bg-white rounded-lg p-2 "
+            className="text-center border-4 border-white hover:border-orange-600 hover:bg-gray-200 bg-white rounded-lg p-2"
             key={picture.id}
+            style={{ width: "220px", minHeight: "260px" }}
           >
-            <p className="text-lg border-b-2  border-black text-center mb-2">
+            <p className="text-lg border-b-2 border-black text-center mb-2">
               {picture.title}
             </p>
             <img
               src={`${pb.baseUrl}/api/files/${picture.collectionId}/${picture.id}/${picture.file}`}
               alt={picture.title || "Uploaded image"}
-              style={{ maxWidth: "200px", height: "auto", cursor: "pointer" }}
+              style={{
+                width: "200px", // Fixed width
+                height: "150px", // Fixed height
+                objectFit: "cover", // Crop to fill space while maintaining aspect ratio
+                borderRadius: "8px",
+                cursor: "pointer",
+              }}
               onClick={() => openModal(picture)}
             />
           </div>
