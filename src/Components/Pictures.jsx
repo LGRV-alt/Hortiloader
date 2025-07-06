@@ -4,8 +4,7 @@ import pb from "../api/pbConnect";
 
 Modal.setAppElement("#root");
 
-const Pictures = ({ taskID }) => {
-  const [pictures, setPictures] = useState([]);
+const Pictures = ({ taskID, pictures, setPictures }) => {
   const [selectedPicture, setSelectedPicture] = useState(null);
   const [error, setError] = useState("");
   const id = taskID;

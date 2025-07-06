@@ -42,6 +42,7 @@ export default function Edit() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
   const [savingState, setSavingState] = useState("Save");
+  const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
     const record = records.find((r) => r.id === id);
@@ -129,8 +130,8 @@ export default function Edit() {
     }
   } else {
     return (
-      <div className="p-1 bg-surface h-full md:p-8 grid grid-cols-1 gap-4 md:text-lg ">
-        <div className="bg-white border-black  border-2 grid md:grid-cols-2 rounded-2xl p-8">
+      <div className="p-2 bg-surface h-full  grid grid-cols-1 gap-4 md:text-lg ">
+        <div className="bg-white border-black  gap-10 border-2 grid md:grid-cols-2 rounded-2xl p-8">
           <div className=" flex flex-col gap-2 w-full ">
             <div className="flex w-full items-center justify-between gap-2 ">
               <h2 className="text-xl md:text-2xl font-medium text-secondary">
@@ -264,35 +265,45 @@ export default function Edit() {
                 required
               />
             </div>
+            <div className="flex flex-col">
+              <div className="w-full flex-col items-center flex p-2">
+                <h3 className="pb-2  font-medium  ">Additional Info</h3>
+                <textarea
+                  className=" p-2 h-32 w-full text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
+                  type="text"
+                  placeholder="Issues/Load information"
+                  onChange={(e) => setOrderInfo(e.target.value)}
+                  value={orderInfo}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-[4fr_1fr] items-center w-full gap-8 p-2">
+                <button
+                  className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
+                  onClick={handleSubmit}
+                >
+                  <p>{savingState}</p>
+                </button>
+
+                <button
+                  className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  <p>Delete</p>
+                </button>
+              </div>
+            </div>
           </div>
           {/* -------------Right hand side------------------ */}
-          <div className="flex flex-col justify-end items-start">
-            <div className="w-full flex-col items-center flex p-2">
-              <h3 className="pb-2  font-medium  ">Additional Info</h3>
-              <textarea
-                className=" p-2 h-32 w-full text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
-                type="text"
-                placeholder="Issues/Load information"
-                onChange={(e) => setOrderInfo(e.target.value)}
-                value={orderInfo}
-                required
-              />
+          <div className="flex flex-col items-center">
+            <div className="w-2/3">
+              <FileUpload taskID={id} onUpload={setPictures} />
             </div>
-            <div className="grid grid-cols-[4fr_1fr] items-center w-full gap-8 p-2">
-              <button
-                className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
-                onClick={handleSubmit}
-              >
-                <p>{savingState}</p>
-              </button>
-
-              <button
-                className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
-                onClick={() => setShowDeleteModal(true)}
-              >
-                <p>Delete</p>
-              </button>
-            </div>
+            <Pictures
+              taskID={id}
+              pictures={pictures}
+              setPictures={setPictures}
+            />
           </div>
         </div>
 

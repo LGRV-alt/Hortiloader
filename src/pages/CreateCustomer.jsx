@@ -128,7 +128,7 @@ export default function CreateCustomer() {
             </select>
 
             <input
-              className=" w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 text-white"
+              className=" w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-secondary-colour placeholder:text-gray-400 "
               type="number"
               min={currentWeek}
               max={52}
