@@ -83,7 +83,7 @@ export default function WeekdayPage() {
         <div className="w-full md:h-36 h-16 flex justify-center flex-col items-center bg-slate-300 text-center  border-b-2 border-black">
           <h3 className="md:text-3xl text-xl font-bold">{`${day}-${number} ${year}`}</h3>
           {!isExporting && (
-            <div className="flex flex-wrap gap-4 justify-center mt-4">
+            <div className="w-full flex flex-wrap gap-4 justify-center mt-4">
               {["wholesale", "retail", "missed", "other"].map((type) => (
                 <label key={type} className="flex items-center space-x-2">
                   <input
@@ -94,6 +94,20 @@ export default function WeekdayPage() {
                   <span className="capitalize">{type}</span>
                 </label>
               ))}
+              <div className=" w-full flex justify-center">
+                <button
+                  className="w-1/6 mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
+                  onClick={() => setExtras(!extras)}
+                >
+                  Show Extras
+                </button>
+                <button
+                  onClick={exportToPDF}
+                  className="w-1/6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
+                >
+                  Print
+                </button>
+              </div>
             </div>
           )}
         </div>
@@ -154,21 +168,6 @@ export default function WeekdayPage() {
             Created with Hortiloader.com • {new Date().toLocaleDateString()}
           </div>
         )}
-      </div>
-
-      <div className="pb-4 pt-2 w-full flex justify-center">
-        <button
-          className="w-1/6 mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
-          onClick={() => setExtras(!extras)}
-        >
-          Show Extras
-        </button>
-        <button
-          onClick={exportToPDF}
-          className="w-1/6 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
-        >
-          Print
-        </button>
       </div>
     </div>
   );
