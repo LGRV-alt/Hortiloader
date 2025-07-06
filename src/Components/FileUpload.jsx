@@ -49,7 +49,7 @@ const FileUpload = ({ taskID, onUpload }) => {
     <div className="justify-center flex text-base border-2 border-black rounded-xl px-10">
       <form onSubmit={handleSubmit} className="">
         <div className="flex flex-col gap-2 pt-4 ">
-          <h3 className="text-center font-bold">Upload Picklist/Pictures</h3>
+          <h3 className="text-center font-bold">Upload PDF/Pictures</h3>
           <div className="flex gap-1">
             <input
               className="text-black w-full"
@@ -60,7 +60,11 @@ const FileUpload = ({ taskID, onUpload }) => {
             />
           </div>
           <div className="flex gap-2">
-            <input type="file" onChange={handleFileChange} />
+            <input
+              type="file"
+              accept="image/*,application/pdf"
+              onChange={handleFileChange}
+            />
           </div>
           <div className="flex justify-center  pb-2">
             <button
