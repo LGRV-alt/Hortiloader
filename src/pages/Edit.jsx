@@ -13,14 +13,14 @@ import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 const userName = pb.authStore.model?.username?.toLowerCase() || "";
-
+console.log(pb.authStore);
 export default function Edit() {
   const records = useTaskStore((state) => state.tasks);
   const optimisticDeleteTask = useTaskStore((state) => state.deleteTask);
   const optimisticUpdateTask = useTaskStore((state) => state.updateTask);
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const [userName, setUserName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const weekNumbers = Array.from({ length: 52 }, (_, i) => i + 1);
 
@@ -61,6 +61,19 @@ export default function Edit() {
       setExtras(record.extras ?? "");
     }
   }, [records, id]);
+
+  useEffect(() => {
+    const updateUserName = () => {
+      setUserName(pb.authStore.model?.username?.toLowerCase() || "");
+    };
+    updateUserName();
+
+    // Listen for changes
+    pb.authStore.onChange(updateUserName);
+
+    // Cleanup
+    return () => pb.authStore.offChange(updateUserName);
+  }, []);
 
   const handleSubmit = async () => {
     if (!title) {
