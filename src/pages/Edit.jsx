@@ -64,15 +64,15 @@ export default function Edit() {
 
   useEffect(() => {
     const updateUserName = () => {
-      setUserName(pb.authStore.model?.username?.toLowerCase() || "");
+      setUserName(pb.authStore.baseModel?.username?.toLowerCase() || "");
     };
     updateUserName();
 
-    // Listen for changes
-    pb.authStore.onChange(updateUserName);
+    // Listen for changes and get unsubscribe function
+    const unsubscribe = pb.authStore.onChange(updateUserName);
 
     // Cleanup
-    return () => pb.authStore.offChange(updateUserName);
+    return unsubscribe;
   }, []);
 
   const handleSubmit = async () => {
