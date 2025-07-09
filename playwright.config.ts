@@ -71,9 +71,16 @@ export default defineConfig({
   ],
 
   /* Run your local dev server before starting the tests */
+  // webServer: {
+  //   command: "npm run dev:test",
+  //   url: "http://localhost:5173/",
+  //   reuseExistingServer: !process.env.CI,
   webServer: {
-    command: "npm run dev",
-    url: "http://localhost:5173/",
+    command: "npx vite --mode test",
+    port: 5173, // or whatever port Vite runs on
+    // reuseExistingServer: !process.env.CI,
+    // env: { VITE_POCKETBASE_URL: "https://horti-test.pockethost.io" }, // ensure test URL
     reuseExistingServer: !process.env.CI,
+    timeout: 120 * 1000,
   },
 });

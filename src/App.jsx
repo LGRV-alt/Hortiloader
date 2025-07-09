@@ -64,6 +64,8 @@ export default function App() {
     }
   }, [settingsChanged]);
 
+  console.log("PocketBase URL:", import.meta.env.VITE_POCKETBASE_URL);
+
   return (
     <>
       <Toaster
