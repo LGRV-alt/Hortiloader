@@ -21,3 +21,29 @@ test.describe("Unauthenticated route allowed cases", () => {
     });
   });
 });
+
+test.describe("Authenticated Routes", () => {
+  protectedURLRoutes.forEach((route) => {
+    test(`Authenticated route for /${route}`, async ({ page }) => {
+      await login(page, "Testing", "Password1");
+
+      // Confirm login worked
+      await expect(page.getByRole("button", { name: "Add Order" })).toBeVisible(
+        { timeout: 10000 }
+      );
+
+      // Navigate to the route
+      await page.goto(`http://localhost:5173/#/${route}`, {
+        waitUntil: "networkidle",
+      });
+
+      // Assert user stays on correct route
+      await expect(page).toHaveURL(new RegExp(`#/${route}`));
+
+      // confirm login screen is NOT visible
+      await expect(
+        page.getByRole("button", { name: "Sign in" })
+      ).not.toBeVisible();
+    });
+  });
+});
