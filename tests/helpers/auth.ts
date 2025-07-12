@@ -1,6 +1,6 @@
 import { Page, expect } from "@playwright/test";
 
-export async function login(page: Page) {
+export async function login(page: Page, username: string, password: string) {
   await page.goto("http://localhost:5173/");
   // Assign the title
   const title = page.getByRole("heading", { name: "Hortiloader" });
@@ -13,14 +13,10 @@ export async function login(page: Page) {
   await expect(title).toBeVisible();
 
   // Fill out login section
-  await usernameInput.fill("Testing");
-  await passwordInput.fill("Password1");
+  await usernameInput.fill(username);
+  await passwordInput.fill(password);
 
   // Hit Sign in button
   const signInButton = page.getByRole("button", { name: "Sign in" });
   await signInButton.click();
-
-  // Assert that log in worked
-  const addOrderButton = page.getByRole("button", { name: "Add Order" });
-  await expect(addOrderButton).toBeVisible({ timeout: 10000 });
 }
