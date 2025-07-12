@@ -1,28 +1,12 @@
 import { test, expect } from "@playwright/test";
+import { login } from "./helpers/auth";
 test.describe("Check Login and Logout Flow", () => {
   test("Login Page", async ({ page }) => {
-    await page.goto("http://localhost:5173/");
-    // Assign the title
-    const title = page.getByRole("heading", { name: "Hortiloader" });
-
-    // Assign the locators for username and password
-    const usernameInput = page.getByLabel("Username");
-    const passwordInput = page.getByLabel("Password");
-
-    // Asset that we are on the correct page
-    await expect(title).toBeVisible();
-
-    // Fill out login section
-    await usernameInput.fill("Testing");
-    await passwordInput.fill("Password1");
-
-    // Hit Sign in button
+    // Page selectors
     const signInButton = page.getByRole("button", { name: "Sign in" });
-    await signInButton.click();
 
-    // Assert that log in worked
-    const addOrderButton = page.getByRole("button", { name: "Add Order" });
-    await expect(addOrderButton).toBeVisible({ timeout: 10000 });
+    // Helper Function for loggin in
+    await login(page);
 
     // Hit the button to show the dropdown menu and click logout
     await page.locator(".ml-2").click();
