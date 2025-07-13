@@ -263,13 +263,25 @@ export default function TrolleyTrackerPage() {
                   {/* Trollies */}
                   <td className="py-2 px-2 text-center">{cust.trolliesOut}</td>
                   <td className="py-2 px-2 text-center">{cust.trolliesIn}</td>
-                  <td className="py-2 px-2 text-center font-bold">
+                  <td
+                    className={`py-2 px-2 text-center font-bold ${
+                      cust.trolliesOutstanding < 1
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
                     {cust.trolliesOutstanding}
                   </td>
                   {/* Shelves */}
                   <td className="py-2 px-2 text-center">{cust.shelvesOut}</td>
                   <td className="py-2 px-2 text-center">{cust.shelvesIn}</td>
-                  <td className="py-2 px-2 text-center font-bold">
+                  <td
+                    className={`py-2 px-2 text-center font-bold ${
+                      cust.shelvesOutstanding < 0
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
                     {cust.shelvesOutstanding}
                   </td>
                   {/* Extensions */}
@@ -277,7 +289,13 @@ export default function TrolleyTrackerPage() {
                     {cust.extensionsOut}
                   </td>
                   <td className="py-2 px-2 text-center">{cust.extensionsIn}</td>
-                  <td className="py-2 px-2 text-center font-bold">
+                  <td
+                    className={`py-2 px-2 text-center font-bold ${
+                      cust.extensionsOutstanding < 0
+                        ? "text-green-500"
+                        : "text-red-500"
+                    }`}
+                  >
                     {cust.extensionsOutstanding}
                   </td>
                   <td className="py-2 px-2 text-center">
@@ -297,17 +315,35 @@ export default function TrolleyTrackerPage() {
               <td className="py-2 px-2 text-right">Total:</td>
               <td className="py-2 px-2 text-center">{totalTrolliesOut}</td>
               <td className="py-2 px-2 text-center">{totalTrolliesIn}</td>
-              <td className="py-2 px-2 text-center">
+              <td
+                className={`py-2 px-2 text-center ${
+                  totalTrolliesOutstanding < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
                 {totalTrolliesOutstanding}
               </td>
               <td className="py-2 px-2 text-center">{totalShelvesOut}</td>
               <td className="py-2 px-2 text-center">{totalShelvesIn}</td>
-              <td className="py-2 px-2 text-center">
+              <td
+                className={`py-2 px-2 text-center ${
+                  totalShelvesOutstanding < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
                 {totalShelvesOutstanding}
               </td>
               <td className="py-2 px-2 text-center">{totalExtensionsOut}</td>
               <td className="py-2 px-2 text-center">{totalExtensionsIn}</td>
-              <td className="py-2 px-2 text-center">
+              <td
+                className={`py-2 px-2 text-center ${
+                  totalExtensionsOutstanding < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
                 {totalExtensionsOutstanding}
               </td>
               <td></td>
