@@ -188,9 +188,11 @@ export default function TrolleyTrackerPage() {
   );
 
   return (
-    <div className="mx-5 mt-5 relative max-w-6xl">
-      <h1 className="text-2xl font-bold mb-4">Trolley Tracker</h1>
-      <p className="mb-4 text-gray-500">Only your customers are shown below.</p>
+    <div className="mx-5 mt-5 relative max-w-full">
+      <h1 className="text-2xl font-bold text-center">Trolley Tracker</h1>
+      <p className="mb-4 text-gray-500 text-center">
+        Total view of all outstanding trollies, shelves and extentions
+      </p>
       <div className="flex justify-end mb-4">
         <button
           className="px-4 py-2 bg-green-700 text-white rounded-2xl shadow hover:bg-green-800"
@@ -199,7 +201,7 @@ export default function TrolleyTrackerPage() {
           + Add Customer
         </button>
       </div>
-      <div className="bg-white rounded-2xl shadow p-4 overflow-x-auto">
+      <div className="bg-white rounded-2xl border-2 border-black shadow p-4 overflow-x-auto">
         <table className="min-w-full table-auto text-xs md:text-sm">
           <thead>
             <tr>
@@ -244,7 +246,7 @@ export default function TrolleyTrackerPage() {
               </tr>
             ) : (
               customers.map((cust) => (
-                <tr key={cust.id} className="border-t">
+                <tr key={cust.id} className="border-t border-black">
                   <td className="py-2 px-2 font-medium">{cust.name}</td>
                   {/* Trollies */}
                   <td className="py-2 px-2 text-center">{cust.trolliesOut}</td>

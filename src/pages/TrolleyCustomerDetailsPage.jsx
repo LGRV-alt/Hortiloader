@@ -246,7 +246,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Trollies out"
                 value={trolliesOut}
                 onChange={(e) => setTrolliesOut(e.target.value)}
@@ -254,7 +254,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Trollies in"
                 value={trolliesIn}
                 onChange={(e) => setTrolliesIn(e.target.value)}
@@ -262,7 +262,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Shelves out"
                 value={shelvesOut}
                 onChange={(e) => setShelvesOut(e.target.value)}
@@ -270,7 +270,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Shelves in"
                 value={shelvesIn}
                 onChange={(e) => setShelvesIn(e.target.value)}
@@ -278,7 +278,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Extensions out"
                 value={extensionsOut}
                 onChange={(e) => setExtensionsOut(e.target.value)}
@@ -286,7 +286,7 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-28"
+                className="border p-2 rounded"
                 placeholder="Extensions in"
                 value={extensionsIn}
                 onChange={(e) => setExtensionsIn(e.target.value)}
