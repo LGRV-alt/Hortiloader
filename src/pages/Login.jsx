@@ -14,18 +14,20 @@ export default function Login() {
   const [signUpStatus, setSignUpStatus] = useState("Sign up");
   const [agreed, setAgreed] = useState(false);
   const [orgName, setOrgName] = useState("");
+  const [loginOrgName, setLoginOrgName] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!username || !password || !loginOrgName) {
       toast.error("Please enter both username and password");
       return;
     }
 
     setLoginStatus("Logging In...");
-    const result = await login(username, password);
+    const result = await login(username, password, loginOrgName);
     setLoginStatus("Sign In");
 
     if (!result.success) {
@@ -106,6 +108,17 @@ export default function Login() {
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
             <div className="space-y-4">
+              <label className="block text-sm font-light">
+                Organization Name
+                <input
+                  type="text"
+                  className="text-lg font-medium w-full border-b-2 outline-none focus:border-green-600"
+                  value={loginOrgName}
+                  onChange={(e) => setLoginOrgName(e.target.value)}
+                  required
+                />
+              </label>
+
               <label className="block text-sm font-light">
                 Username
                 <input

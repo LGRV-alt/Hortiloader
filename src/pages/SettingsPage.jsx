@@ -8,6 +8,11 @@ export default function SettingsPage({ onSettingsChange }) {
   const { settings, updateSettings, fetchSettings } = useUserSettings(); // include fetchSettings
   const [form, setForm] = useState({});
   const [save, setSave] = useState(false);
+  const [orgName, setOrgName] = useState("");
+
+  const [resetUser, setResetUser] = useState(null); // user to reset password for
+  const [resetPassword, setResetPassword] = useState("");
+  const [resetPasswordConfirm, setResetPasswordConfirm] = useState("");
 
   const [users, setUsers] = useState([]);
   const [showAddUser, setShowAddUser] = useState(false);
@@ -18,7 +23,21 @@ export default function SettingsPage({ onSettingsChange }) {
     passwordConfirm: "",
   });
 
+  const SUBUSER_LIMIT = 5;
+  const subuserCount = users.length; // this already includes the admin
+  console.log(users.length);
+
   const currentUser = pb.authStore.record;
+
+  useEffect(() => {
+    // Only try if user has an org id
+    if (currentUser.organization) {
+      pb.collection("organization")
+        .getOne(currentUser.organization)
+        .then((org) => setOrgName(org.name))
+        .catch(() => setOrgName("Unknown"));
+    }
+  }, [currentUser.organization]);
 
   useEffect(() => {
     if (settings) {
@@ -55,6 +74,12 @@ export default function SettingsPage({ onSettingsChange }) {
 
   const handleAddUser = async (e) => {
     e.preventDefault();
+    if (subuserCount >= SUBUSER_LIMIT) {
+      toast.error(
+        `You can only have ${SUBUSER_LIMIT} users in your organization.`
+      );
+      return;
+    }
     // Optionally validate inputs here
     try {
       await pb.collection("users").create({
@@ -82,19 +107,28 @@ export default function SettingsPage({ onSettingsChange }) {
     }
   };
 
+  function handleShowPasswordReset(user) {
+    setResetUser(user);
+    setResetPassword("");
+    setResetPasswordConfirm("");
+  }
+
   return (
     <div className="grid h-full grid-cols-1 md:grid-cols-2 p-4 bg-surface">
       <div className="flex flex-col items-center">
         {/* <h1 className="text-2xl font-bold mb-4">Settings</h1> */}
         <div className="bg-white w-full md:w-1/2 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">
           <h3>Account Info</h3>
+          <p>Organization - {orgName || currentUser.organization}</p>
           <p>Username - {currentUser.username}</p>
-          <Link
-            to="/forgot-password"
-            className="text-blue-600 hover:underline text-sm"
-          >
-            Change Password
-          </Link>
+          {currentUser.role === "admin" && (
+            <Link
+              to="/forgot-password"
+              className="text-blue-600 hover:underline text-sm"
+            >
+              Change Password
+            </Link>
+          )}
         </div>
         <div className="bg-white p-4 w-full md:w-1/2 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10">
           <h3>User Agreement</h3>
@@ -167,17 +201,58 @@ export default function SettingsPage({ onSettingsChange }) {
                 <span>
                   {u.username} ({u.email}){" "}
                   {u.role === "admin" && <b>- Admin</b>}
+                  {u.id === currentUser.id && " (You)"}
                 </span>
-                {/* (Add Remove/Disable/Reset Button here, if not self) */}
+                {u.id !== currentUser.id && (
+                  <div className="flex gap-2">
+                    <button
+                      className="text-red-500 text-xs hover:underline"
+                      onClick={async () => {
+                        if (
+                          window.confirm(
+                            `Delete user "${u.username}"? This cannot be undone.`
+                          )
+                        ) {
+                          try {
+                            await pb.collection("users").delete(u.id);
+                            toast.success("User deleted");
+                            setUsers(users.filter((user) => user.id !== u.id));
+                          } catch (err) {
+                            toast.error("Failed to delete user.");
+                          }
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="text-blue-500 text-xs hover:underline"
+                      onClick={() => handleShowPasswordReset(u)}
+                    >
+                      Reset Password
+                    </button>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
           <button
             onClick={() => setShowAddUser((s) => !s)}
-            className="text-blue-600 underline"
+            className={`text-blue-600 underline ${
+              subuserCount >= SUBUSER_LIMIT
+                ? "opacity-50 cursor-not-allowed"
+                : ""
+            }`}
+            disabled={subuserCount >= SUBUSER_LIMIT}
           >
             {showAddUser ? "Cancel" : "Add New User"}
           </button>
+          {subuserCount >= SUBUSER_LIMIT && (
+            <p className="text-red-500 mt-2 text-sm">
+              Subuser limit reached (max {SUBUSER_LIMIT} per organization).
+              Please remove a user before adding another.
+            </p>
+          )}
           {showAddUser && (
             <form
               onSubmit={handleAddUser}
@@ -241,6 +316,73 @@ export default function SettingsPage({ onSettingsChange }) {
               </button>
             </form>
           )}
+        </div>
+      )}
+      {resetUser && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
+          <div className="bg-white rounded-xl p-6 shadow-md w-full max-w-xs">
+            <h3 className="text-lg mb-2 font-bold">
+              Reset password for "{resetUser.username}"
+            </h3>
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (resetPassword !== resetPasswordConfirm) {
+                  toast.error("Passwords do not match");
+                  return;
+                }
+                try {
+                  await pb.collection("users").update(resetUser.id, {
+                    password: resetPassword,
+                    passwordConfirm: resetPasswordConfirm,
+                  });
+                  toast.success("Password updated!");
+                  setResetUser(null);
+                } catch (err) {
+                  toast.error(
+                    err?.data?.password?.message ||
+                      err?.message ||
+                      "Failed to update password."
+                  );
+
+                  console.error("Error details:", err.data || err.message, err);
+                }
+              }}
+              className="flex flex-col gap-2"
+            >
+              <input
+                className="border p-2 rounded"
+                type="password"
+                placeholder="New password"
+                value={resetPassword}
+                onChange={(e) => setResetPassword(e.target.value)}
+                required
+              />
+              <input
+                className="border p-2 rounded"
+                type="password"
+                placeholder="Confirm new password"
+                value={resetPasswordConfirm}
+                onChange={(e) => setResetPasswordConfirm(e.target.value)}
+                required
+              />
+              <div className="flex gap-2 justify-end mt-2">
+                <button
+                  type="button"
+                  className="bg-gray-200 px-3 py-1 rounded"
+                  onClick={() => setResetUser(null)}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white px-3 py-1 rounded"
+                >
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

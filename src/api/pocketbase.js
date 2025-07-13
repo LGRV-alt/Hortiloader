@@ -93,59 +93,136 @@ export async function updateTask(
 //   }
 // }
 
-export async function login(username, password) {
+// export async function login(username, password, orgName) {
+//   try {
+//     // 1) Attempt to authenticate
+//     await pb.collection("users").authWithPassword(username, password);
+
+//     // 2) Check role & email-verified (only for admin)
+//     const user = pb.authStore.model;
+//     if (user.role === "admin" && !user.verified) {
+//       pb.authStore.clear();
+//       return {
+//         success: false,
+//         reason: "unverified",
+//         message: "Please verify your email before logging in.",
+//       };
+//     }
+//     // 4) Check that user's org name matches the one provided
+//     if (orgName) {
+//       try {
+//         const orgId = user.organization;
+//         if (!orgId) {
+//           pb.authStore.clear();
+//           return {
+//             success: false,
+//             reason: "no_org",
+//             message: "This user is not linked to any organization.",
+//           };
+//         }
+//         // Fetch the org record
+//         const org = await pb.collection("organization").getOne(orgId);
+//         if (org.name.trim().toLowerCase() !== orgName.trim().toLowerCase()) {
+//           pb.authStore.clear();
+//           return {
+//             success: false,
+//             reason: "org_mismatch",
+//             message: "Organization name does not match this account.",
+//           };
+//         }
+//       } catch {
+//         pb.authStore.clear();
+//         return {
+//           success: false,
+//           reason: "org_error",
+//           message: "Could not verify organization.",
+//         };
+//       }
+//     }
+
+//     // 3) Check terms agreement
+//     const agreement = user?.termsAgreement;
+//     if (!agreement?.agreed) {
+//       // Don't clear auth store – let them continue to /accept-terms
+//       return {
+//         success: false,
+//         reason: "no_terms",
+//         message:
+//           "You must agree to the Terms and Privacy Policy before logging in.",
+//       };
+//     }
+
+//     // 4) All good
+//     return { success: true };
+//   } catch (error) {
+//     const status = error?.status;
+
+//     if (status === 403) {
+//       return {
+//         success: false,
+//         reason: "forbidden",
+//         message: "Access denied. Please check your email or account status.",
+//       };
+//     }
+
+//     if (status === 400) {
+//       return {
+//         success: false,
+//         reason: "credentials",
+//         message: "Incorrect username or password.",
+//       };
+//     }
+
+//     return {
+//       success: false,
+//       reason: "unknown",
+//       message: "Unexpected error occurred.",
+//     };
+//   }
+// }
+
+export async function login(username, password, orgName) {
   try {
-    // 1) Attempt to authenticate
-    await pb.collection("users").authWithPassword(username, password);
-
-    // 2) Check role & email-verified (only for admin)
-    const user = pb.authStore.model;
-    if (user.role === "admin" && !user.verified) {
-      pb.authStore.clear();
-      return {
-        success: false,
-        reason: "unverified",
-        message: "Please verify your email before logging in.",
-      };
-    }
-
-    // 3) Check terms agreement
-    const agreement = user?.termsAgreement;
-    if (!agreement?.agreed) {
-      // Don't clear auth store – let them continue to /accept-terms
-      return {
-        success: false,
-        reason: "no_terms",
-        message:
-          "You must agree to the Terms and Privacy Policy before logging in.",
-      };
-    }
-
-    // 4) All good
-    return { success: true };
-  } catch (error) {
-    const status = error?.status;
-
-    if (status === 403) {
-      return {
-        success: false,
-        reason: "forbidden",
-        message: "Access denied. Please check your email or account status.",
-      };
-    }
-
-    if (status === 400) {
+    // 1. Look up user by username (or email), get their org id
+    const users = await pb.collection("users").getFullList({
+      filter: `username="${username}"`,
+      expand: "organization",
+    });
+    const user = users[0];
+    if (!user) {
       return {
         success: false,
         reason: "credentials",
-        message: "Incorrect username or password.",
+        message: "Incorrect username, password, or organization.",
       };
     }
 
+    // 2. Load their organization and compare names (case-insensitive, trimmed)
+    const orgRecord = user.expand?.organization;
+    if (
+      !orgRecord ||
+      orgRecord.name.trim().toLowerCase() !== orgName.trim().toLowerCase()
+    ) {
+      return {
+        success: false,
+        reason: "credentials",
+        message: "Incorrect username, password, or organization.",
+      };
+    }
+
+    // 3. Actually authenticate (will update authStore)
+    await pb.collection("users").authWithPassword(username, password);
+
+    // 4. Other checks if you want (terms, verified, etc.)
+    // ...existing logic...
+
+    return { success: true };
+  } catch (error) {
+    // ...existing error handling...
     return {
       success: false,
-      reason: "unknown",
-      message: "Unexpected error occurred.",
+      reason: "credentials",
+      message: "Incorrect username, password, or organization.",
     };
   }
 }
