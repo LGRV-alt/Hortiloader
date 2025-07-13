@@ -13,8 +13,6 @@ import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 const userName = pb.authStore.model?.username?.toLowerCase() || "";
-const user = pb.authStore.record;
-console.log(user);
 
 export default function Edit() {
   const records = useTaskStore((state) => state.tasks);
@@ -23,6 +21,7 @@ export default function Edit() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [user, setUser] = useState(pb.authStore.record);
   const [isSaving, setIsSaving] = useState(false);
   const weekNumbers = Array.from({ length: 52 }, (_, i) => i + 1);
   const [loading, setLoading] = useState(true);
@@ -75,6 +74,12 @@ export default function Edit() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    const updateUser = () => setUser(pb.authStore.record);
+    updateUser();
+    return pb.authStore.onChange(updateUser);
+  }, []);
 
   useEffect(() => {
     const updateUserName = () => {
@@ -325,9 +330,9 @@ export default function Edit() {
                 >
                   <p>{savingState}</p>
                 </button>
-                {user.role === "admin" && (
+                {(user?.role === "admin" || user?.role === "super-user") && (
                   <button
-                    className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
+                    className="bg-red-500 rounded-md text-white px-4 py-2 hover:bg-red-600"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     <p>Delete</p>
