@@ -10,6 +10,11 @@ export default function TrolleyTrackerPage() {
   const [newCustomerNotes, setNewCustomerNotes] = useState("");
   const [newCustomerContactInfo, setNewCustomerContactInfo] = useState("");
   const [error, setError] = useState("");
+  const [search, setSearch] = useState("");
+
+  const filteredCustomers = customers.filter((c) =>
+    c.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   const navigate = useNavigate();
 
@@ -191,7 +196,7 @@ export default function TrolleyTrackerPage() {
     <div className="mx-5 mt-5 relative max-w-full">
       <h1 className="text-2xl font-bold text-center">Trolley Tracker</h1>
       <p className="mb-4 text-gray-500 text-center">
-        Total view of all outstanding trollies, shelves and extentions
+        Total view of all outstanding trollies, shelves and extensions
       </p>
       <div className="flex justify-end mb-4">
         <button
@@ -202,6 +207,13 @@ export default function TrolleyTrackerPage() {
         </button>
       </div>
       <div className="bg-white rounded-2xl border-2 border-black shadow p-4 overflow-x-auto">
+        <input
+          type="text"
+          placeholder="Search customer..."
+          className="border p-2 rounded mb-3"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <table className="min-w-full table-auto text-xs md:text-sm">
           <thead>
             <tr>
@@ -245,7 +257,7 @@ export default function TrolleyTrackerPage() {
                 </td>
               </tr>
             ) : (
-              customers.map((cust) => (
+              filteredCustomers.map((cust) => (
                 <tr key={cust.id} className="border-t border-black">
                   <td className="py-2 px-2 font-medium">{cust.name}</td>
                   {/* Trollies */}
