@@ -13,6 +13,7 @@ export default function Login() {
   const [loginStatus, setLoginStatus] = useState("Sign In");
   const [signUpStatus, setSignUpStatus] = useState("Sign up");
   const [agreed, setAgreed] = useState(false);
+  const [orgName, setOrgName] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -60,11 +61,17 @@ export default function Login() {
     }
 
     setSignUpStatus("Creating...");
-    const result = await signup(username, password, email, {
-      agreed: true,
-      timestamp: new Date().toISOString(),
-      version: "v1.0",
-    });
+    const result = await signup(
+      username,
+      password,
+      email,
+      {
+        agreed: true,
+        timestamp: new Date().toISOString(),
+        version: "v1.0",
+      },
+      orgName
+    );
 
     if (!result.success) {
       toast.error(result.message);
@@ -161,6 +168,16 @@ export default function Login() {
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Sign up</h2>
             <div className="space-y-4">
+              <label className="block text-sm font-thin">
+                Organization Name
+                <input
+                  type="text"
+                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  value={orgName}
+                  onChange={(e) => setOrgName(e.target.value)}
+                  required
+                />
+              </label>
               <label className="block text-sm font-thin">
                 Email
                 <input

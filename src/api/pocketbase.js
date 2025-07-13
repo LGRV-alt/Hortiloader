@@ -97,17 +97,34 @@ export function signout() {
   window.location.reload();
 }
 
-export async function signup(username, password, email, termsAgreement) {
+export async function signup(
+  username,
+  password,
+  email,
+  termsAgreement,
+  orgName
+) {
   try {
+    // Create Org
+    const org = await pb.collection("organization").create({ name: orgName });
+
     const data = {
       username,
       password,
       passwordConfirm: password,
       email,
       termsAgreement,
+      organization: org.id,
+      role: "admin",
     };
 
+    // Create User
     const createdUser = await pb.collection("users").create(data);
+
+    // Set org's owner field to this user's id
+    await pb.collection("organization").update(org.id, {
+      owner: createdUser.id,
+    });
 
     // Optional: Trigger verification email
     await pb.collection("users").requestVerification(email);

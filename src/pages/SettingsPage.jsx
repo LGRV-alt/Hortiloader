@@ -9,6 +9,14 @@ export default function SettingsPage({ onSettingsChange }) {
   const [form, setForm] = useState({});
   const [save, setSave] = useState(false);
 
+  const [users, setUsers] = useState([]);
+  const [showAddUser, setShowAddUser] = useState(false);
+  const [newUser, setNewUser] = useState({
+    email: "",
+    username: "",
+    role: "staff",
+  });
+
   const currentUser = pb.authStore.model;
 
   useEffect(() => {
