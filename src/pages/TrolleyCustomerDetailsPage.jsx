@@ -213,7 +213,7 @@ export default function TrolleyCustomerDetailsPage() {
     <div className="max-w-full mx-auto pt-2 px-4">
       <button
         onClick={() => navigate(-1)}
-        className="mb-4 text-blue-600 hover:underline"
+        className=" text-blue-600 hover:underline"
       >
         &larr; Back
       </button>
@@ -224,25 +224,20 @@ export default function TrolleyCustomerDetailsPage() {
       ) : (
         <>
           <div className="flex flex-col justify-center items-center ">
-            <h2 className="text-2xl font-bold">
-              {customer.name}{" "}
-              <span>
-                {" "}
-                <button
-                  className="text-blue-600 hover:underline text-xs"
-                  onClick={() => {
-                    setEditName(customer.name);
-                    setEditNotes(customer.notes || "");
-                    setEditContactInfo(customer.contact_info || "");
-                    setEditingCustomer(true);
-                  }}
-                >
-                  Edit
-                </button>
-              </span>
-            </h2>
+            <h2 className="text-2xl font-bold">{customer.name}</h2>
             <p className="text-gray-500">{customer.notes.toUpperCase()}</p>
             <p className="text-gray-500">{customer.contact_info}</p>
+            <button
+              className="text-blue-600 hover:underline text-xs"
+              onClick={() => {
+                setEditName(customer.name);
+                setEditNotes(customer.notes || "");
+                setEditContactInfo(customer.contact_info || "");
+                setEditingCustomer(true);
+              }}
+            >
+              Edit
+            </button>
           </div>
 
           {/* -----------------------------------Edit customer modal------------------------------------ */}
@@ -282,6 +277,26 @@ export default function TrolleyCustomerDetailsPage() {
                     onClick={async () => {
                       try {
                         setSaving(true);
+
+                        // Fetch all other customers for this user (except the current one)
+                        const others = await pb
+                          .collection("trolley_customers")
+                          .getFullList({
+                            filter: `user="${customer.user}" && id != "${customer.id}"`,
+                          });
+                        const duplicate = others.some(
+                          (cust) =>
+                            cust.name.trim().toLowerCase() ===
+                            editName.trim().toLowerCase()
+                        );
+                        if (duplicate) {
+                          setSaving(false);
+                          toast.error(
+                            "A customer with that name already exists."
+                          );
+                          return;
+                        }
+
                         await pb
                           .collection("trolley_customers")
                           .update(customer.id, {
@@ -292,8 +307,9 @@ export default function TrolleyCustomerDetailsPage() {
                         setSaving(false);
                         toast.success("User Updated");
                         setEditingCustomer(false);
-                        setReloadMovements((r) => !r); // This will refetch customer
+                        setReloadMovements((r) => !r);
                       } catch (err) {
+                        setSaving(false);
                         alert("Could not update customer.");
                         console.error(err);
                       }
@@ -310,13 +326,40 @@ export default function TrolleyCustomerDetailsPage() {
           <div className="mb-4 flex flex-wrap gap-4">
             <span className="text-lg font-bold">Outstanding:</span>
             <span className="text-lg">
-              Trollies: <b>{totalTrolliesOut - totalTrolliesIn}</b>
+              Trollies:{" "}
+              <b
+                className={` ${
+                  totalTrolliesOut - totalTrolliesIn < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {totalTrolliesOut - totalTrolliesIn}
+              </b>
             </span>
             <span className="text-lg">
-              Shelves: <b>{totalShelvesOut - totalShelvesIn}</b>
+              Shelves:{" "}
+              <b
+                className={` ${
+                  totalShelvesOut - totalShelvesIn < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {totalShelvesOut - totalShelvesIn}
+              </b>
             </span>
             <span className="text-lg">
-              Extensions: <b>{totalExtensionsOut - totalExtensionsIn}</b>
+              Extensions:{" "}
+              <b
+                className={` ${
+                  totalExtensionsOut - totalExtensionsIn < 0
+                    ? "text-green-500"
+                    : "text-red-500"
+                }`}
+              >
+                {totalExtensionsOut - totalExtensionsIn}
+              </b>
             </span>
           </div>
 
@@ -426,11 +469,11 @@ export default function TrolleyCustomerDetailsPage() {
                     <th className="text-center py-2">Shelves In</th>
                     <th className="text-center py-2">Ext. Out</th>
                     <th className="text-center py-2">Ext. In</th>
-                    <th className="text-left py-2">Notes</th>
                     <th className="text-center py-2">Trollies Bal</th>
                     <th className="text-center py-2">Shelves Bal</th>
                     <th className="text-center py-2">Ext. Bal</th>
-                    <th className="text-center py-2">Files</th>
+                    <th className="text-left py-2">Notes</th>
+                    {/* <th className="text-center py-2">Files</th> */}
                     <th></th>
                   </tr>
                 </thead>
@@ -530,6 +573,16 @@ export default function TrolleyCustomerDetailsPage() {
                               }
                             />
                           </td>
+
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].trollies}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].shelves}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].extensions}
+                          </td>
                           <td className="py-2">
                             <input
                               type="text"
@@ -542,15 +595,6 @@ export default function TrolleyCustomerDetailsPage() {
                                 }))
                               }
                             />
-                          </td>
-                          <td className="py-2 text-center">
-                            {runningBalances[idx].trollies}
-                          </td>
-                          <td className="py-2 text-center">
-                            {runningBalances[idx].shelves}
-                          </td>
-                          <td className="py-2 text-center">
-                            {runningBalances[idx].extensions}
                           </td>
 
                           {/* ---------------File Upload----------------- */}
@@ -668,7 +712,7 @@ export default function TrolleyCustomerDetailsPage() {
                           <td className="py-2 text-center">
                             {move.extensions_in}
                           </td>
-                          <td className="py-2">{move.notes}</td>
+
                           <td className="py-2 text-center">
                             {runningBalances[idx].trollies}
                           </td>
@@ -678,6 +722,7 @@ export default function TrolleyCustomerDetailsPage() {
                           <td className="py-2 text-center">
                             {runningBalances[idx].extensions}
                           </td>
+                          <td className="py-2">{move.notes}</td>
                           {/* ----------File Upload--------------- */}
                           {/* <td className="py-2 text-center">
                             <div className="flex flex-col gap-1 mt-2">

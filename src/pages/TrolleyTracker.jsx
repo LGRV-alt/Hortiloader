@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import pb from "../api/pbConnect";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function TrolleyTrackerPage() {
   const [customers, setCustomers] = useState([]);
@@ -11,6 +12,7 @@ export default function TrolleyTrackerPage() {
   const [newCustomerContactInfo, setNewCustomerContactInfo] = useState("");
   const [error, setError] = useState("");
   const [search, setSearch] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const filteredCustomers = customers.filter((c) =>
     c.name.toLowerCase().includes(search.toLowerCase())
@@ -113,7 +115,24 @@ export default function TrolleyTrackerPage() {
   }, [userId]);
 
   const handleAddCustomer = async () => {
-    if (!newCustomerName.trim()) return;
+    if (!newCustomerName.trim()) {
+      setError("No customer name added");
+      return;
+    }
+
+    setSaving(true);
+
+    // Check for duplicate name (case insensitive)
+    const exists = customers.some(
+      (cust) =>
+        cust.name.trim().toLowerCase() === newCustomerName.trim().toLowerCase()
+    );
+    if (exists) {
+      setError("A customer with that name already exists.");
+      setSaving(false);
+      return;
+    }
+
     try {
       const created = await pb.collection("trolley_customers").create({
         name: newCustomerName,
@@ -141,9 +160,12 @@ export default function TrolleyTrackerPage() {
       setNewCustomerName("");
       setNewCustomerNotes("");
       setNewCustomerContactInfo("");
+      setSaving(false);
       setError("");
+      toast.success("Customer Account added");
     } catch (err) {
       setError("Failed to add customer.");
+      setSaving(false);
       console.error(err);
     }
   };
@@ -193,7 +215,7 @@ export default function TrolleyTrackerPage() {
   );
 
   return (
-    <div className="mx-5 mt-5 relative max-w-full">
+    <div className="mx-5 mt-5 relative max-w-full mb-5">
       <h1 className="text-2xl font-bold text-center">Trolley Tracker</h1>
       <p className="mb-4 text-gray-500 text-center">
         Total view of all outstanding trollies, shelves and extensions
@@ -350,10 +372,10 @@ export default function TrolleyTrackerPage() {
             </tr>
           </tfoot>
         </table>
-        {error && <div className="text-red-600 mt-4 text-sm">{error}</div>}
+        {/* {error && <div className="text-red-600 mt-4 text-sm">{error}</div>} */}
       </div>
 
-      {/* Add Customer Modal */}
+      {/* ----------------------Add Customer Modal-------------------------------- */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm">
@@ -374,7 +396,7 @@ export default function TrolleyTrackerPage() {
             />
             <textarea
               className="border p-2 w-full rounded mb-4"
-              placeholder="Email/Mobile (pptional)"
+              placeholder="Email/Mobile (optional)"
               value={newCustomerContactInfo}
               onChange={(e) => setNewCustomerContactInfo(e.target.value)}
             />
@@ -389,7 +411,7 @@ export default function TrolleyTrackerPage() {
                 className="px-4 py-2 bg-green-700 text-white rounded-2xl shadow hover:bg-green-800"
                 onClick={handleAddCustomer}
               >
-                Add
+                {saving ? "Adding..." : "Add"}
               </button>
             </div>
             {error && <div className="text-red-600 mt-4 text-sm">{error}</div>}

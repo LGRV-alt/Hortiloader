@@ -227,6 +227,13 @@ export default function Header({
             Runs
           </NavLink>
           <NavLink
+            to="/trolley-tracker"
+            onClick={() => setMenuOpen(false)}
+            className="hover:text-blue-300"
+          >
+            Trolley Tracker
+          </NavLink>
+          <NavLink
             className={"hover:text-blue-500 flex justify-center items-center"}
             onClick={() => setMenuOpen(false)}
             to="/search"
