@@ -689,10 +689,10 @@ export default function TrolleyCustomerDetailsPage() {
                         <>
                           <td className="py-2">
                             {new Date(move.date).toLocaleDateString()}{" "}
-                            {new Date(move.date).toLocaleTimeString([], {
+                            {/* {new Date(move.date).toLocaleTimeString([], {
                               hour: "2-digit",
                               minute: "2-digit",
-                            })}
+                            })} */}
                           </td>
                           <td className="py-2 text-center">
                             {move.trollies_out}
