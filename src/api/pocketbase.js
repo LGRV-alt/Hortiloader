@@ -164,6 +164,17 @@ export async function signup(
   orgName
 ) {
   try {
+    // 1. Check if org name already exists
+    const existing = await pb.collection("organization").getFullList({
+      filter: `name = "${orgName}"`,
+    });
+    console.log(existing);
+    if (existing.length > 0) {
+      return {
+        success: false,
+        message: "Organization name already exists. Please choose another.",
+      };
+    }
     // Create Org
     const org = await pb.collection("organization").create({ name: orgName });
 
