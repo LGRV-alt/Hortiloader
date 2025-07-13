@@ -13,7 +13,9 @@ import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
 const userName = pb.authStore.model?.username?.toLowerCase() || "";
-console.log(pb.authStore);
+const user = pb.authStore.record;
+console.log(user);
+
 export default function Edit() {
   const records = useTaskStore((state) => state.tasks);
   const optimisticDeleteTask = useTaskStore((state) => state.deleteTask);
@@ -45,24 +47,6 @@ export default function Edit() {
   const [deletePassword, setDeletePassword] = useState("");
   const [savingState, setSavingState] = useState("Save");
   const [pictures, setPictures] = useState([]);
-
-  // useEffect(() => {
-  //   const record = records.find((r) => r.id === id);
-  //   if (record) {
-  //     setTitle(record.title ?? "");
-  //     setDay(record.day ?? "");
-  //     setPostcode(record.postcode ?? "");
-  //     setOrderNumber(record.orderNumber ?? "");
-  //     setCustomerType(record.customerType ?? "");
-  //     setOther(record.other ?? "");
-  //     setWeekNumber(record.weekNumber ?? "");
-  //     setOrderInfo(record.orderInfo ?? "");
-  //     setStatus(record.status ?? "");
-  //     setYear(record.year ?? "");
-  //     setTrollies(record.trollies ?? "");
-  //     setExtras(record.extras ?? "");
-  //   }
-  // }, [records, id]);
 
   useEffect(() => {
     if (!id) return;
@@ -126,7 +110,7 @@ export default function Edit() {
         year,
         trollies,
         extras,
-        updated_by: pb.authStore.record.id,
+        updated_by: user.id,
       });
       setSavingState("Save");
       toast.success("Order updated successfully!");
@@ -341,13 +325,14 @@ export default function Edit() {
                 >
                   <p>{savingState}</p>
                 </button>
-
-                <button
-                  className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
-                  onClick={() => setShowDeleteModal(true)}
-                >
-                  <p>Delete</p>
-                </button>
+                {user.role === "admin" && (
+                  <button
+                    className=" bg-red-500 rounded-md  text-white px-4 py-2 hover:bg-red-600"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    <p>Delete</p>
+                  </button>
+                )}
               </div>
             </div>
           </div>
