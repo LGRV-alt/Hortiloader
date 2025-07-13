@@ -41,8 +41,10 @@ export default function CreateCustomer() {
         orderInfo,
         status: null,
         year,
-        user: pb.authStore.model.id,
+        user: user.id,
         org: user.organization,
+        created_by: user.id,
+        updated_by: user.id,
       });
       setSaving(false);
       toast.success("Order Created");

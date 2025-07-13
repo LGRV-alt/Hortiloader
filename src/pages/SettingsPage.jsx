@@ -28,6 +28,7 @@ export default function SettingsPage({ onSettingsChange }) {
   console.log(users.length);
 
   const currentUser = pb.authStore.record;
+  console.log("currentUser.role:", currentUser.role);
 
   useEffect(() => {
     let isMounted = true;
@@ -121,7 +122,7 @@ export default function SettingsPage({ onSettingsChange }) {
   }
 
   return (
-    <div className="grid h-full grid-cols-1 md:grid-cols-3 p-4 bg-surface">
+    <div className={`grid h-full grid-cols-1 md:grid-cols-3 p-4 bg-surface`}>
       <div className="flex flex-col items-center w-full">
         {/* <h1 className="text-2xl font-bold mb-4">Settings</h1> */}
         <div className="bg-white w-full md:w-3/4 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">

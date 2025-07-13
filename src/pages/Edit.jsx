@@ -23,6 +23,7 @@ export default function Edit() {
   const [userName, setUserName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const weekNumbers = Array.from({ length: 52 }, (_, i) => i + 1);
+  const [loading, setLoading] = useState(true);
 
   // --------------------Form Data---------------------------
   const [title, setTitle] = useState("");
@@ -37,6 +38,7 @@ export default function Edit() {
   const [year, setYear] = useState("");
   const [trollies, setTrollies] = useState("");
   const [extras, setExtras] = useState("");
+  const [taskDetail, setTaskDetail] = useState(null);
 
   // --------------------Delete modal----------------------------
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -44,23 +46,51 @@ export default function Edit() {
   const [savingState, setSavingState] = useState("Save");
   const [pictures, setPictures] = useState([]);
 
+  // useEffect(() => {
+  //   const record = records.find((r) => r.id === id);
+  //   if (record) {
+  //     setTitle(record.title ?? "");
+  //     setDay(record.day ?? "");
+  //     setPostcode(record.postcode ?? "");
+  //     setOrderNumber(record.orderNumber ?? "");
+  //     setCustomerType(record.customerType ?? "");
+  //     setOther(record.other ?? "");
+  //     setWeekNumber(record.weekNumber ?? "");
+  //     setOrderInfo(record.orderInfo ?? "");
+  //     setStatus(record.status ?? "");
+  //     setYear(record.year ?? "");
+  //     setTrollies(record.trollies ?? "");
+  //     setExtras(record.extras ?? "");
+  //   }
+  // }, [records, id]);
+
   useEffect(() => {
-    const record = records.find((r) => r.id === id);
-    if (record) {
-      setTitle(record.title ?? "");
-      setDay(record.day ?? "");
-      setPostcode(record.postcode ?? "");
-      setOrderNumber(record.orderNumber ?? "");
-      setCustomerType(record.customerType ?? "");
-      setOther(record.other ?? "");
-      setWeekNumber(record.weekNumber ?? "");
-      setOrderInfo(record.orderInfo ?? "");
-      setStatus(record.status ?? "");
-      setYear(record.year ?? "");
-      setTrollies(record.trollies ?? "");
-      setExtras(record.extras ?? "");
-    }
-  }, [records, id]);
+    if (!id) return;
+    setLoading(true);
+    pb.collection("tasks")
+      .getOne(id, { expand: "created_by,updated_by" })
+      .then((task) => {
+        setTaskDetail(task);
+        // Set your form fields here as well:
+        setTitle(task.title ?? "");
+        setDay(task.day ?? "");
+        setPostcode(task.postcode ?? "");
+        setOrderNumber(task.orderNumber ?? "");
+        setCustomerType(task.customerType ?? "");
+        setOther(task.other ?? "");
+        setWeekNumber(task.weekNumber ?? "");
+        setOrderInfo(task.orderInfo ?? "");
+        setStatus(task.status ?? "");
+        setYear(task.year ?? "");
+        setTrollies(task.trollies ?? "");
+        setExtras(task.extras ?? "");
+        setLoading(false);
+      })
+      .catch((e) => {
+        toast.error("Could not load task.");
+        setLoading(false);
+      });
+  }, [id]);
 
   useEffect(() => {
     const updateUserName = () => {
@@ -96,6 +126,7 @@ export default function Edit() {
         year,
         trollies,
         extras,
+        updated_by: pb.authStore.record.id,
       });
       setSavingState("Save");
       toast.success("Order updated successfully!");
@@ -128,7 +159,7 @@ export default function Edit() {
     }
   };
 
-  if (!records || records.length === 0) {
+  if (loading) {
     {
       return (
         <div className="relative h-full w-full overflow-hidden">
@@ -144,12 +175,25 @@ export default function Edit() {
   } else {
     return (
       <div className="p-2 bg-surface grid grid-cols-1 gap-4 text-sm md:text-lg h-full ">
-        <div className="bg-white  border-black gap-5 md:gap-10 border-2 grid md:grid-cols-2 rounded-2xl p-8">
+        <div className="bg-white  border-black gap-5 md:gap-10 border-2 grid md:grid-cols-2 rounded-2xl p-2">
           <div className=" flex flex-col gap-2">
             <div className="flex items-center justify-center md:justify-between gap-2 ">
-              <h2 className="text-sm md:text-2xl font-medium text-secondary">
-                Edit Order
-              </h2>
+              <div>
+                <h2 className="text-sm md:text-2xl font-medium text-secondary">
+                  Edit Order
+                </h2>
+                <p className="text-xs">
+                  Created by:{" "}
+                  {taskDetail?.expand?.created_by?.username ||
+                    taskDetail?.created_by}
+                </p>
+                <p className="text-xs">
+                  Updated by:{" "}
+                  {taskDetail?.expand?.updated_by?.username ||
+                    taskDetail?.updated_by}
+                </p>
+              </div>
+
               <div className="flex font-semibold gap-1 border-b-2 border-black">
                 <select
                   className="text-center w-auto md:w-auto cursor-pointer bg-transparent text-input appearance-none focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"

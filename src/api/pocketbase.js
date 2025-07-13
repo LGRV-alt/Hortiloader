@@ -17,7 +17,8 @@ export async function updateTask(
   year,
   trollies,
   extras,
-  org
+  org,
+  updated_by
 ) {
   const data = {
     title: title,
@@ -33,6 +34,7 @@ export async function updateTask(
     trollies: trollies,
     extras: extras,
     org: org,
+    updated_by: updated_by,
   };
   await pb.collection("tasks").update(id, data);
 }
@@ -307,7 +309,9 @@ export async function createTask(
   weekNumber,
   orderInfo,
   status,
-  year
+  year,
+  created_by,
+  updated_by
 ) {
   const data = {
     title: title,
@@ -321,6 +325,8 @@ export async function createTask(
     orderInfo,
     status: status,
     year: year,
+    created_by: created_by,
+    updated_by: updated_by,
   };
   await pb.collection("tasks").create(data);
 }
