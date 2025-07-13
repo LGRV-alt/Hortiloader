@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import pb from "../api/pbConnect";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
 // import MovementFileUpload from "../Components/MovementFileUpload";
 
 export default function TrolleyCustomerDetailsPage() {
@@ -11,6 +11,13 @@ export default function TrolleyCustomerDetailsPage() {
   const [customer, setCustomer] = useState(null);
   const [movements, setMovements] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //   Edit Customer Details
+  const [editingCustomer, setEditingCustomer] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editNotes, setEditNotes] = useState("");
+  const [editContactInfo, setEditContactInfo] = useState("");
+  const [saving, setSaving] = useState(false);
 
   // Movement form state
   const [trolliesOut, setTrolliesOut] = useState("");
@@ -217,10 +224,87 @@ export default function TrolleyCustomerDetailsPage() {
       ) : (
         <>
           <div className="flex flex-col justify-center items-center ">
-            <h2 className="text-2xl font-bold">{customer.name}</h2>
+            <h2 className="text-2xl font-bold">
+              {customer.name}{" "}
+              <span>
+                {" "}
+                <button
+                  className="text-blue-600 hover:underline text-xs"
+                  onClick={() => {
+                    setEditName(customer.name);
+                    setEditNotes(customer.notes || "");
+                    setEditContactInfo(customer.contact_info || "");
+                    setEditingCustomer(true);
+                  }}
+                >
+                  Edit
+                </button>
+              </span>
+            </h2>
             <p className="text-gray-500">{customer.notes.toUpperCase()}</p>
             <p className="text-gray-500">{customer.contact_info}</p>
           </div>
+
+          {/* -----------------------------------Edit customer modal------------------------------------ */}
+          {editingCustomer && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+                <h2 className="text-lg font-bold mb-4">Edit Account Details</h2>
+                <input
+                  className="border p-2 w-full rounded mb-2"
+                  type="text"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  placeholder="Name"
+                />
+                <textarea
+                  className="border p-2 w-full rounded mb-2"
+                  value={editNotes}
+                  onChange={(e) => setEditNotes(e.target.value)}
+                  placeholder="Address/Postcode (optional)"
+                  rows={2}
+                />
+                <textarea
+                  className="border p-2 w-full rounded mb-4"
+                  value={editContactInfo}
+                  onChange={(e) => setEditContactInfo(e.target.value)}
+                  placeholder="Contact Info (optional)"
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+                    onClick={() => setEditingCustomer(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="px-4 py-2 bg-green-700 text-white rounded hover:bg-green-800"
+                    onClick={async () => {
+                      try {
+                        setSaving(true);
+                        await pb
+                          .collection("trolley_customers")
+                          .update(customer.id, {
+                            name: editName,
+                            notes: editNotes,
+                            contact_info: editContactInfo,
+                          });
+                        setSaving(false);
+                        toast.success("User Updated");
+                        setEditingCustomer(false);
+                        setReloadMovements((r) => !r); // This will refetch customer
+                      } catch (err) {
+                        alert("Could not update customer.");
+                        console.error(err);
+                      }
+                    }}
+                  >
+                    {saving ? "Saving..." : "Save"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Outstanding summary */}
           <div className="mb-4 flex flex-wrap gap-4">

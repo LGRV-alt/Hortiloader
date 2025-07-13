@@ -209,8 +209,8 @@ export default function TrolleyTrackerPage() {
       <div className="bg-white rounded-2xl border-2 border-black shadow p-4 overflow-x-auto">
         <input
           type="text"
-          placeholder="Search customer..."
-          className="border p-2 rounded mb-3"
+          placeholder="Search..."
+          className="border p-2 rounded mb-3 border-black"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
