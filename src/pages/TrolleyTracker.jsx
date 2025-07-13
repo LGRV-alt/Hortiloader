@@ -8,6 +8,7 @@ export default function TrolleyTrackerPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerNotes, setNewCustomerNotes] = useState("");
+  const [newCustomerContactInfo, setNewCustomerContactInfo] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -112,6 +113,7 @@ export default function TrolleyTrackerPage() {
       const created = await pb.collection("trolley_customers").create({
         name: newCustomerName,
         notes: newCustomerNotes,
+        contact_info: newCustomerContactInfo,
         user: userId,
       });
       // Add new customer to the list with zero tallies
@@ -133,6 +135,7 @@ export default function TrolleyTrackerPage() {
       setShowAddModal(false);
       setNewCustomerName("");
       setNewCustomerNotes("");
+      setNewCustomerContactInfo("");
       setError("");
     } catch (err) {
       setError("Failed to add customer.");
@@ -304,7 +307,7 @@ export default function TrolleyTrackerPage() {
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm">
-            <h2 className="text-xl font-bold mb-3">Add Customer</h2>
+            <h2 className="text-xl text-center font-bold mb-3">Add Customer</h2>
             <input
               className="border p-2 w-full rounded mb-4"
               type="text"
@@ -315,9 +318,15 @@ export default function TrolleyTrackerPage() {
             />
             <textarea
               className="border p-2 w-full rounded mb-4"
-              placeholder="Notes (optional)"
+              placeholder="Address/Postcode (optional)"
               value={newCustomerNotes}
               onChange={(e) => setNewCustomerNotes(e.target.value)}
+            />
+            <textarea
+              className="border p-2 w-full rounded mb-4"
+              placeholder="Email/Mobile (pptional)"
+              value={newCustomerContactInfo}
+              onChange={(e) => setNewCustomerContactInfo(e.target.value)}
             />
             <div className="flex justify-end gap-2">
               <button

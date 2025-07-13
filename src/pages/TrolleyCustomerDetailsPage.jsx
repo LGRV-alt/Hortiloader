@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import pb from "../api/pbConnect";
-import toast from "react-hot-toast";
-import MovementFileUpload from "../Components/MovementFileUpload";
+// import toast from "react-hot-toast";
+// import MovementFileUpload from "../Components/MovementFileUpload";
 
 export default function TrolleyCustomerDetailsPage() {
   const { id } = useParams();
@@ -28,7 +28,7 @@ export default function TrolleyCustomerDetailsPage() {
   const [showDelete, setShowDelete] = useState(null);
 
   // File upload after add
-  const [lastCreatedId, setLastCreatedId] = useState(null);
+  //   const [lastCreatedId, setLastCreatedId] = useState(null);
 
   // For reloading movement files after upload/delete
   const [reloadMovements, setReloadMovements] = useState(false);
@@ -131,7 +131,7 @@ export default function TrolleyCustomerDetailsPage() {
       setExtensionsOut("");
       setExtensionsIn("");
       setNotes("");
-      setLastCreatedId(created.id); // trigger upload UI
+      //   setLastCreatedId(created.id); // trigger upload UI
       setReloadMovements((r) => !r);
     } catch (err) {
       setError("Failed to add movement.");
@@ -203,7 +203,7 @@ export default function TrolleyCustomerDetailsPage() {
   //   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-8 px-4">
+    <div className="max-w-full mx-auto pt-2 px-4">
       <button
         onClick={() => navigate(-1)}
         className="mb-4 text-blue-600 hover:underline"
@@ -216,10 +216,12 @@ export default function TrolleyCustomerDetailsPage() {
         <div className="text-red-600">{error}</div>
       ) : (
         <>
-          <h2 className="text-2xl font-bold mb-2">{customer.name}</h2>
-          {customer.notes && (
-            <p className="text-gray-500 mb-2">{customer.notes}</p>
-          )}
+          <div className="flex flex-col justify-center items-center ">
+            <h2 className="text-2xl font-bold">{customer.name}</h2>
+            <p className="text-gray-500">{customer.notes.toUpperCase()}</p>
+            <p className="text-gray-500">{customer.contact_info}</p>
+          </div>
+
           {/* Outstanding summary */}
           <div className="mb-4 flex flex-wrap gap-4">
             <span className="text-lg font-bold">Outstanding:</span>
