@@ -12,18 +12,29 @@ export default function SettingsPage({ onSettingsChange }) {
   const [users, setUsers] = useState([]);
   const [showAddUser, setShowAddUser] = useState(false);
   const [newUser, setNewUser] = useState({
-    email: "",
     username: "",
     role: "staff",
+    password: "",
+    passwordConfirm: "",
   });
 
-  const currentUser = pb.authStore.model;
+  const currentUser = pb.authStore.record;
 
   useEffect(() => {
     if (settings) {
       setForm(settings);
     }
   }, [settings]);
+
+  useEffect(() => {
+    if (currentUser.role === "admin" && currentUser.organization) {
+      pb.collection("users")
+        .getFullList({ filter: `organization="${currentUser.organization}"` })
+        .then(setUsers)
+        .catch(() => setUsers([]));
+    }
+    // Only run when org or role changes
+  }, [currentUser.organization, currentUser.role]);
 
   const handleChange = (e) => {
     setForm({
@@ -40,6 +51,35 @@ export default function SettingsPage({ onSettingsChange }) {
     await fetchSettings();
     toast.success("Settings saved!");
     setSave(false);
+  };
+
+  const handleAddUser = async (e) => {
+    e.preventDefault();
+    // Optionally validate inputs here
+    try {
+      await pb.collection("users").create({
+        ...newUser,
+        organization: currentUser.organization,
+        role: newUser.role || "staff",
+        termsAgreement: {
+          agreed: true,
+          timestamp: new Date().toISOString(),
+          version: "v1.0",
+        },
+      });
+
+      toast.success("User invited!");
+      setShowAddUser(false);
+      setNewUser({ email: "", username: "", role: "staff" });
+      // Refresh list
+      const updated = await pb.collection("users").getFullList({
+        filter: `organization="${currentUser.organization}"`,
+      });
+      setUsers(updated);
+    } catch (err) {
+      toast.error("Failed to invite user: " + (err.message || ""));
+      console.error("Error details:", err.data);
+    }
   };
 
   return (
@@ -115,6 +155,94 @@ export default function SettingsPage({ onSettingsChange }) {
           </form>
         </div>
       </div>
+      {currentUser.role === "admin" && (
+        <div className="bg-white p-4 mt-10 w-full md:w-1/2 gap-4 rounded-2xl flex flex-col items-center">
+          <h3 className="font-bold mb-2">Organization Users</h3>
+          <ul className="w-full mb-4">
+            {users.map((u) => (
+              <li
+                key={u.id}
+                className="flex justify-between items-center border-b py-1"
+              >
+                <span>
+                  {u.username} ({u.email}){" "}
+                  {u.role === "admin" && <b>- Admin</b>}
+                </span>
+                {/* (Add Remove/Disable/Reset Button here, if not self) */}
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() => setShowAddUser((s) => !s)}
+            className="text-blue-600 underline"
+          >
+            {showAddUser ? "Cancel" : "Add New User"}
+          </button>
+          {showAddUser && (
+            <form
+              onSubmit={handleAddUser}
+              className="flex flex-col gap-2 w-full mt-2"
+            >
+              <input
+                className="border p-2 rounded"
+                type="text"
+                placeholder="Username"
+                value={newUser.username}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, username: e.target.value }))
+                }
+                required
+              />
+              {/* <input
+                className="border p-2 rounded"
+                type="email"
+                placeholder="Email"
+                value={newUser.email}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, email: e.target.value }))
+                }
+                required
+              /> */}
+              <input
+                className="border p-2 rounded"
+                type="text"
+                placeholder="Password"
+                value={newUser.password}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, password: e.target.value }))
+                }
+                required
+              />
+              <input
+                className="border p-2 rounded"
+                type="text"
+                placeholder="Password Confirm"
+                value={newUser.passwordConfirm}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, passwordConfirm: e.target.value }))
+                }
+                required
+              />
+              <select
+                className="border p-2 rounded"
+                value={newUser.role}
+                onChange={(e) =>
+                  setNewUser((u) => ({ ...u, role: e.target.value }))
+                }
+              >
+                <option value="staff">Staff</option>
+                <option value="admin">Admin</option>
+              </select>
+              <button
+                className="bg-green-600 text-white px-3 py-1 rounded"
+                type="submit"
+              >
+                Invite User
+              </button>
+            </form>
+          )}
+        </div>
+      )}
     </div>
   );
 }

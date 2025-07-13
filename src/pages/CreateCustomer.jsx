@@ -6,6 +6,7 @@ import pb from "../api/pbConnect";
 import toast from "react-hot-toast";
 
 export default function CreateCustomer() {
+  const user = pb.authStore.record;
   const currentWeek = getDateWeek(new Date());
   const navigate = useNavigate();
   const createTask = useTaskStore((state) => state.createTask);
@@ -41,6 +42,7 @@ export default function CreateCustomer() {
         status: null,
         year,
         user: pb.authStore.model.id,
+        org: user.organization,
       });
       setSaving(false);
       toast.success("Order Created");

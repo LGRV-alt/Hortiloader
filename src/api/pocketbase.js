@@ -16,7 +16,8 @@ export async function updateTask(
   status,
   year,
   trollies,
-  extras
+  extras,
+  org
 ) {
   const data = {
     title: title,
@@ -31,17 +32,75 @@ export async function updateTask(
     year: year,
     trollies: trollies,
     extras: extras,
+    org: org,
   };
   await pb.collection("tasks").update(id, data);
 }
+
+// export async function login(username, password) {
+//   try {
+//     // 1) Attempt to authenticate
+//     await pb.collection("users").authWithPassword(username, password);
+
+//     // 2) Check email-verified
+//     if (!pb.authStore.model?.verified) {
+//       pb.authStore.clear();
+//       return {
+//         success: false,
+//         reason: "unverified",
+//         message: "Please verify your email before logging in.",
+//       };
+//     }
+
+//     // 3) Check terms agreement
+//     const agreement = pb.authStore.model?.termsAgreement;
+//     if (!agreement?.agreed) {
+//       // Don't clear auth store – let them continue to /accept-terms
+//       return {
+//         success: false,
+//         reason: "no_terms",
+//         message:
+//           "You must agree to the Terms and Privacy Policy before logging in.",
+//       };
+//     }
+
+//     // 4) All good
+//     return { success: true };
+//   } catch (error) {
+//     const status = error?.status;
+
+//     if (status === 403) {
+//       return {
+//         success: false,
+//         reason: "forbidden",
+//         message: "Access denied. Please check your email or account status.",
+//       };
+//     }
+
+//     if (status === 400) {
+//       return {
+//         success: false,
+//         reason: "credentials",
+//         message: "Incorrect username or password.",
+//       };
+//     }
+
+//     return {
+//       success: false,
+//       reason: "unknown",
+//       message: "Unexpected error occurred.",
+//     };
+//   }
+// }
 
 export async function login(username, password) {
   try {
     // 1) Attempt to authenticate
     await pb.collection("users").authWithPassword(username, password);
 
-    // 2) Check email-verified
-    if (!pb.authStore.model?.verified) {
+    // 2) Check role & email-verified (only for admin)
+    const user = pb.authStore.model;
+    if (user.role === "admin" && !user.verified) {
       pb.authStore.clear();
       return {
         success: false,
@@ -51,7 +110,7 @@ export async function login(username, password) {
     }
 
     // 3) Check terms agreement
-    const agreement = pb.authStore.model?.termsAgreement;
+    const agreement = user?.termsAgreement;
     if (!agreement?.agreed) {
       // Don't clear auth store – let them continue to /accept-terms
       return {

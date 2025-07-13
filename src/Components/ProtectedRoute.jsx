@@ -11,7 +11,8 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/login" />;
   }
 
-  if (!user?.verified) {
+  // Only force verification for admin users!
+  if (user?.role === "admin" && !user?.verified) {
     return <Navigate to="/resend-verification" />;
   }
 
