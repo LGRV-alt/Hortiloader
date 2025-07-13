@@ -306,7 +306,8 @@ export default function SettingsPage({ onSettingsChange }) {
                 }
               >
                 <option value="staff">Staff</option>
-                <option value="admin">Admin</option>
+                <option value="super-user">Super User</option>
+                <option value="driver">Driver</option>
               </select>
               <button
                 className="bg-green-600 text-white px-3 py-1 rounded"
