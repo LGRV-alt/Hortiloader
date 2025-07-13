@@ -11,7 +11,8 @@ import SearchPage from "./pages/SearchPage";
 import WeekdayPage from "./pages/Weekday";
 import TrolleyMapper from "./pages/TrolleyMapper";
 import TrolleyExportsPage from "./pages/TrolleyExportsPage";
-
+import TrolleyTrackerPage from "./pages/TrolleyTracker";
+import TrolleyCustomerDetailsPage from "./pages/TrolleyCustomerDetailsPage";
 import ResetPassword from "./pages/auth/ResetPassword";
 
 import Terms from "./pages/Terms";
@@ -120,6 +121,23 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <HoldingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/trolley-tracker"
+                element={
+                  <ProtectedRoute>
+                    <TrolleyTrackerPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/trollies/customer/:id"
+                element={
+                  <ProtectedRoute>
+                    <TrolleyCustomerDetailsPage />
                   </ProtectedRoute>
                 }
               />
