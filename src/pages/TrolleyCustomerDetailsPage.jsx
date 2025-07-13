@@ -1,35 +1,47 @@
-/* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import pb from "../api/pbConnect";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import pb from "../api/pbConnect";
+import toast from "react-hot-toast";
+import MovementFileUpload from "../Components/MovementFileUpload";
 
 export default function TrolleyCustomerDetailsPage() {
-  const { id } = useParams(); // customer id
+  const { id } = useParams();
   const navigate = useNavigate();
-  console.log(pb.authStore.record);
 
   const [customer, setCustomer] = useState(null);
   const [movements, setMovements] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Movement form state
   const [trolliesOut, setTrolliesOut] = useState("");
   const [trolliesIn, setTrolliesIn] = useState("");
+  const [shelvesOut, setShelvesOut] = useState("");
+  const [shelvesIn, setShelvesIn] = useState("");
+  const [extensionsOut, setExtensionsOut] = useState("");
+  const [extensionsIn, setExtensionsIn] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
   const [adding, setAdding] = useState(false);
 
-  // Fetch customer + movements
+  // For editing/deleting
+  const [editing, setEditing] = useState(null);
+  const [showDelete, setShowDelete] = useState(null);
+
+  // File upload after add
+  const [lastCreatedId, setLastCreatedId] = useState(null);
+
+  // For reloading movement files after upload/delete
+  const [reloadMovements, setReloadMovements] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       setLoading(true);
       try {
-        // Fetch customer
         const cust = await pb.collection("trolley_customers").getOne(id);
         setCustomer(cust);
-
-        // Fetch movements for this customer
         const moves = await pb.collection("trolley_movements").getFullList({
           filter: `customer="${id}"`,
-          sort: "-date",
+          sort: "date",
         });
         setMovements(moves);
       } catch (err) {
@@ -39,46 +51,156 @@ export default function TrolleyCustomerDetailsPage() {
       setLoading(false);
     }
     fetchData();
-  }, [id]);
+  }, [id, reloadMovements]);
 
-  // Calculate total
-  const totalOut = movements.reduce((sum, m) => sum + (m.trollies_out || 0), 0);
-  const totalIn = movements.reduce((sum, m) => sum + (m.trollies_in || 0), 0);
-  const runningTotal = totalOut - totalIn;
+  // Running balance
+  const runningBalances = [];
+  let trolliesBal = 0,
+    shelvesBal = 0,
+    extensionsBal = 0;
+  movements.forEach((move) => {
+    trolliesBal += (move.trollies_out || 0) - (move.trollies_in || 0);
+    shelvesBal += (move.shelves_out || 0) - (move.shelves_in || 0);
+    extensionsBal += (move.extensions_out || 0) - (move.extensions_in || 0);
+    runningBalances.push({
+      trollies: trolliesBal,
+      shelves: shelvesBal,
+      extensions: extensionsBal,
+    });
+  });
 
-  // Add a new movement (in/out)
+  // Outstanding
+  const totalTrolliesOut = movements.reduce(
+    (sum, m) => sum + (m.trollies_out || 0),
+    0
+  );
+  const totalTrolliesIn = movements.reduce(
+    (sum, m) => sum + (m.trollies_in || 0),
+    0
+  );
+  const totalShelvesOut = movements.reduce(
+    (sum, m) => sum + (m.shelves_out || 0),
+    0
+  );
+  const totalShelvesIn = movements.reduce(
+    (sum, m) => sum + (m.shelves_in || 0),
+    0
+  );
+  const totalExtensionsOut = movements.reduce(
+    (sum, m) => sum + (m.extensions_out || 0),
+    0
+  );
+  const totalExtensionsIn = movements.reduce(
+    (sum, m) => sum + (m.extensions_in || 0),
+    0
+  );
+
+  // Add movement
   const handleAddMovement = async (e) => {
     e.preventDefault();
     setError("");
-    if (!trolliesOut && !trolliesIn) {
-      setError("Please enter trollies out and/or in.");
+    if (
+      !trolliesOut &&
+      !trolliesIn &&
+      !shelvesOut &&
+      !shelvesIn &&
+      !extensionsOut &&
+      !extensionsIn
+    ) {
+      setError("Enter at least one value.");
       return;
     }
     setAdding(true);
     try {
-      await pb.collection("trolley_movements").create({
+      const created = await pb.collection("trolley_movements").create({
         customer: id,
         trollies_out: Number(trolliesOut) || 0,
         trollies_in: Number(trolliesIn) || 0,
+        shelves_out: Number(shelvesOut) || 0,
+        shelves_in: Number(shelvesIn) || 0,
+        extensions_out: Number(extensionsOut) || 0,
+        extensions_in: Number(extensionsIn) || 0,
         notes,
         date: new Date().toISOString(),
         user: pb.authStore.record.id,
       });
       setTrolliesOut("");
       setTrolliesIn("");
+      setShelvesOut("");
+      setShelvesIn("");
+      setExtensionsOut("");
+      setExtensionsIn("");
       setNotes("");
-      // Re-fetch movements
-      const moves = await pb.collection("trolley_movements").getFullList({
-        filter: `customer="${id}"`,
-        sort: "-date",
-      });
-      setMovements(moves);
+      setLastCreatedId(created.id); // trigger upload UI
+      setReloadMovements((r) => !r);
     } catch (err) {
       setError("Failed to add movement.");
       console.error(err);
     }
     setAdding(false);
   };
+
+  // Delete movement
+  const handleDelete = async () => {
+    if (!showDelete) return;
+    try {
+      await pb.collection("trolley_movements").delete(showDelete);
+      setShowDelete(null);
+      setReloadMovements((r) => !r);
+    } catch (err) {
+      alert("Could not delete movement.");
+      console.error(err);
+    }
+  };
+
+  // Edit movement
+  const openEdit = (move) => {
+    setEditing({
+      ...move,
+      trollies_out: move.trollies_out || "",
+      trollies_in: move.trollies_in || "",
+      shelves_out: move.shelves_out || "",
+      shelves_in: move.shelves_in || "",
+      extensions_out: move.extensions_out || "",
+      extensions_in: move.extensions_in || "",
+    });
+  };
+
+  // Save edit
+  const handleEditSave = async () => {
+    try {
+      await pb.collection("trolley_movements").update(editing.id, {
+        trollies_out: Number(editing.trollies_out) || 0,
+        trollies_in: Number(editing.trollies_in) || 0,
+        shelves_out: Number(editing.shelves_out) || 0,
+        shelves_in: Number(editing.shelves_in) || 0,
+        extensions_out: Number(editing.extensions_out) || 0,
+        extensions_in: Number(editing.extensions_in) || 0,
+        notes: editing.notes,
+      });
+      setEditing(null);
+      setReloadMovements((r) => !r);
+    } catch (err) {
+      alert("Could not update movement.");
+      console.error(err);
+    }
+  };
+  const handleEditCancel = () => setEditing(null);
+
+  // Delete file from movement
+  //   const handleDeleteFile = async (movement, filename) => {
+  //     try {
+  //       const newFiles = (movement.files || []).filter((f) => f !== filename);
+  //       await pb.collection("trolley_movements").update(movement.id, {
+  //         files: newFiles,
+  //       });
+  //       toast.success("File deleted");
+  //       setReloadMovements((r) => !r);
+  //     } catch (err) {
+  //       toast.error("Failed to delete file");
+  //       console.error(err);
+  //     }
+  //   };
 
   return (
     <div className="max-w-2xl mx-auto mt-8 px-4">
@@ -98,16 +220,17 @@ export default function TrolleyCustomerDetailsPage() {
           {customer.notes && (
             <p className="text-gray-500 mb-2">{customer.notes}</p>
           )}
-
-          <div className="mb-4">
+          {/* Outstanding summary */}
+          <div className="mb-4 flex flex-wrap gap-4">
+            <span className="text-lg font-bold">Outstanding:</span>
             <span className="text-lg">
-              Total trollies out: <b>{totalOut}</b>
+              Trollies: <b>{totalTrolliesOut - totalTrolliesIn}</b>
             </span>
-            <span className="ml-4 text-lg">
-              in: <b>{totalIn}</b>
+            <span className="text-lg">
+              Shelves: <b>{totalShelvesOut - totalShelvesIn}</b>
             </span>
-            <span className="ml-4 text-lg font-bold">
-              Balance: {runningTotal}
+            <span className="text-lg">
+              Extensions: <b>{totalExtensionsOut - totalExtensionsIn}</b>
             </span>
           </div>
 
@@ -117,11 +240,11 @@ export default function TrolleyCustomerDetailsPage() {
             className="bg-gray-50 p-4 rounded-xl mb-6 shadow"
           >
             <h3 className="font-semibold mb-2">Add Movement</h3>
-            <div className="flex gap-2 mb-2">
+            <div className="flex gap-2 mb-2 flex-wrap">
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-32"
+                className="border p-2 rounded w-28"
                 placeholder="Trollies out"
                 value={trolliesOut}
                 onChange={(e) => setTrolliesOut(e.target.value)}
@@ -129,10 +252,42 @@ export default function TrolleyCustomerDetailsPage() {
               <input
                 type="number"
                 min="0"
-                className="border p-2 rounded w-32"
+                className="border p-2 rounded w-28"
                 placeholder="Trollies in"
                 value={trolliesIn}
                 onChange={(e) => setTrolliesIn(e.target.value)}
+              />
+              <input
+                type="number"
+                min="0"
+                className="border p-2 rounded w-28"
+                placeholder="Shelves out"
+                value={shelvesOut}
+                onChange={(e) => setShelvesOut(e.target.value)}
+              />
+              <input
+                type="number"
+                min="0"
+                className="border p-2 rounded w-28"
+                placeholder="Shelves in"
+                value={shelvesIn}
+                onChange={(e) => setShelvesIn(e.target.value)}
+              />
+              <input
+                type="number"
+                min="0"
+                className="border p-2 rounded w-28"
+                placeholder="Extensions out"
+                value={extensionsOut}
+                onChange={(e) => setExtensionsOut(e.target.value)}
+              />
+              <input
+                type="number"
+                min="0"
+                className="border p-2 rounded w-28"
+                placeholder="Extensions in"
+                value={extensionsIn}
+                onChange={(e) => setExtensionsIn(e.target.value)}
               />
             </div>
             <textarea
@@ -152,40 +307,369 @@ export default function TrolleyCustomerDetailsPage() {
             {error && <div className="text-red-600 mt-2 text-sm">{error}</div>}
           </form>
 
+          {/* Show file upload for new movement */}
+          {/* {lastCreatedId && (
+            <div className="my-4 border rounded-xl p-3 bg-gray-100">
+              <div className="mb-1 font-bold">
+                Attach files to new movement:
+              </div>
+              <MovementFileUpload
+                movementID={lastCreatedId}
+                onUploaded={() => {
+                  setLastCreatedId(null);
+                  setReloadMovements((r) => !r);
+                }}
+              />
+            </div>
+          )} */}
+
           <h3 className="font-semibold mb-2">Trolley History</h3>
           {movements.length === 0 ? (
             <div className="text-gray-500">
               No trolley movements recorded yet.
             </div>
           ) : (
-            <table className="w-full mb-10 text-sm">
-              <thead>
-                <tr>
-                  <th className="text-left py-2">Date</th>
-                  <th className="text-center py-2">Out</th>
-                  <th className="text-center py-2">In</th>
-                  <th className="text-left py-2">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                {movements.map((move) => (
-                  <tr key={move.id} className="border-t">
-                    <td className="py-2">
-                      {new Date(move.date).toLocaleDateString()}{" "}
-                      {new Date(move.date).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </td>
-                    <td className="py-2 text-center">{move.trollies_out}</td>
-                    <td className="py-2 text-center">{move.trollies_in}</td>
-                    <td className="py-2">{move.notes}</td>
+            <div className="overflow-x-auto">
+              <table className="w-full mb-10 text-sm">
+                <thead>
+                  <tr>
+                    <th className="text-left py-2">Date</th>
+                    <th className="text-center py-2">Trollies Out</th>
+                    <th className="text-center py-2">Trollies In</th>
+                    <th className="text-center py-2">Shelves Out</th>
+                    <th className="text-center py-2">Shelves In</th>
+                    <th className="text-center py-2">Ext. Out</th>
+                    <th className="text-center py-2">Ext. In</th>
+                    <th className="text-left py-2">Notes</th>
+                    <th className="text-center py-2">Trollies Bal</th>
+                    <th className="text-center py-2">Shelves Bal</th>
+                    <th className="text-center py-2">Ext. Bal</th>
+                    <th className="text-center py-2">Files</th>
+                    <th></th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {movements.map((move, idx) => (
+                    <tr key={move.id} className="border-t align-top">
+                      {editing?.id === move.id ? (
+                        <>
+                          <td className="py-2">
+                            {new Date(move.date).toLocaleDateString()}{" "}
+                            {new Date(move.date).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.trollies_out}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  trollies_out: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.trollies_in}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  trollies_in: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.shelves_out}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  shelves_out: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.shelves_in}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  shelves_in: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.extensions_out}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  extensions_out: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            <input
+                              type="number"
+                              min="0"
+                              className="border p-1 rounded w-12"
+                              value={editing.extensions_in}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  extensions_in: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2">
+                            <input
+                              type="text"
+                              className="border p-1 rounded w-full"
+                              value={editing.notes}
+                              onChange={(e) =>
+                                setEditing((ed) => ({
+                                  ...ed,
+                                  notes: e.target.value,
+                                }))
+                              }
+                            />
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].trollies}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].shelves}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].extensions}
+                          </td>
+
+                          {/* ---------------File Upload----------------- */}
+                          {/* <td className="py-2 text-center align-top">
+                            {editing?.id === move.id ? (
+                              <>
+                                <MovementFileUpload
+                                  movementID={move.id}
+                                  onUploaded={() =>
+                                    setReloadMovements((r) => !r)
+                                  }
+                                />
+                                <div className="flex flex-col gap-1 mt-2">
+                                  {(move.files || []).map((file) => (
+                                    <div
+                                      key={file}
+                                      className="flex items-center gap-2"
+                                    >
+                                      {file.toLowerCase().endsWith(".pdf") ? (
+                                        <a
+                                          href={pb.files.getUrl(move, file)}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-600 underline"
+                                        >
+                                          PDF
+                                        </a>
+                                      ) : (
+                                        <img
+                                          src={pb.files.getUrl(move, file)}
+                                          alt="Movement file"
+                                          className="w-10 h-10 rounded object-cover"
+                                        />
+                                      )}
+                                      <button
+                                        className="text-xs text-red-500 hover:underline"
+                                        onClick={() =>
+                                          handleDeleteFile(move, file)
+                                        }
+                                        type="button"
+                                      >
+                                        Delete
+                                      </button>
+                                    </div>
+                                  ))}
+                                </div>
+                              </>
+                            ) : (
+                              <div className="flex flex-col gap-1">
+                                {(move.files || []).map((file) => (
+                                  <div
+                                    key={file}
+                                    className="flex items-center gap-2"
+                                  >
+                                    {file.toLowerCase().endsWith(".pdf") ? (
+                                      <a
+                                        href={pb.files.getUrl(move, file)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 underline"
+                                      >
+                                        PDF
+                                      </a>
+                                    ) : (
+                                      <img
+                                        src={pb.files.getUrl(move, file)}
+                                        alt="Movement file"
+                                        className="w-10 h-10 rounded object-cover"
+                                      />
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </td> */}
+                          <td className="py-2 text-center">
+                            <button
+                              onClick={handleEditSave}
+                              className="bg-green-600 text-white px-2 py-1 rounded mr-1 text-xs"
+                            >
+                              Save
+                            </button>
+                            <button
+                              onClick={handleEditCancel}
+                              className="bg-gray-300 text-black px-2 py-1 rounded text-xs"
+                            >
+                              Cancel
+                            </button>
+                          </td>
+                        </>
+                      ) : (
+                        <>
+                          <td className="py-2">
+                            {new Date(move.date).toLocaleDateString()}{" "}
+                            {new Date(move.date).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.trollies_out}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.trollies_in}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.shelves_out}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.shelves_in}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.extensions_out}
+                          </td>
+                          <td className="py-2 text-center">
+                            {move.extensions_in}
+                          </td>
+                          <td className="py-2">{move.notes}</td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].trollies}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].shelves}
+                          </td>
+                          <td className="py-2 text-center">
+                            {runningBalances[idx].extensions}
+                          </td>
+                          {/* ----------File Upload--------------- */}
+                          {/* <td className="py-2 text-center">
+                            <div className="flex flex-col gap-1 mt-2">
+                              {(move.files || []).map((file) => (
+                                <div
+                                  key={file}
+                                  className="flex items-center gap-2"
+                                >
+                                  {file.toLowerCase().endsWith(".pdf") ? (
+                                    <a
+                                      href={pb.files.getUrl(move, file)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-blue-600 underline"
+                                    >
+                                      PDF
+                                    </a>
+                                  ) : (
+                                    <img
+                                      src={pb.files.getUrl(move, file)}
+                                      alt="Movement file"
+                                      className="w-10 h-10 rounded object-cover"
+                                    />
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </td> */}
+                          <td className="py-2 text-center">
+                            <button
+                              onClick={() => openEdit(move)}
+                              className="text-blue-600 hover:underline text-xs mr-1"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => setShowDelete(move.id)}
+                              className="text-red-500 hover:text-red-700 text-xs"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDelete && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+            <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
+            <p className="mb-4 text-sm">
+              Are you sure you want to delete this movement? This cannot be
+              undone.
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                onClick={() => setShowDelete(null)}
+                className="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
