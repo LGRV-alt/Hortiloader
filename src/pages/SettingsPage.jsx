@@ -8,7 +8,7 @@ export default function SettingsPage({ onSettingsChange }) {
   const { settings, updateSettings, fetchSettings } = useUserSettings(); // include fetchSettings
   const [form, setForm] = useState({});
   const [save, setSave] = useState(false);
-  const [orgName, setOrgName] = useState("");
+  const [orgName, setOrgName] = useState(null);
 
   const [resetUser, setResetUser] = useState(null); // user to reset password for
   const [resetPassword, setResetPassword] = useState("");
@@ -30,13 +30,20 @@ export default function SettingsPage({ onSettingsChange }) {
   const currentUser = pb.authStore.record;
 
   useEffect(() => {
-    // Only try if user has an org id
+    let isMounted = true;
     if (currentUser.organization) {
       pb.collection("organization")
         .getOne(currentUser.organization)
-        .then((org) => setOrgName(org.name))
-        .catch(() => setOrgName("Unknown"));
+        .then((org) => {
+          if (isMounted) setOrgName(org.name);
+        })
+        .catch(() => {
+          if (isMounted) setOrgName("Unknown");
+        });
     }
+    return () => {
+      isMounted = false;
+    }; // Prevent state update if unmounted
   }, [currentUser.organization]);
 
   useEffect(() => {
@@ -119,7 +126,15 @@ export default function SettingsPage({ onSettingsChange }) {
         {/* <h1 className="text-2xl font-bold mb-4">Settings</h1> */}
         <div className="bg-white w-full md:w-1/2 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">
           <h3>Account Info</h3>
-          <p>Organization - {orgName || currentUser.organization}</p>
+          <p>
+            Organization -{" "}
+            {orgName === null ? (
+              <span className="text-gray-400">Loading...</span>
+            ) : (
+              orgName
+            )}
+          </p>
+
           <p>Username - {currentUser.username}</p>
           {currentUser.role === "admin" && (
             <Link
