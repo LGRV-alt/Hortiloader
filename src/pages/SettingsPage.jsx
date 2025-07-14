@@ -13,6 +13,7 @@ export default function SettingsPage({ onSettingsChange }) {
   const [resetUser, setResetUser] = useState(null); // user to reset password for
   const [resetPassword, setResetPassword] = useState("");
   const [resetPasswordConfirm, setResetPasswordConfirm] = useState("");
+  const [showRoleInfo, setShowRoleInfo] = useState(false);
 
   const [users, setUsers] = useState([]);
   const [showAddUser, setShowAddUser] = useState(false);
@@ -25,10 +26,8 @@ export default function SettingsPage({ onSettingsChange }) {
 
   const SUBUSER_LIMIT = 5;
   const subuserCount = users.length; // this already includes the admin
-  console.log(users.length);
 
   const currentUser = pb.authStore.record;
-  console.log("currentUser.role:", currentUser.role);
 
   useEffect(() => {
     let isMounted = true;
@@ -101,7 +100,7 @@ export default function SettingsPage({ onSettingsChange }) {
         },
       });
 
-      toast.success("User invited!");
+      toast.success("User Added!");
       setShowAddUser(false);
       setNewUser({ email: "", username: "", role: "staff" });
       // Refresh list
@@ -137,6 +136,7 @@ export default function SettingsPage({ onSettingsChange }) {
           </p>
 
           <p>Username - {currentUser.username}</p>
+          <p>Role - {currentUser.role}</p>
           {currentUser.role === "admin" && (
             <Link
               to="/forgot-password"
@@ -249,7 +249,7 @@ export default function SettingsPage({ onSettingsChange }) {
                   className="border p-2 rounded"
                   type="text"
                   placeholder="Username"
-                  value={newUser.username}
+                  value={newUser.username.toLowerCase()}
                   onChange={(e) =>
                     setNewUser((u) => ({ ...u, username: e.target.value }))
                   }
@@ -285,10 +285,17 @@ export default function SettingsPage({ onSettingsChange }) {
                     setNewUser((u) => ({ ...u, role: e.target.value }))
                   }
                 >
-                  <option value="staff">Staff</option>
                   <option value="super-user">Super User</option>
-                  <option value="driver">Driver</option>
+                  <option value="staff">Staff</option>
+                  <option value="viewer">Viewer</option>
                 </select>
+                <button
+                  type="button"
+                  className="text-blue-600 underline text-xs"
+                  onClick={() => setShowRoleInfo(true)}
+                >
+                  What do these roles mean?
+                </button>
                 <button
                   className="bg-green-600 text-white px-3 py-1 rounded"
                   type="submit"
@@ -334,6 +341,7 @@ export default function SettingsPage({ onSettingsChange }) {
         </div>
       </div>
 
+      {/* ------------------------Reset Password Modal------------------------------------------ */}
       {resetUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
           <div className="bg-white rounded-xl p-6 shadow-md w-full max-w-xs">
@@ -398,6 +406,45 @@ export default function SettingsPage({ onSettingsChange }) {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------------------Roles Modal--------------------------------------------------- */}
+      {showRoleInfo && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full relative">
+            <h3 className="text-lg font-bold mb-2">User Roles & Permissions</h3>
+            <ul className="text-sm space-y-2 mb-4">
+              <li>
+                <b>Admin:</b> Full control. Manage everything: users, orders,
+                settings and reports.
+              </li>
+              <li>
+                <b>Super User:</b> Create, update, and delete orders. Edit
+                reports. No access to user or organization settings.
+              </li>
+              <li>
+                <b>Staff:</b> Create and update orders only. No deleting or
+                admin access.
+              </li>
+              <li>
+                <b>Viewer:</b> View-only access to orders.
+              </li>
+            </ul>
+            <button
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl"
+              onClick={() => setShowRoleInfo(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+            <button
+              className="bg-green-600 text-white px-3 py-1 rounded mt-2 w-full"
+              onClick={() => setShowRoleInfo(false)}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
