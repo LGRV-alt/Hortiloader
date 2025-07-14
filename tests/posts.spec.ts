@@ -4,7 +4,7 @@ import { taskData, updatedTaskData } from "./fixtures/site-data";
 
 test.describe("CRUD Tests", () => {
   test.beforeEach("Log the user in", async ({ page }) => {
-    await login(page, "Testing", "Password1");
+    await login(page, "Testing", "Testing", "Password1");
   });
   test("Create, Update and Delete a task", async ({ page }) => {
     // Selectors for the form input fields

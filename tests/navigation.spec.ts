@@ -25,7 +25,7 @@ test.describe("Unauthenticated route allowed cases", () => {
 test.describe("Authenticated Routes", () => {
   protectedURLRoutes.forEach((route) => {
     test(`Authenticated route for /${route}`, async ({ page }) => {
-      await login(page, "Testing", "Password1");
+      await login(page, "Testing", "Testing", "Password1");
 
       // Confirm login worked
       await expect(page.getByRole("button", { name: "Add Order" })).toBeVisible(

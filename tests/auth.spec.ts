@@ -7,7 +7,7 @@ test.describe("Check Login and Logout Flow", () => {
     const signInButton = page.getByRole("button", { name: "Sign in" });
 
     // Helper Function for loggin in
-    await login(page, "Testing", "Password1");
+    await login(page, "Testing", "Testing", "Password1");
 
     // Assert that log in worked
     const addOrderButton = page.getByRole("button", { name: "Add Order" });
@@ -26,7 +26,7 @@ test.describe("Check Login and Logout Flow", () => {
     const signInButton = page.getByRole("button", { name: "Sign in" });
 
     // Helper function with the wrong username passed into the input
-    await login(page, "WrongUserName", "Password1");
+    await login(page, "testing", "WrongUserName", "Password1");
 
     // Assert the login was failed and the user can still see the signin button
     await expect(signInButton).toBeVisible({ timeout: 10000 });
