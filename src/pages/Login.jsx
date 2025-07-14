@@ -20,6 +20,8 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    const normUsername = normalizeInput(username);
+    const normOrg = normalizeInput(loginOrgName);
 
     if (!username || !password || !loginOrgName) {
       toast.error("Please enter both username and password");
@@ -27,7 +29,7 @@ export default function Login() {
     }
 
     setLoginStatus("Logging In...");
-    const result = await login(username, password, loginOrgName);
+    const result = await login(normUsername, password, normOrg);
     setLoginStatus("Sign In");
 
     if (!result.success) {
@@ -47,6 +49,8 @@ export default function Login() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    const normUsername = normalizeInput(username);
+    const normOrg = normalizeInput(orgName);
     if (!username || !password || !email) {
       toast.error("Please fill in all fields");
       return;
@@ -64,7 +68,7 @@ export default function Login() {
 
     setSignUpStatus("Creating...");
     const result = await signup(
-      username,
+      normUsername,
       password,
       email,
       {
@@ -72,7 +76,7 @@ export default function Login() {
         timestamp: new Date().toISOString(),
         version: "v1.0",
       },
-      orgName
+      normOrg
     );
 
     if (!result.success) {
@@ -97,6 +101,10 @@ export default function Login() {
     setConfirmPassword("");
     setToggle(!toggle);
   };
+
+  function normalizeInput(str) {
+    return str ? str.trim().toLowerCase() : "";
+  }
 
   return (
     <div className="grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
