@@ -305,7 +305,7 @@ export default function Edit() {
               <input
                 className="pl-1 bg-transparent text-input border-b-2  border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 "
                 type="text"
-                placeholder="Extras Items"
+                placeholder="Extra Items"
                 onChange={(e) => setExtras(e.target.value)}
                 value={extras}
                 required

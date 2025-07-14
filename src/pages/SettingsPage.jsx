@@ -184,9 +184,8 @@ export default function SettingsPage({ onSettingsChange }) {
                   className="flex justify-between items-center border-b py-1"
                 >
                   <span>
-                    {u.username} ({u.email}){" "}
-                    {u.role === "admin" && <b>- Admin</b>}
-                    {u.id === currentUser.id && " (You)"}
+                    {u.username} <b>{u.role}</b>
+                    {u.id === currentUser.id && " (Current User)"}
                   </span>
                   {u.id !== currentUser.id && (
                     <div className="flex gap-2">
