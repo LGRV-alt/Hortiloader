@@ -18,9 +18,11 @@ export default function TrolleyMapper({
     initialTasks ?? records.filter((item) => customerList.includes(item.id))
   );
 
+  const user = pb.authStore.record;
+
   const [customerName, setCustomerName] = useState("");
   const [saveStatus, setSaveStatus] = useState("Save");
-  const [isExporting, setIsExporting] = useState(false); // 👈 control what's shown
+  const [isExporting, setIsExporting] = useState(false);
 
   const [vehicleInfo, setVehicleInfo] = useState({
     driver: "",
@@ -45,6 +47,10 @@ export default function TrolleyMapper({
   const exportRef = useRef();
 
   const saveToPocketBase = async () => {
+    if (user.role === "viewer") {
+      toast.error("Viewer cannot edit orders");
+      return;
+    }
     if (!isVehicleInfoComplete()) {
       toast.error("Please enter driver, registration and date before saving.");
       return;
@@ -67,10 +73,12 @@ export default function TrolleyMapper({
         name,
         data: tasks,
         vehicleInfo,
-        user: pb.authStore.model.id,
+        user: pb.authStore.record.id,
+        organization: pb.authStore.record.organization,
       });
 
       setSaveStatus("Save");
+      toast.success("Run Updated");
     } catch (error) {
       if (error.status === 404) {
         // If not found, create a new record
@@ -79,9 +87,11 @@ export default function TrolleyMapper({
             name,
             data: tasks,
             vehicleInfo,
-            user: pb.authStore.model.id,
+            user: pb.authStore.record.id,
+            organization: pb.authStore.record.organization,
           });
           setSaveStatus("Save");
+          toast.success("Run Saved");
         } catch (createErr) {
           console.error("Error creating export in PocketBase:", createErr);
           toast.error("error");

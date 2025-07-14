@@ -331,12 +331,15 @@ export default function SettingsPage({ onSettingsChange }) {
                 />
               </div>
             ))}
-            <button
-              type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded "
-            >
-              {!save ? "Save Settings" : "Saving..."}
-            </button>
+            {(currentUser.role === "admin" ||
+              currentUser.role === "super-user") && (
+              <button
+                type="submit"
+                className="bg-blue-600 text-white px-4 py-2 rounded "
+              >
+                {!save ? "Save Settings" : "Saving..."}
+              </button>
+            )}
           </form>
         </div>
       </div>

@@ -24,9 +24,10 @@ export function useUserSettings() {
     // Then fetch from PocketBase if logged in
     if (pb.authStore.isValid) {
       try {
-        const userId = pb.authStore.model.id;
+        const user = pb.authStore.record;
+        const userId = user.id;
         const records = await pb.collection("user_settings").getFullList({
-          filter: `user="${userId}"`,
+          filter: `organization="${user.organization}"`,
         });
 
         let record;
@@ -36,6 +37,7 @@ export function useUserSettings() {
           record = await pb.collection("user_settings").create({
             user: userId,
             settings_json: {},
+            organization: user.organization,
           });
         }
 
@@ -53,9 +55,9 @@ export function useUserSettings() {
   const updateSettings = async (newSettings) => {
     if (!pb.authStore.isValid) return;
 
-    const userId = pb.authStore.model.id;
+    const user = pb.authStore.record;
     const records = await pb.collection("user_settings").getFullList({
-      filter: `user="${userId}"`,
+      filter: `organization="${user.organization}"`,
     });
 
     if (!records.length) return;

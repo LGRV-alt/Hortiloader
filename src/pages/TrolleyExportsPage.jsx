@@ -10,14 +10,16 @@ export default function TrolleyExportsPage() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const user = pb.authStore.record;
 
-  const userName = pb.authStore.model.username.toLowerCase();
+  const userName = user.username.toLowerCase();
 
   useEffect(() => {
     const fetchExports = async () => {
       try {
         const records = await pb.collection("trolley_exports").getFullList({
           sort: "-created",
+          filter: `organization="${user.organization}"`,
         });
         setExports(records);
       } catch (err) {
@@ -75,13 +77,14 @@ export default function TrolleyExportsPage() {
                 {new Date(record.created).toLocaleString()}
               </p>
             </div>
-
-            <button
-              onClick={() => promptDelete(record)}
-              className="text-red-500 hover:text-red-700 text-sm"
-            >
-              Delete
-            </button>
+            {(user.role === "admin" || user.role === "super-user") && (
+              <button
+                onClick={() => promptDelete(record)}
+                className="text-red-500 hover:text-red-700 text-sm"
+              >
+                Delete
+              </button>
+            )}
           </div>
         ))
       )}
