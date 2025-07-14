@@ -32,7 +32,7 @@ export default function TrolleyTrackerPage() {
         const customerRecords = await pb
           .collection("trolley_customers")
           .getFullList({
-            filter: `user="${userId}"`,
+            filter: `organization="${user.organization}"`,
             sort: "name",
           });
 
@@ -139,6 +139,7 @@ export default function TrolleyTrackerPage() {
         notes: newCustomerNotes,
         contact_info: newCustomerContactInfo,
         user: userId,
+        organization: user.organization,
       });
       // Add new customer to the list with zero tallies
       setCustomers((prev) => [
@@ -220,14 +221,17 @@ export default function TrolleyTrackerPage() {
       <p className="mb-4 text-gray-500 text-center">
         Total view of all outstanding trollies, shelves and extensions
       </p>
-      <div className="flex justify-end mb-4">
-        <button
-          className="px-4 py-2 bg-green-700 text-white rounded-2xl shadow hover:bg-green-800"
-          onClick={() => setShowAddModal(true)}
-        >
-          + Add Customer
-        </button>
-      </div>
+      {user.role !== "viewer" && (
+        <div className="flex justify-end mb-4">
+          <button
+            className="px-4 py-2 bg-green-700 text-white rounded-2xl shadow hover:bg-green-800"
+            onClick={() => setShowAddModal(true)}
+          >
+            + Add Customer
+          </button>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl border-2 border-black shadow p-4 overflow-x-auto">
         <input
           type="text"

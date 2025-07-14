@@ -8,6 +8,7 @@ import { getDateWeek, signout } from "../../api/pocketbase";
 import { useTaskStore } from "../../hooks/useTaskStore";
 import { IoIosRefresh } from "react-icons/io";
 import toast from "react-hot-toast";
+import pb from "../../api/pbConnect";
 
 export default function Header({
   setChosenWeek,
@@ -21,6 +22,8 @@ export default function Header({
   const isAuthenticated = useAuth();
   const { lastFetched, fetchTasks } = useTaskStore();
   const [refreshing, setRefreshing] = useState(false);
+
+  const user = pb.authStore.record;
 
   const handleManualRefresh = async () => {
     setRefreshing(true);
@@ -163,22 +166,25 @@ export default function Header({
               </div>
             ) : (
               <div className="flex gap-2">
-                <button
-                  onClick={() => setEdit((prev) => !prev)}
-                  className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 hidden md:flex"
-                >
-                  Map
-                </button>
+                {user.role !== "viewer" && (
+                  <>
+                    <button
+                      onClick={() => setEdit((prev) => !prev)}
+                      className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 hidden md:flex"
+                    >
+                      Map
+                    </button>
 
-                <Link to="/createCustomer">
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex"
-                  >
-                    Add Order
-                  </button>
-                </Link>
-
+                    <Link to="/createCustomer">
+                      <button
+                        onClick={() => setMenuOpen(false)}
+                        className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex"
+                      >
+                        Add Order
+                      </button>
+                    </Link>
+                  </>
+                )}
                 <button
                   onClick={() => setMenuOpen((prev) => !prev)}
                   className="ml-2 text-white"

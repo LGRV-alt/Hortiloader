@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 export default function TrolleyCustomerDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const user = pb.authStore.record;
 
   const [customer, setCustomer] = useState(null);
   const [movements, setMovements] = useState([]);
@@ -227,17 +228,19 @@ export default function TrolleyCustomerDetailsPage() {
             <h2 className="text-2xl font-bold">{customer.name}</h2>
             <p className="text-gray-500">{customer.notes.toUpperCase()}</p>
             <p className="text-gray-500">{customer.contact_info}</p>
-            <button
-              className="text-blue-600 hover:underline text-xs"
-              onClick={() => {
-                setEditName(customer.name);
-                setEditNotes(customer.notes || "");
-                setEditContactInfo(customer.contact_info || "");
-                setEditingCustomer(true);
-              }}
-            >
-              Edit
-            </button>
+            {(user.role === "admin" || user.role === "super-user") && (
+              <button
+                className="text-blue-600 hover:underline text-xs"
+                onClick={() => {
+                  setEditName(customer.name);
+                  setEditNotes(customer.notes || "");
+                  setEditContactInfo(customer.contact_info || "");
+                  setEditingCustomer(true);
+                }}
+              >
+                Edit
+              </button>
+            )}
           </div>
 
           {/* -----------------------------------Edit customer modal------------------------------------ */}
@@ -364,77 +367,81 @@ export default function TrolleyCustomerDetailsPage() {
           </div>
 
           {/* Add movement form */}
-          <form
-            onSubmit={handleAddMovement}
-            className="bg-gray-50 p-4 rounded-xl mb-6 shadow"
-          >
-            <h3 className="font-semibold mb-2">Add Movement</h3>
-            <div className="flex gap-2 mb-2 flex-wrap">
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Trollies out"
-                value={trolliesOut}
-                onChange={(e) => setTrolliesOut(e.target.value)}
-              />
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Trollies in"
-                value={trolliesIn}
-                onChange={(e) => setTrolliesIn(e.target.value)}
-              />
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Shelves out"
-                value={shelvesOut}
-                onChange={(e) => setShelvesOut(e.target.value)}
-              />
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Shelves in"
-                value={shelvesIn}
-                onChange={(e) => setShelvesIn(e.target.value)}
-              />
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Extensions out"
-                value={extensionsOut}
-                onChange={(e) => setExtensionsOut(e.target.value)}
-              />
-              <input
-                type="number"
-                min="0"
-                className="border p-2 rounded"
-                placeholder="Extensions in"
-                value={extensionsIn}
-                onChange={(e) => setExtensionsIn(e.target.value)}
-              />
-            </div>
-            <textarea
-              className="border p-2 w-full rounded mb-2"
-              placeholder="Notes (optional)"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows={2}
-            />
-            <button
-              type="submit"
-              disabled={adding}
-              className="px-4 py-2 bg-green-700 text-white rounded-xl shadow hover:bg-green-800"
+          {user.role !== "viewer" && (
+            <form
+              onSubmit={handleAddMovement}
+              className="bg-gray-50 p-4 rounded-xl mb-6 shadow"
             >
-              {adding ? "Adding..." : "Add Movement"}
-            </button>
-            {error && <div className="text-red-600 mt-2 text-sm">{error}</div>}
-          </form>
+              <h3 className="font-semibold mb-2">Add Movement</h3>
+              <div className="flex gap-2 mb-2 flex-wrap">
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Trollies out"
+                  value={trolliesOut}
+                  onChange={(e) => setTrolliesOut(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Trollies in"
+                  value={trolliesIn}
+                  onChange={(e) => setTrolliesIn(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Shelves out"
+                  value={shelvesOut}
+                  onChange={(e) => setShelvesOut(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Shelves in"
+                  value={shelvesIn}
+                  onChange={(e) => setShelvesIn(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Extensions out"
+                  value={extensionsOut}
+                  onChange={(e) => setExtensionsOut(e.target.value)}
+                />
+                <input
+                  type="number"
+                  min="0"
+                  className="border p-2 rounded"
+                  placeholder="Extensions in"
+                  value={extensionsIn}
+                  onChange={(e) => setExtensionsIn(e.target.value)}
+                />
+              </div>
+              <textarea
+                className="border p-2 w-full rounded mb-2"
+                placeholder="Notes (optional)"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                rows={2}
+              />
+              <button
+                type="submit"
+                disabled={adding}
+                className="px-4 py-2 bg-green-700 text-white rounded-xl shadow hover:bg-green-800"
+              >
+                {adding ? "Adding..." : "Add Movement"}
+              </button>
+              {error && (
+                <div className="text-red-600 mt-2 text-sm">{error}</div>
+              )}
+            </form>
+          )}
 
           {/* Show file upload for new movement */}
           {/* {lastCreatedId && (
@@ -751,20 +758,25 @@ export default function TrolleyCustomerDetailsPage() {
                               ))}
                             </div>
                           </td> */}
-                          <td className="py-2 text-center">
-                            <button
-                              onClick={() => openEdit(move)}
-                              className="text-blue-600 hover:underline text-xs mr-1"
-                            >
-                              Edit
-                            </button>
-                            <button
-                              onClick={() => setShowDelete(move.id)}
-                              className="text-red-500 hover:text-red-700 text-xs"
-                            >
-                              Delete
-                            </button>
-                          </td>
+                          {user.role !== "viewer" && (
+                            <td className="py-2 text-center">
+                              <button
+                                onClick={() => openEdit(move)}
+                                className="text-blue-600 hover:underline text-xs mr-1"
+                              >
+                                Edit
+                              </button>
+                              {(user.role === "admin" ||
+                                user.role === "super-user") && (
+                                <button
+                                  onClick={() => setShowDelete(move.id)}
+                                  className="text-red-500 hover:text-red-700 text-xs"
+                                >
+                                  Delete
+                                </button>
+                              )}
+                            </td>
+                          )}
                         </>
                       )}
                     </tr>

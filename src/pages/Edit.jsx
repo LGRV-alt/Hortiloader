@@ -323,35 +323,39 @@ export default function Edit() {
                   required
                 />
               </div>
-              <div className="grid grid-cols-[4fr_1fr] items-center md:gap-8 gap-2 md:p-2">
-                <button
-                  className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
-                  onClick={handleSubmit}
-                >
-                  <p>{savingState}</p>
-                </button>
-                {(user?.role === "admin" || user?.role === "super-user") && (
+              {user.role !== "viewer" && (
+                <div className="grid grid-cols-[4fr_1fr] items-center md:gap-8 gap-2 md:p-2">
                   <button
-                    className="bg-red-500 rounded-md text-white px-4 py-2 hover:bg-red-600"
-                    onClick={() => setShowDeleteModal(true)}
+                    className="bg-secondary py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline w-full"
+                    onClick={handleSubmit}
                   >
-                    <p>Delete</p>
+                    <p>{savingState}</p>
                   </button>
-                )}
-              </div>
+                  {(user?.role === "admin" || user?.role === "super-user") && (
+                    <button
+                      className="bg-red-500 rounded-md text-white px-4 py-2 hover:bg-red-600"
+                      onClick={() => setShowDeleteModal(true)}
+                    >
+                      <p>Delete</p>
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           {/* -------------Right hand side------------------ */}
-          <div className="flex flex-col items-center w-full">
-            <div className="">
-              <FileUpload taskID={id} onUpload={setPictures} />
+          {user.role !== "viewer" && (
+            <div className="flex flex-col items-center w-full">
+              <div className="">
+                <FileUpload taskID={id} onUpload={setPictures} />
+              </div>
+              <Pictures
+                taskID={id}
+                pictures={pictures}
+                setPictures={setPictures}
+              />
             </div>
-            <Pictures
-              taskID={id}
-              pictures={pictures}
-              setPictures={setPictures}
-            />
-          </div>
+          )}
         </div>
 
         {showDeleteModal && (

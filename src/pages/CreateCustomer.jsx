@@ -24,6 +24,11 @@ export default function CreateCustomer() {
   const [year, setYear] = useState(2025);
 
   const handleSubmit = async () => {
+    if (user.role === "viewer") {
+      toast.error("Viewer cant create order");
+      return;
+    }
+
     if (!title) {
       toast.error("Order needs a customer name");
       return;
