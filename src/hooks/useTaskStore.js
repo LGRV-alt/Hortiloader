@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import pb from "../api/pbConnect";
 
+const user = pb.authStore.record;
+
 export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
@@ -14,7 +16,7 @@ export const useTaskStore = create((set, get) => ({
     try {
       const tasks = await pb
         .collection("tasks")
-        .getFullList({ sort: "+created" });
+        .getFullList({ filter: "deleted = false", sort: "+created" });
       set({ tasks, lastFetched: new Date().toISOString() });
       if (isInitialLoad) {
         console.log("[PocketBase] Initial load complete.");
@@ -29,7 +31,7 @@ export const useTaskStore = create((set, get) => ({
     console.warn("[PocketBase] Polling started.");
     const intervalId = setInterval(() => {
       get().fetchTasks();
-    }, 2 * 60 * 1000);
+    }, 5 * 60 * 1000);
     set({ pollingIntervalId: intervalId });
   },
 
@@ -91,7 +93,12 @@ export const useTaskStore = create((set, get) => ({
     }));
 
     try {
-      await pb.collection("tasks").delete(id);
+      await pb.collection("tasks").update(id, {
+        deleted: true,
+        deleted_by: user.id,
+        deleted_at: new Date().toISOString(),
+      });
+      // await pb.collection("tasks").delete(id);
     } catch (err) {
       set({ tasks: prevTasks });
       throw err;

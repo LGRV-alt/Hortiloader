@@ -281,8 +281,8 @@ export default function Edit() {
 
               <select
                 className="cursor-pointer bg-transparent text-input border-b-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400  focus-within:text-black"
-                name="day"
-                id="day"
+                name="boardType"
+                id="boardType"
                 value={other}
                 onChange={(e) => setOther(e.target.value)}
               >
