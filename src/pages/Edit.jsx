@@ -12,8 +12,6 @@ import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
-const userName = pb.authStore.model?.username?.toLowerCase() || "";
-
 export default function Edit() {
   const records = useTaskStore((state) => state.tasks);
   const optimisticDeleteTask = useTaskStore((state) => state.deleteTask);
@@ -94,7 +92,7 @@ export default function Edit() {
 
   useEffect(() => {
     const updateUserName = () => {
-      setUserName(pb.authStore.baseModel?.username?.toLowerCase() || "");
+      setUserName(pb.authStore.record?.username?.toLowerCase() || "");
     };
     updateUserName();
 

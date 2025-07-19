@@ -253,6 +253,16 @@ export default function Header({
           >
             Settings
           </NavLink>
+          {user.role === "admin" && (
+            <NavLink
+              to="/logs"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Admin Logs
+            </NavLink>
+          )}
+
           <button
             onClick={() => handleMapClick()}
             className="bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"

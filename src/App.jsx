@@ -7,6 +7,7 @@ import SettingsPage from "./pages/SettingsPage";
 import HoldingPage from "./pages/HoldingPage";
 import Collect from "./pages/Collect";
 import SearchPage from "./pages/SearchPage";
+import DeletedTasks from "./pages/DeletedTasks";
 
 import WeekdayPage from "./pages/Weekday";
 import TrolleyMapper from "./pages/TrolleyMapper";
@@ -123,6 +124,15 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <TrolleyTrackerPage />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/logs"
+                element={
+                  <ProtectedRoute>
+                    <DeletedTasks />
                   </ProtectedRoute>
                 }
               />
