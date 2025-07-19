@@ -48,6 +48,17 @@ export default function Edit() {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
+    // Stop polling when editing starts
+    useTaskStore.getState().stopPolling();
+
+    return () => {
+      // Resume polling when editing ends
+      useTaskStore.getState().startPolling();
+    };
+  }, []);
+
+  useEffect(() => {
+    useTaskStore.getState().stopPolling();
     if (!id) return;
     setLoading(true);
     pb.collection("tasks")

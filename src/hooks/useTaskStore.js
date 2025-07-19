@@ -29,7 +29,7 @@ export const useTaskStore = create((set, get) => ({
     console.warn("[PocketBase] Polling started.");
     const intervalId = setInterval(() => {
       get().fetchTasks();
-    }, 5 * 60 * 1000);
+    }, 2 * 60 * 1000);
     set({ pollingIntervalId: intervalId });
   },
 
