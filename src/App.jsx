@@ -131,7 +131,7 @@ export default function App() {
               <Route
                 path="/logs"
                 element={
-                  <ProtectedRoute>
+                  <ProtectedRoute roles="admin">
                     <DeletedTasks />
                   </ProtectedRoute>
                 }

@@ -4,11 +4,11 @@ import pb from "../api/pbConnect";
 
 const REQUIRED_TERMS_VERSION = "v1.0"; // match your latest terms version
 
-export default function ProtectedRoute({ children }) {
-  const user = pb.authStore.model;
+export default function ProtectedRoute({ roles, children }) {
+  const user = pb.authStore.record;
 
   if (!pb.authStore.isValid) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   // Only force verification for admin users!
@@ -21,6 +21,15 @@ export default function ProtectedRoute({ children }) {
     user.termsAgreement.version !== REQUIRED_TERMS_VERSION
   ) {
     return <Navigate to="/accept-terms" />;
+  }
+
+  // Role-based protection
+  // roles can be a string or array
+  if (roles) {
+    const allowedRoles = Array.isArray(roles) ? roles : [roles];
+    if (!allowedRoles.includes(user.role)) {
+      return <Navigate to="/" />; // or a 404, etc.
+    }
   }
 
   return children;
