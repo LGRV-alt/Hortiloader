@@ -57,13 +57,13 @@ export default function TrolleyExportsPage() {
   };
 
   return (
-    <div className="mx-5 mt-5 relative">
+    <div className="relative h-full pt-10 flex-col flex justify-start items-center bg-surface">
       {exports.length === 0 ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
         exports.map((record) => (
           <div
-            className="flex items-center justify-between border-b-2 border-slate-300 mb-5 cursor-pointer"
+            className="rounded-2xl flex w-full bg-white p-6 md:w-1/2 items-center justify-between border-b-2 border-slate-300 mb-5 cursor-pointer"
             key={record.id}
           >
             <div
