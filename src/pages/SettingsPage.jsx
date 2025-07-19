@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { useUserSettings } from "../hooks/useUserSettings";
 import pb from "../api/pbConnect";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useSettingsStore } from "../hooks/useSettingsStore";
 
-export default function SettingsPage({ onSettingsChange }) {
-  const { settings, updateSettings, fetchSettings } = useUserSettings(); // include fetchSettings
+export default function SettingsPage({}) {
   const [form, setForm] = useState({});
   const [save, setSave] = useState(false);
   const [orgName, setOrgName] = useState(null);
@@ -14,6 +13,7 @@ export default function SettingsPage({ onSettingsChange }) {
   const [resetPassword, setResetPassword] = useState("");
   const [resetPasswordConfirm, setResetPasswordConfirm] = useState("");
   const [showRoleInfo, setShowRoleInfo] = useState(false);
+  const { settings, updateSettings } = useSettingsStore();
 
   const [users, setUsers] = useState([]);
   const [showAddUser, setShowAddUser] = useState(false);
@@ -73,8 +73,6 @@ export default function SettingsPage({ onSettingsChange }) {
     e.preventDefault();
     setSave(true);
     await updateSettings(form);
-    onSettingsChange(); // Notify App
-    await fetchSettings();
     toast.success("Settings saved!");
     setSave(false);
   };

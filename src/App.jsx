@@ -26,7 +26,6 @@ import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
-import { useUserSettings } from "./hooks/useUserSettings";
 import { Toaster } from "react-hot-toast";
 import useAutoRefreshOnIdle from "./hooks/useAutoRefreshOnIdle";
 import { useTaskStore } from "./hooks/useTaskStore";
@@ -37,6 +36,7 @@ import VerifyEmail from "./pages/auth/VerifyEmail";
 import ResendVerification from "./pages/auth/ResendVerification";
 import AcceptTerms from "./pages/auth/AcceptTerms";
 import CreateCustomer from "./pages/CreateCustomer";
+import { useSettingsStore } from "./hooks/useSettingsStore";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -44,28 +44,22 @@ export default function App() {
   const [chosenYear, setChosenYear] = useState(2025);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
-  const [settingsChanged, setSettingsChanged] = useState(false);
-  const { settings, fetchSettings } = useUserSettings();
   const isAuthenticated = useAuth();
   const { loading, startPollingWithImmediateFetch, stopPolling } =
     useTaskStore();
 
+  const fetchSettings = useSettingsStore((state) => state.fetchSettings);
+  const settings = useSettingsStore((state) => state.settings);
+
   // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
   useEffect(() => {
     if (isAuthenticated) {
+      fetchSettings();
       startPollingWithImmediateFetch();
     } else {
       stopPolling(); //user logged out, stop polling
     }
   }, [isAuthenticated]);
-
-  useEffect(() => {
-    if (settingsChanged) {
-      fetchSettings().then(() => setSettingsChanged(false));
-    }
-  }, [settingsChanged]);
-
-  console.log("PocketBase URL:", import.meta.env.VITE_POCKETBASE_URL);
 
   return (
     <>
@@ -151,14 +145,7 @@ export default function App() {
                 }
               />
 
-              <Route
-                path="/settings"
-                element={
-                  <SettingsPage
-                    onSettingsChange={() => setSettingsChanged(true)}
-                  />
-                }
-              />
+              <Route path="/settings" element={<SettingsPage />} />
 
               <Route
                 path="/runs/view/:id"
