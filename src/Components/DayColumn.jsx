@@ -5,8 +5,8 @@ import { FaSearchPlus } from "react-icons/fa";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { FaExclamation } from "react-icons/fa";
 import { TiSpanner } from "react-icons/ti";
-import { MdPresentToAll } from "react-icons/md";
 import { MdOutlineQuestionMark } from "react-icons/md";
+import { BiCheckDouble } from "react-icons/bi";
 
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -60,7 +60,7 @@ export default function DayColumn({
       case "pulled":
         return <IoCheckmarkSharp color="green" fontSize="1.5em" />;
       case "loaded":
-        return <MdPresentToAll color="green" fontSize="1.5em" />;
+        return <BiCheckDouble color="green" fontSize="1.5em" />;
       case "working":
         return <TiSpanner fontSize="1.5em" />;
       case "missed":
