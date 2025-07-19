@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import pb from "../api/pbConnect";
 
-const user = pb.authStore.record;
-
 export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
@@ -93,9 +91,11 @@ export const useTaskStore = create((set, get) => ({
     }));
 
     try {
+      // Get the user at the moment you delete!
+      const user = pb.authStore?.record;
       await pb.collection("tasks").update(id, {
         deleted: true,
-        deleted_by: user.id,
+        deleted_by: user?.id ?? null, // fallback if user is undefined
         deleted_at: new Date().toISOString(),
       });
       // await pb.collection("tasks").delete(id);
