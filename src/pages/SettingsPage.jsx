@@ -24,7 +24,7 @@ export default function SettingsPage({}) {
     passwordConfirm: "",
   });
 
-  const SUBUSER_LIMIT = 5;
+  const SUBUSER_LIMIT = 8;
   const subuserCount = users.length; // this already includes the admin
 
   const currentUser = pb.authStore.record;
