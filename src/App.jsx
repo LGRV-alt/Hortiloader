@@ -80,7 +80,7 @@ export default function App() {
         <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           {loading && (
             <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
-              <h2 className="text-4xl font-bold mb-8">Fetching Orders...</h2>
+              <h2 className="text-xl font-bold mb-8">Fetching Orders...</h2>
               <div className="relative w-full h-full overflow-hidden">
                 <div className="absolute left-0  -translate-y-1/2">
                   <DanishTrolleyLoader />

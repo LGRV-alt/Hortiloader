@@ -4,7 +4,7 @@ export default function DanishTrolleyLoader() {
       viewBox="0 0 200 250"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
-      className="absolute w-[15rem] h-auto animate-trolleyFast lg:animate-trolleySlow"
+      className="absolute w-[10rem] h-auto animate-trolleyFast lg:animate-trolleySlow"
     >
       {/* Frame */}
       <rect
