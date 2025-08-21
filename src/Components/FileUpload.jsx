@@ -28,7 +28,8 @@ const FileUpload = ({ taskID, onUpload }) => {
     formData.append("file", file);
     formData.append("title", title);
     formData.append("taskID", id);
-    formData.append("user", pb.authStore.model.id);
+    formData.append("user", pb.authStore.record.id);
+    formData.append("org", pb.authStore.record.organization);
 
     try {
       setUpload(true);
