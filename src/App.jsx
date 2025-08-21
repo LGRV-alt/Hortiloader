@@ -95,6 +95,7 @@ export default function App() {
               setEdit={setEdit}
               edit={edit}
               setCustomerList={setCustomerList}
+              year={chosenYear}
             />
           </div>
           <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">

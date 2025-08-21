@@ -16,6 +16,7 @@ export default function Header({
   setEdit,
   edit,
   setCustomerList,
+  year,
 }) {
   const [week, setWeek] = useState(getDateWeek(new Date()));
   const [menuOpen, setMenuOpen] = useState(false);
@@ -28,7 +29,7 @@ export default function Header({
   const handleManualRefresh = async () => {
     setRefreshing(true);
     try {
-      await fetchTasks();
+      await fetchTasks({ week: week, year: year });
       toast.success("Board Synced");
     } catch (err) {
       console.error("Manual refresh failed:", err);
