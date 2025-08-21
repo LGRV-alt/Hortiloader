@@ -55,7 +55,7 @@ export default function Header({
   }
 
   return (
-    <header className="border-b-2 border-black bg-main text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="z-50 border-b-2 border-black bg-main text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -202,12 +202,19 @@ export default function Header({
         )}
       </div>
 
+      {menuOpen && (
+        <div
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className=" opacity-65 fixed w-full left-0 top-0 h-screen z-10 bg-black"
+        ></div>
+      )}
+
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className=" text-center fixed  inset-y-0 right-0  bg-main  text-white  z-50 flex flex-col gap-4 px-6 py-4 w-full md:w-1/6">
+        <div className=" text-center fixed  inset-y-0 right-0  bg-main  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6">
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="ml-2 flex justify-end text-white "
+            className="flex justify-end   text-white "
           >
             {menuOpen ? (
               <FaTimes fontSize="1.5rem" />
@@ -274,28 +281,29 @@ export default function Header({
               Admin Logs
             </NavLink>
           )}
-
-          <button
-            onClick={() => handleMapClick()}
-            className="bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
-          >
-            Map
-          </button>
-
-          <Link to="/createCustomer">
+          <div className="flex flex-col gap-2 w-full items-center">
             <button
-              onClick={() => setMenuOpen(false)}
-              className="bg-green-600 justify-center px-2 w-full py-1 rounded hover:bg-green-700 flex md:hidden text-white"
+              onClick={() => handleMapClick()}
+              className="w-1/2 bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
             >
-              Add Order
+              Map
             </button>
-          </Link>
-          <button
-            onClick={signout}
-            className="bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
-          >
-            Logout
-          </button>
+
+            <Link className="w-full flex justify-center" to="/createCustomer">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="w-1/2  bg-green-600 justify-center px-2 py-1 rounded hover:bg-green-700 flex md:hidden text-white"
+              >
+                Add Order
+              </button>
+            </Link>
+            <button
+              onClick={signout}
+              className="w-1/2 bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       )}
     </header>
