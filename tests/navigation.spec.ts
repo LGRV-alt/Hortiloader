@@ -8,6 +8,7 @@ test.describe("Unauthenticated route protection", () => {
       await page.goto(`http://localhost:5173/#/${route}`);
       const signInButton = page.getByRole("button", { name: "Sign in" });
       await expect(signInButton).toBeVisible({ timeout: 10000 });
+      await page.waitForTimeout(3000); // 5s Pause
     });
   });
 });
@@ -26,6 +27,7 @@ test.describe("Authenticated Routes", () => {
   protectedURLRoutes.forEach((route) => {
     test(`Authenticated route for /${route}`, async ({ page }) => {
       await login(page, "Testing", "Testing", "Password1");
+      await page.waitForTimeout(3000); // 5s Pause
 
       // Confirm login worked
       await expect(page.getByRole("button", { name: "Add Order" })).toBeVisible(

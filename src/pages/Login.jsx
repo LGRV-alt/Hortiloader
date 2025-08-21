@@ -20,7 +20,9 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const normUsername = normalizeInput(username);
+    const normUsername = `${normalizeInput(loginOrgName)}-${normalizeInput(
+      username
+    )}`;
     const normOrg = normalizeInput(loginOrgName);
 
     if (!username || !password || !loginOrgName) {
@@ -49,8 +51,11 @@ export default function Login() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const normUsername = normalizeInput(username);
+    const normUsername = `${normalizeInput(orgName)}-${normalizeInput(
+      username
+    )}`;
     const normOrg = normalizeInput(orgName);
+    const display_username = normalizeInput(username);
     if (!username || !password || !email) {
       toast.error("Please fill in all fields");
       return;
@@ -76,7 +81,8 @@ export default function Login() {
         timestamp: new Date().toISOString(),
         version: "v1.0",
       },
-      normOrg
+      normOrg,
+      display_username
     );
 
     if (!result.success) {
@@ -102,9 +108,32 @@ export default function Login() {
     setToggle(!toggle);
   };
 
+  // function normalizeInput(str) {
+  //   return str ? str.trim().toLowerCase() : "";
+  // }
+
+  console.log(`${normalizeInput(loginOrgName)}-${normalizeInput(username)}`);
+
   function normalizeInput(str) {
-    return str ? str.trim().toLowerCase() : "";
+    return str
+      ? str
+          .normalize("NFKD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+      : "";
   }
+
+  const toSlug = (s) =>
+    s
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      // .trim()
+      .replace(/\s+/g, "-"); // spaces -> hyphen
+  // .replace(/[^a-z0-9-]/g, "") // allowed chars
+  // .replace(/-+/g, "-")
+  // .replace(/^-|-$/g, "");
 
   return (
     <div className="grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">

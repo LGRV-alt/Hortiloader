@@ -5,7 +5,9 @@ import { taskData, updatedTaskData } from "./fixtures/site-data";
 test.describe("CRUD Tests", () => {
   test.beforeEach("Log the user in", async ({ page }) => {
     await login(page, "Testing", "Testing", "Password1");
+    await page.waitForTimeout(5000); // 5s Pause
   });
+
   test("Create, Update and Delete a task", async ({ page }) => {
     // Selectors for the form input fields
     const customerName = page.getByPlaceholder("Customer Name");
@@ -65,7 +67,7 @@ test.describe("CRUD Tests", () => {
 
     // Handle deleteing the task
     await deleteTask.click();
-    await page.locator(".fixed > .bg-white > .w-full").fill("testing");
+    await page.locator(".fixed > .bg-white > .w-full").fill("testing-testing");
     await page.getByRole("button", { name: "Confirm Delete" }).click();
 
     // Assert the user is back to the main page and the task is no longer there

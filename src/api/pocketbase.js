@@ -240,7 +240,8 @@ export async function signup(
   password,
   email,
   termsAgreement,
-  orgName
+  orgName,
+  display_username
 ) {
   try {
     // 1. Check if org name already exists
@@ -265,6 +266,7 @@ export async function signup(
       termsAgreement,
       organization: org.id,
       role: "admin",
+      display_username,
     };
 
     // Create User
