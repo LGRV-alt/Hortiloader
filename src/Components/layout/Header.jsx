@@ -64,7 +64,7 @@ export default function Header({
           <LogoTree height="40px" width="40px" />
         </Link>
         <Link to="/">
-          <h1 className="text-4xl font-display hidden lg:flex pr-4">
+          <h1 className="text-4xl font-display hidden lg:flex pr-4 tracking-wider">
             HortiLoader
           </h1>
         </Link>

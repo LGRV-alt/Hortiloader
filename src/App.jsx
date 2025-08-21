@@ -52,15 +52,21 @@ export default function App() {
   const fetchSettings = useSettingsStore((state) => state.fetchSettings);
   const settings = useSettingsStore((state) => state.settings);
 
+  const fetchTasks = useTaskStore((s) => s.fetchTasks);
+
   // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
   useEffect(() => {
     if (isAuthenticated) {
       fetchSettings();
-      startPollingWithImmediateFetch();
+      startPollingWithImmediateFetch({ week: chosenWeek, year: chosenYear });
     } else {
       stopPolling(); //user logged out, stop polling
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    fetchTasks({ week: chosenWeek, year: chosenYear });
+  }, [chosenWeek, chosenYear, fetchTasks]);
 
   return (
     <>

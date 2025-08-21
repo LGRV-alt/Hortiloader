@@ -1,49 +1,89 @@
 import { create } from "zustand";
 import pb from "../api/pbConnect";
 
+// export const useTaskStore = create((set, get) => ({
+//   tasks: [],
+//   loading: false,
+//   pollingIntervalId: null,
+//   lastFetched: null,
+
+//   fetchTasks: async () => {
+//     const isInitialLoad = get().tasks.length === 0;
+//     if (isInitialLoad) set({ loading: true });
+
+//     try {
+//       const tasks = await pb
+//         .collection("tasks")
+//         .getFullList({ filter: "deleted = false", sort: "+created" });
+//       set({ tasks, lastFetched: new Date().toISOString() });
+//       if (isInitialLoad) {
+//         console.log("[PocketBase] Initial load complete.");
+//       }
+//     } finally {
+//       if (isInitialLoad) set({ loading: false });
+//     }
+//   },
+
+//   startPolling: () => {
+//     if (get().pollingIntervalId) return; // Prevent multiple intervals
+//     console.warn("[PocketBase] Polling started.");
+//     const intervalId = setInterval(() => {
+//       get().fetchTasks();
+//     }, 5 * 60 * 1000);
+//     set({ pollingIntervalId: intervalId });
+//   },
+
+//   stopPolling: () => {
+//     const intervalId = get().pollingIntervalId;
+//     if (intervalId) {
+//       clearInterval(intervalId);
+//       set({ pollingIntervalId: null });
+//       console.warn("[PocketBase] Polling stopped.");
+//     }
+//   },
+const buildFilter = ({ week, year } = {}) => {
+  const parts = ["deleted = false"];
+  if (Number.isInteger(week)) parts.push(`weekNumber = ${week}`);
+  if (Number.isInteger(year)) parts.push(`year = ${year}`);
+  return parts.join(" && ");
+};
+
 export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
   pollingIntervalId: null,
   lastFetched: null,
 
-  fetchTasks: async () => {
+  fetchTasks: async (params) => {
     const isInitialLoad = get().tasks.length === 0;
     if (isInitialLoad) set({ loading: true });
-
     try {
+      const filter = buildFilter(params);
       const tasks = await pb
         .collection("tasks")
-        .getFullList({ filter: "deleted = false", sort: "+created" });
+        .getFullList({ filter, sort: "+created" });
       set({ tasks, lastFetched: new Date().toISOString() });
-      if (isInitialLoad) {
-        console.log("[PocketBase] Initial load complete.");
-      }
     } finally {
       if (isInitialLoad) set({ loading: false });
     }
   },
 
-  startPolling: () => {
-    if (get().pollingIntervalId) return; // Prevent multiple intervals
-    console.warn("[PocketBase] Polling started.");
-    const intervalId = setInterval(() => {
-      get().fetchTasks();
-    }, 5 * 60 * 1000);
+  startPolling: (ms = 5 * 60 * 1000, params) => {
+    if (get().pollingIntervalId) return;
+    const intervalId = setInterval(() => get().fetchTasks(params), ms);
     set({ pollingIntervalId: intervalId });
   },
 
   stopPolling: () => {
-    const intervalId = get().pollingIntervalId;
-    if (intervalId) {
-      clearInterval(intervalId);
+    const id = get().pollingIntervalId;
+    if (id) {
+      clearInterval(id);
       set({ pollingIntervalId: null });
-      console.warn("[PocketBase] Polling stopped.");
     }
   },
 
-  startPollingWithImmediateFetch: () => {
-    get().fetchTasks(); // Immediate fetch
+  startPollingWithImmediateFetch: (params) => {
+    get().fetchTasks(params); // Immediate fetch
     get().startPolling(); // Start polling after that
   },
 
