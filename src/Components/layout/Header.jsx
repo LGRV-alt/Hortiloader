@@ -211,7 +211,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className=" text-center fixed  inset-y-0 right-0  bg-main  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6">
+        <div className="md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6">
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="flex justify-end   text-white "
@@ -222,66 +222,68 @@ export default function Header({
               <FaBars fontSize="1.5rem" />
             )}
           </button>
-
-          <NavLink
-            to="/"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/collect"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Collects
-          </NavLink>
-          <NavLink
-            to="/holdingPage"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Holding
-          </NavLink>
-          <NavLink
-            to="/runs"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Runs
-          </NavLink>
-          <NavLink
-            to="/trolley-tracker"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Trolley Tracker
-          </NavLink>
-          <NavLink
-            className={"hover:text-blue-500 flex justify-center items-center"}
-            onClick={() => setMenuOpen(false)}
-            to="/search"
-          >
-            Search
-          </NavLink>
-          <NavLink
-            to="/settings"
-            onClick={() => setMenuOpen(false)}
-            className="hover:text-blue-300"
-          >
-            Settings
-          </NavLink>
-          {user.role === "admin" && (
+          <div className="border-t-2 border-white w-full"></div>
+          <div className="md:pt-10 flex flex-col w-full items-center md:items-end gap-4 md:pr-3">
             <NavLink
-              to="/logs"
+              to="/"
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >
-              Admin Logs
+              Home
             </NavLink>
-          )}
-          <div className="flex flex-col gap-2 w-full items-center">
+            <NavLink
+              to="/collect"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Collects
+            </NavLink>
+            <NavLink
+              to="/holdingPage"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Holding
+            </NavLink>
+            <NavLink
+              to="/runs"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Runs
+            </NavLink>
+            <NavLink
+              to="/trolley-tracker"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Trolley Tracker
+            </NavLink>
+            <NavLink
+              className={"hover:text-blue-500 flex "}
+              onClick={() => setMenuOpen(false)}
+              to="/search"
+            >
+              Search
+            </NavLink>
+            <NavLink
+              to="/settings"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Settings
+            </NavLink>
+            {user.role === "admin" && (
+              <NavLink
+                to="/logs"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-blue-300"
+              >
+                Admin Logs
+              </NavLink>
+            )}
+          </div>
+          <div className="text-lg flex flex-col gap-2 w-full items-center">
             <button
               onClick={() => handleMapClick()}
               className="w-1/2 bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
@@ -299,7 +301,7 @@ export default function Header({
             </Link>
             <button
               onClick={signout}
-              className="w-1/2 bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
+              className="w-1/2 md:mt-32 bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
             >
               Logout
             </button>
