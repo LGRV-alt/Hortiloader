@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { login } from "./helpers/auth";
 import { protectedURLRoutes, unprotectedRoutes } from "./fixtures/site-data";
+import type { Page } from "@playwright/test";
 
 test.describe("Unauthenticated route protection", () => {
   protectedURLRoutes.forEach((route) => {

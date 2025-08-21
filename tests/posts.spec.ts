@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { login } from "./helpers/auth";
 import { taskData, updatedTaskData } from "./fixtures/site-data";
+import type { Page } from "@playwright/test";
 
 test.describe("CRUD Tests", () => {
   test.beforeEach("Log the user in", async ({ page }) => {
