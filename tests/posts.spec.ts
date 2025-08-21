@@ -68,7 +68,7 @@ test.describe("CRUD Tests", () => {
 
     // Handle deleteing the task
     await deleteTask.click();
-    await page.locator(".fixed > .bg-white > .w-full").fill("testing-testing");
+    await page.locator(".fixed > .bg-white > .w-full").fill("testing");
     await page.getByRole("button", { name: "Confirm Delete" }).click();
 
     // Assert the user is back to the main page and the task is no longer there
