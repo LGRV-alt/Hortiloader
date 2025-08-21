@@ -79,6 +79,11 @@ export default function SettingsPage({}) {
 
   const handleAddUser = async (e) => {
     e.preventDefault();
+    const display_username = newUser.username;
+    const username = `${orgName}-${newUser.username}`;
+    const password = newUser.password;
+    const passwordConfirm = newUser.passwordConfirm;
+
     if (subuserCount >= SUBUSER_LIMIT) {
       toast.error(
         `You can only have ${SUBUSER_LIMIT} users in your organization.`
@@ -88,7 +93,10 @@ export default function SettingsPage({}) {
     // Optionally validate inputs here
     try {
       await pb.collection("users").create({
-        ...newUser,
+        username: username,
+        password: password,
+        passwordConfirm: passwordConfirm,
+        display_username: display_username,
         organization: currentUser.organization,
         role: newUser.role || "staff",
         termsAgreement: {
@@ -133,7 +141,7 @@ export default function SettingsPage({}) {
             )}
           </p>
 
-          <p>Username - {currentUser.username}</p>
+          <p>Username - {currentUser.display_username}</p>
           <p>Role - {currentUser.role}</p>
           {currentUser.role === "admin" && (
             <Link
@@ -182,7 +190,7 @@ export default function SettingsPage({}) {
                   className="flex justify-between items-center border-b py-1"
                 >
                   <span>
-                    {u.username} <b>{u.role}</b>
+                    {u.display_username} <b>{u.role}</b>
                     {u.id === currentUser.id && " (Current User)"}
                   </span>
                   {u.id !== currentUser.id && (

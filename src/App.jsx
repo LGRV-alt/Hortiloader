@@ -235,6 +235,10 @@ export default function App() {
                 path="/auth/confirm-password-reset/:token"
                 element={<ResetPassword />}
               />
+              <Route
+                path="/resend-verification"
+                element={<ResendVerification />}
+              />
             </Routes>
           </div>
         </div>
