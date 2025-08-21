@@ -236,21 +236,21 @@ export default function Header({
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >
-              Collects
+              Collections
             </NavLink>
             <NavLink
               to="/holdingPage"
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >
-              Holding
+              Holding Page
             </NavLink>
             <NavLink
               to="/runs"
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >
-              Runs
+              Delivery Runs
             </NavLink>
             <NavLink
               to="/trolley-tracker"
