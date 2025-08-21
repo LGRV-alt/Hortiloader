@@ -108,12 +108,6 @@ export default function Login() {
     setToggle(!toggle);
   };
 
-  // function normalizeInput(str) {
-  //   return str ? str.trim().toLowerCase() : "";
-  // }
-
-  console.log(`${normalizeInput(loginOrgName)}-${normalizeInput(username)}`);
-
   function normalizeInput(str) {
     return str
       ? str
@@ -123,17 +117,6 @@ export default function Login() {
           .replace(/\s+/g, "-")
       : "";
   }
-
-  const toSlug = (s) =>
-    s
-      .normalize("NFKD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      // .trim()
-      .replace(/\s+/g, "-"); // spaces -> hyphen
-  // .replace(/[^a-z0-9-]/g, "") // allowed chars
-  // .replace(/-+/g, "-")
-  // .replace(/^-|-$/g, "");
 
   return (
     <div className="grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
