@@ -92,7 +92,7 @@ export default function Edit() {
 
   useEffect(() => {
     const updateUserName = () => {
-      setUserName(pb.authStore.record?.username?.toLowerCase() || "");
+      setUserName(pb.authStore.record?.display_username?.toLowerCase() || "");
     };
     updateUserName();
 
@@ -182,12 +182,12 @@ export default function Edit() {
                 </h2>
                 <p className="text-xs">
                   Created by:{" "}
-                  {taskDetail?.expand?.created_by?.username ||
+                  {taskDetail?.expand?.created_by?.display_username ||
                     taskDetail?.created_by}
                 </p>
                 <p className="text-xs">
                   Updated by:{" "}
-                  {taskDetail?.expand?.updated_by?.username ||
+                  {taskDetail?.expand?.updated_by?.display_username ||
                     taskDetail?.updated_by}
                 </p>
               </div>
