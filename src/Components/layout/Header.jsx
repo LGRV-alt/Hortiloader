@@ -65,7 +65,7 @@ export default function Header({
           <LogoTree height="40px" width="40px" />
         </Link>
         <Link to="/">
-          <h1 className="text-4xl font-display hidden lg:flex pr-4 tracking-wider">
+          <h1 className="text-4xl font-display hidden lg:flex pr-4 tracking-tight">
             HortiLoader
           </h1>
         </Link>
@@ -167,7 +167,7 @@ export default function Header({
               </div>
             ) : (
               <div className="flex gap-2">
-                {user.role !== "viewer" && (
+                {user.role !== "viewer" && !menuOpen && (
                   <>
                     <button
                       onClick={() => setEdit((prev) => !prev)}
@@ -204,7 +204,18 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="text-center absolute top-full right-0 bg-white border-2 border-black  text-black shadow-md z-50 flex flex-col gap-4 px-6 py-4 w-full md:w-1/6">
+        <div className=" text-center fixed  inset-y-0 right-0  bg-main  text-white  z-50 flex flex-col gap-4 px-6 py-4 w-full md:w-1/6">
+          <button
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className="ml-2 flex justify-end text-white "
+          >
+            {menuOpen ? (
+              <FaTimes fontSize="1.5rem" />
+            ) : (
+              <FaBars fontSize="1.5rem" />
+            )}
+          </button>
+
           <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}
