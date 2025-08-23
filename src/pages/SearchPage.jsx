@@ -64,8 +64,8 @@ export default function SearchPage() {
 
   return (
     <div className="bg-surface h-full pt-5">
-      <div className="flex justify-start flex-col md:mx-24  ">
-        <p className="text-center text-gray-500">
+      <div className="flex justify-start flex-col mx-8  ">
+        <p className="text-center text-gray-500 pb-4">
           Search details such as name, postcode, order number or any information
           saved within the order.
         </p>
@@ -81,48 +81,48 @@ export default function SearchPage() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
-            className="py-2 px-6 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
+            className="py-2 w-40 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
             type="submit"
             onClick={() => searchData()}
           >
             {searching ? "Searching..." : "Search"}
           </button>
         </form>
+        <div className="grid grid-cols-2 gap-2">
+          {records.map((record) => (
+            <Link key={record.id} to={`/edit/${record.id}`}>
+              <div className=" rounded-3xl bg-white h-60 hover:bg-red-300">
+                <div className="flex rounded-t-3xl p-3 bg-gray-300 flex-col">
+                  {record.customerType === "retail" ? (
+                    <p className="text-blue-700 md:text-lg mr-2 ">
+                      {record.title}
+                    </p>
+                  ) : record.customerType === "other" ? (
+                    <p className="text-red-500  font-medium md:text-lg mr-2">
+                      {record.title}
+                    </p>
+                  ) : record.customerType === "missed" ? (
+                    <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
+                      {record.title}
+                    </p>
+                  ) : (
+                    <p className="font-medium md:text-lg mr-2 ">
+                      {record.title}
+                    </p>
+                  )}
 
-        {records.map((record) => (
-          <div
-            className="flex pl-2  items-center border-b-2 border-slate-300 mb-5 "
-            key={record.id}
-          >
-            <Link to={`/edit/${record.id}`}>
-              <div className="flex items-center hover:border-black hover:border-b-2 ">
-                {record.customerType === "retail" ? (
-                  <p className="text-blue-700 md:text-lg mr-2 ">
-                    {record.title}
+                  <p className="font-medium md:text-lg mr-2">
+                    {record.postcode ? record.postcode.toUpperCase() : ""}
                   </p>
-                ) : record.customerType === "other" ? (
-                  <p className="text-red-500  font-medium md:text-lg mr-2">
-                    {record.title}
+                  <p className=" ">
+                    {record.orderNumber ? record.orderNumber : ""}
                   </p>
-                ) : record.customerType === "missed" ? (
-                  <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
-                    {record.title}
-                  </p>
-                ) : (
-                  <p className="font-medium md:text-lg mr-2 ">{record.title}</p>
-                )}
-
-                <p className="font-medium md:text-lg mr-2">
-                  {record.postcode ? record.postcode.toUpperCase() : ""}
-                </p>
-                <p className=" ">
-                  {record.orderNumber ? record.orderNumber : ""}
-                </p>
+                </div>
                 <p className="hidden ml-2 md:block">{record.orderInfo}</p>
               </div>
             </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
