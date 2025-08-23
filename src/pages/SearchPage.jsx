@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import pb from "../api/pbConnect";
+import toast from "react-hot-toast";
 
 export default function SearchPage() {
   const user = pb.authStore.record;
@@ -11,6 +12,10 @@ export default function SearchPage() {
 
   async function searchData() {
     // e.preventDefault();
+    if (searchTerm.length === 0) {
+      toast.error("Please enter search term");
+      return;
+    }
     setSearching(true);
     try {
       const records = await pb.collection("tasks").getFullList({
@@ -19,6 +24,7 @@ export default function SearchPage() {
       });
       setRecords(records);
       setSearching(false);
+      records.length === 0 ? toast.error("No Results Found") : "";
     } catch (err) {
       console.error("Error fetching exports:", err);
       setSearching(false);
@@ -57,27 +63,31 @@ export default function SearchPage() {
   // };
 
   return (
-    <div>
-      <div className="flex justify-start flex-col md:mx-24 mt-5">
+    <div className="bg-surface h-full pt-5">
+      <div className="flex justify-start flex-col md:mx-24  ">
+        <p className="text-center text-gray-500">
+          Search details such as name, postcode, order number or any information
+          saved within the order.
+        </p>
         <form
           action=""
-          className="flex justify-center items-center w-full border-b-4 pb-4 border-black mb-4"
+          className="gap-1 flex justify-center items-center w-full border-b-2 pb-4 border-black mb-4"
         >
-          <p className="text-xl pr-2">Search -</p>
+          {/* <p className="text-xl pr-2">Search -</p> */}
           <input
-            className=" text-xl border-2 w-1/2 p-2 rounded-xl border-black"
+            className=" text-xl bg-gray-300 w-1/2 p-3 rounded "
             type="text"
             placeholder="Enter details"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button type="submit" onClick={() => searchData()}>
+          <button
+            className="py-2 px-6 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
+            type="submit"
+            onClick={() => searchData()}
+          >
             {searching ? "Searching..." : "Search"}
           </button>
         </form>
-
-        {records.length === 0 && searchTerm.trim() !== "" && (
-          <p className="text-center text-gray-500">No results found.</p>
-        )}
 
         {records.map((record) => (
           <div
