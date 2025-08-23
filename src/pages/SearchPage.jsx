@@ -7,16 +7,21 @@ export default function SearchPage() {
   const user = pb.authStore.record;
 
   const [records, setRecords] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   async function searchData() {
+    // e.preventDefault();
+    setSearching(true);
     try {
       const records = await pb.collection("tasks").getFullList({
         sort: "-created",
         filter: `org="${user.organization}" && (title~"${searchTerm}" || orderInfo~"${searchTerm}" || postcode~"${searchTerm}" || orderNumber~"${searchTerm}") `,
       });
       setRecords(records);
+      setSearching(false);
     } catch (err) {
       console.error("Error fetching exports:", err);
+      setSearching(false);
     }
   }
 
@@ -55,17 +60,18 @@ export default function SearchPage() {
     <div>
       <div className="flex justify-start flex-col md:mx-24 mt-5">
         <div className="flex justify-center items-center w-full border-b-4 pb-4 border-black mb-4">
-          <p className="text-xl pr-2">Search -</p>
-          <input
-            className=" text-xl border-2 w-1/2 p-2 rounded-xl border-black"
-            type="text"
-            placeholder="Enter details"
-            // onChange={handleChange}
-            onChange={(e) => setSearchTerm(e.target.value)}
-
-            // value={searchTerm}
-          />
-          <button onClick={() => searchData()}>search</button>
+          <form action="">
+            <p className="text-xl pr-2">Search -</p>
+            <input
+              className=" text-xl border-2 w-1/2 p-2 rounded-xl border-black"
+              type="text"
+              placeholder="Enter details"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <button type="submit" onClick={() => searchData()}>
+              {searching ? "Searching..." : "Search"}
+            </button>
+          </form>
         </div>
         {records.length === 0 && searchTerm.trim() !== "" && (
           <p className="text-center text-gray-500">No results found.</p>
