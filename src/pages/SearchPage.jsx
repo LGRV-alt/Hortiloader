@@ -2,12 +2,35 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useTaskStore } from "../hooks/useTaskStore";
+import pb from "../api/pbConnect";
 
 export default function SearchPage() {
-  const records = useTaskStore((state) => state.tasks);
+  // const records = useTaskStore((state) => state.tasks);
+  const user = pb.authStore.record;
+
+  const [records, setRecords] = useState({});
+
+  useEffect(() => {
+    const fetchExports = async () => {
+      try {
+        const records = await pb.collection("tasks").getFullList({
+          sort: "-created",
+          filter: `org="${user.organization}"`,
+        });
+        setRecords(records);
+      } catch (err) {
+        console.error("Error fetching exports:", err);
+      }
+    };
+
+    fetchExports();
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
+
+  console.log(records);
 
   // Update searchTerm based on URL when on the search page
   useEffect(() => {
