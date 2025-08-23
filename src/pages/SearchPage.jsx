@@ -62,6 +62,13 @@ export default function SearchPage() {
   //   }
   // };
 
+  function uppercaseFirstLetter(string) {
+    let newString = [];
+    newString = string.split("");
+    newString.splice(0, 1, newString[0].toUpperCase());
+    return newString.join("");
+  }
+
   return (
     <div className="bg-surface h-full pt-5">
       <div className="flex justify-start flex-col mx-8  ">
@@ -75,7 +82,7 @@ export default function SearchPage() {
         >
           {/* <p className="text-xl pr-2">Search -</p> */}
           <input
-            className=" text-xl bg-gray-300 w-1/2 p-3 rounded "
+            className=" text-xl bg-white w-1/2 p-2 rounded "
             type="text"
             placeholder="Enter details"
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -91,34 +98,47 @@ export default function SearchPage() {
         <div className="grid grid-cols-2 gap-2">
           {records.map((record) => (
             <Link key={record.id} to={`/edit/${record.id}`}>
-              <div className=" rounded-3xl bg-white h-60 hover:bg-red-300">
-                <div className="flex rounded-t-3xl p-3 bg-gray-300 flex-col">
-                  {record.customerType === "retail" ? (
-                    <p className="text-blue-700 md:text-lg mr-2 ">
-                      {record.title}
-                    </p>
-                  ) : record.customerType === "other" ? (
-                    <p className="text-red-500  font-medium md:text-lg mr-2">
-                      {record.title}
-                    </p>
-                  ) : record.customerType === "missed" ? (
-                    <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
-                      {record.title}
-                    </p>
-                  ) : (
-                    <p className="font-medium md:text-lg mr-2 ">
-                      {record.title}
-                    </p>
-                  )}
+              <div className="rounded-3xl bg-white  hover:bg-red-300">
+                <div className="flex justify-between rounded-t-3xl p-3 bg-gray-300">
+                  <div>
+                    {record.customerType === "retail" ? (
+                      <p className="text-blue-700 md:text-lg mr-2 ">
+                        {uppercaseFirstLetter(record.title)}
+                      </p>
+                    ) : record.customerType === "other" ? (
+                      <p className="text-red-500  font-medium md:text-lg mr-2">
+                        {uppercaseFirstLetter(record.title)}
+                      </p>
+                    ) : record.customerType === "missed" ? (
+                      <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
+                        {uppercaseFirstLetter(record.title)}
+                      </p>
+                    ) : (
+                      <p className="font-medium md:text-lg mr-2 ">
+                        {uppercaseFirstLetter(record.title)} -{" "}
+                        {record.orderNumber ? record.orderNumber : ""}
+                      </p>
+                    )}
 
-                  <p className="font-medium md:text-lg mr-2">
-                    {record.postcode ? record.postcode.toUpperCase() : ""}
-                  </p>
-                  <p className=" ">
-                    {record.orderNumber ? record.orderNumber : ""}
-                  </p>
+                    <p className="font-medium">
+                      {record.postcode ? record.postcode.toUpperCase() : ""}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p>Day - {uppercaseFirstLetter(record.day[0])}</p>
+                    <p>Week - {record.weekNumber}</p>
+                    <p>Year - {record.year === 0 ? "2024" : record.year}</p>
+                  </div>
                 </div>
-                <p className="hidden ml-2 md:block">{record.orderInfo}</p>
+
+                <div className="flex h-48 justify-center items-center text-center">
+                  <p className=" w-full">{record.orderInfo}</p>
+                  <div className="text-center w-1/2">
+                    <p>Trollies -{record.trollies} </p>
+                    <p>Other Items - {record.extras}</p>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}
