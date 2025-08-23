@@ -1,80 +1,55 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useTaskStore } from "../hooks/useTaskStore";
 import pb from "../api/pbConnect";
 
 export default function SearchPage() {
-  // const records = useTaskStore((state) => state.tasks);
   const user = pb.authStore.record;
 
-  const [records, setRecords] = useState({});
+  const [records, setRecords] = useState([]);
 
-  useEffect(() => {
-    const fetchExports = async () => {
-      try {
-        const records = await pb.collection("tasks").getFullList({
-          sort: "-created",
-          filter: `org="${user.organization}"`,
-        });
-        setRecords(records);
-      } catch (err) {
-        console.error("Error fetching exports:", err);
-      }
-    };
-
-    fetchExports();
-  }, []);
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  console.log(records);
-
-  // Update searchTerm based on URL when on the search page
-  useEffect(() => {
-    if (location.pathname === "/search") {
-      const params = new URLSearchParams(location.search);
-      const query = params.get("q");
-      if (query) {
-        setSearchTerm(query);
-      }
+  async function searchData() {
+    try {
+      const records = await pb.collection("tasks").getFullList({
+        sort: "-created",
+        filter: `org="${user.organization}" && (title~"${searchTerm}" || orderInfo~"${searchTerm}" || postcode~"${searchTerm}" || orderNumber~"${searchTerm}") `,
+      });
+      setRecords(records);
+    } catch (err) {
+      console.error("Error fetching exports:", err);
     }
-  }, [location]);
-
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-
-    if (location.pathname === "/search") {
-      // Only update the URL if on the search page
-      const params = new URLSearchParams();
-      params.set("q", value);
-      navigate(`?${params.toString()}`, { replace: true });
-    }
-  };
-
-  const filteredEntry =
-    searchTerm.trim() === ""
-      ? []
-      : records.filter(
-          (val) =>
-            val.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            val.orderNumber.toString().includes(searchTerm)
-        );
-
-  function compareYear(a, b) {
-    if (a.created > b.created) {
-      return -1;
-    }
-    if (a.created < b.created) {
-      return 1;
-    }
-    return 0;
   }
 
-  filteredEntry.sort(compareYear);
+  const [searchTerm, setSearchTerm] = useState("");
+  // const location = useLocation();
+  // const navigate = useNavigate();
+
+  console.log(records);
+  console.log(searchTerm);
+
+  // Update searchTerm based on URL when on the search page
+  // useEffect(() => {
+  //   if (location.pathname === "/search") {
+  //     const params = new URLSearchParams(location.search);
+  //     const query = params.get("q");
+  //     if (query) {
+  //       setSearchTerm(query);
+  //       searchData();
+  //     }
+  //   }
+  // }, []);
+
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   setSearchTerm(value);
+
+  //   if (location.pathname === "/search") {
+  //     // Only update the URL if on the search page
+  //     const params = new URLSearchParams();
+  //     params.set("q", value);
+  //     navigate(`?${params.toString()}`, { replace: true });
+  //   }
+  // };
 
   return (
     <div>
@@ -85,15 +60,18 @@ export default function SearchPage() {
             className=" text-xl border-2 w-1/2 p-2 rounded-xl border-black"
             type="text"
             placeholder="Enter details"
-            onChange={handleChange}
-            value={searchTerm}
+            // onChange={handleChange}
+            onChange={(e) => setSearchTerm(e.target.value)}
+
+            // value={searchTerm}
           />
+          <button onClick={() => searchData()}>search</button>
         </div>
-        {filteredEntry.length === 0 && searchTerm.trim() !== "" && (
+        {records.length === 0 && searchTerm.trim() !== "" && (
           <p className="text-center text-gray-500">No results found.</p>
         )}
 
-        {filteredEntry.map((record) => (
+        {records.map((record) => (
           <div
             className="flex pl-2  items-center border-b-2 border-slate-300 mb-5 "
             key={record.id}
