@@ -18,8 +18,8 @@ export default function SearchPage() {
     missed: "bg-red-100 text-red-800 border-red-200",
   };
 
-  async function searchData() {
-    // e.preventDefault();
+  async function searchData(e) {
+    e.preventDefault();
     if (searchTerm.length === 0) {
       toast.error("Please enter search term");
       return;
@@ -95,7 +95,7 @@ export default function SearchPage() {
           <button
             className="text-sm md:text-base py-2 w-28 md:w-40 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
             type="submit"
-            onClick={() => searchData()}
+            onClick={(e) => searchData(e)}
           >
             {searching ? "Searching..." : "Search"}
           </button>
