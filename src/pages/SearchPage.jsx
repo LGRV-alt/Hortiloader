@@ -87,38 +87,38 @@ export default function SearchPage() {
         >
           {/* <p className="text-xl pr-2">Search -</p> */}
           <input
-            className=" text-xl bg-white outline w-1/2 p-2 rounded-xl pl-5 "
+            className="w-full text-base md:text-xl bg-white outline md:w-1/2 p-2 rounded-xl pl-5 "
             type="text"
             placeholder="Enter details"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
-            className="py-2 w-40 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
+            className="text-sm md:text-base py-2 w-28 md:w-40 bg-green-600 justify-center  rounded hover:bg-green-700 flex text-white"
             type="submit"
             onClick={() => searchData()}
           >
             {searching ? "Searching..." : "Search"}
           </button>
         </form>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
           {records.map((record) => (
             <Link key={record.id} to={`/edit/${record.id}`}>
-              <div className="shadow-lg  shadow-gray-400 rounded-3xl bg-white ">
+              <div className="shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
                 <div className="flex justify-between min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
                   <div>
-                    <h4 className="text-2xl font-semibold tracking-tighter">
+                    <h4 className="text-lg md:text-2xl font-semibold tracking-tighter">
                       {uppercaseFirstLetter(record.title)} -{" "}
                       {record.orderNumber ? record.orderNumber : ""}
                     </h4>
-                    <p className="text-lg font-semibold">
+                    <p className="text-sm md:text-lg font-semibold">
                       {uppercaseFirstLetter(record.customerType)}
                     </p>
-                    <p className="text-lg text-gray-100">
+                    <p className="text-sm md:text-sm text-gray-100">
                       {record.postcode !== "" && record.postcode.toUpperCase()}
                     </p>
                   </div>
 
-                  <div>
+                  <div className="flex flex-col justify-start gap-1 text-sm md:text-base">
                     <p>Day - {uppercaseFirstLetter(record.day[0])}</p>
                     <p>Week - {record.weekNumber}</p>
                     <p>Year - {record.year === 0 ? "2024" : record.year}</p>
@@ -126,11 +126,15 @@ export default function SearchPage() {
                 </div>
 
                 <div className="flex min-h-48 justify-center items-center text-center">
-                  <p className=" w-full p-4">{record.orderInfo}</p>
-                  <div className="text-center w-1/2 p-4">
-                    <h4 className="">Order Status</h4>
+                  <p className="line-clamp-3  w-full md:px-4 text-sm md:text-base">
+                    {record.orderInfo}
+                  </p>
+                  <div className="text-center gap-1 flex flex-col w-full md:w-1/2 pr-1 md:px-4">
+                    <h5 className="text-sm tracking-tighter font-semibold">
+                      ORDER STATUS
+                    </h5>
                     <span
-                      className={`inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full border ${
+                      className={`w-2/3 md:w-1/2 self-center md:px-4 py-1 text-sm rounded-full border ${
                         chip[record.status] || chip.new
                       }`}
                     >
@@ -139,12 +143,12 @@ export default function SearchPage() {
                         : uppercaseFirstLetter(record.status)}
                     </span>
                     {record.trollies !== "" && (
-                      <p className="font-bold text-green-500">
+                      <p className="font-bold text-sm text-green-500">
                         {record.trollies} Trollies
                       </p>
                     )}
                     {record.extras !== "" && (
-                      <p className="font-bold text-green-500">
+                      <p className="line-clamp-2 font-bold text-sm text-green-500">
                         {record.extras}
                       </p>
                     )}
