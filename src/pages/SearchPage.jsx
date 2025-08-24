@@ -10,6 +10,14 @@ export default function SearchPage() {
   const [records, setRecords] = useState([]);
   const [searching, setSearching] = useState(false);
 
+  const chip = {
+    new: "bg-amber-100 text-amber-800 border-amber-200",
+    working: "bg-purple-100 text-purple-800 border-purple-200",
+    loaded: "bg-blue-100 text-blue-800 border-blue-200",
+    pulled: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    missed: "bg-red-100 text-red-800 border-red-200",
+  };
+
   async function searchData() {
     // e.preventDefault();
     if (searchTerm.length === 0) {
@@ -34,9 +42,6 @@ export default function SearchPage() {
   const [searchTerm, setSearchTerm] = useState("");
   // const location = useLocation();
   // const navigate = useNavigate();
-
-  console.log(records);
-  console.log(searchTerm);
 
   // Update searchTerm based on URL when on the search page
   // useEffect(() => {
@@ -70,7 +75,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="bg-surface h-full pt-5">
+    <div className="bg-gray-200 h-full pt-5">
       <div className="flex justify-start flex-col mx-8  ">
         <p className="text-center text-gray-500 pb-4">
           Search details such as name, postcode, order number or any information
@@ -82,7 +87,7 @@ export default function SearchPage() {
         >
           {/* <p className="text-xl pr-2">Search -</p> */}
           <input
-            className=" text-xl bg-white w-1/2 p-2 rounded "
+            className=" text-xl bg-white outline w-1/2 p-2 rounded-xl pl-5 "
             type="text"
             placeholder="Enter details"
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -95,33 +100,21 @@ export default function SearchPage() {
             {searching ? "Searching..." : "Search"}
           </button>
         </form>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           {records.map((record) => (
             <Link key={record.id} to={`/edit/${record.id}`}>
-              <div className="rounded-3xl bg-white  hover:bg-red-300">
-                <div className="flex justify-between rounded-t-3xl p-3 bg-gray-300">
+              <div className="shadow-lg  shadow-gray-400 rounded-3xl bg-white ">
+                <div className="flex justify-between min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
                   <div>
-                    {record.customerType === "retail" ? (
-                      <p className="text-blue-700 md:text-lg mr-2 ">
-                        {uppercaseFirstLetter(record.title)}
-                      </p>
-                    ) : record.customerType === "other" ? (
-                      <p className="text-red-500  font-medium md:text-lg mr-2">
-                        {uppercaseFirstLetter(record.title)}
-                      </p>
-                    ) : record.customerType === "missed" ? (
-                      <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
-                        {uppercaseFirstLetter(record.title)}
-                      </p>
-                    ) : (
-                      <p className="font-medium md:text-lg mr-2 ">
-                        {uppercaseFirstLetter(record.title)} -{" "}
-                        {record.orderNumber ? record.orderNumber : ""}
-                      </p>
-                    )}
-
-                    <p className="font-medium">
-                      {record.postcode ? record.postcode.toUpperCase() : ""}
+                    <h4 className="text-2xl font-semibold tracking-tighter">
+                      {uppercaseFirstLetter(record.title)} -{" "}
+                      {record.orderNumber ? record.orderNumber : ""}
+                    </h4>
+                    <p className="text-lg font-semibold">
+                      {uppercaseFirstLetter(record.customerType)}
+                    </p>
+                    <p className="text-lg text-gray-100">
+                      {record.postcode !== "" && record.postcode.toUpperCase()}
                     </p>
                   </div>
 
@@ -132,11 +125,29 @@ export default function SearchPage() {
                   </div>
                 </div>
 
-                <div className="flex h-48 justify-center items-center text-center">
-                  <p className=" w-full">{record.orderInfo}</p>
-                  <div className="text-center w-1/2">
-                    <p>Trollies -{record.trollies} </p>
-                    <p>Other Items - {record.extras}</p>
+                <div className="flex min-h-48 justify-center items-center text-center">
+                  <p className=" w-full p-4">{record.orderInfo}</p>
+                  <div className="text-center w-1/2 p-4">
+                    <h4 className="">Order Status</h4>
+                    <span
+                      className={`inline-flex items-center gap-1 px-2 py-0.5 text-xs rounded-full border ${
+                        chip[record.status] || chip.new
+                      }`}
+                    >
+                      {record.status === ""
+                        ? "New"
+                        : uppercaseFirstLetter(record.status)}
+                    </span>
+                    {record.trollies !== "" && (
+                      <p className="font-bold text-green-500">
+                        {record.trollies} Trollies
+                      </p>
+                    )}
+                    {record.extras !== "" && (
+                      <p className="font-bold text-green-500">
+                        {record.extras}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
