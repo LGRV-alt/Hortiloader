@@ -104,24 +104,27 @@ export default function SearchPage() {
           {records.map((record) => (
             <Link key={record.id} to={`/edit/${record.id}`}>
               <div className="shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
-                <div className="flex justify-between min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
+                <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
                   <div>
-                    <h4 className="text-lg md:text-2xl font-semibold tracking-tighter">
-                      {uppercaseFirstLetter(record.title)} -{" "}
-                      {record.orderNumber ? record.orderNumber : ""}
+                    <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
+                      {uppercaseFirstLetter(record.title)}
                     </h4>
+                    <p className="text-sm md:text-lg font-semibold">
+                      {record.orderNumber ? record.orderNumber : ""}
+                    </p>
                     <p className="text-sm md:text-lg font-semibold">
                       {uppercaseFirstLetter(record.customerType)}
                     </p>
+
                     <p className="text-sm md:text-sm text-gray-100">
                       {record.postcode !== "" && record.postcode.toUpperCase()}
                     </p>
                   </div>
 
-                  <div className="flex flex-col justify-start gap-1 text-sm md:text-base">
-                    <p>Day - {uppercaseFirstLetter(record.day[0])}</p>
-                    <p>Week - {record.weekNumber}</p>
-                    <p>Year - {record.year === 0 ? "2024" : record.year}</p>
+                  <div className="flex flex-col justify-start items-end gap-1 text-sm md:text-base">
+                    <p>{uppercaseFirstLetter(record.day[0])}</p>
+                    <p>Week {record.weekNumber}</p>
+                    <p>{record.year === 0 ? "2024" : record.year}</p>
                   </div>
                 </div>
 
