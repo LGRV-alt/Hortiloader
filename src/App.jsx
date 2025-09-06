@@ -46,8 +46,12 @@ export default function App() {
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
   const isAuthenticated = useAuth();
-  const { loading, startPollingWithImmediateFetch, stopPolling } =
-    useTaskStore();
+  const {
+    loading,
+    startPollingWithImmediateFetch,
+    stopPolling,
+    debouncedFetchTasks,
+  } = useTaskStore();
 
   const fetchSettings = useSettingsStore((state) => state.fetchSettings);
   const settings = useSettingsStore((state) => state.settings);

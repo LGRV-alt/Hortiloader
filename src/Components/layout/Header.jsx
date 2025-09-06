@@ -39,13 +39,13 @@ export default function Header({
     }
   };
 
-  const handleWeekChange = (num) => {
+  const handleWeekChange = async (num) => {
     const clamped = Math.min(Math.max(num, 1), 52);
     setWeek(clamped);
     setChosenWeek(clamped);
   };
 
-  const handleYearChange = (e) => {
+  const handleYearChange = async (e) => {
     setChosenYear(Number(e.target.value));
   };
 
@@ -95,7 +95,10 @@ export default function Header({
               <span>
                 Sync -{" "}
                 {lastFetched
-                  ? new Date(lastFetched).toLocaleTimeString()
+                  ? new Date(lastFetched).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })
                   : "Never"}
               </span>
               <button

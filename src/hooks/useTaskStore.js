@@ -13,9 +13,14 @@ export const useTaskStore = create((set, get) => ({
   loading: false,
   pollingIntervalId: null,
   lastFetched: null,
+  currentFetchId: null,
 
   fetchTasks: async (params) => {
     const isInitialLoad = get().tasks.length === 0;
+    console.log("fetch tasks called");
+
+    const fetchId = crypto.randomUUID();
+    set({ currentFetchId: fetchId, loading: true });
     if (isInitialLoad) set({ loading: true });
     try {
       set({ loading: true });
@@ -23,15 +28,28 @@ export const useTaskStore = create((set, get) => ({
       const tasks = await pb
         .collection("tasks")
         .getFullList({ filter, sort: "+created" });
+      if (get().currentFetchId !== fetchId) return;
       set({ tasks, lastFetched: new Date().toISOString(), loading: false });
-    } finally {
-      if (isInitialLoad) set({ loading: false });
+    } catch (err) {
+      if (get().currentFetchId === fetchId) set({ loading: false });
+      throw err;
     }
   },
 
   startPolling: (ms = 5 * 60 * 1000, params) => {
     if (get().pollingIntervalId) return;
-    const intervalId = setInterval(() => get().fetchTasks(params), ms);
+    console.log("Polling check");
+
+    const intervalId = setInterval(() => {
+      const { lastFetched, fetchTasks } = get();
+      const now = Date.now();
+
+      // If never fetched, or it's older than `ms`, then fetch
+      if (!lastFetched || now - new Date(lastFetched).getTime() >= ms) {
+        fetchTasks(params);
+      }
+    }, 3000); // check every second (or every 30s to be lighter)
+
     set({ pollingIntervalId: intervalId });
   },
 
