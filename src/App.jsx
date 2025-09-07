@@ -38,6 +38,7 @@ import ResendVerification from "./pages/auth/ResendVerification";
 import AcceptTerms from "./pages/auth/AcceptTerms";
 import CreateCustomer from "./pages/CreateCustomer";
 import { useSettingsStore } from "./hooks/useSettingsStore";
+import ViewTask from "./pages/ViewTask";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -219,7 +220,7 @@ export default function App() {
                 path="/edit/:id"
                 element={
                   <ProtectedRoute>
-                    <Edit />
+                    <ViewTask />
                   </ProtectedRoute>
                 }
               />
