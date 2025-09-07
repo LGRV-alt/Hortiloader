@@ -160,15 +160,15 @@ export default function ViewTask() {
   };
 
   const chip = {
-    new: "bg-amber-100 text-amber-800 border-amber-200",
-    working: "bg-purple-100 text-purple-800 border-purple-200",
+    new: "bg-red-300 text-red-800 border-red-200",
+    working: "bg-yellow-400 text-yellow-800 border-yellow-200",
     loaded: "bg-blue-100 text-blue-800 border-blue-200",
     pulled: "bg-emerald-100 text-emerald-800 border-emerald-200",
-    missed: "bg-red-100 text-red-800 border-red-200",
+    missed: "bg-purple-100 text-purple-800 border-purple-200",
   };
 
   return (
-    <div className="p-10 bg-surface grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg h-full ">
+    <div className="p-10 bg-surface  text- grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg h-full ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -185,9 +185,9 @@ export default function ViewTask() {
 
       <div className=" shadow-lg shadow-gray-400 rounded-3xl bg-white">
         <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
-          <div className="w-full">
+          {/* ---------------------left side of the card header-------------------------- */}
+          <div className="w-full flex flex-col">
             {/* Title */}
-
             <input
               readOnly={!isEditing}
               className={`bg-transparent capitalize truncate w-full text-base md:text-2xl font-semibold tracking-tighter ${
@@ -220,84 +220,179 @@ export default function ViewTask() {
             </div>
 
             {/* Customer Type */}
-            <div className="flex items-center gap-2">
-              <p>Customer Type - </p>
+            <select
+              readOnly={!isEditing}
+              className={`bg-transparent truncate text-base md:text-lg appearance-none ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
+              }`}
+              name="customerType"
+              id="customerType"
+              onChange={(e) => setCustomerType(e.target.value)}
+              value={customerType}
+            >
+              <option value=" " disabled>
+                Customer Type
+              </option>
+              <option value="wholesale">Wholesale</option>
+              <option value="retail">Retail</option>
+              <option value="missed">Missed</option>
+              <option value="other">Other</option>
+            </select>
+
+            {/* Postcode */}
+            <input
+              readOnly={!isEditing}
+              className={`bg-transparent truncate text-base md:text-lg uppercase ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
+              }`}
+              type="text"
+              placeholder="Postcode"
+              onChange={(e) => setPostcode(e.target.value)}
+              value={postcode}
+              required
+            />
+          </div>
+
+          {/* --------------------right side of the card header------------------------- */}
+          <div className="text-center gap-1 flex flex-col w-full ">
+            <h5 className="text-sm tracking-tighter font-semibold">
+              ORDER STATUS
+            </h5>
+
+            {/* -----load status----- */}
+            <span
+              className={`w-2/3 font-semibold text-base md:w-1/2 self-center md:px-4 py-1    rounded-full border ${
+                chip[status] || chip.new
+              }`}
+            >
               <select
-                readOnly={!isEditing}
-                className={`bg-transparent truncate text-base md:text-lg appearance-none ${
-                  isEditing
-                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                    : "border-none pointer-events-none"
-                }`}
-                name="customerType"
-                id="customerType"
-                onChange={(e) => setCustomerType(e.target.value)}
-                value={customerType}
+                value={status === "" ? "New" : status}
+                className="cursor-pointer bg-transparent text-center  outline-none focus-within:text-black appearance-none"
+                onChange={(e) => setStatus(e.target.value)}
               >
-                <option value=" " disabled>
-                  Customer Type
-                </option>
-                <option value="wholesale">Wholesale</option>
-                <option value="retail">Retail</option>
-                <option value="missed">Missed</option>
-                <option value="other">Other</option>
+                <option value="new">New</option>
+                <option value="working">Working</option>
+                <option value="missed">Query</option>
+                <option value="pulled">Pulled</option>
+                <option value="loaded">Loaded</option>
               </select>
+            </span>
+
+            {/* ------trolley count----- */}
+            <div className="flex items-center justify-center  ">
+              <input
+                className={`bg-transparent w-6 text-center text-base md:text-lg  focus:outline-none"}`}
+                type="text"
+                placeholder="0"
+                onChange={(e) => setTrollies(e.target.value)}
+                //   value={trollies}
+                required
+              />
+              <p>Trollies</p>
             </div>
 
-            {/* Order Number */}
-            <div className="flex items-center gap-2">
-              <p>Postcode - </p>
+            {/* -----extra items----- */}
+            <div>
               <input
-                readOnly={!isEditing}
-                className={`bg-transparent truncate text-base md:text-lg uppercase ${
-                  isEditing
-                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                    : "border-none pointer-events-none"
-                }`}
+                className={`bg-transparent w-2/3 text-center text-base md:text-lg capitalize focus:border-secondary-colour focus:outline-none"}`}
                 type="text"
-                placeholder="Postcode"
-                onChange={(e) => setPostcode(e.target.value)}
-                value={postcode}
+                placeholder="Extra Items"
+                onChange={(e) => setExtras(e.target.value)}
+                value={extras}
                 required
               />
             </div>
           </div>
-
-          <div className="flex flex-col justify-start items-end gap-1 text-sm md:text-base">
-            <p>Monday</p>
-            <p>Week</p>
-            <p>Year</p>
-          </div>
         </div>
 
-        <div className="flex min-h-48 justify-center items-center text-center">
-          <p className="line-clamp-3  w-full md:px-4 text-sm md:text-base">
-            Order Info here
-          </p>
-          <div className="text-center gap-1 flex flex-col w-full md:w-1/2 pr-1 md:px-4">
-            <h5 className="text-sm tracking-tighter font-semibold">
-              ORDER STATUS
-            </h5>
-            <span
-              className={`w-2/3 md:w-1/2 self-center md:px-4 py-1 text-sm rounded-full border ${
-                chip[status] || chip.new
+        {/* ----------start of the main body---------- */}
+        <div className="">
+          {/* -----data fingerprint----- */}
+          <div>
+            <p className="text-xs">
+              Created by:{" "}
+              {taskDetail?.expand?.created_by?.display_username ||
+                taskDetail?.created_by}
+            </p>
+            <p className="text-xs">
+              Updated by:{" "}
+              {taskDetail?.expand?.updated_by?.display_username ||
+                taskDetail?.updated_by}
+            </p>
+          </div>
+          {/* ------date items------ */}
+          <div className="text-sm md:text-base flex gap-4">
+            {/* Weekday */}
+            <select
+              readOnly={!isEditing}
+              className={`bg-transparent capitalize appearance-none ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
               }`}
+              name="day"
+              id="day"
+              onChange={(e) => setDay(e.target.value)}
+              value={day}
             >
-              {status === "" ? "New" : uppercaseFirstLetter(status)}
-            </span>
-            {trollies !== "" && (
-              <p className="font-bold text-sm text-green-500">
-                {trollies} Trollies
-              </p>
-            )}
-            {extras !== "" && (
-              <p className="line-clamp-2 font-bold text-sm text-green-500">
-                {extras}
-              </p>
-            )}
-            <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
+              <option disabled>Day</option>
+              <option value="monday">Monday</option>
+              <option value="tuesday">Tuesday</option>
+              <option value="wednesday">Wednesday</option>
+              <option value="thursday">Thursday</option>
+              <option value="friday">Friday</option>
+              <option value="saturday">Saturday</option>
+              <option value="sunday">Sunday</option>
+            </select>
+
+            {/* Week */}
+            <div className="flex">
+              <p className="text-end">Week - </p>
+              <select
+                value={weekNumber}
+                readOnly={!isEditing}
+                className={`bg-transparent capitalize appearance-none ${
+                  isEditing
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    : "border-none pointer-events-none"
+                }`}
+                onChange={(e) => setWeekNumber(e.target.value)}
+                name=""
+                id=""
+              >
+                {weekNumbers.map((w) => (
+                  <option key={w} value={w}>
+                    {w}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Year */}
+
+            <select
+              value={year}
+              readOnly={!isEditing}
+              className={`bg-transparent capitalize appearance-none ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
+              }`}
+              onChange={(e) => setYear(e.target.value)}
+              name=""
+              id=""
+            >
+              <option value="0">2024</option>
+              <option value="2025">2025</option>
+            </select>
           </div>
         </div>
+
+        <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
       </div>
       {user.role !== "viewer" && (
         <div className="flex flex-col items-center w-full">
