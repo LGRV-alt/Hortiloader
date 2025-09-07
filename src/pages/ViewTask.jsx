@@ -168,7 +168,7 @@ export default function ViewTask() {
   };
 
   return (
-    <div className="p-2 bg-surface grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg h-full ">
+    <div className="p-10 bg-surface grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg h-full ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -183,16 +183,84 @@ export default function ViewTask() {
 
       {/* ------------Task---------------- */}
 
-      <div className=" shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
+      <div className=" shadow-lg shadow-gray-400 rounded-3xl bg-white">
         <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
-          <div>
-            <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
-              Title
-            </h4>
-            <p className="text-sm md:text-lg font-semibold">Order No</p>
-            <p className="text-sm md:text-lg font-semibold">Wholesale</p>
+          <div className="w-full">
+            {/* Title */}
 
-            <p className="text-sm md:text-sm text-gray-100">Postcode</p>
+            <input
+              readOnly={!isEditing}
+              className={`bg-transparent capitalize truncate w-full text-base md:text-2xl font-semibold tracking-tighter ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
+              }`}
+              type="text"
+              placeholder="Customer Name"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+
+            {/* Order Number */}
+            <div className="flex items-center gap-2">
+              <p>Order Number - </p>
+              <input
+                readOnly={!isEditing}
+                className={`bg-transparent truncate text-base md:text-lg ${
+                  isEditing
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    : "border-none pointer-events-none"
+                }`}
+                placeholder="Order No."
+                onChange={(e) => setOrderNumber(e.target.value)}
+                value={orderNumber}
+                required
+              />
+            </div>
+
+            {/* Customer Type */}
+            <div className="flex items-center gap-2">
+              <p>Customer Type - </p>
+              <select
+                readOnly={!isEditing}
+                className={`bg-transparent truncate text-base md:text-lg appearance-none ${
+                  isEditing
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    : "border-none pointer-events-none"
+                }`}
+                name="customerType"
+                id="customerType"
+                onChange={(e) => setCustomerType(e.target.value)}
+                value={customerType}
+              >
+                <option value=" " disabled>
+                  Customer Type
+                </option>
+                <option value="wholesale">Wholesale</option>
+                <option value="retail">Retail</option>
+                <option value="missed">Missed</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            {/* Order Number */}
+            <div className="flex items-center gap-2">
+              <p>Postcode - </p>
+              <input
+                readOnly={!isEditing}
+                className={`bg-transparent truncate text-base md:text-lg uppercase ${
+                  isEditing
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    : "border-none pointer-events-none"
+                }`}
+                type="text"
+                placeholder="Postcode"
+                onChange={(e) => setPostcode(e.target.value)}
+                value={postcode}
+                required
+              />
+            </div>
           </div>
 
           <div className="flex flex-col justify-start items-end gap-1 text-sm md:text-base">
@@ -227,9 +295,18 @@ export default function ViewTask() {
                 {extras}
               </p>
             )}
+            <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
           </div>
         </div>
       </div>
+      {user.role !== "viewer" && (
+        <div className="flex flex-col items-center w-full">
+          <div className="">
+            <FileUpload taskID={id} onUpload={setPictures} />
+          </div>
+          <Pictures taskID={id} pictures={pictures} setPictures={setPictures} />
+        </div>
+      )}
     </div>
   );
 }
