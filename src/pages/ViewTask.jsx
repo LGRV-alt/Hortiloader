@@ -310,7 +310,7 @@ export default function ViewTask() {
         </div>
 
         {/* ----------start of the main body---------- */}
-        <div className="">
+        <div className="flex justify-between items-center pr-5">
           {/* -----data fingerprint----- */}
           <div>
             <p className="text-xs">
@@ -325,11 +325,11 @@ export default function ViewTask() {
             </p>
           </div>
           {/* ------date items------ */}
-          <div className="text-sm md:text-base flex gap-4">
+          <div className="text-sm md:text-base flex gap-2">
             {/* Weekday */}
             <select
               readOnly={!isEditing}
-              className={`bg-transparent capitalize appearance-none ${
+              className={`bg-transparent capitalize appearance-none text-end ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
