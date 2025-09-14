@@ -310,7 +310,7 @@ export default function ViewTask() {
         </div>
 
         {/* ----------start of the main body---------- */}
-        <div className="flex justify-between items-center pr-5">
+        <div className="flex justify-between items-center pr-5 pl-1">
           {/* -----data fingerprint----- */}
           <div>
             <p className="text-xs">
@@ -350,8 +350,8 @@ export default function ViewTask() {
             </select>
 
             {/* Week */}
-            <div className="flex">
-              <p className="text-end">Week - </p>
+            <div className="flex gap-1">
+              <p className="text-end">Week</p>
               <select
                 value={weekNumber}
                 readOnly={!isEditing}
