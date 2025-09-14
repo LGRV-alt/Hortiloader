@@ -168,7 +168,7 @@ export default function ViewTask() {
   };
 
   return (
-    <div className="p-10 bg-surface  text- grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg h-full ">
+    <div className="p-10 bg-surface  text- grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -183,8 +183,8 @@ export default function ViewTask() {
 
       {/* ------------Task---------------- */}
 
-      <div className=" shadow-lg shadow-gray-400 rounded-3xl bg-white">
-        <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
+      <div className="grid grid-rows-[1fr_2.5fr_0.5fr]  shadow-lg shadow-gray-400 rounded-3xl bg-white">
+        <div className="grid grid-cols-[2fr_1fr]  rounded-t-3xl p-3 bg-regal-blue text-white">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col">
             {/* Title */}
@@ -258,7 +258,8 @@ export default function ViewTask() {
           </div>
 
           {/* --------------------right side of the card header------------------------- */}
-          <div className="text-center gap-1 flex flex-col w-full ">
+
+          <div className="text-center gap-1 flex flex-col w-full">
             <h5 className="text-sm tracking-tighter font-semibold">
               ORDER STATUS
             </h5>
@@ -289,7 +290,7 @@ export default function ViewTask() {
                 type="text"
                 placeholder="0"
                 onChange={(e) => setTrollies(e.target.value)}
-                //   value={trollies}
+                value={trollies}
                 required
               />
               <p>Trollies</p>
@@ -310,89 +311,132 @@ export default function ViewTask() {
         </div>
 
         {/* ----------start of the main body---------- */}
-        <div className="flex justify-between items-center pr-5 pl-1">
-          {/* -----data fingerprint----- */}
-          <div>
-            <p className="text-xs">
-              Created by:{" "}
-              {taskDetail?.expand?.created_by?.display_username ||
-                taskDetail?.created_by}
-            </p>
-            <p className="text-xs">
-              Updated by:{" "}
-              {taskDetail?.expand?.updated_by?.display_username ||
-                taskDetail?.updated_by}
-            </p>
-          </div>
-          {/* ------date items------ */}
-          <div className="text-sm md:text-base flex gap-2">
-            {/* Weekday */}
-            <select
-              readOnly={!isEditing}
-              className={`bg-transparent capitalize appearance-none text-end ${
-                isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                  : "border-none pointer-events-none"
-              }`}
-              name="day"
-              id="day"
-              onChange={(e) => setDay(e.target.value)}
-              value={day}
-            >
-              <option disabled>Day</option>
-              <option value="monday">Monday</option>
-              <option value="tuesday">Tuesday</option>
-              <option value="wednesday">Wednesday</option>
-              <option value="thursday">Thursday</option>
-              <option value="friday">Friday</option>
-              <option value="saturday">Saturday</option>
-              <option value="sunday">Sunday</option>
-            </select>
-
-            {/* Week */}
-            <div className="flex gap-1">
-              <p className="text-end">Week</p>
+        <div className="">
+          <div className="flex justify-between px-2 items-center">
+            {/* -----data fingerprint----- */}
+            <div>
+              <p className="text-xs">
+                Created by:{" "}
+                {taskDetail?.expand?.created_by?.display_username ||
+                  taskDetail?.created_by}
+              </p>
+              <p className="text-xs">
+                Updated by:{" "}
+                {taskDetail?.expand?.updated_by?.display_username ||
+                  taskDetail?.updated_by}
+              </p>
+            </div>
+            {/* ------date items------ */}
+            <div className="text-sm md:text-base flex gap-2">
+              {/* Weekday */}
               <select
-                value={weekNumber}
+                readOnly={!isEditing}
+                className={`bg-transparent capitalize appearance-none text-end ${
+                  isEditing
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    : "border-none pointer-events-none"
+                }`}
+                name="day"
+                id="day"
+                onChange={(e) => setDay(e.target.value)}
+                value={day}
+              >
+                <option disabled>Day</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+                <option value="sunday">Sunday</option>
+              </select>
+
+              {/* Week */}
+              <div className="flex gap-1">
+                <p className="text-end">Week</p>
+                <select
+                  value={weekNumber}
+                  readOnly={!isEditing}
+                  className={`bg-transparent capitalize appearance-none ${
+                    isEditing
+                      ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                      : "border-none pointer-events-none"
+                  }`}
+                  onChange={(e) => setWeekNumber(e.target.value)}
+                  name=""
+                  id=""
+                >
+                  {weekNumbers.map((w) => (
+                    <option key={w} value={w}>
+                      {w}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Year */}
+
+              <select
+                value={year}
                 readOnly={!isEditing}
                 className={`bg-transparent capitalize appearance-none ${
                   isEditing
                     ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                     : "border-none pointer-events-none"
                 }`}
-                onChange={(e) => setWeekNumber(e.target.value)}
+                onChange={(e) => setYear(e.target.value)}
                 name=""
                 id=""
               >
-                {weekNumbers.map((w) => (
-                  <option key={w} value={w}>
-                    {w}
-                  </option>
-                ))}
+                <option value="0">2024</option>
+                <option value="2025">2025</option>
               </select>
             </div>
-
-            {/* Year */}
-
-            <select
-              value={year}
+          </div>
+          {/* ----- Main Body ------ */}
+          <div className="w-full h-full flex-col items-center flex pt-10">
+            {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
+            <textarea
               readOnly={!isEditing}
-              className={`bg-transparent capitalize appearance-none ${
+              className={`p-2 w-4/5 h-2/3 text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 resize-none  ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                  : "border-none pointer-events-none"
+                  : "border-none pointer-events-none appearance-none overflow-hidden"
               }`}
-              onChange={(e) => setYear(e.target.value)}
-              name=""
-              id=""
-            >
-              <option value="0">2024</option>
-              <option value="2025">2025</option>
-            </select>
+              type="text"
+              placeholder="Issues/Load information"
+              onChange={(e) => setOrderInfo(e.target.value)}
+              value={orderInfo}
+              required
+            />
           </div>
         </div>
-
-        <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
+        <div className="">
+          {user.role !== "viewer" && (
+            <div className="grid grid-cols-3  md:gap-8 gap-2 md:px-12">
+              <button
+                className="bg-orange-500 rounded-md text-white px-4 py-2 hover:bg-orange-600"
+                onClick={() => setIsEditing(!isEditing)}
+              >
+                Edit
+              </button>
+              <button
+                className="bg-green-500 py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline hover:bg-green-600 "
+                onClick={handleSubmit}
+              >
+                <p>{savingState}</p>
+              </button>
+              {(user?.role === "admin" || user?.role === "super-user") && (
+                <button
+                  className="bg-red-500 rounded-md text-white px-4 py-2 hover:bg-red-600"
+                  onClick={() => setShowDeleteModal(true)}
+                >
+                  <p>Delete</p>
+                </button>
+              )}
+            </div>
+          )}
+        </div>
       </div>
       {user.role !== "viewer" && (
         <div className="flex flex-col items-center w-full">
@@ -400,6 +444,39 @@ export default function ViewTask() {
             <FileUpload taskID={id} onUpload={setPictures} />
           </div>
           <Pictures taskID={id} pictures={pictures} setPictures={setPictures} />
+        </div>
+      )}
+      {showDeleteModal && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">
+            <h2 className="text-xl font-semibold mb-4 text-red-600">
+              Confirm Delete
+            </h2>
+            <p className="mb-2 text-black">
+              Enter username to delete this task:{" "}
+              <span className="font-bold">{userName}</span>
+            </p>
+            <input
+              type="text"
+              className="w-full border px-3 py-2 mb-4 rounded text-black"
+              value={deletePassword}
+              onChange={(e) => setDeletePassword(e.target.value)}
+            />
+            <div className="flex justify-center space-x-2">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete()}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
