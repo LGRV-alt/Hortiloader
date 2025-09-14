@@ -29,7 +29,6 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
   }, [id, setPictures]);
 
   const role = pb.authStore.record.role;
-  console.log(role);
 
   const openModal = (picture) => {
     setSelectedPicture(picture);

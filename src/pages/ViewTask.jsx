@@ -168,7 +168,7 @@ export default function ViewTask() {
   };
 
   return (
-    <div className="p-10 bg-surface h-full grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
+    <div className=" p-2 md:p-10 bg-surface h-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -182,15 +182,15 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-      <div className="grid grid-rows-[1fr_2.5fr_0.5fr]  shadow-lg shadow-gray-400 rounded-3xl bg-white">
+      <div className="grid grid-rows-[1fr_2.5fr_0.5fr] text-xs md:text-lg shadow-lg shadow-gray-400 rounded-3xl bg-white">
         {/* ------ HEADER ------ */}
         <div className="grid grid-cols-[2fr_1fr]  rounded-t-3xl p-3 bg-regal-blue text-white">
           {/* ---------------------left side of the card header-------------------------- */}
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col justify-between">
             {/* Title */}
             <input
               readOnly={!isEditing}
-              className={`bg-transparent capitalize truncate w-full text-base md:text-2xl font-semibold tracking-tighter ${
+              className={`bg-transparent capitalize truncate w-full text-sm md:text-2xl font-semibold tracking-tighter ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
@@ -204,10 +204,10 @@ export default function ViewTask() {
 
             {/* Order Number */}
             <div className="flex items-center gap-2">
-              <p>Order Number - </p>
+              {/* <p>Order Number - </p> */}
               <input
                 readOnly={!isEditing}
-                className={`bg-transparent truncate text-base md:text-lg ${
+                className={`bg-transparent truncate  ${
                   isEditing
                     ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                     : "border-none pointer-events-none"
@@ -222,7 +222,7 @@ export default function ViewTask() {
             {/* Customer Type */}
             <select
               readOnly={!isEditing}
-              className={`bg-transparent truncate text-base md:text-lg appearance-none ${
+              className={`bg-transparent truncate appearance-none focus-within:text-black ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
@@ -244,7 +244,7 @@ export default function ViewTask() {
             {/* Postcode */}
             <input
               readOnly={!isEditing}
-              className={`bg-transparent truncate text-base md:text-lg uppercase ${
+              className={`bg-transparent truncate  uppercase ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
@@ -257,8 +257,21 @@ export default function ViewTask() {
             />
           </div>
           {/* --------------------right side of the card header------------------------- */}
-          <div className="flex flex-col justify-start items-end ">
-            <div className="text-sm md:text-lg font-semibold border-black flex gap-2">
+          <div className="flex flex-col justify-between items-end text-xs md:text-lg">
+            {/* -----data fingerprint----- */}
+            <div className="md:text-base">
+              <p className="capitalize">
+                Created by:{" "}
+                {taskDetail?.expand?.created_by?.display_username ||
+                  taskDetail?.created_by}
+              </p>
+              <p className="capitalize">
+                Updated by:{" "}
+                {taskDetail?.expand?.updated_by?.display_username ||
+                  taskDetail?.updated_by}
+              </p>
+            </div>
+            <div className=" font-semibold focus-within:text-black border-black flex gap-2 text-sm md:text-lg">
               {/* Weekday */}
               <select
                 readOnly={!isEditing}
@@ -322,47 +335,16 @@ export default function ViewTask() {
                 <option value="2025">2025</option>
               </select>
             </div>
-
-            {/* -----data fingerprint----- */}
-            <div className="text-sm ">
-              <p className="capitalize">
-                Created by:{" "}
-                {taskDetail?.expand?.created_by?.display_username ||
-                  taskDetail?.created_by}
-              </p>
-              <p className="capitalize">
-                Updated by:{" "}
-                {taskDetail?.expand?.updated_by?.display_username ||
-                  taskDetail?.updated_by}
-              </p>
-            </div>
           </div>
         </div>
         {/* ----- Main Body ------ */}
-        <div className="grid grid-cols-2 pt-20 px-2">
-          <div className="w-full h-full flex-col items-center flex">
-            {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
-            <textarea
-              readOnly={!isEditing}
-              className={`p-2 w-4/5 h-2/3 text-center  bg-transparent border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 resize-none  ${
-                isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                  : "border-none pointer-events-none appearance-none overflow-hidden"
-              }`}
-              type="text"
-              placeholder="Issues/Load information"
-              onChange={(e) => setOrderInfo(e.target.value)}
-              value={orderInfo}
-              required
-            />
-          </div>
-
-          <div className="text-center gap-1 flex flex-col justify-start w-full h-full">
-            <h5 className="text-lg tracking-wide font-bold underline">
+        <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 pt-2 md:pt-20 px-2">
+          <div className="text-center gap-1 flex flex-col justify-start w-full ">
+            <h5 className=" md:text-lg tracking-wide font-bold underline">
               ORDER STATUS
             </h5>
             <span
-              className={`w-2/3 font-semibold text-base md:w-auto self-center md:px-10 py-1 rounded-full border ${
+              className={` font-semibold text-sm md:text-base w-auto self-center px-10 py-1 rounded-full border ${
                 chip[status] || chip.new
               }`}
             >
@@ -380,9 +362,9 @@ export default function ViewTask() {
             </span>
 
             {/* ------trolley count----- */}
-            <div className="flex items-center justify-center text-green-500 font-semibold  ">
+            <div className="flex items-center justify-center text-green-500 font-semibold text-sm md:text-lg ">
               <input
-                className={`bg-transparent w-6 text-center text-base md:text-lg  focus:outline-none"}`}
+                className={`bg-transparent w-6 text-center   focus:outline-none"}`}
                 type="text"
                 placeholder="0"
                 onChange={(e) => setTrollies(e.target.value)}
@@ -393,9 +375,9 @@ export default function ViewTask() {
             </div>
 
             {/* -----extra items----- */}
-            <div className=" text-green-500 font-semibold">
+            <div className=" text-green-500 font-semibold  text-sm md:text-lg h-full ">
               <textarea
-                className={`bg-transparent w-2/3 h-full text-center text-base md:text-lg capitalize resize-none "}`}
+                className={`bg-transparent w-2/3 h-full text-center capitalize resize-none "}`}
                 type="text"
                 placeholder="Extra Items"
                 onChange={(e) => setExtras(e.target.value)}
@@ -404,11 +386,23 @@ export default function ViewTask() {
               />
             </div>
           </div>
+          <div className="w-full h-full flex-col items-center flex">
+            {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
+            <textarea
+              // readOnly={!isEditing}
+              className="p-2 w-4/5 h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 resize-none appearance-none"
+              type="text"
+              placeholder="Issues/Load information"
+              onChange={(e) => setOrderInfo(e.target.value)}
+              value={orderInfo}
+              required
+            />
+          </div>
         </div>
 
-        <div className=" pt-3 rounded-b-xl">
+        <div className="">
           {user.role !== "viewer" && (
-            <div className="grid grid-cols-3  md:gap-8 gap-2 md:px-12">
+            <div className="grid grid-cols-3 px-5  md:gap-8 gap-2 md:px-12">
               <button
                 className="bg-orange-500 rounded-md text-white px-4 py-2 hover:bg-orange-600"
                 onClick={() => setIsEditing(!isEditing)}
@@ -436,8 +430,8 @@ export default function ViewTask() {
 
       {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className="flex flex-col items-center w-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
-          <div className="w-full">
+        <div className="pb-10 md:pb-2 flex flex-col items-center w-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
+          <div className="w-full pb-5">
             <FileUpload taskID={id} onUpload={setPictures} />
           </div>
           <Pictures taskID={id} pictures={pictures} setPictures={setPictures} />
