@@ -47,13 +47,15 @@ const FileUpload = ({ taskID, onUpload }) => {
   };
 
   return (
-    <div className="justify-center flex md:text-base border-2 border-black rounded-xl p-2 md:px-10">
+    <div className="justify-center bg-regal-blue flex md:text-base text-white  rounded-t-2xl p-2 md:px-10">
       <form onSubmit={handleSubmit} className="">
-        <div className="flex flex-col gap-2 pt-4 ">
-          <h3 className="text-center  font-bold">Upload PDF/Pictures</h3>
+        <div className="flex flex-col gap-2 pt- 2">
+          <h3 className="text-center text-lg font-semibold underline">
+            Upload PDF/Pictures
+          </h3>
           <div className="flex gap-1">
             <input
-              className="text-black w-full"
+              className="text-black px-1"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -70,7 +72,7 @@ const FileUpload = ({ taskID, onUpload }) => {
           <div className="flex justify-center  pb-2">
             <button
               type="submit"
-              className="w-full bg-green-500  text-white py-2 px-4 rounded-md  hover:bg-green-400 transition-all border-2 border-black "
+              className=" bg-green-500  text-white py-1 px-6 rounded-md  hover:bg-green-400 transition-all  "
             >
               {upload ? "Uploading..." : "Upload"}
             </button>

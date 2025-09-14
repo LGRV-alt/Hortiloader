@@ -28,6 +28,9 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
     fetchPictures(id);
   }, [id, setPictures]);
 
+  const role = pb.authStore.record.role;
+  console.log(role);
+
   const openModal = (picture) => {
     setSelectedPicture(picture);
   };
@@ -67,11 +70,11 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
           const isPDF = picture.file.toLowerCase().endsWith(".pdf");
           return (
             <div
-              className="flex flex-col justify-center items-center text-center border-2 p-2 border-white hover:border-secondary-colour rounded-lg"
+              className="flex flex-col justify-center items-center text-center border-2 gap-1 bg-gray-100 hover:border-secondary-colour rounded-lg"
               key={picture.id}
-              style={{ width: "180px", minHeight: "200px" }}
+              style={{ width: "100px", minHeight: "100px" }}
             >
-              <p className="md:text-lg border-b-2 w-full border-black text-center mb-2">
+              <p className="md:text-lg capitalize w-full text-center">
                 {picture.title}
               </p>
               {isPDF ? (
@@ -83,8 +86,8 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
                 >
                   <div
                     style={{
-                      width: "150px",
-                      height: "150px",
+                      width: "50px",
+                      height: "50px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -102,14 +105,22 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
                   src={`${pb.baseUrl}/api/files/${picture.collectionId}/${picture.id}/${picture.file}`}
                   alt={picture.title || "Uploaded image"}
                   style={{
-                    width: "150px",
-                    height: "150px",
+                    width: "50px",
+                    height: "50px",
                     objectFit: "cover",
                     borderRadius: "8px",
                     cursor: "pointer",
                   }}
                   onClick={() => openModal(picture)}
                 />
+              )}
+              {role !== "viewer" && (
+                <button
+                  className="bg-red-600 w-full text-sm text-white font-semibold hover:bg-red-500"
+                  onClick={() => confirmDelete(picture)}
+                >
+                  Delete
+                </button>
               )}
             </div>
           );
@@ -149,12 +160,14 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
               >
                 Close
               </button>
-              <button
-                className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-800"
-                onClick={() => confirmDelete(selectedPicture)}
-              >
-                Delete
-              </button>
+              {role !== "viwer" && (
+                <button
+                  className="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-800"
+                  onClick={() => confirmDelete(selectedPicture)}
+                >
+                  Delete
+                </button>
+              )}
             </div>
           </div>
           <div className="flex-grow overflow-auto">

@@ -339,7 +339,7 @@ export default function ViewTask() {
           </div>
         </div>
         {/* ----- Main Body ------ */}
-        <div className="grid grid-cols-2 pt-20">
+        <div className="grid grid-cols-2 pt-20 px-2">
           <div className="w-full h-full flex-col items-center flex">
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
@@ -357,8 +357,8 @@ export default function ViewTask() {
             />
           </div>
 
-          <div className="text-center gap-1 flex flex-col justify-start w-full">
-            <h5 className="text-lg tracking-tighter font-semibold">
+          <div className="text-center gap-1 flex flex-col justify-start w-full h-full">
+            <h5 className="text-lg tracking-wide font-bold underline">
               ORDER STATUS
             </h5>
             <span
@@ -368,7 +368,7 @@ export default function ViewTask() {
             >
               <select
                 value={status === "" ? "New" : status}
-                className="cursor-pointer bg-transparent text-center  outline-none focus-within:text-black appearance-none"
+                className="cursor-pointer bg-transparent text-center outline-none focus-within:text-black appearance-none "
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="new">New</option>
@@ -393,9 +393,9 @@ export default function ViewTask() {
             </div>
 
             {/* -----extra items----- */}
-            <div className=" text-green-500 font-semibold ">
-              <input
-                className={`bg-transparent w-2/3 text-center text-base md:text-lg capitalize focus:border-secondary-colour focus:outline-none"}`}
+            <div className=" text-green-500 font-semibold">
+              <textarea
+                className={`bg-transparent w-2/3 h-full text-center text-base md:text-lg capitalize resize-none "}`}
                 type="text"
                 placeholder="Extra Items"
                 onChange={(e) => setExtras(e.target.value)}
@@ -406,7 +406,7 @@ export default function ViewTask() {
           </div>
         </div>
 
-        <div className="">
+        <div className=" pt-3 rounded-b-xl">
           {user.role !== "viewer" && (
             <div className="grid grid-cols-3  md:gap-8 gap-2 md:px-12">
               <button
@@ -434,9 +434,10 @@ export default function ViewTask() {
         </div>
       </div>
 
+      {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className="flex flex-col items-center w-full">
-          <div className="">
+        <div className="flex flex-col items-center w-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
+          <div className="w-full">
             <FileUpload taskID={id} onUpload={setPictures} />
           </div>
           <Pictures taskID={id} pictures={pictures} setPictures={setPictures} />
