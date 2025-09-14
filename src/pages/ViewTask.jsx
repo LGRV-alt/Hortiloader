@@ -168,7 +168,7 @@ export default function ViewTask() {
   };
 
   return (
-    <div className="p-10 bg-surface  text- grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
+    <div className="p-10 bg-surface h-full grid grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -182,8 +182,8 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-
       <div className="grid grid-rows-[1fr_2.5fr_0.5fr]  shadow-lg shadow-gray-400 rounded-3xl bg-white">
+        {/* ------ HEADER ------ */}
         <div className="grid grid-cols-[2fr_1fr]  rounded-t-3xl p-3 bg-regal-blue text-white">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col">
@@ -256,78 +256,9 @@ export default function ViewTask() {
               required
             />
           </div>
-
           {/* --------------------right side of the card header------------------------- */}
-
-          <div className="text-center gap-1 flex flex-col w-full">
-            <h5 className="text-sm tracking-tighter font-semibold">
-              ORDER STATUS
-            </h5>
-
-            {/* -----load status----- */}
-            <span
-              className={`w-2/3 font-semibold text-base md:w-1/2 self-center md:px-4 py-1    rounded-full border ${
-                chip[status] || chip.new
-              }`}
-            >
-              <select
-                value={status === "" ? "New" : status}
-                className="cursor-pointer bg-transparent text-center  outline-none focus-within:text-black appearance-none"
-                onChange={(e) => setStatus(e.target.value)}
-              >
-                <option value="new">New</option>
-                <option value="working">Working</option>
-                <option value="missed">Query</option>
-                <option value="pulled">Pulled</option>
-                <option value="loaded">Loaded</option>
-              </select>
-            </span>
-
-            {/* ------trolley count----- */}
-            <div className="flex items-center justify-center  ">
-              <input
-                className={`bg-transparent w-6 text-center text-base md:text-lg  focus:outline-none"}`}
-                type="text"
-                placeholder="0"
-                onChange={(e) => setTrollies(e.target.value)}
-                value={trollies}
-                required
-              />
-              <p>Trollies</p>
-            </div>
-
-            {/* -----extra items----- */}
-            <div>
-              <input
-                className={`bg-transparent w-2/3 text-center text-base md:text-lg capitalize focus:border-secondary-colour focus:outline-none"}`}
-                type="text"
-                placeholder="Extra Items"
-                onChange={(e) => setExtras(e.target.value)}
-                value={extras}
-                required
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* ----------start of the main body---------- */}
-        <div className="">
-          <div className="flex justify-between px-2 items-center">
-            {/* -----data fingerprint----- */}
-            <div>
-              <p className="text-xs">
-                Created by:{" "}
-                {taskDetail?.expand?.created_by?.display_username ||
-                  taskDetail?.created_by}
-              </p>
-              <p className="text-xs">
-                Updated by:{" "}
-                {taskDetail?.expand?.updated_by?.display_username ||
-                  taskDetail?.updated_by}
-              </p>
-            </div>
-            {/* ------date items------ */}
-            <div className="text-sm md:text-base flex gap-2">
+          <div className="flex flex-col justify-start items-end ">
+            <div className="text-sm md:text-lg font-semibold border-black flex gap-2">
               {/* Weekday */}
               <select
                 readOnly={!isEditing}
@@ -375,7 +306,6 @@ export default function ViewTask() {
               </div>
 
               {/* Year */}
-
               <select
                 value={year}
                 readOnly={!isEditing}
@@ -392,9 +322,25 @@ export default function ViewTask() {
                 <option value="2025">2025</option>
               </select>
             </div>
+
+            {/* -----data fingerprint----- */}
+            <div className="text-sm ">
+              <p className="capitalize">
+                Created by:{" "}
+                {taskDetail?.expand?.created_by?.display_username ||
+                  taskDetail?.created_by}
+              </p>
+              <p className="capitalize">
+                Updated by:{" "}
+                {taskDetail?.expand?.updated_by?.display_username ||
+                  taskDetail?.updated_by}
+              </p>
+            </div>
           </div>
-          {/* ----- Main Body ------ */}
-          <div className="w-full h-full flex-col items-center flex pt-10">
+        </div>
+        {/* ----- Main Body ------ */}
+        <div className="grid grid-cols-2 pt-20">
+          <div className="w-full h-full flex-col items-center flex">
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
               readOnly={!isEditing}
@@ -410,7 +356,56 @@ export default function ViewTask() {
               required
             />
           </div>
+
+          <div className="text-center gap-1 flex flex-col justify-start w-full">
+            <h5 className="text-lg tracking-tighter font-semibold">
+              ORDER STATUS
+            </h5>
+            <span
+              className={`w-2/3 font-semibold text-base md:w-auto self-center md:px-10 py-1 rounded-full border ${
+                chip[status] || chip.new
+              }`}
+            >
+              <select
+                value={status === "" ? "New" : status}
+                className="cursor-pointer bg-transparent text-center  outline-none focus-within:text-black appearance-none"
+                onChange={(e) => setStatus(e.target.value)}
+              >
+                <option value="new">New</option>
+                <option value="working">Working</option>
+                <option value="missed">Query</option>
+                <option value="pulled">Pulled</option>
+                <option value="loaded">Loaded</option>
+              </select>
+            </span>
+
+            {/* ------trolley count----- */}
+            <div className="flex items-center justify-center text-green-500 font-semibold  ">
+              <input
+                className={`bg-transparent w-6 text-center text-base md:text-lg  focus:outline-none"}`}
+                type="text"
+                placeholder="0"
+                onChange={(e) => setTrollies(e.target.value)}
+                value={trollies}
+                required
+              />
+              <p className="">Trollies</p>
+            </div>
+
+            {/* -----extra items----- */}
+            <div className=" text-green-500 font-semibold ">
+              <input
+                className={`bg-transparent w-2/3 text-center text-base md:text-lg capitalize focus:border-secondary-colour focus:outline-none"}`}
+                type="text"
+                placeholder="Extra Items"
+                onChange={(e) => setExtras(e.target.value)}
+                value={extras}
+                required
+              />
+            </div>
+          </div>
         </div>
+
         <div className="">
           {user.role !== "viewer" && (
             <div className="grid grid-cols-3  md:gap-8 gap-2 md:px-12">
@@ -438,6 +433,7 @@ export default function ViewTask() {
           )}
         </div>
       </div>
+
       {user.role !== "viewer" && (
         <div className="flex flex-col items-center w-full">
           <div className="">
