@@ -47,6 +47,8 @@ test.describe("CRUD Tests", () => {
     // Move back into the created task to update it
     await page.getByRole("link", { name: task }).click();
 
+    await page.getByRole("button", { name: "edit" }).click();
+
     // Fill the form in with the updated data
     await customerName.fill(updatedTaskData.name);
     await postcode.fill(updatedTaskData.postcode);

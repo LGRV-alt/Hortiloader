@@ -119,7 +119,7 @@ export default function DayColumn({
               </a>
             ) : (
               <Link
-                to={`/edit/${record.id}`}
+                to={`/view/${record.id}`}
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}
               >
@@ -137,7 +137,7 @@ export default function DayColumn({
             ) : (
               <Link
                 className="flex justify-center items-center"
-                to={`/edit/${record.id}`}
+                to={`/view/${record.id}`}
               >
                 <div className="flex justify-center items-center">
                   {getStatusIcon(record.status)}

@@ -217,7 +217,7 @@ export default function App() {
               />
 
               <Route
-                path="/edit/:id"
+                path="/view/:id"
                 element={
                   <ProtectedRoute>
                     <ViewTask />
