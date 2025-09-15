@@ -202,6 +202,21 @@ export default function ViewTask() {
               required
             />
 
+            {/* Postcode */}
+            <input
+              readOnly={!isEditing}
+              className={`bg-transparent truncate  uppercase ${
+                isEditing
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  : "border-none pointer-events-none"
+              }`}
+              type="text"
+              placeholder="Postcode"
+              onChange={(e) => setPostcode(e.target.value)}
+              value={postcode}
+              required
+            />
+
             {/* Order Number */}
             <div className="flex items-center gap-2">
               {/* <p>Order Number - </p> */}
@@ -240,21 +255,6 @@ export default function ViewTask() {
               <option value="missed">Missed</option>
               <option value="other">Other</option>
             </select>
-
-            {/* Postcode */}
-            <input
-              readOnly={!isEditing}
-              className={`bg-transparent truncate  uppercase ${
-                isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                  : "border-none pointer-events-none"
-              }`}
-              type="text"
-              placeholder="Postcode"
-              onChange={(e) => setPostcode(e.target.value)}
-              value={postcode}
-              required
-            />
           </div>
           {/* --------------------right side of the card header------------------------- */}
           <div className="flex flex-col justify-between items-end text-xs md:text-lg">
