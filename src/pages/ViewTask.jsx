@@ -275,7 +275,7 @@ export default function ViewTask() {
               <div className="flex flex-col justify-end items-end ">
                 <select
                   readOnly={!isEditing}
-                  className={`bg-transparent capitalize appearance-none focus-within:text-black ${
+                  className={`bg-transparent capitalize appearance-none focus-within:text-black text-end ${
                     isEditing
                       ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
                       : "border-none pointer-events-none"
