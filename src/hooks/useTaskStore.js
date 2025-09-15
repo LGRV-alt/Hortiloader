@@ -137,91 +137,127 @@ const buildFilter = ({ week, year } = {}) => {
   return parts.join(" && ");
 };
 
+const paramsKey = (p = {}) =>
+  `${Number.isInteger(p.week) ? p.week : "any"}-${
+    Number.isInteger(p.year) ? p.year : "any"
+  }`;
+
 export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
-  isFetching: false, // NEW: block overlapping fetches
+  inFlight: false,
   pollingIntervalId: null,
-  _pollingConfig: undefined, // NEW: track current polling config to avoid dupes
-  lastFetched: null,
+  pollingMs: 5 * 60 * 1000, // 5 minutes
+  lastFetched: null, // number (epoch ms) is easier for comparisons
+  currentParamsKey: null, // tracks the params used for the last fetch
+  currentFetchId: null,
+
+  // fetchTasks: async (params) => {
+  //   const key = paramsKey(params);
+  //   const state = get();
+  //   if (state.inFlight) return;
+
+  //   const isInitialLoad = state.tasks.length === 0;
+  //   if (isInitialLoad) set({ loading: true });
+
+  //   try {
+  //     set({ loading: true, inFlight: true });
+
+  //     const filter = buildFilter(params);
+  //     const tasks = await pb
+  //       .collection("tasks")
+  //       .getFullList({ filter, sort: "+created" });
+
+  //     set({
+  //       tasks,
+  //       lastFetched: Date.now(),
+  //       currentParamsKey: key,
+  //       loading: false,
+  //       inFlight: false,
+  //     });
+  //   } catch (err) {
+  //     // keep lastFetched unchanged on failure so we’ll retry on next tick
+  //     set({ loading: false, inFlight: false });
+  //     throw err;
+  //   }
+  // },
 
   fetchTasks: async (params) => {
-    if (get().isFetching) return;
+    const fetchId = crypto.randomUUID();
+    const startedAt = Date.now();
+    set({ currentFetchId: fetchId, inFlight: true, loading: true });
 
-    set({ loading: true, isFetching: true });
     try {
       const filter = buildFilter(params);
       const tasks = await pb
         .collection("tasks")
         .getFullList({ filter, sort: "+created" });
 
+      // only the latest request is allowed to commit
+      if (get().currentFetchId !== fetchId) return;
+
       set({
         tasks,
-        lastFetched: new Date().toISOString(),
+        lastFetched: startedAt,
+        currentParamsKey: paramsKey(params),
+        inFlight: false,
+        loading: false,
       });
     } catch (err) {
-      console.error("fetchTasks failed:", err);
-    } finally {
-      set({ loading: false, isFetching: false });
+      // ignore abort-like errors below, see #2
+      if (get().currentFetchId === fetchId)
+        set({ inFlight: false, loading: false });
+      throw err;
     }
   },
 
-  // startPolling can be called as:
-  //   startPolling(params)
-  //   startPolling(params, ms)
-  //   startPolling(ms)
-  //   startPolling(ms, params)
-  startPolling: (arg1, arg2) => {
-    let params;
-    let ms;
-
-    if (typeof arg1 === "number") {
-      ms = arg1;
-      params = arg2;
-    } else {
-      params = arg1;
-      ms = typeof arg2 === "number" ? arg2 : undefined;
+  /** Start polling with specific params and optional interval ms. */
+  startPolling: (ms, params) => {
+    // Always reset the interval when (re)starting so new params are respected
+    const { pollingIntervalId } = get();
+    if (pollingIntervalId) {
+      clearInterval(pollingIntervalId);
     }
 
-    // Defaults & safety
-    const DEFAULT_MS = 5 * 60 * 1000; // 5 minutes
-    const SAFE_MIN_MS = 1000; // floor to avoid super-tight loops
-    ms = Number.isFinite(ms) ? ms : DEFAULT_MS;
-    if (ms < SAFE_MIN_MS) ms = DEFAULT_MS;
+    if (typeof ms === "number" && ms > 0) {
+      set({ pollingMs: ms });
+    }
 
-    const { pollingIntervalId, _pollingConfig } = get();
-    const nextConfig = JSON.stringify({ ms, params });
+    const intervalId = setInterval(() => {
+      const { lastFetched, pollingMs, currentParamsKey, loading, inFlight } =
+        get();
 
-    // If already polling with same cadence+params, do nothing
-    if (pollingIntervalId && _pollingConfig === nextConfig) return;
+      // 1) If params changed since last fetch → fetch immediately
+      const key = paramsKey(params);
+      if (key !== currentParamsKey) {
+        get().fetchTasks(params);
+        return;
+      }
 
-    // If an interval exists but config changed, clear it
-    if (pollingIntervalId) clearInterval(pollingIntervalId);
+      // 2) Time-based refresh every pollingMs from the last successful fetch
+      if (!loading && !inFlight) {
+        const now = Date.now();
+        if (!lastFetched || now - lastFetched >= pollingMs) {
+          get().fetchTasks(params);
+        }
+      }
+    }, 5000); // check every 5s; light weight, responsive
 
-    const id = window.setInterval(() => {
-      const state = get();
-      if (state.isFetching) return; // guard against overlap
-      state.fetchTasks(params);
-    }, ms);
-
-    set({ pollingIntervalId: id, _pollingConfig: nextConfig });
+    set({ pollingIntervalId: intervalId });
   },
 
   stopPolling: () => {
     const id = get().pollingIntervalId;
     if (id) {
       clearInterval(id);
-      set({ pollingIntervalId: null, _pollingConfig: undefined });
+      set({ pollingIntervalId: null });
     }
   },
 
+  /** Convenience: fetch now, then start polling with the same params + interval. */
   startPollingWithImmediateFetch: (params, ms) => {
-    const state = get();
-    if (!state.isFetching) {
-      state.fetchTasks(params);
-    }
-    // Accept both orders here too
-    get().startPolling(params, ms);
+    get().fetchTasks(params);
+    get().startPolling(ms, params);
   },
 
   createTask: async (data) => {

@@ -59,19 +59,35 @@ export default function App() {
 
   const fetchTasks = useTaskStore((s) => s.fetchTasks);
 
-  // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchSettings();
-      startPollingWithImmediateFetch({ week: chosenWeek, year: chosenYear });
-    } else {
-      stopPolling(); //user logged out, stop polling
-    }
-  }, [isAuthenticated]);
+  // // Initial fetch of data - when the user logs in (is authenticated) fetch the data and start polling
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     fetchSettings();
+  //     startPollingWithImmediateFetch({ week: chosenWeek, year: chosenYear });
+  //   } else {
+  //     stopPolling(); //user logged out, stop polling
+  //   }
+  // }, [isAuthenticated]);
+
+  // useEffect(() => {
+  //   fetchTasks({ week: chosenWeek, year: chosenYear });
+  // }, [chosenWeek, chosenYear, fetchTasks]);
 
   useEffect(() => {
-    fetchTasks({ week: chosenWeek, year: chosenYear });
-  }, [chosenWeek, chosenYear, fetchTasks]);
+    if (!isAuthenticated) {
+      stopPolling();
+      return;
+    }
+
+    // (optional) only fetch settings once or guard it
+    fetchSettings();
+
+    // one call covers initial + any week/year changes
+    startPollingWithImmediateFetch({ week: chosenWeek, year: chosenYear });
+
+    // clean up on unmount / auth change
+    return () => stopPolling();
+  }, [isAuthenticated, chosenWeek, chosenYear]);
 
   return (
     <>

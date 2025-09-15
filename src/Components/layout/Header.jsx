@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -39,10 +39,27 @@ export default function Header({
     }
   };
 
-  const handleWeekChange = async (num) => {
+  // const handleWeekChange = async (num) => {
+  //   const clamped = Math.min(Math.max(num, 1), 52);
+  //   setWeek(clamped);
+  //   setChosenWeek(clamped);
+  // };
+
+  const debounceTimer = useRef(null);
+
+  const handleWeekChange = (num) => {
     const clamped = Math.min(Math.max(num, 1), 52);
-    setWeek(clamped);
-    setChosenWeek(clamped);
+    setWeek(clamped); // update UI immediately
+
+    // clear any pending update
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
+
+    // schedule the real fetch-trigger after 300ms
+    debounceTimer.current = setTimeout(() => {
+      setChosenWeek(clamped);
+    }, 300);
   };
 
   const handleYearChange = async (e) => {
