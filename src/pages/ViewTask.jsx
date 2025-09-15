@@ -57,7 +57,7 @@ export default function ViewTask() {
   // }, []);
 
   useEffect(() => {
-    useTaskStore.getState().stopPolling();
+    // useTaskStore.getState().stopPolling();
     if (!id) return;
     setLoading(true);
     pb.collection("tasks")
@@ -186,7 +186,7 @@ export default function ViewTask() {
         {/* ------ HEADER ------ */}
         <div className="grid grid-cols-[2fr_1fr]  rounded-t-3xl p-3 bg-regal-blue text-white">
           {/* ---------------------left side of the card header-------------------------- */}
-          <div className="w-full flex flex-col justify-between">
+          <div className="w-full flex flex-col ">
             {/* Title */}
             <input
               readOnly={!isEditing}
@@ -271,86 +271,107 @@ export default function ViewTask() {
                   taskDetail?.updated_by}
               </p>
             </div>
-            <div className=" font-semibold focus-within:text-black border-black flex gap-2 text-sm md:text-lg">
-              {/* Weekday */}
-              <select
-                readOnly={!isEditing}
-                className={`bg-transparent capitalize appearance-none text-end ${
-                  isEditing
-                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                    : "border-none pointer-events-none"
-                }`}
-                name="day"
-                id="day"
-                onChange={(e) => setDay(e.target.value)}
-                value={day}
-              >
-                <option disabled>Day</option>
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-                <option value="saturday">Saturday</option>
-                <option value="sunday">Sunday</option>
-              </select>
-
-              {/* Week */}
-              <div className="flex gap-1">
-                <p className="text-end">Week</p>
+            <div className=" font-semibold  border-black flex gap-2 text-sm md:text-lg">
+              <div className="flex flex-col justify-end items-end ">
                 <select
-                  value={weekNumber}
                   readOnly={!isEditing}
-                  className={`bg-transparent capitalize appearance-none ${
+                  className={`bg-transparent capitalize appearance-none focus-within:text-black ${
                     isEditing
-                      ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                      ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
                       : "border-none pointer-events-none"
                   }`}
-                  onChange={(e) => setWeekNumber(e.target.value)}
-                  name=""
-                  id=""
+                  name="boardType"
+                  id="boardType"
+                  value={other}
+                  onChange={(e) => setOther(e.target.value)}
                 >
-                  {weekNumbers.map((w) => (
-                    <option key={w} value={w}>
-                      {w}
-                    </option>
-                  ))}
+                  <option disabled>Type</option>
+                  <option value="none">Whiteboard</option>
+                  <option value="holding">Holding</option>
+                  <option value="collect">Collect</option>
                 </select>
-              </div>
+                <div className="flex gap-2">
+                  {/* Weekday */}
+                  <select
+                    readOnly={!isEditing}
+                    className={`bg-transparent capitalize appearance-none text-end focus-within:text-black ${
+                      isEditing
+                        ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
+                        : "border-none pointer-events-none"
+                    }`}
+                    name="day"
+                    id="day"
+                    onChange={(e) => setDay(e.target.value)}
+                    value={day}
+                  >
+                    <option disabled>Day</option>
+                    <option value="monday">Monday</option>
+                    <option value="tuesday">Tuesday</option>
+                    <option value="wednesday">Wednesday</option>
+                    <option value="thursday">Thursday</option>
+                    <option value="friday">Friday</option>
+                    <option value="saturday">Saturday</option>
+                    <option value="sunday">Sunday</option>
+                  </select>
 
-              {/* Year */}
-              <select
-                value={year}
-                readOnly={!isEditing}
-                className={`bg-transparent capitalize appearance-none ${
-                  isEditing
-                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
-                    : "border-none pointer-events-none"
-                }`}
-                onChange={(e) => setYear(e.target.value)}
-                name=""
-                id=""
-              >
-                <option value="0">2024</option>
-                <option value="2025">2025</option>
-              </select>
+                  {/* Week */}
+                  <div className="flex gap-1">
+                    <p className="text-end">Week</p>
+                    <select
+                      value={weekNumber}
+                      readOnly={!isEditing}
+                      className={`bg-transparent capitalize appearance-none focus-within:text-black ${
+                        isEditing
+                          ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
+                          : "border-none pointer-events-none"
+                      }`}
+                      onChange={(e) => setWeekNumber(e.target.value)}
+                      name=""
+                      id=""
+                    >
+                      {weekNumbers.map((w) => (
+                        <option key={w} value={w}>
+                          {w}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Year */}
+                  <select
+                    value={year}
+                    readOnly={!isEditing}
+                    className={`bg-transparent capitalize appearance-none ${
+                      isEditing
+                        ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none focus-within:text-black appearance-auto cursor-pointer"
+                        : "border-none pointer-events-none"
+                    }`}
+                    onChange={(e) => setYear(e.target.value)}
+                    name=""
+                    id=""
+                  >
+                    <option value="0">2024</option>
+                    <option value="2025">2025</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </div>
         {/* ----- Main Body ------ */}
-        <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 pt-2 md:pt-20 px-2">
+        <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 pt-2 md:pt-10 px-2">
           <div className="text-center gap-1 flex flex-col justify-start w-full ">
             <h5 className=" md:text-lg tracking-wide font-bold underline">
               ORDER STATUS
             </h5>
             <span
-              className={` font-semibold text-sm md:text-base w-auto self-center px-10 py-1 rounded-full border ${
+              className={`hover:bg-white hover:text-black font-semibold text-sm md:text-base w-auto self-center px-10 py-1 rounded-full border ${
                 chip[status] || chip.new
               }`}
             >
               <select
                 value={status === "" ? "New" : status}
-                className="cursor-pointer bg-transparent text-center outline-none focus-within:text-black appearance-none "
+                className="cursor-pointer bg-transparent text-center outline-none focus-within:text-black  "
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="new">New</option>
@@ -377,7 +398,7 @@ export default function ViewTask() {
             {/* -----extra items----- */}
             <div className=" text-green-500 font-semibold  text-sm md:text-lg h-full ">
               <textarea
-                className={`bg-transparent w-2/3 h-full text-center capitalize resize-none "}`}
+                className={`bg-transparent w-2/3 h-4/5 text-center capitalize resize-none "}`}
                 type="text"
                 placeholder="Extra Items"
                 onChange={(e) => setExtras(e.target.value)}
@@ -390,7 +411,7 @@ export default function ViewTask() {
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
               // readOnly={!isEditing}
-              className="p-2 w-4/5 h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none focus:border-secondary-colour placeholder:text-gray-400 resize-none appearance-none"
+              className="p-2 w-4/5 h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
               type="text"
               placeholder="Issues/Load information"
               onChange={(e) => setOrderInfo(e.target.value)}
