@@ -46,16 +46,6 @@ export default function ViewTask() {
   const [savingState, setSavingState] = useState("Save");
   const [pictures, setPictures] = useState([]);
 
-  // useEffect(() => {
-  //   // Stop polling when editing starts
-  //   useTaskStore.getState().stopPolling();
-
-  //   return () => {
-  //     // Resume polling when editing ends
-  //     useTaskStore.getState().startPolling();
-  //   };
-  // }, []);
-
   useEffect(() => {
     // useTaskStore.getState().stopPolling();
     if (!id) return;
@@ -129,7 +119,7 @@ export default function ViewTask() {
       });
       setSavingState("Save");
       toast.success("Order updated successfully!");
-      useTaskStore.getState().startPolling();
+      // useTaskStore.getState().startPolling();
       navigate(-1);
     } catch (err) {
       console.error("Error updating task:", err);
