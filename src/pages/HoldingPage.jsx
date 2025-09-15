@@ -37,7 +37,7 @@ export default function HoldingPage() {
             className="flex  items-center border-b-2 border-slate-300 mb-5 "
             key={record.id}
           >
-            <Link to={`/edit/${record.id}`}>
+            <Link to={`/view/${record.id}`}>
               <div className="flex items-center hover:border-black hover:border-b-2 ">
                 {/* <p className="mr-2">Created-{record.created.slice(5, 10)}</p> */}
                 {record.customerType === "retail" ? (

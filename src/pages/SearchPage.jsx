@@ -102,7 +102,7 @@ export default function SearchPage() {
         </form>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
           {records.map((record) => (
-            <Link key={record.id} to={`/edit/${record.id}`}>
+            <Link key={record.id} to={`/view/${record.id}`}>
               <div className=" shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
                 <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
                   <div>
