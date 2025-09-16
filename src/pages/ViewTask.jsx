@@ -195,7 +195,7 @@ export default function ViewTask() {
             {/* Postcode */}
             <input
               readOnly={!isEditing}
-              className={`bg-transparent truncate  uppercase ${
+              className={`bg-transparent truncate  uppercase w-1/2 ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
@@ -212,7 +212,7 @@ export default function ViewTask() {
               {/* <p>Order Number - </p> */}
               <input
                 readOnly={!isEditing}
-                className={`bg-transparent truncate  ${
+                className={`bg-transparent truncate w-1/2  ${
                   isEditing
                     ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                     : "border-none pointer-events-none"
@@ -227,7 +227,7 @@ export default function ViewTask() {
             {/* Customer Type */}
             <select
               readOnly={!isEditing}
-              className={`bg-transparent truncate appearance-none focus-within:text-black ${
+              className={`bg-transparent truncate w-1/2 appearance-none focus-within:text-black ${
                 isEditing
                   ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
                   : "border-none pointer-events-none"
@@ -261,13 +261,13 @@ export default function ViewTask() {
                   taskDetail?.updated_by}
               </p>
             </div>
-            <div className=" font-semibold  border-black flex gap-2 text-sm md:text-lg">
+            <div className=" font-semibold  flex gap-2 text-xs md:text-lg">
               <div className="flex flex-col justify-end items-end ">
                 <select
                   readOnly={!isEditing}
                   className={`bg-transparent capitalize appearance-none focus-within:text-black text-end ${
                     isEditing
-                      ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
+                      ? "  appearance-auto cursor-pointer"
                       : "border-none pointer-events-none"
                   }`}
                   name="boardType"
@@ -280,13 +280,13 @@ export default function ViewTask() {
                   <option value="holding">Holding</option>
                   <option value="collect">Collect</option>
                 </select>
-                <div className="flex gap-2">
+                <div className="flex gap-2 ">
                   {/* Weekday */}
                   <select
                     readOnly={!isEditing}
                     className={`bg-transparent capitalize appearance-none text-end focus-within:text-black ${
                       isEditing
-                        ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
+                        ? "appearance-auto cursor-pointer"
                         : "border-none pointer-events-none"
                     }`}
                     name="day"
@@ -312,7 +312,7 @@ export default function ViewTask() {
                       readOnly={!isEditing}
                       className={`bg-transparent capitalize appearance-none focus-within:text-black ${
                         isEditing
-                          ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none appearance-auto cursor-pointer"
+                          ? " appearance-auto cursor-pointer"
                           : "border-none pointer-events-none"
                       }`}
                       onChange={(e) => setWeekNumber(e.target.value)}
@@ -333,7 +333,7 @@ export default function ViewTask() {
                     readOnly={!isEditing}
                     className={`bg-transparent capitalize appearance-none ${
                       isEditing
-                        ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none focus-within:text-black appearance-auto cursor-pointer"
+                        ? " focus-within:text-black appearance-auto cursor-pointer"
                         : "border-none pointer-events-none"
                     }`}
                     onChange={(e) => setYear(e.target.value)}
