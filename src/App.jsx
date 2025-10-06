@@ -182,7 +182,7 @@ export default function App() {
               />
 
               <Route
-                path="/runs"
+                path="/delivery-runs"
                 element={
                   <ProtectedRoute>
                     <TrolleyExportsPage />
@@ -249,7 +249,7 @@ export default function App() {
               />
 
               <Route
-                path="/createCustomer"
+                path="/create-customer"
                 element={
                   <ProtectedRoute>
                     <CreateCustomer />

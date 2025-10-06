@@ -196,7 +196,7 @@ export default function Header({
                       Map
                     </button>
 
-                    <Link to="/createCustomer">
+                    <Link to="/create-customer">
                       <button
                         onClick={() => setMenuOpen(false)}
                         className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex"
@@ -275,7 +275,7 @@ export default function Header({
               Holding Page
             </NavLink>
             <NavLink
-              to="/runs"
+              to="/delivery-runs"
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >
