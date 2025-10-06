@@ -105,13 +105,14 @@ export default function App() {
       {isAuthenticated ? (
         <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           {loading && (
-            <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
-              <h2 className="text-xl font-bold mb-8">Fetching Orders...</h2>
-              <div className="relative w-full h-full overflow-hidden">
-                <div className="absolute left-0  -translate-y-1/2">
-                  <DanishTrolleyLoader />
-                </div>
-              </div>
+            <div
+              className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm
+               flex flex-col items-start justify-center"
+              role="status"
+              aria-live="polite"
+              aria-label="Loading"
+            >
+              <DanishTrolleyLoader />
             </div>
           )}
           <div className="sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
