@@ -268,7 +268,7 @@ export default function Header({
               Collections
             </NavLink>
             <NavLink
-              to="/holdingPage"
+              to="/holding-page"
               onClick={() => setMenuOpen(false)}
               className="hover:text-blue-300"
             >

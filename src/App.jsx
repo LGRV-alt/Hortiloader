@@ -145,7 +145,7 @@ export default function App() {
                 }
               />
               <Route
-                path="/holdingPage"
+                path="/holding-page"
                 element={
                   <ProtectedRoute>
                     <HoldingPage />
