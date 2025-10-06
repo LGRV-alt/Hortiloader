@@ -250,18 +250,18 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="bg-gray-200 h-full pt-5 scroll-smooth px-10">
+    <div className="bg-gray-200 h-full pt-5 scroll-smooth lg:px-10 px-1">
       <div className="flex justify-start flex-col ">
-        <h3 className="self-center text-3xl font-bold tracking-tighter">
+        <h3 className="self-center text-2xl lg:text-3xl font-bold tracking-tighter">
           Search Page
         </h3>
-        <p className="self-center pb-2">
+        <p className="self-center text-sm lg:text-base text-center pb-2">
           Search details such as name, postcode, order number or any information
           saved within the order.
         </p>
         {/* Segmented search + filters */}
         <form
-          className=" p-10 mb-4 bg-white w-3/4 self-center rounded-3xl shadow-xl"
+          className="p-2 lg:p-10 mb-4 bg-white w-full lg:w-3/4 self-center rounded-3xl shadow-xl"
           onSubmit={onSubmit}
           role="search"
           aria-label="Orders"
@@ -294,7 +294,7 @@ export default function SearchPage() {
           {/* Search row */}
           <div className="gap-2 flex justify-center items-center">
             <input
-              className="w-full text-base border-2  md:w-1/2 p-2 rounded-xl pl-5"
+              className="w-full text-base border-2  md:w-1/2 p-2 rounded-xl pl-1 lg:pl-5"
               type="text"
               placeholder='e.g "Stanleys Garden Centre" or AB12 3CD'
               value={searchTerm}
