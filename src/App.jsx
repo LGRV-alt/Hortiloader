@@ -39,6 +39,7 @@ import AcceptTerms from "./pages/auth/AcceptTerms";
 import CreateCustomer from "./pages/CreateCustomer";
 import { useSettingsStore } from "./hooks/useSettingsStore";
 import ViewTask from "./pages/ViewTask";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -159,6 +160,8 @@ export default function App() {
                   </ProtectedRoute>
                 }
               />
+
+              <Route path="*" element={<NotFound />} />
 
               <Route
                 path="/logs"

@@ -81,7 +81,7 @@ export default function DeletedTasks() {
               <tr key={task.id}>
                 <td>{task.title}</td>
                 <td>
-                  {task.expand?.deleted_by?.username ||
+                  {task.expand?.deleted_by?.display_username ||
                     task.deleted_by ||
                     "Unknown"}
                 </td>
