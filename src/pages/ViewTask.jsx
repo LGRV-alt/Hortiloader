@@ -158,11 +158,11 @@ export default function ViewTask() {
   };
 
   return (
-    <div className=" p-2 md:p-10 bg-surface h-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
+    <div className=" p-2 md:p-6 bg-surface h-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
-          <h2 className="text-xl font-bold mb-8">Fetching Data...</h2>
+          <h2 className="text-xl font-bold mb-8">Fetching Task...</h2>
           <div className="relative w-full h-full overflow-hidden">
             <div className="absolute left-0  -translate-y-1/2">
               <DanishTrolleyLoader />
@@ -247,9 +247,17 @@ export default function ViewTask() {
             </select>
           </div>
           {/* --------------------right side of the card header------------------------- */}
-          <div className="flex flex-col justify-between items-end text-xs md:text-lg">
+          <div className="flex flex-col justify-between items-end text-xs md:text-lg gap-2">
             {/* -----data fingerprint----- */}
-            <div className="md:text-base">
+            <div className="md:text-sm">
+              <p className="capitalize">
+                Created on:{" "}
+                {taskDetail?.created
+                  .split(" ")[0]
+                  .split("-")
+                  .reverse()
+                  .join("-")}
+              </p>
               <p className="capitalize">
                 Created by:{" "}
                 {taskDetail?.expand?.created_by?.display_username ||

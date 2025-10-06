@@ -162,7 +162,7 @@ export default function Edit() {
     <div className="p-2 bg-surface grid grid-cols-1 gap-4 text-sm md:text-lg h-full ">
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
-          <h2 className="text-xl font-bold mb-8">Fetching Data...</h2>
+          <h2 className="text-xl font-bold mb-8">Fetching Task...</h2>
           <div className="relative w-full h-full overflow-hidden">
             <div className="absolute left-0  -translate-y-1/2">
               <DanishTrolleyLoader />
@@ -182,6 +182,10 @@ export default function Edit() {
                 {taskDetail?.expand?.created_by?.display_username ||
                   taskDetail?.created_by}
               </p>
+              <p className="text-xs">
+                Created on: {taskDetail?.expand?.created}
+              </p>
+
               <p className="text-xs">
                 Updated by:{" "}
                 {taskDetail?.expand?.updated_by?.display_username ||
