@@ -250,16 +250,18 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="bg-gray-200 h-full pt-5 scroll-smooth">
-      <div className="flex justify-start flex-col mx-8">
-        <p className="text-center text-gray-500 pb-4">
+    <div className="bg-gray-200 h-full pt-5 scroll-smooth px-10">
+      <div className="flex justify-start flex-col ">
+        <h3 className="self-center text-3xl font-bold tracking-tighter">
+          Search Page
+        </h3>
+        <p className="self-center pb-2">
           Search details such as name, postcode, order number or any information
           saved within the order.
         </p>
-
         {/* Segmented search + filters */}
         <form
-          className="w-full border-b-2 pb-4 border-black mb-4"
+          className=" p-10 mb-4 bg-white w-3/4 self-center rounded-3xl shadow-xl"
           onSubmit={onSubmit}
           role="search"
           aria-label="Orders"
@@ -292,19 +294,12 @@ export default function SearchPage() {
           {/* Search row */}
           <div className="gap-2 flex justify-center items-center">
             <input
-              className="w-full text-base md:text-xl bg-white md:w-1/2 p-2 rounded-xl pl-5"
+              className="w-full text-base border-2  md:w-1/2 p-2 rounded-xl pl-5"
               type="text"
-              placeholder="Enter details"
+              placeholder='e.g "Stanleys Garden Centre" or AB12 3CD'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button
-              className="text-sm md:text-base py-2 w-28 md:w-40 bg-green-600 justify-center rounded hover:bg-green-700 flex text-white disabled:opacity-60"
-              type="submit"
-              disabled={searching}
-            >
-              {searching ? "Searching..." : "Search"}
-            </button>
 
             <button
               type="button"
@@ -312,6 +307,13 @@ export default function SearchPage() {
               className="text-sm md:text-base py-2 px-3 bg-gray-300 rounded hover:bg-gray-400"
             >
               Clear
+            </button>
+            <button
+              className="text-sm md:text-base py-2 w-28 md:w-32 bg-green-600 justify-center rounded hover:bg-green-700 flex text-white disabled:opacity-60"
+              type="submit"
+              disabled={searching}
+            >
+              {searching ? "Searching..." : "Search"}
             </button>
           </div>
 
@@ -455,6 +457,22 @@ export default function SearchPage() {
             </Link>
           ))}
         </div>
+
+        {/* Loading state */}
+        {searching && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <div
+                key={i}
+                className="animate-pulse rounded-3xl bg-white shadow-lg shadow-gray-400 p-6 h-48"
+              >
+                <div className="h-6 w-1/3 bg-gray-200 rounded mb-3"></div>
+                <div className="h-4 w-1/2 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 w-2/3 bg-gray-200 rounded"></div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Empty state */}
         {showEmpty && (
