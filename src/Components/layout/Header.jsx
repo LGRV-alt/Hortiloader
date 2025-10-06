@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import LogoTree from "../svg/LogoTree";
 import { getDateWeek, signout } from "../../api/pocketbase";
@@ -206,9 +206,18 @@ export default function Header({
                     </Link>
                   </>
                 )}
+                <NavLink
+                  className={
+                    "hover:text-blue-500 flex justify-center items-center "
+                  }
+                  onClick={() => setMenuOpen(false)}
+                  to="/search"
+                >
+                  <FaSearch fontSize={"1.2rem"} />
+                </NavLink>
                 <button
                   onClick={() => setMenuOpen((prev) => !prev)}
-                  className="ml-2 text-white"
+                  className="ml-2 text-white hover:text-blue-500 "
                 >
                   {menuOpen ? (
                     <FaTimes fontSize="1.5rem" />
