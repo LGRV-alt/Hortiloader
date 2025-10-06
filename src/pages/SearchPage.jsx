@@ -125,6 +125,9 @@ export default function SearchPage() {
                     <p>{uppercaseFirstLetter(record.day[0])}</p>
                     <p>Week {record.weekNumber}</p>
                     <p>{record.year === 0 ? "2024" : record.year}</p>
+                    <p className="capitalize">
+                      {record.other === "none" ? "Whiteboard" : record.other}
+                    </p>
                   </div>
                 </div>
 
