@@ -1,73 +1,211 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import pb from "../api/pbConnect";
 
+const CHIP = {
+  new: "bg-amber-100 text-amber-800 border-amber-200",
+  working: "bg-purple-100 text-purple-800 border-purple-200",
+  loaded: "bg-blue-100 text-blue-800 border-blue-200",
+  pulled: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  missed: "bg-red-100 text-red-800 border-red-200",
+};
+
 export default function HoldingPage() {
-  const user = pb.authStore.record;
+  const user = pb?.authStore?.record;
 
   const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [errMsg, setErrMsg] = useState("");
+
+  // Build filter safely once user is known
+  const filter = useMemo(() => {
+    if (!user?.organization) return null;
+    // PocketBase filter uses && and = for equality; escape quotes if needed
+    return `org="${user.organization}" && other="holding" && deleted=false`;
+  }, [user?.organization]);
 
   useEffect(() => {
-    const fetchExports = async () => {
-      try {
-        const records = await pb.collection("tasks").getFullList({
-          sort: "-created",
-          filter: `org="${user.organization}" && other="holding" && deleted = false `,
-        });
-        setRecords(records);
-      } catch (err) {
-        console.error("Error fetching exports:", err);
-      }
-    };
+    if (!filter) {
+      setLoading(false);
+      return;
+    }
 
-    fetchExports();
-  }, []);
+    const ctrl = new AbortController();
+
+    (async () => {
+      try {
+        setLoading(true);
+        // If the collection could be large, consider getList(page, perPage)
+        const list = await pb.collection("tasks").getFullList({
+          sort: "-created",
+          filter,
+          $autoCancel: false, // we'll handle via AbortController
+        });
+
+        if (!ctrl.signal.aborted) setRecords(list);
+      } catch (err) {
+        if (ctrl.signal.aborted) return;
+        console.error("Error fetching holding tasks:", err);
+        setErrMsg("Sorry, we couldn’t load the holding tasks.");
+      } finally {
+        if (!ctrl.signal.aborted) setLoading(false);
+      }
+    })();
+
+    return () => ctrl.abort();
+  }, [filter]);
+
+  if (!user) {
+    return (
+      <div className="px-10 py-10">
+        <p className="text-gray-600">
+          You’re not signed in. Please log in to view holding tasks.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <div className="hidden md:block"></div>
-      <div className="flex justify-start flex-col mx-5 mt-5 ">
-        {records.length === 0 && (
-          <p className="text-center text-gray-500">No results found.</p>
-        )}
-        {records.map((record) => (
-          <div
-            className="flex  items-center border-b-2 border-slate-300 mb-5 "
-            key={record.id}
-          >
-            <Link to={`/view/${record.id}`}>
-              <div className="flex items-center hover:border-black hover:border-b-2 ">
-                {/* <p className="mr-2">Created-{record.created.slice(5, 10)}</p> */}
-                {record.customerType === "retail" ? (
-                  <p className="text-blue-700 md:text-lg mr-2 ">
-                    {record.title}
-                  </p>
-                ) : record.customerType === "other" ? (
-                  <p className="text-red-500  font-medium md:text-lg mr-2">
-                    {record.title}
-                  </p>
-                ) : record.customerType === "missed" ? (
-                  <p className="text-fuchsia-600  font-medium md:text-lg mr-2">
-                    {record.title}
-                  </p>
-                ) : (
-                  <p className="font-medium md:text-lg mr-2 ">{record.title}</p>
-                )}
-
-                <p className="font-medium md:text-lg mr-2">
-                  {record.postcode.toUpperCase()}
-                </p>
-                <p className=" ">
-                  {record.orderNumber ? record.orderNumber : ""}
-                </p>
-                <p className="hidden ml-2 md:block">{record.orderInfo}</p>
-              </div>
-            </Link>
-          </div>
-        ))}
+    <div className="px-4 md:px-10">
+      <div className="flex flex-col justify-center items-center py-5">
+        <h2 className="text-2xl lg:text-3xl font-bold tracking-tighter">
+          Holding Page
+        </h2>
+        <p className="text-center text-gray-500 text-sm lg:text-base pb-4">
+          Orders held within the holding section, move them to the working board
+          when ready.
+        </p>
       </div>
+
+      {/* Loading state */}
+      {loading && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="animate-pulse rounded-3xl bg-white shadow-lg shadow-gray-400 p-6 h-48"
+            >
+              <div className="h-6 w-1/3 bg-gray-200 rounded mb-3"></div>
+              <div className="h-4 w-1/2 bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 w-2/3 bg-gray-200 rounded"></div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error state */}
+      {!loading && errMsg && (
+        <div className="pb-10">
+          <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+            {errMsg}
+          </div>
+        </div>
+      )}
+
+      {/* Empty state */}
+      {!loading && !errMsg && records.length === 0 && (
+        <div className="pb-10">
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center">
+            <p className="text-gray-600">No orders in holding right now.</p>
+          </div>
+        </div>
+      )}
+
+      {/* List */}
+      {!loading && !errMsg && records.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
+          {records.map((record) => {
+            const {
+              id,
+              title,
+              orderNumber,
+              customerType,
+              postcode,
+              day,
+              weekNumber,
+              year,
+              other,
+              orderInfo,
+              status,
+              trollies,
+              extras,
+            } = record || {};
+
+            const safeDay = Array.isArray(day) && day.length > 0 ? day[0] : "";
+            const safeYear = typeof year === "number" && year > 0 ? year : "";
+            const safePostcode =
+              typeof postcode === "string" ? postcode.trim().toUpperCase() : "";
+            const chipClass = CHIP[status] || CHIP.new;
+
+            return (
+              <Link
+                key={id}
+                to={`/view/${id}`}
+                className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black rounded-3xl"
+                aria-label={`Open ${title || "order"}`}
+              >
+                <article className="shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
+                  <header className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
+                    <div>
+                      <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
+                        {title || "Untitled"}
+                      </h4>
+                      <p className="text-sm md:text-lg font-semibold">
+                        {orderNumber || ""}
+                      </p>
+                      <p className="text-sm md:text-lg font-semibold">
+                        {customerType || ""}
+                      </p>
+                      <p className="text-sm text-gray-100">{safePostcode}</p>
+                    </div>
+
+                    <div className="flex flex-col justify-start items-end gap-1 text-sm md:text-base">
+                      <p>{safeDay}</p>
+                      <p>{weekNumber ? `Week ${weekNumber}` : ""}</p>
+                      <p>{safeYear}</p>
+                      <p className="capitalize">
+                        {other && other !== "none" ? other : "Whiteboard"}
+                      </p>
+                    </div>
+                  </header>
+
+                  <div className="flex min-h-48 justify-center items-center text-center">
+                    <p className="line-clamp-3 w-full md:px-4 text-sm md:text-base">
+                      {orderInfo || "No order information."}
+                    </p>
+
+                    <div className="text-center gap-1 flex flex-col w-full md:w-1/2 pr-1 md:px-4">
+                      <h5 className="text-sm tracking-tighter font-semibold">
+                        ORDER STATUS
+                      </h5>
+
+                      <span
+                        className={`w-2/3 md:w-1/2 self-center md:px-4 py-1 text-sm rounded-full border ${chipClass}`}
+                      >
+                        {status ? status : "New"}
+                      </span>
+
+                      {!!trollies && (
+                        <p className="font-bold text-sm text-green-600">
+                          {trollies}{" "}
+                          {Number(trollies) === 1 ? "Trolley" : "Trolleys"}
+                        </p>
+                      )}
+
+                      {!!extras && (
+                        <p className="line-clamp-2 font-bold text-sm text-green-600">
+                          {extras}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
