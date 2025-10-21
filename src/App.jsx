@@ -40,6 +40,7 @@ import CreateCustomer from "./pages/CreateCustomer";
 import { useSettingsStore } from "./hooks/useSettingsStore";
 import ViewTask from "./pages/ViewTask";
 import NotFound from "./pages/NotFound";
+import LandingPage from "./pages/LandingPage";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -150,6 +151,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <HoldingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/landing-page"
+                element={
+                  <ProtectedRoute>
+                    <LandingPage />
                   </ProtectedRoute>
                 }
               />
