@@ -155,14 +155,6 @@ export default function App() {
                 }
               />
               <Route
-                path="/landing-page"
-                element={
-                  <ProtectedRoute>
-                    <LandingPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
                 path="/trolley-tracker"
                 element={
                   <ProtectedRoute>
@@ -300,11 +292,14 @@ export default function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/accept-terms" element={<AcceptTerms />} />
+            <Route path="/landing-page" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
             <Route
               path="*"
               element={
                 // Default fallback for unauthenticated users
-                <Login />
+                // <Login />
+                <LandingPage />
               }
             />
           </Routes>
