@@ -6,36 +6,50 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
       {/* Header */}
-      <header className="w-full border-b border-slate-200 bg-main text-white sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
-          <LogoTree height="40px" width="40px" />
-          <a href="/" className="text-lg md:text-2xl font-bold tracking-tight">
-            Hortiloader
-          </a>
+      <header className="w-full border-b border-slate-200 bg-main text-white top-0 z-30">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
+          <div className="flex gap-3">
+            <LogoTree height="40px" width="40px" />
+            <a
+              href="/"
+              className="text-lg md:text-4xl font-display font-semi-bold tracking-tight"
+            >
+              Hortiloader
+            </a>
+          </div>
           <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#features" className="hover:text-slate-950">
+            <a
+              href="#features"
+              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
+            >
               Features
             </a>
-            <a href="#how" className="hover:text-slate-950">
+            <a
+              href="#how"
+              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
+            >
               How it Works
             </a>
-            <a href="#contact" className="hover:text-slate-950">
+            <a
+              href="#contact"
+              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
+            >
               Contact
             </a>
           </nav>
           <div className="flex gap-3">
             <Link
               to="/login"
-              className="px-4 py-2 text-sm rounded-lg border hover:bg-slate-100"
+              className="px-4 py-2 text-sm rounded-lg border hover:bg-slate-700"
             >
               Log In
             </Link>
-            <a
-              href="/signup"
+            <Link
+              to="/login"
               className="px-4 py-2 text-sm rounded-lg bg-green-600  hover:bg-green-700"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       </header>
