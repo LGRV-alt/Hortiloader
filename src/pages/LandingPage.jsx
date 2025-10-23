@@ -64,18 +64,18 @@ export default function LandingPage() {
           loads, and simplify daily operations — all in one tool.
         </p>
         <div className="flex gap-4">
-          <a
-            href="/signup"
+          <Link
+            to="/login"
             className="px-6 py-3 rounded-xl bg-slate-900 text-white hover:bg-slate-800"
           >
             Try it Free
-          </a>
-          <a
+          </Link>
+          {/* <a
             href="#features"
             className="px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-100"
           >
             Learn More
-          </a>
+          </a> */}
         </div>
       </section>
 
@@ -94,8 +94,20 @@ export default function LandingPage() {
                 desc: "See which trolleys are ready, in progress, or on the truck.",
               },
               {
-                title: "Mobile Friendly",
-                desc: "Works seamlessly across desktop, tablet, and phone.",
+                title: "Loading Sheets",
+                desc: "Group orders together in a clear map to assist in the loading and delivery of each load.",
+              },
+              {
+                title: "Trolley Tracking",
+                desc: "Trolley movements can be logged and tracked with total numbers easily shown at a glance.",
+              },
+              {
+                title: "Account Control",
+                desc: "Add team accounts with role-based permissions to fit your business.",
+              },
+              {
+                title: "Picture/File Upload",
+                desc: "Attach photos & files to each order.",
               },
             ].map((f) => (
               <div
@@ -119,17 +131,17 @@ export default function LandingPage() {
               {
                 step: "1",
                 title: "Create Orders",
-                desc: "Add customer orders or import existing data.",
+                desc: "Add customer orders or tasks.",
               },
               {
                 step: "2",
                 title: "Pick & Load",
-                desc: "Organise items by trolley and monitor loading progress.",
+                desc: "Orders organized by weekdays and weeks, monitor status of tasks at a glance.",
               },
               {
                 step: "3",
                 title: "Deliver & Confirm",
-                desc: "Track deliveries and keep your records synced.",
+                desc: "Complete orders can be grouped together and delivery sheets produced.",
               },
             ].map((s) => (
               <div
@@ -155,26 +167,35 @@ export default function LandingPage() {
         <p className="mb-6 text-emerald-100">
           Join other garden centres using Hortiloader today.
         </p>
-        <a
-          href="/signup"
+        <Link
+          to="/login"
           className="px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50"
         >
           Get Started
-        </a>
+        </Link>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-600">
+      <footer
+        id="contact"
+        className="border-t border-slate-200 py-8 text-center text-sm text-slate-600"
+      >
         <p>© {new Date().getFullYear()} Hortiloader. All rights reserved.</p>
         <div className="mt-3 flex justify-center gap-4">
-          <a href="/privacy" className="hover:text-slate-950">
+          <Link to="/privacy" className="hover:text-slate-950">
             Privacy
-          </a>
-          <a href="/terms" className="hover:text-slate-950">
+          </Link>
+          <Link to="/terms" className="hover:text-slate-950">
             Terms
-          </a>
-          <a href="/login" className="hover:text-slate-950">
+          </Link>
+          <Link to="/login" className="hover:text-slate-950">
             Login
+          </Link>
+          <a
+            className="hover:text-slate-950"
+            href="mailto:support@hortiloader.com"
+          >
+            Email Us
           </a>
         </div>
       </footer>
