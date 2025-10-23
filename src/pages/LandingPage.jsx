@@ -1,13 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import LogoTree from "../Components/svg/LogoTree";
 
 export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-white to-slate-50 text-slate-900">
       {/* Header */}
-      <header className="w-full border-b border-slate-200 bg-white sticky top-0 z-30">
+      <header className="w-full border-b border-slate-200 bg-main text-white sticky top-0 z-30">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
-          <a href="/" className="text-lg font-bold tracking-tight">
-            🌿 Hortiloader
+          <LogoTree height="40px" width="40px" />
+          <a href="/" className="text-lg md:text-2xl font-bold tracking-tight">
+            Hortiloader
           </a>
           <nav className="hidden md:flex items-center gap-6 text-sm">
             <a href="#features" className="hover:text-slate-950">
@@ -21,15 +24,15 @@ export default function LandingPage() {
             </a>
           </nav>
           <div className="flex gap-3">
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="px-4 py-2 text-sm rounded-lg border hover:bg-slate-100"
             >
               Log In
-            </a>
+            </Link>
             <a
               href="/signup"
-              className="px-4 py-2 text-sm rounded-lg bg-slate-900 text-white hover:bg-slate-800"
+              className="px-4 py-2 text-sm rounded-lg bg-green-600  hover:bg-green-700"
             >
               Get Started
             </a>

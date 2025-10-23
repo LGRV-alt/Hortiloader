@@ -47,6 +47,7 @@ export default function Login() {
 
     //Fully authenticated
     toast.success("Login successful!");
+    navigate("/");
   };
 
   const handleSignup = async (e) => {
