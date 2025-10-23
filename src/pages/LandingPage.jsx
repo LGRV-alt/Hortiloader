@@ -17,7 +17,7 @@ export default function LandingPage() {
               Hortiloader
             </a>
           </div>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
+          <nav className="hidden md:flex items-center gap-2 text-sm">
             <a
               href="#features"
               className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
@@ -29,6 +29,12 @@ export default function LandingPage() {
               className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
             >
               How it Works
+            </a>
+            <a
+              href="#about"
+              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
+            >
+              About
             </a>
             <a
               href="#contact"
@@ -61,7 +67,7 @@ export default function LandingPage() {
         </h1>
         <p className="text-slate-600 max-w-2xl mb-8">
           Hortiloader helps garden centres and suppliers organise orders, track
-          loads, and simplify daily operations — all in one tool.
+          loads and simplify daily operations — all in one tool.
         </p>
         <div className="flex gap-4">
           <Link
@@ -91,7 +97,7 @@ export default function LandingPage() {
               },
               {
                 title: "Track Loading Progress",
-                desc: "See which trolleys are ready, in progress, or on the truck.",
+                desc: "See which trolleys are ready, in progress or on the truck.",
               },
               {
                 title: "Loading Sheets",
@@ -175,12 +181,37 @@ export default function LandingPage() {
         </Link>
       </section>
 
+      <section id="about" className="py-16 bg-white border-t">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold mb-4">About Hortiloader</h2>
+          <p className="text-slate-600 text-sm leading-relaxed max-w-2xl mx-auto">
+            Hortiloader is a side project built out of a love for plants and
+            practical tools. It started as a hobby idea to make organising
+            horticultural orders and trolleys a little easier.
+          </p>
+          <p className="text-slate-600 text-sm leading-relaxed mt-3 max-w-2xl mx-auto">
+            It’s currently in <span className="font-semibold">beta</span> — that
+            means it’s still growing and may change over time. Feel free to
+            explore, test it out and share feedback if you find it useful!
+          </p>
+          <p className="text-slate-500 text-xs mt-6 max-w-2xl mx-auto">
+            This project is shared freely as a hobby and learning experience.
+            There are no guarantees or support obligations but you’re very
+            welcome to use it and see what you think.
+          </p>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer
         id="contact"
-        className="border-t border-slate-200 py-8 text-center text-sm text-slate-600"
+        className="border-t bg-slate-50 border-slate-200 py-8 text-center text-sm text-slate-600"
       >
         <p>© {new Date().getFullYear()} Hortiloader. All rights reserved.</p>
+        <p className="mt-2 text-xs text-slate-500">
+          Version 0.9 – Beta release. Hortiloader is a personal project shared
+          for testing and feedback. No warranties or guarantees are provided.
+        </p>
         <div className="mt-3 flex justify-center gap-4">
           <Link to="/privacy" className="hover:text-slate-950">
             Privacy
