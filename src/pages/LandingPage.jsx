@@ -8,11 +8,11 @@ export default function LandingPage() {
       {/* Header */}
       <header className="w-full border-b border-slate-200 bg-main text-white top-0 z-30">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <LogoTree height="40px" width="40px" />
             <a
               href="/"
-              className="text-lg md:text-4xl font-display font-semi-bold tracking-tight"
+              className="text-3xl md:text-4xl font-display font-semi-bold tracking-tight"
             >
               Hortiloader
             </a>
@@ -46,13 +46,13 @@ export default function LandingPage() {
           <div className="flex gap-3">
             <Link
               to="/login"
-              className="px-4 py-2 text-sm rounded-lg border hover:bg-slate-700"
+              className="p-2 md:px-4 text-sm rounded-lg border hover:bg-slate-700"
             >
               Log In
             </Link>
             <Link
               to="/login"
-              className="px-4 py-2 text-sm rounded-lg bg-green-600  hover:bg-green-700"
+              className="p-2 text-sm rounded-lg bg-green-600  hover:bg-green-700"
             >
               Get Started
             </Link>
@@ -109,11 +109,11 @@ export default function LandingPage() {
               },
               {
                 title: "Account Control",
-                desc: "Add team accounts with role-based permissions to fit your business.",
+                desc: "Add team accounts with role based permissions to fit your business.",
               },
               {
                 title: "Picture/File Upload",
-                desc: "Attach photos & files to each order.",
+                desc: "Attach photos and files to each order.",
               },
             ].map((f) => (
               <div
@@ -142,7 +142,7 @@ export default function LandingPage() {
               {
                 step: "2",
                 title: "Pick & Load",
-                desc: "Orders organized by weekdays and weeks, monitor status of tasks at a glance.",
+                desc: "Orders organised by weekdays and weeks, monitor status of tasks at a glance.",
               },
               {
                 step: "3",
