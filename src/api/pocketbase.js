@@ -232,7 +232,7 @@ export async function login(username, password, orgName) {
 export function signout() {
   localStorage.removeItem("user_settings_cache");
   pb.authStore.clear();
-  window.location.reload();
+  // window.location.reload();
 }
 
 export async function signup(
