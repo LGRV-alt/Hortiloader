@@ -3,6 +3,8 @@ import { login } from "./helpers/auth";
 
 test.describe("Check Login and Logout Flow", () => {
   test("Login Page", async ({ page }) => {
+    // Landing Page Selector
+    const logInButton = page.getByRole("link", { name: "Log In" });
     // Page selectors
     const signInButton = page.getByRole("button", { name: "Sign in" });
 
@@ -18,7 +20,7 @@ test.describe("Check Login and Logout Flow", () => {
     await page.getByRole("button", { name: "Logout" }).click();
 
     // Assert that the page is back to the signin page
-    await expect(signInButton).toBeVisible({ timeout: 10000 });
+    await expect(logInButton).toBeVisible({ timeout: 10000 });
   });
 
   test("Login rejected with wrong credentials", async ({ page }) => {
