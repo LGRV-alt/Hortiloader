@@ -320,7 +320,7 @@ export default function Header({
               Map
             </button>
 
-            <Link className="w-full flex justify-center" to="/createCustomer">
+            <Link className="w-full flex justify-center" to="/create-customer">
               <button
                 onClick={() => setMenuOpen(false)}
                 className="w-1/2  bg-green-600 justify-center px-2 py-1 rounded hover:bg-green-700 flex md:hidden text-white"
