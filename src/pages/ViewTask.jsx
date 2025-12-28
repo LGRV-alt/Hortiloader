@@ -350,6 +350,7 @@ export default function ViewTask() {
                   >
                     <option value="0">2024</option>
                     <option value="2025">2025</option>
+                    <option value="2026">2026</option>
                   </select>
                 </div>
               </div>

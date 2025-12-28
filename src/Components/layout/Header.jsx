@@ -94,6 +94,7 @@ export default function Header({
               onChange={handleYearChange}
               className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
             >
+              <option value={2026}>2026</option>
               <option value={2025}>2025</option>
               <option value={0}>2024</option>
             </select>

@@ -21,7 +21,7 @@ export default function CreateCustomer() {
   const [other, setOther] = useState("none");
   const [weekNumber, setWeekNumber] = useState(currentWeek);
   const [orderInfo, setOrderInfo] = useState("");
-  const [year, setYear] = useState(2025);
+  const [year, setYear] = useState(2026);
 
   const handleSubmit = async () => {
     if (user.role === "viewer") {
@@ -154,6 +154,7 @@ export default function CreateCustomer() {
               <option value="" disabled>
                 Type
               </option>
+              <option value="2026">2026</option>
               <option value="2025">2025</option>
               <option value="0">2024</option>
             </select>

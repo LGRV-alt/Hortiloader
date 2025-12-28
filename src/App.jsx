@@ -45,7 +45,7 @@ import LandingPage from "./pages/LandingPage";
 export default function App() {
   useAutoRefreshOnIdle();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
-  const [chosenYear, setChosenYear] = useState(2025);
+  const [chosenYear, setChosenYear] = useState(2026);
   const [edit, setEdit] = useState(false);
   const [customerList, setCustomerList] = useState([]);
   const isAuthenticated = useAuth();
