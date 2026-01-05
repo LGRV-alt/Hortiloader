@@ -3,6 +3,7 @@ import pb from "../api/pbConnect";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useSettingsStore } from "../hooks/useSettingsStore";
+import TrmnlToken from "../Components/TrmnlToken";
 
 export default function SettingsPage({}) {
   const [form, setForm] = useState({});
@@ -346,6 +347,7 @@ export default function SettingsPage({}) {
               </button>
             )}
           </form>
+          <TrmnlToken />
         </div>
       </div>
 
