@@ -50,7 +50,7 @@ export default function WeekdayPage() {
           }w-full flex justify-center flex-col items-center bg-slate-300 text-center border-b-2 border-black`}
         >
           <h3 className="md:text-3xl text-xl font-bold">{`${day}-${number} ${year}`}</h3>
-          <div className="w-full flex flex-wrap gap-4 justify-center mt-4 print:hidden">
+          <div className="w-full flex flex-wrap gap-4 justify-center mt-0 md:mt-2 print:hidden">
             {" "}
             {/* Hide filters/buttons on print */}
             {["wholesale", "retail", "missed", "other"].map((type) => (
@@ -63,7 +63,7 @@ export default function WeekdayPage() {
                 <span className="capitalize">{type}</span>
               </label>
             ))}
-            <div className="w-full text-sm md:text-base flex justify-center">
+            <div className="w-full text-sm md:text-base flex justify-center pb-2">
               <button
                 className="w-auto mr-2 px-6 py-2 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition"
                 onClick={() => setExtras(!extras)}
@@ -80,14 +80,14 @@ export default function WeekdayPage() {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center">
+        <div className="text-sm md:text-xl flex flex-col justify-center">
           {arr.map((record) => (
             <div
               key={record.id}
-              className="flex justify-between items-center border-b-2  border-black md:pl-4"
+              className="flex justify-between items-center border-b-2  border-black md:pl-4 p-2"
             >
               <Link to={`/edit/${record.id}`}>
-                <div className="flex hover:border-black hover:border-b-2 ">
+                <div className="flex hover:border-black hover:border-b-2 gap-2 ">
                   <p
                     className={`font-normal  ${
                       record.customerType === "retail"
@@ -101,21 +101,21 @@ export default function WeekdayPage() {
                   >
                     {record.title}
                   </p>
-                  <p className="md:text-3xl text-xs self-end">
+                  <p className="md:text-lg text-xs self-center">
                     {record.orderNumber || ""}
                   </p>
-                  <p className="md:text-3xl text-xs self-end">
+                  <p className="md:text-md text-xs self-center">
                     {record.postcode.toUpperCase() || ""}
                   </p>
                 </div>
               </Link>
 
               {extras && (
-                <div className="md:text-2xl text-xs flex gap-1 md:gap-4 md:pr-8">
+                <div className="md:text-lg text-xs flex gap-1 md:gap-2 md:pr-8">
                   {["Green", "Yellow", "Shelves"].map((label) => (
                     <div key={label} className="flex gap-1">
-                      <p className="pb-2">{label}</p>
-                      <span className="self-end w-6 h-6 md:w-20 md:h-14 border-black border-2"></span>
+                      <p className="">{label}</p>
+                      <span className="w-4 md:w-10 border-black border-2"></span>
                     </div>
                   ))}
                 </div>
