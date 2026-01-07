@@ -277,7 +277,6 @@ export default function TrolleyMapper({
   }, [vehicleInfoFromExport]);
 
   const saveToPocketBase = async () => {
-    console.log("Pressed");
     if (user.role === "viewer") {
       toast.error("Viewer cannot edit orders");
       return;
@@ -287,18 +286,86 @@ export default function TrolleyMapper({
       return;
     }
 
-    // ... (your existing save logic remains unchanged)
+    setSaveStatus("Saving...");
+    const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
+      vehicleInfo.driver
+    }-${vehicleInfo.reg}`;
+
+    try {
+      // Check if a record with this name already exists
+      const existing = await pb
+        .collection("trolley_exports")
+        .getFirstListItem(`name="${name}"`);
+
+      // If it exists, update it
+      await pb.collection("trolley_exports").update(existing.id, {
+        name,
+        data: tasks,
+        vehicleInfo,
+        user: pb.authStore.record.id,
+        organization: pb.authStore.record.organization,
+      });
+
+      setSaveStatus("Save");
+      toast.success("Run Updated");
+    } catch (error) {
+      if (error.status === 404) {
+        // If not found, create a new record
+        try {
+          await pb.collection("trolley_exports").create({
+            name,
+            data: tasks,
+            vehicleInfo,
+            user: pb.authStore.record.id,
+            organization: pb.authStore.record.organization,
+          });
+          setSaveStatus("Save");
+          toast.success("Run Saved");
+        } catch (createErr) {
+          console.error("Error creating export in PocketBase:", createErr);
+          toast.error("error");
+        }
+      } else {
+        console.error("Error checking for existing export:", error);
+        toast.error("error");
+      }
+    }
+
+    // Reset status after a short delay
+    setTimeout(() => setSaveStatus("Save"), 3000);
   };
 
   const handleReorder = (newOrder) => setTasks(newOrder);
 
-  const handlePrint = () => {
+  const handlePrint = async () => {
+    if (!isVehicleInfoComplete()) {
+      toast.error(
+        "Please enter driver, registration and date before printing."
+      );
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(suggestedFileName);
+      // Optional: brief visual feedback
+      toast.success(`Copied filename — ready to paste!`, { duration: 2500 });
+    } catch (err) {
+      console.warn("Clipboard copy failed:", err);
+      // Fallback: still open print even if copy fails
+    }
+    // Open print dialog right after (feels instant)
     window.print();
   };
 
-  const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
-    vehicleInfo.driver
-  }-${vehicleInfo.reg}`;
+  // const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
+  //   vehicleInfo.driver
+  // }-${vehicleInfo.reg}`;
+
+  const suggestedFileName = `${vehicleInfo.date
+    .split("-")
+    .reverse()
+    .join("-")}_${vehicleInfo.driver || "driver"}_${
+    vehicleInfo.reg || "reg"
+  }.pdf`.replace(/\s+/g, "-");
 
   return (
     <div className="flex flex-col h-full">
@@ -320,7 +387,7 @@ export default function TrolleyMapper({
             items={tasks}
             onReorder={handleReorder}
             hideEditButtons={false} // ← keep your original behavior
-            // export={handlePrint}           // ← optional: if DragAndDropList uses this prop
+            export={handlePrint}
             setVehicleInfo={setVehicleInfo}
             vehicleInfo={vehicleInfo}
             saveToPocketBase={saveToPocketBase}
@@ -342,7 +409,7 @@ export default function TrolleyMapper({
       </div>
 
       {/* Controls - hidden during print */}
-      <div className="print:hidden mt-6 flex flex-wrap justify-center gap-4 p-4 bg-gray-100 border-t">
+      {/* <div className="print:hidden mt-6 flex flex-wrap justify-center gap-4 p-4 bg-gray-100 border-t">
         <button
           onClick={saveToPocketBase}
           disabled={saveStatus !== "Save"}
@@ -357,7 +424,7 @@ export default function TrolleyMapper({
         >
           Print / Save as PDF
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
