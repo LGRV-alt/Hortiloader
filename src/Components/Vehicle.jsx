@@ -47,14 +47,12 @@ export default function Vehicle({
       grid: Array(prev.trolleyNumber).fill(""),
     }));
   }
-  console.log(printing);
 
   return (
     <div
       className={`grid h-full ${
-        printing ? "grid-rows-[1fr]" : "grid-rows-[1fr_5fr]"
+        printing ? "grid-rows-[1fr]" : "grid-rows-[1fr_6fr]"
       }`}
-      // className="grid h-full "
     >
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
@@ -142,7 +140,7 @@ export default function Vehicle({
       )}
 
       {/* --- Vehicle Layout --- */}
-      <div className="p-7">
+      <div className="">
         {vehicle === "trailer" ? (
           <div className="h-full flex flex-col items-center p-2">
             <div

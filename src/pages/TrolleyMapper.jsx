@@ -375,16 +375,6 @@ export default function TrolleyMapper({
       {/* Exportable / Printable content */}
       <div className="flex md:flex-row flex-col flex-grow">
         <div className="w-full md:w-1/2 p-2">
-          <div className="hidden print:block text-base text-gray-600 italic mb-4">
-            Created with Hortiloader.com •{" "}
-            {new Date()
-              .toLocaleDateString("en-GB")
-              .split("/")
-              .reverse()
-              .join("-")}{" "}
-            / {vehicleInfo.code || "N/A"}
-          </div>
-
           <DragAndDropList
             setCustomerName={setCustomerName}
             items={tasks}
@@ -395,7 +385,17 @@ export default function TrolleyMapper({
             vehicleInfo={vehicleInfo}
             saveToPocketBase={saveToPocketBase}
             saveStatus={saveStatus}
+            printing={printing}
           />
+          <div className="hidden print:block text-base text-gray-600 italic mb-4">
+            Created with Hortiloader.com •{" "}
+            {new Date()
+              .toLocaleDateString("en-GB")
+              .split("/")
+              .reverse()
+              .join("-")}{" "}
+            / {vehicleInfo.code || "N/A"}
+          </div>
         </div>
 
         <div className="w-full md:w-1/2 p-2">
@@ -411,24 +411,6 @@ export default function TrolleyMapper({
           />
         </div>
       </div>
-
-      {/* Controls - hidden during print */}
-      {/* <div className="print:hidden mt-6 flex flex-wrap justify-center gap-4 p-4 bg-gray-100 border-t">
-        <button
-          onClick={saveToPocketBase}
-          disabled={saveStatus !== "Save"}
-          className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 disabled:opacity-50 transition"
-        >
-          {saveStatus}
-        </button>
-
-        <button
-          onClick={handlePrint}
-          className="px-10 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition"
-        >
-          Print / Save as PDF
-        </button>
-      </div> */}
     </div>
   );
 }

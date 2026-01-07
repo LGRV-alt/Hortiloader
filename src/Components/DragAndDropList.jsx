@@ -31,6 +31,7 @@ export default function DragAndDropList({
   setVehicleInfo,
   saveToPocketBase,
   saveStatus,
+  printing,
 }) {
   const [items, setItems] = useState(initialItems);
   const [isEditing, setIsEditing] = useState(false);
@@ -112,68 +113,69 @@ export default function DragAndDropList({
   return (
     <div className="w-full border-black border-2 rounded-lg p-2">
       {/* This is the view when working on the page and not exporting the PDF */}
-      {!isExporting && (
-        <div className="flex justify-between items-center border-black border-b-2 pb-2">
-          <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
+      <div className="print:hidden flex justify-between items-center border-black border-b-2 pb-2">
+        <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
 
-          {!isEditing && (
-            <div className="flex gap-2">
+        {!isEditing && (
+          <div className="flex gap-2 print:hidden">
+            <button
+              onClick={() => setIsEditing((prev) => !prev)}
+              className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              {isEditing ? "Finish Editing" : "Edit"}
+            </button>
+            <div className="flex items-center">
               <button
-                onClick={() => setIsEditing((prev) => !prev)}
-                className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded hover:bg-blue-700"
+                onClick={saveToPocketBase}
+                className="md:p-2 p-1 text-sm md:text-base bg-green-600 text-white rounded hover:bg-green-700"
               >
-                {isEditing ? "Finish Editing" : "Edit"}
-              </button>
-              <div className="flex items-center">
-                <button
-                  onClick={saveToPocketBase}
-                  className="md:p-2 p-1 text-sm md:text-base bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  {saveStatus}
-                </button>
-              </div>
-
-              <button
-                onClick={exportToPDF}
-                className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded"
-              >
-                Print
+                {saveStatus}
               </button>
             </div>
-          )}
 
-          {isEditing && (
-            <div className="flex gap-2">
-              <button
-                onClick={() => setIsEditing((prev) => !prev)}
-                className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-              >
-                {isEditing ? "Finish Editing" : "Edit"}
-              </button>
-              <button
-                onClick={handleAddTask}
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              >
-                + Add
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+            <button
+              onClick={exportToPDF}
+              className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded"
+            >
+              Print
+            </button>
+          </div>
+        )}
+
+        {isEditing && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => setIsEditing((prev) => !prev)}
+              className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              {isEditing ? "Finish Editing" : "Edit"}
+            </button>
+            <button
+              onClick={handleAddTask}
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            >
+              + Add
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* This is the view when exporting the page - Needs to display certain information */}
-      {isExporting && (
-        <div className="flex justify-between  border-black border-b-2 md:pb-2">
-          <div className="flex gap-2 md:gap-8 md:text-lg text-xs md:justify-between">
-            <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>
-            <p>{`${vehicleInfo.reg.toUpperCase()}`}</p>
-            <p>{`${vehicleInfo.date.split("-").reverse().join("-")}`}</p>
-          </div>
-          <div className="flex justify-end items-center text-xs md:text-lg">
-            <p> Total Trollies-{trolleyTotal}</p>
-          </div>
+
+      <div
+        className={`${
+          printing ? "flex" : "hidden"
+        } justify-between border-black border-b-2 md:pb-2`}
+      >
+        <div className="flex gap-2  md:gap-8 md:text-lg text-xs md:justify-between">
+          <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>
+          <p>{`${vehicleInfo.reg.toUpperCase()}`}</p>
+          <p>{`${vehicleInfo.date.split("-").reverse().join("-")}`}</p>
         </div>
-      )}
+        <div className="flex justify-end items-center text-xs md:text-lg">
+          <p> Total Trollies-{trolleyTotal}</p>
+        </div>
+      </div>
 
       {isEditing ? (
         <div className="flex p-2 text-xs md:text-base">
