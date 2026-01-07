@@ -4,6 +4,7 @@ export default function Vehicle({
   readOnly,
   vehicleInfo,
   setVehicleInfo,
+  printing,
 }) {
   const grid = vehicleInfo.grid || [];
   const vehicle = vehicleInfo.vehicleType;
@@ -46,17 +47,19 @@ export default function Vehicle({
       grid: Array(prev.trolleyNumber).fill(""),
     }));
   }
+  console.log(printing);
 
   return (
     <div
       className={`grid h-full ${
-        readOnly ? "grid-rows-[1fr]" : "grid-rows-[0.5fr_5fr]"
+        printing ? "grid-rows-[1fr]" : "grid-rows-[1fr_5fr]"
       }`}
+      // className="grid h-full "
     >
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
-        <div className="flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
-          <div className="flex justify-center items-center gap-1">
+        <div className="print:hidden flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
+          <div className="print:hidden flex justify-center items-center gap-1">
             <div className="border-black md:border-r-2 md:pr-2 gap-1 flex ">
               <button
                 onClick={handleVehicleSelection}
@@ -98,7 +101,7 @@ export default function Vehicle({
 
           {/* --- Trolley Count Buttons --- */}
           {vehicle === "trailer" ? (
-            <ul className="flex gap-2 justify-center items-center">
+            <ul className="print:hidden flex gap-2 justify-center items-center">
               <button
                 onClick={handleTrolleyNumber}
                 value={5}
@@ -122,7 +125,7 @@ export default function Vehicle({
               </button>
             </ul>
           ) : (
-            <ul className="flex gap-1 justify-center items-center">
+            <ul className="print:hidden flex gap-1 justify-center items-center">
               {[4, 8, 12, 16, 20, 24].map((val) => (
                 <button
                   key={val}

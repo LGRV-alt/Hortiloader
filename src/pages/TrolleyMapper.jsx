@@ -255,6 +255,7 @@ export default function TrolleyMapper({
 
   const [customerName, setCustomerName] = useState("");
   const [saveStatus, setSaveStatus] = useState("Save");
+  const [printing, setPrinting] = useState(false);
 
   const [vehicleInfo, setVehicleInfo] = useState({
     driver: "",
@@ -344,6 +345,7 @@ export default function TrolleyMapper({
       );
       return;
     }
+    setPrinting(true);
     try {
       await navigator.clipboard.writeText(suggestedFileName);
       // Optional: brief visual feedback
@@ -354,6 +356,7 @@ export default function TrolleyMapper({
     }
     // Open print dialog right after (feels instant)
     window.print();
+    setPrinting(false);
   };
 
   // const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
@@ -404,6 +407,7 @@ export default function TrolleyMapper({
             readOnly={false} // ← keep editable on screen
             vehicleInfo={vehicleInfo}
             setVehicleInfo={setVehicleInfo}
+            printing={printing}
           />
         </div>
       </div>

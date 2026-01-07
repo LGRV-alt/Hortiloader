@@ -24,16 +24,24 @@
 
 @page {
   size: A4 landscape;
-  margin: 8mm; /* or 5mm / 0 for no margins – test what looks best */
+  margin: 8mm; /* or 5mm / 10mm — adjust to taste */
 }
 
 @media print {
   html,
   body {
-    margin: 0;
-    padding: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .print-hidden {
-    display: none !important;
+
+  /* Force full-page usage for main content wrapper */
+  #root,
+  .app-container,
+  .print-full-page {
+    height: 100vh !important; /* 100vh is respected in most print engines */
+    min-height: 100% !important;
+    max-height: 100% !important;
   }
 }
