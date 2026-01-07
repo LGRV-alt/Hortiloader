@@ -11,9 +11,29 @@
 #root {
   background-color: white;
 }
+@page {
+  margin: 0;
+  size: A4 portrait; /* or letter if you prefer US size */
+}
 .body--dragging {
   touch-action: none !important;
   overflow: hidden !important;
   position: fixed; /* Prevents scrolling on some iOS Safari cases */
   width: 100%;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 8mm; /* or 5mm / 0 for no margins – test what looks best */
+}
+
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  .print-hidden {
+    display: none !important;
+  }
 }
