@@ -11,37 +11,29 @@
 #root {
   background-color: white;
 }
-@page {
-  margin: 0;
-  size: A4 portrait; /* or letter if you prefer US size */
-}
-.body--dragging {
-  touch-action: none !important;
-  overflow: hidden !important;
-  position: fixed; /* Prevents scrolling on some iOS Safari cases */
-  width: 100%;
-}
 
-@page {
-  size: A4 landscape;
-  margin: 8mm; /* or 5mm / 10mm — adjust to taste */
-}
-
+/* Optional: Better print defaults */
 @media print {
   html,
   body {
-    height: 100%;
-    width: 100%;
     margin: 0 !important;
     padding: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+    overflow: visible !important;
   }
 
-  /* Force full-page usage for main content wrapper */
+  /* Remove any forced height restrictions that might interfere */
   #root,
   .app-container,
-  .print-full-page {
-    height: 100vh !important; /* 100vh is respected in most print engines */
-    min-height: 100% !important;
-    max-height: 100% !important;
+  [class*="print"] {
+    height: auto !important;
+    min-height: unset !important;
+    max-height: none !important;
+  }
+
+  /* Your .portrait-print class (optional – can remove if not needed) */
+  .portrait-print {
+    /* page-specific tweaks if any */
   }
 }
