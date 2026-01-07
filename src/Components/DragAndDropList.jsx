@@ -24,9 +24,7 @@ export default function DragAndDropList({
   items: initialItems = [],
   onReorder,
   setCustomerName,
-  export: exportToPDF,
-  readOnly,
-  isExporting,
+  print,
   vehicleInfo,
   setVehicleInfo,
   saveToPocketBase,
@@ -134,7 +132,7 @@ export default function DragAndDropList({
             </div>
 
             <button
-              onClick={exportToPDF}
+              onClick={print}
               className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded"
             >
               Print
