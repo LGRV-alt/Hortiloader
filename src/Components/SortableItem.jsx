@@ -74,7 +74,7 @@ export default function SortableItem({
     <li
       ref={setNodeRef}
       style={style}
-      className={`border-b-2 border-black md:h-12 px-1 ${
+      className={`border-b-2 w-full border-black  ${
         isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
       }`}
       onClick={() =>
@@ -135,7 +135,7 @@ export default function SortableItem({
           </button>
         </div>
       ) : (
-        <div className="flex justify-between items-center px-1 py-2">
+        <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span
               {...attributes}

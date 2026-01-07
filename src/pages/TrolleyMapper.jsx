@@ -140,8 +140,6 @@ export default function TrolleyMapper({
             setCustomerName={setCustomerName}
             items={tasks}
             onReorder={handleReorder}
-            // hideEditButtons={false}
-            // export={handlePrint}
             print={handlePrint}
             setVehicleInfo={setVehicleInfo}
             vehicleInfo={vehicleInfo}
