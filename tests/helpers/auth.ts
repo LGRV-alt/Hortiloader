@@ -7,7 +7,16 @@ export async function login(
   username: string,
   password: string
 ) {
+  await page.addInitScript(() => {
+    localStorage.setItem("changelog_last_seen", "2026-01-10");
+  });
   await page.goto("http://localhost:5173/");
+  // Set the "already dismissed" state BEFORE loading the page
+
+  // Now assert modal is NOT present
+  await expect(page.locator("text=What's New")).not.toBeVisible();
+  // ... rest of your test
+
   // Assign the title
   const landingPageTitle = page.getByRole("link", { name: "Hortiloader" });
   const LoginTitle = page.getByRole("heading", { name: "Hortiloader" });

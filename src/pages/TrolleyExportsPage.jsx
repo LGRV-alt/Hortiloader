@@ -79,41 +79,41 @@ export default function TrolleyExportsPage() {
     navigate(`/runs/view/${record.id}`);
   };
 
-  console.log(exports);
-
   return (
-    <div className="grid grid-cols-2 h-full p-6 gap-2 bg-surface">
+    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 gap-2 bg-surface">
       {exports.length === 0 && !isLoading ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
         <>
           {exports.map((record, index) => (
             <div
+              onClick={() => handleClick(record)}
               key={index}
-              className="h-full rounded-2xl grid grid-cols-2 bg-white p-6 border-b-2 border-slate-300  cursor-pointer"
+              className="h-full rounded-2xl grid md:grid-cols-2 grid-cols-[2fr_3fr] bg-white p-4 border-b-2 border-slate-300  cursor-pointer hover:bg-gray-100 hover:outline-black hover:outline"
             >
-              {console.log(record.data)}
-              <div
-                onClick={() => handleClick(record)}
-                className="flex flex-col hover:border-black hover:border-b-2"
-              >
-                <p className="text-blue-700 md:text-lg font-medium mr-4">
-                  {record.name || "Untitled Export"}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  created on -{" "}
-                  {new Date(record.created).toLocaleString([], {
-                    year: "numeric",
-                    month: "numeric",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
+              <div className="flex flex-col justify-between">
+                <div>
+                  <p className="text-blue-700 md:text-xl text-base font-medium mr-4">
+                    {record.name || "Untitled Export"}
+                  </p>
+                  <p className="text-gray-600 md:text-sm text-xs">
+                    created on -{" "}
+                    {new Date(record.created).toLocaleString([], {
+                      year: "numeric",
+                      month: "numeric",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
                 {(user.role === "admin" || user.role === "super-user") && (
                   <button
-                    onClick={() => promptDelete(record)}
-                    className="text-red-500 w-full flex hover:text-red-700 text-sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      promptDelete(record);
+                    }}
+                    className="bg-red-500 text-white w-1/3 p-2 rounded-3xl flex justify-center items-center hover:bg-red-400 text-sm"
                   >
                     Delete
                   </button>
@@ -121,7 +121,7 @@ export default function TrolleyExportsPage() {
               </div>
               <div>
                 {record.data.map((task, index) => (
-                  <div className="flex gap-2" key={index}>
+                  <div className="flex gap-2 text-xs md:text-base" key={index}>
                     <p>{index + 1} - </p>
                     <p
                       className={`font-normal capitalize  ${
@@ -145,7 +145,7 @@ export default function TrolleyExportsPage() {
 
           {/* Load More Button */}
           {hasMore && (
-            <div className="w-full text-center py-8">
+            <div className="w-full text-center col-span-2">
               <button
                 onClick={handleLoadMore}
                 disabled={isLoading}

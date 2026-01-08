@@ -53,9 +53,10 @@ export default function TrolleyMapper({
     }
 
     setSaveStatus("Saving...");
-    const name = `${vehicleInfo.date.split("-").reverse().join("-")}-${
-      vehicleInfo.driver
-    }-${vehicleInfo.reg}`;
+    const name = `${vehicleInfo.driver.toUpperCase()} ${vehicleInfo.reg.toUpperCase()} ${vehicleInfo.date
+      .split("-")
+      .reverse()
+      .join("-")}`;
 
     try {
       // Check if a record with this name already exists

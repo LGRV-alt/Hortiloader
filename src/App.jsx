@@ -41,6 +41,7 @@ import { useSettingsStore } from "./hooks/useSettingsStore";
 import ViewTask from "./pages/ViewTask";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
+import ChangelogModal from "./pages/ChangelogModal";
 
 export default function App() {
   useAutoRefreshOnIdle();
@@ -116,7 +117,8 @@ export default function App() {
               <DanishTrolleyLoader />
             </div>
           )}
-          <div className="print:hidden sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
+          <ChangelogModal />
+          <div className="print:hidden sticky top-0 z-30 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
             <Header
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
