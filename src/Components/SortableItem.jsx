@@ -146,7 +146,17 @@ export default function SortableItem({
               {/* <GripVertical size={16} /> */}
               {index + 1}.
             </span>
-            <div className="flex gap-2 text-sm items-center">
+            <div
+              className={`flex gap-2 text-sm items-center font-normal capitalize  ${
+                item.customerType === "retail"
+                  ? "text-blue-700"
+                  : item.customerType === "other"
+                  ? "text-red-500"
+                  : item.customerType === "missed"
+                  ? "text-fuchsia-600"
+                  : ""
+              }`}
+            >
               <p className="font-semibold md:text-2xl">{item.title}</p>
               <p className="text-xs md:text-xl">
                 {reduceOrderNumber(item.orderNumber)}

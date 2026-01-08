@@ -79,36 +79,67 @@ export default function TrolleyExportsPage() {
     navigate(`/runs/view/${record.id}`);
   };
 
+  console.log(exports);
+
   return (
-    <div className="relative h-full pt-10 flex flex-col justify-start items-center bg-surface">
+    <div className="grid grid-cols-2 h-full p-6 gap-2 bg-surface">
       {exports.length === 0 && !isLoading ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
         <>
-          {exports.map((record) => (
+          {exports.map((record, index) => (
             <div
-              key={record.id}
-              className="rounded-2xl flex w-full bg-white p-6 md:w-1/2 items-center justify-between border-b-2 border-slate-300 mb-5 cursor-pointer"
+              key={index}
+              className="h-full rounded-2xl grid grid-cols-2 bg-white p-6 border-b-2 border-slate-300  cursor-pointer"
             >
+              {console.log(record.data)}
               <div
                 onClick={() => handleClick(record)}
-                className="flex items-center hover:border-black hover:border-b-2"
+                className="flex flex-col hover:border-black hover:border-b-2"
               >
                 <p className="text-blue-700 md:text-lg font-medium mr-4">
                   {record.name || "Untitled Export"}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  {new Date(record.created).toLocaleString()}
+                  created on -{" "}
+                  {new Date(record.created).toLocaleString([], {
+                    year: "numeric",
+                    month: "numeric",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </p>
+                {(user.role === "admin" || user.role === "super-user") && (
+                  <button
+                    onClick={() => promptDelete(record)}
+                    className="text-red-500 w-full flex hover:text-red-700 text-sm"
+                  >
+                    Delete
+                  </button>
+                )}
               </div>
-              {(user.role === "admin" || user.role === "super-user") && (
-                <button
-                  onClick={() => promptDelete(record)}
-                  className="text-red-500 hover:text-red-700 text-sm"
-                >
-                  Delete
-                </button>
-              )}
+              <div>
+                {record.data.map((task, index) => (
+                  <div className="flex gap-2" key={index}>
+                    <p>{index + 1} - </p>
+                    <p
+                      className={`font-normal capitalize  ${
+                        task.customerType === "retail"
+                          ? "text-blue-700"
+                          : task.customerType === "other"
+                          ? "text-red-500"
+                          : task.customerType === "missed"
+                          ? "text-fuchsia-600"
+                          : ""
+                      }`}
+                    >
+                      {task.title} - {task.postcode.toUpperCase()}{" "}
+                      {task.orderNumber}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
 
