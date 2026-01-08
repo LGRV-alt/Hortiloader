@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const LAST_SEEN_KEY = "changelog_last_seen";
 
 // Change this when updating something new
-const CURRENT_VERSION = "2026-01-10";
+const CURRENT_VERSION = "2026-01-08";
 
 export default function ChangelogModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,24 +26,24 @@ export default function ChangelogModal() {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-3xl w-full p-12 shadow-2xl">
+      <div className="bg-white rounded-2xl max-w-4xl w-full p-12 shadow-2xl">
         <h2 className="text-2xl font-bold mb-4">What's New 🎉</h2>
 
         <div className="space-y-4 mb-6">
           <div>
-            <h3 className="font-semibold text-lg">Jan 10, 2026 Update</h3>
+            <h3 className="font-semibold text-lg">Jan 8, 2026 Update</h3>
             <ul className="list-disc pl-5 text-gray-700">
               <li>
-                Delivery Runs page now displays the full ordered list of
-                customers on each run
+                Delivery Runs page now shows the full ordered list of customers
+                directly on each run
               </li>
               <li>
-                Trolley Mapper printing updated (best to use landscape
-                orientation) to use full page/screen
+                Trolley Mapper printing improved to use the full page/screen
+                (recommended: landscape orientation)
               </li>
               <li>
-                Daylist printing optimized (best to use portrait orientation) —
-                smaller file size + better scaling
+                Daylist printing optimized for smaller file sizes + better
+                scaling (recommended: portrait orientation)
               </li>
             </ul>
           </div>
