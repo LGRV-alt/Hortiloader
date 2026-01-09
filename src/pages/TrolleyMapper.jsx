@@ -113,8 +113,8 @@ export default function TrolleyMapper({
     setPrinting(true);
     try {
       await navigator.clipboard.writeText(suggestedFileName);
-      // Optional: brief visual feedback
-      toast.success(`Copied filename — ready to paste!`, { duration: 2500 });
+      // // Optional: brief visual feedback
+      // toast.success(`Copied filename — ready to paste!`, { duration: 2500 });
     } catch (err) {
       console.warn("Clipboard copy failed:", err);
       // Fallback: still open print even if copy fails

@@ -80,7 +80,7 @@ export default function TrolleyExportsPage() {
   };
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 gap-2 bg-surface">
+    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 md:gap-2 bg-surface">
       {exports.length === 0 && !isLoading ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
@@ -113,7 +113,7 @@ export default function TrolleyExportsPage() {
                       e.stopPropagation();
                       promptDelete(record);
                     }}
-                    className="bg-red-500 text-white w-1/3 p-2 rounded-3xl flex justify-center items-center hover:bg-red-400 text-sm"
+                    className="bg-red-500 text-white md:w-1/3 p-2 rounded-3xl flex justify-center items-center hover:bg-red-400 text-sm"
                   >
                     Delete
                   </button>
