@@ -87,43 +87,86 @@ export default function TrolleyExportsPage() {
   };
 
   const updateDispatchStatus = async (recordId, newStatus) => {
+    const now = new Date().toISOString();
     try {
-      // Optimistic UI update
       setExports((prev) =>
-        prev.map((rec) =>
-          rec.id === recordId ? { ...rec, dispatch_status: newStatus } : rec,
-        ),
+        prev.map((rec) => {
+          if (rec.id !== recordId) return rec;
+
+          const shouldSetDispatchedAt =
+            newStatus === "dispatched" && !rec.dispatched_at;
+
+          return {
+            ...rec,
+            dispatch_status: newStatus,
+            dispatched_at: shouldSetDispatchedAt ? now : rec.dispatched_at,
+          };
+        }),
       );
 
-      // Persist to PocketBase
-      await pb.collection("trolley_exports").update(recordId, {
+      const updatePayload = {
         dispatch_status: newStatus,
-      });
+      };
+
+      // Only set timestamp once
+      if (newStatus === "dispatched") {
+        updatePayload.dispatched_at = now;
+      }
+
+      await pb.collection("trolley_exports").update(recordId, updatePayload);
     } catch (err) {
       console.error("Failed to update dispatch status:", err);
     }
   };
 
+  const chip = {
+    processing: "bg-yellow-400 text-yellow-800 border-yellow-200",
+    new: "bg-blue-100 text-blue-800 border-blue-200",
+    dispatched: "bg-emerald-100 text-emerald-800 border-emerald-200",
+  };
+
+  // const DISPATCHED_STATUS = "dispatched";
+
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 md:gap-2 bg-surface">
+    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 md:gap-2 bg-[#EEF2F7]">
       {exports.length === 0 && !isLoading ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
         <>
           {exports.map((record, index) => (
             <div
-              onClick={(e) => handleClick(e, record)}
               key={index}
-              className="h-full rounded-2xl grid md:grid-cols-2 grid-cols-[2fr_3fr] bg-white p-4 border-b-2 border-slate-300  cursor-pointer hover:bg-gray-100 hover:outline-black hover:outline"
+              className="h-full rounded-2xl grid md:grid-cols-2 grid-cols-[2fr_3fr] p-4 border-2 b-[#D8E0EA] bg-[#F9FBFD] hover:bg-[#EDF2F7]"
             >
-              {console.log(record.id)}
               <div className="flex flex-col justify-between">
                 <div>
                   <p className=" md:text-xl text-base font-medium mr-4">
                     {record.name.toUpperCase() || "Untitled Export"}
                   </p>
-                  <p className="text-gray-600 md:text-sm text-xs">
-                    {record.dispatch_status}
+                  <button
+                    className="text-[#2563EB]"
+                    onClick={(e) => handleClick(e, record)}
+                  >
+                    View Run
+                  </button>
+                  {record.dispatched_at && (
+                    <p className="text-xs text-gray-500">
+                      Dispatched on{" "}
+                      {new Date(record.dispatched_at).toLocaleString([], {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  )}
+
+                  <span
+                    className={`hover:bg-white hover:text-black font-semibold text-sm md:text-base w-auto self-center px-10 py-1 rounded-full border ${
+                      chip[record.dispatch_status] || chip.new
+                    }`}
+                  >
                     <select
                       value={record.dispatch_status || "new"}
                       onClick={(e) => e.stopPropagation()}
@@ -133,21 +176,10 @@ export default function TrolleyExportsPage() {
                       className="cursor-pointer bg-transparent text-center outline-none"
                     >
                       <option value="new">New</option>
-                      <option value="working">Working</option>
-                      <option value="missed">Query</option>
-                      <option value="pulled">Pulled</option>
-                      <option value="loaded">Loaded</option>
+                      <option value="processing">Processing</option>
+                      <option value="dispatched">Dispatched</option>
                     </select>
-
-                    {/* created on -{" "}
-                    {new Date(record.created).toLocaleString([], {
-                      year: "numeric",
-                      month: "numeric",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })} */}
-                  </p>
+                  </span>
                 </div>
                 {user.role === "admin" && (
                   <button
