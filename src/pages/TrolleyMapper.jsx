@@ -13,7 +13,7 @@ export default function TrolleyMapper({
 }) {
   const records = useTaskStore((state) => state.tasks);
   const [tasks, setTasks] = useState(
-    initialTasks ?? records.filter((item) => customerList.includes(item.id))
+    initialTasks ?? records.filter((item) => customerList.includes(item.id)),
   );
 
   const user = pb.authStore.record;
@@ -72,7 +72,6 @@ export default function TrolleyMapper({
         user: pb.authStore.record.id,
         organization: pb.authStore.record.organization,
       });
-
       setSaveStatus("Save");
       toast.success("Run Updated");
     } catch (error) {
@@ -106,7 +105,7 @@ export default function TrolleyMapper({
   const handlePrint = async () => {
     if (!isVehicleInfoComplete()) {
       toast.error(
-        "Please enter driver, registration and date before printing."
+        "Please enter driver, registration and date before printing.",
       );
       return;
     }

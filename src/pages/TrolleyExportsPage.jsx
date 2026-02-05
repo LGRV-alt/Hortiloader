@@ -75,8 +75,33 @@ export default function TrolleyExportsPage() {
     }
   };
 
-  const handleClick = (record) => {
+  // Stop the dispatch option triggering the parents onclick event
+  const handleClick = (e, record) => {
+    if (e.target.tagName === "SELECT" || e.target.tagName === "OPTION") {
+      return;
+    }
+    if (e.target.closest("select")) {
+      return;
+    }
     navigate(`/runs/view/${record.id}`);
+  };
+
+  const updateDispatchStatus = async (recordId, newStatus) => {
+    try {
+      // Optimistic UI update
+      setExports((prev) =>
+        prev.map((rec) =>
+          rec.id === recordId ? { ...rec, dispatch_status: newStatus } : rec,
+        ),
+      );
+
+      // Persist to PocketBase
+      await pb.collection("trolley_exports").update(recordId, {
+        dispatch_status: newStatus,
+      });
+    } catch (err) {
+      console.error("Failed to update dispatch status:", err);
+    }
   };
 
   return (
@@ -87,27 +112,44 @@ export default function TrolleyExportsPage() {
         <>
           {exports.map((record, index) => (
             <div
-              onClick={() => handleClick(record)}
+              onClick={(e) => handleClick(e, record)}
               key={index}
               className="h-full rounded-2xl grid md:grid-cols-2 grid-cols-[2fr_3fr] bg-white p-4 border-b-2 border-slate-300  cursor-pointer hover:bg-gray-100 hover:outline-black hover:outline"
             >
+              {console.log(record.id)}
               <div className="flex flex-col justify-between">
                 <div>
-                  <p className="text-blue-700 md:text-xl text-base font-medium mr-4">
-                    {record.name || "Untitled Export"}
+                  <p className=" md:text-xl text-base font-medium mr-4">
+                    {record.name.toUpperCase() || "Untitled Export"}
                   </p>
                   <p className="text-gray-600 md:text-sm text-xs">
-                    created on -{" "}
+                    {record.dispatch_status}
+                    <select
+                      value={record.dispatch_status || "new"}
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={(e) =>
+                        updateDispatchStatus(record.id, e.target.value)
+                      }
+                      className="cursor-pointer bg-transparent text-center outline-none"
+                    >
+                      <option value="new">New</option>
+                      <option value="working">Working</option>
+                      <option value="missed">Query</option>
+                      <option value="pulled">Pulled</option>
+                      <option value="loaded">Loaded</option>
+                    </select>
+
+                    {/* created on -{" "}
                     {new Date(record.created).toLocaleString([], {
                       year: "numeric",
                       month: "numeric",
                       day: "numeric",
                       hour: "2-digit",
                       minute: "2-digit",
-                    })}
+                    })} */}
                   </p>
                 </div>
-                {(user.role === "admin" || user.role === "super-user") && (
+                {user.role === "admin" && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -128,10 +170,10 @@ export default function TrolleyExportsPage() {
                         task.customerType === "retail"
                           ? "text-blue-700"
                           : task.customerType === "other"
-                          ? "text-red-500"
-                          : task.customerType === "missed"
-                          ? "text-fuchsia-600"
-                          : ""
+                            ? "text-red-500"
+                            : task.customerType === "missed"
+                              ? "text-fuchsia-600"
+                              : ""
                       }`}
                     >
                       {task.title} - {task.postcode.toUpperCase()}{" "}
