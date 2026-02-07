@@ -88,6 +88,7 @@ export default function TrolleyExportsPage() {
 
   const updateDispatchStatus = async (recordId, newStatus) => {
     const now = new Date().toISOString();
+
     try {
       setExports((prev) =>
         prev.map((rec) => {
@@ -128,7 +129,7 @@ export default function TrolleyExportsPage() {
   // const DISPATCHED_STATUS = "dispatched";
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 h-full p-6 md:gap-2 bg-[#EEF2F7]">
+    <div className="md:grid md:grid-cols-2 flex flex-col gap-4 h-full md:p-6 p-2 md:gap-2 bg-[#edf5ff]">
       {exports.length === 0 && !isLoading ? (
         <p className="text-gray-500 text-center">No runs found.</p>
       ) : (
@@ -136,22 +137,35 @@ export default function TrolleyExportsPage() {
           {exports.map((record, index) => (
             <div
               key={index}
-              className=" rounded-2xl border-2 b-[#D8E0EA] bg-[#eef3f7] hover:bg-[#EDF2F7]"
+              className=" rounded-2xl border-2 b-[#D8E0EA] bg-[#f3f7f9] "
             >
-              <div className=" bg-[#daedfd] rounded-t-xl min-h-24">
-                <div className="flex justify-between px-4 py-2">
-                  <p className=" md:text-xl text-base font-medium mr-4">
-                    {record.name.toUpperCase() || "Untitled Export"}
-                  </p>
+              <div className=" bg-[#d5ecff] rounded-t-xl min-h-24 flex flex-col gap-2">
+                <div className="flex justify-between pt-2 px-4">
+                  <div className="flex items-center">
+                    <p className=" md:text-xl text-sm font-medium me-2 ">
+                      {record.name.toUpperCase() || "Untitled Export"}
+                    </p>
+                    {user.role === "admin" && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          promptDelete(record);
+                        }}
+                        className="text-red-500 md:w-auto hidden  md:flex justify-center items-center hover:text-red-800 hover:underline md:text-sm text-xs"
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                   <button
-                    className="text-[#2563EB] hover:text-blue-400 hover:underline"
+                    className="text-[#2563EB] hover:text-blue-400 hover:underline md:text-base text-sm"
                     onClick={(e) => handleClick(e, record)}
                   >
                     View Run
                   </button>
                 </div>
 
-                <div className="px-2 flex justify-start items-center gap-3">
+                <div className="px-2 pb-2 flex justify-start items-center gap-2">
                   <span
                     className={`hover:bg-white hover:text-black font-semibold text-sm md:text-base w-auto self-center px-6 py-1 rounded-full border  ${
                       chip[record.dispatch_status] || chip.new
@@ -183,20 +197,8 @@ export default function TrolleyExportsPage() {
                     </p>
                   )}
                 </div>
-
-                {/* {user.role === "admin" && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      promptDelete(record);
-                    }}
-                    className="bg-red-500 text-white md:w-1/3 p-2 rounded-3xl flex justify-center items-center hover:bg-red-400 text-sm"
-                  >
-                    Delete
-                  </button>
-                )} */}
               </div>
-              <div className="px-2 py-5">
+              <div className="px-2 pt-2 pb-5">
                 {record.data.map((task, index) => (
                   <div className="flex gap-2 text-xs md:text-base" key={index}>
                     <p>{index + 1} - </p>
