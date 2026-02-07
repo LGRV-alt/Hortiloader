@@ -18,7 +18,7 @@ export default function Body({
         record.day == day &&
         record.weekNumber == chosenWeek &&
         (record.other === "none" || record.other === "collect") &&
-        record.year === chosenYear
+        record.year === chosenYear,
     );
   };
 
@@ -34,7 +34,7 @@ export default function Body({
     <div className="relative h-full">
       {/* Actual Day Grid Layout */}
       <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 h-full">
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2">
+        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 ">
           <DayColumn
             arr={monday}
             day="Monday"

@@ -158,7 +158,7 @@ export default function ViewTask() {
   };
 
   return (
-    <div className=" p-2 md:p-6 bg-surface h-full grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
+    <div className=" p-2 md:p-6 bg-[#ffffff] h-full grid md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
         <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
@@ -172,9 +172,9 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-      <div className="grid grid-rows-[1fr_2.5fr_0.5fr] text-xs md:text-lg shadow-lg shadow-gray-400 rounded-3xl bg-white">
+      <div className=" grid grid-rows-[1fr_2.5fr_0.5fr] h-3/4 md:h-full rounded-3xl text-xs md:text-lg shadow-lg shadow-gray-400 bg-white ">
         {/* ------ HEADER ------ */}
-        <div className="grid grid-cols-[2fr_1fr]  rounded-t-3xl p-3 bg-regal-blue text-white">
+        <div className="grid grid-cols-[2fr_1fr] p-4 min-h-44 rounded-t-3xl bg-regal-blue text-white ">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col ">
             {/* Title */}
@@ -358,7 +358,7 @@ export default function ViewTask() {
           </div>
         </div>
         {/* ----- Main Body ------ */}
-        <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 pt-2 md:pt-10 px-2">
+        <div className="md:grid flex h-1/2 flex-col md:grid-rows-1 md:grid-cols-2 pt-2 md:pt-10 px-2">
           <div className="text-center gap-1 flex flex-col justify-start w-full ">
             <h5 className=" md:text-lg tracking-wide font-bold underline">
               ORDER STATUS
@@ -395,7 +395,7 @@ export default function ViewTask() {
             </div>
 
             {/* -----extra items----- */}
-            <div className=" text-green-500 font-semibold  text-sm md:text-lg h-full ">
+            <div className=" text-green-500 font-semibold  text-sm md:text-lg md:h-full ">
               <textarea
                 className={`bg-transparent w-2/3 h-4/5 text-center capitalize resize-none "}`}
                 type="text"
@@ -406,13 +406,13 @@ export default function ViewTask() {
               />
             </div>
           </div>
-          <div className="w-full h-full flex-col items-center flex">
+          <div className="w-full md:h-full flex-col items-center flex">
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
               // readOnly={!isEditing}
-              className="p-2 w-4/5 h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
+              className="p-2 w-4/5 md:h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
               type="text"
-              placeholder="Issues/Load information"
+              placeholder="Task information"
               onChange={(e) => setOrderInfo(e.target.value)}
               value={orderInfo}
               required
@@ -422,27 +422,30 @@ export default function ViewTask() {
 
         <div className="">
           {user.role !== "viewer" && (
-            <div className="grid grid-cols-3 px-5  md:gap-8 gap-2 md:px-12">
-              <button
-                className="bg-orange-500 rounded-md text-white px-4 py-2 hover:bg-orange-600"
-                onClick={() => setIsEditing(!isEditing)}
-              >
-                Edit
-              </button>
-              <button
-                className="bg-green-500 py-2 px-4 rounded-md text-white hover:text-white  transition-all hover:outline hover:bg-green-600 "
-                onClick={handleSubmit}
-              >
-                <p>{savingState}</p>
-              </button>
-              {(user?.role === "admin" || user?.role === "super-user") && (
+            <div className="w-full flex flex-col justify-center items-center">
+              <span className="border-gray-400 border-t-2 w-4/5 h-2"></span>
+              <div className="grid grid-cols-3 w-full  px-5  pt-2 md:gap-8 gap-2 ">
                 <button
-                  className="bg-red-500 rounded-md text-white px-4 py-2 hover:bg-red-600"
-                  onClick={() => setShowDeleteModal(true)}
+                  className="bg-gray-300 rounded-md font-semibold px-4 py-2 hover:bg-gray-400"
+                  onClick={() => setIsEditing(!isEditing)}
                 >
-                  <p>Delete</p>
+                  Edit
                 </button>
-              )}
+                <button
+                  className="bg-blue-500 py-2 px-4 font-semibold rounded-md text-white hover:text-white  transition-all hover:outline hover:bg-blue-600 "
+                  onClick={handleSubmit}
+                >
+                  <p>{savingState}</p>
+                </button>
+                {(user?.role === "admin" || user?.role === "super-user") && (
+                  <button
+                    className="bg-red-500 rounded-md font-semibold text-white px-4 py-2 hover:bg-red-600"
+                    onClick={() => setShowDeleteModal(true)}
+                  >
+                    <p>Delete</p>
+                  </button>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -450,11 +453,15 @@ export default function ViewTask() {
 
       {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className="pb-10 md:pb-2 flex flex-col items-center w-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
-          <div className="w-full pb-5">
+        <div className="pb-10 md:pb-2 flex flex-col items-center h-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
+          <div className="w-full">
             <FileUpload taskID={id} onUpload={setPictures} />
+            <Pictures
+              taskID={id}
+              pictures={pictures}
+              setPictures={setPictures}
+            />
           </div>
-          <Pictures taskID={id} pictures={pictures} setPictures={setPictures} />
         </div>
       )}
       {showDeleteModal && (
