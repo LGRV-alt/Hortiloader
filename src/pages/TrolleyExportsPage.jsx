@@ -121,7 +121,7 @@ export default function TrolleyExportsPage() {
 
   const chip = {
     processing: "bg-yellow-400 text-yellow-800 border-yellow-200",
-    new: "bg-blue-100 text-blue-800 border-blue-200",
+    new: "bg-red-300 text-red-800 border-red-200",
     dispatched: "bg-emerald-100 text-emerald-800 border-emerald-200",
   };
 
@@ -136,20 +136,41 @@ export default function TrolleyExportsPage() {
           {exports.map((record, index) => (
             <div
               key={index}
-              className="h-full rounded-2xl grid md:grid-cols-2 grid-cols-[2fr_3fr] p-4 border-2 b-[#D8E0EA] bg-[#F9FBFD] hover:bg-[#EDF2F7]"
+              className=" rounded-2xl border-2 b-[#D8E0EA] bg-[#eef3f7] hover:bg-[#EDF2F7]"
             >
-              <div className="flex flex-col justify-between">
-                <div>
+              <div className=" bg-[#daedfd] rounded-t-xl min-h-24">
+                <div className="flex justify-between px-4 py-2">
                   <p className=" md:text-xl text-base font-medium mr-4">
                     {record.name.toUpperCase() || "Untitled Export"}
                   </p>
                   <button
-                    className="text-[#2563EB]"
+                    className="text-[#2563EB] hover:text-blue-400 hover:underline"
                     onClick={(e) => handleClick(e, record)}
                   >
                     View Run
                   </button>
-                  {record.dispatched_at && (
+                </div>
+
+                <div className="px-2 flex justify-start items-center gap-3">
+                  <span
+                    className={`hover:bg-white hover:text-black font-semibold text-sm md:text-base w-auto self-center px-6 py-1 rounded-full border  ${
+                      chip[record.dispatch_status] || chip.new
+                    }`}
+                  >
+                    <select
+                      value={record.dispatch_status || "new"}
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={(e) =>
+                        updateDispatchStatus(record.id, e.target.value)
+                      }
+                      className="cursor-pointer bg-transparent text-center outline-none appearance-none"
+                    >
+                      <option value="new">New</option>
+                      <option value="processing">Processing</option>
+                      <option value="dispatched">Dispatched</option>
+                    </select>
+                  </span>
+                  {record.dispatch_status === "dispatched" && (
                     <p className="text-xs text-gray-500">
                       Dispatched on{" "}
                       {new Date(record.dispatched_at).toLocaleString([], {
@@ -161,27 +182,9 @@ export default function TrolleyExportsPage() {
                       })}
                     </p>
                   )}
-
-                  <span
-                    className={`hover:bg-white hover:text-black font-semibold text-sm md:text-base w-auto self-center px-10 py-1 rounded-full border ${
-                      chip[record.dispatch_status] || chip.new
-                    }`}
-                  >
-                    <select
-                      value={record.dispatch_status || "new"}
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={(e) =>
-                        updateDispatchStatus(record.id, e.target.value)
-                      }
-                      className="cursor-pointer bg-transparent text-center outline-none"
-                    >
-                      <option value="new">New</option>
-                      <option value="processing">Processing</option>
-                      <option value="dispatched">Dispatched</option>
-                    </select>
-                  </span>
                 </div>
-                {user.role === "admin" && (
+
+                {/* {user.role === "admin" && (
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -191,9 +194,9 @@ export default function TrolleyExportsPage() {
                   >
                     Delete
                   </button>
-                )}
+                )} */}
               </div>
-              <div>
+              <div className="px-2 py-5">
                 {record.data.map((task, index) => (
                   <div className="flex gap-2 text-xs md:text-base" key={index}>
                     <p>{index + 1} - </p>
