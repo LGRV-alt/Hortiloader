@@ -11,11 +11,17 @@ test.describe("CRUD Tests", () => {
 
   test("Create, Update and Delete a task", async ({ page }) => {
     // Selectors for the form input fields
-    const customerName = page.getByPlaceholder("Customer Name");
-    const postcode = page.getByPlaceholder("Postcode");
-    const orderNo = page.getByPlaceholder("Order No");
+    const customerName = page.getByLabel("Customer Name");
+    const postcode = page.getByLabel("Postcode");
+    const orderNo = page.getByLabel("Order Number");
     const orderType = page.locator("#customerType");
     const orderDay = page.locator("#day").first();
+
+    const editCustomerName = page.getByPlaceholder("Customer Name");
+    const editPostcode = page.getByPlaceholder("Postcode");
+    const editOrderNo = page.getByPlaceholder("Order No.");
+    const editOrderType = page.locator("#customerType");
+    const editOrderDay = page.locator("#day").first();
 
     // Selectors for the create page
     const createSave = page.getByRole("button", { name: "Save" });
@@ -50,11 +56,11 @@ test.describe("CRUD Tests", () => {
     await page.getByRole("button", { name: "edit" }).click();
 
     // Fill the form in with the updated data
-    await customerName.fill(updatedTaskData.name);
-    await postcode.fill(updatedTaskData.postcode);
-    await orderNo.fill(updatedTaskData.orderNumber);
-    await orderType.selectOption(updatedTaskData.orderType);
-    await orderDay.selectOption(updatedTaskData.orderDay);
+    await editCustomerName.fill(updatedTaskData.name);
+    await editPostcode.fill(updatedTaskData.postcode);
+    await editOrderNo.fill(updatedTaskData.orderNumber);
+    await editOrderType.selectOption(updatedTaskData.orderType);
+    await editOrderDay.selectOption(updatedTaskData.orderDay);
 
     // Save the task
     await createSave.click();
