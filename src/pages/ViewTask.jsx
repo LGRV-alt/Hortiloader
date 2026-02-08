@@ -172,9 +172,9 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-      <div className=" grid grid-rows-[1fr_2.5fr_0.5fr] h-3/4 md:h-full rounded-3xl text-xs md:text-lg shadow-lg shadow-gray-400 bg-white ">
+      <div className=" grid grid-rows-[2fr_3fr_1fr] h-full  rounded-3xl text-xs md:text-lg shadow-lg shadow-gray-400 bg-white ">
         {/* ------ HEADER ------ */}
-        <div className="grid grid-cols-[2fr_1fr] p-4 min-h-44 rounded-t-3xl bg-regal-blue text-white ">
+        <div className="grid grid-cols-[2fr_1fr] p-4 rounded-t-3xl bg-regal-blue text-white ">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col ">
             {/* Title */}
@@ -410,7 +410,7 @@ export default function ViewTask() {
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
               // readOnly={!isEditing}
-              className="p-2 w-4/5 md:h-2/3 text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
+              className="p-2 w-4/5 md:h-full text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
               type="text"
               placeholder="Task information"
               onChange={(e) => setOrderInfo(e.target.value)}
@@ -453,7 +453,7 @@ export default function ViewTask() {
 
       {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className="pb-10 md:pb-2 flex flex-col items-center h-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
+        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
           <div className="w-full">
             <FileUpload taskID={id} onUpload={setPictures} />
             <Pictures

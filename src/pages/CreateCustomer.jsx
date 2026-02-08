@@ -72,7 +72,7 @@ export default function CreateCustomer() {
   bg-gradient-to-b from-blue-500 to-blue-700"
         />
         <div className="flex flex-col h-full items-center justify-center md:justify-start relative px-12 py-10">
-          <div className="flex-col  w-2/3 flex gap-2">
+          <div className="flex-col  w-2/3 flex ">
             <h2 className="text-2xl font-semibold text-slate-900 text-center">
               Create Order
             </h2>
@@ -81,6 +81,7 @@ export default function CreateCustomer() {
               Customer Name
             </label>
             <input
+              onChange={(e) => setTitle(e.target.value)}
               className="w-full rounded-lg border border-slate-300
   px-4 py-2.5 text-slate-900
   focus:outline-none focus:ring-2 focus:ring-blue-500
@@ -93,20 +94,40 @@ export default function CreateCustomer() {
               onChange={(e) => setTitle(e.target.value)}
               required
             /> */}
+            <label className="block text-sm font-medium text-slate-600 mb-1">
+              Postcode
+            </label>
             <input
+              onChange={(e) => setPostcode(e.target.value)}
+              className="w-full rounded-lg border border-slate-300
+  px-4 py-2.5 text-slate-900
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+  focus:border-blue-500 transition"
+            />
+            {/* <input
               className=" w-auto  bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-[#2563EB] placeholder:text-gray-400 "
               type="text"
               placeholder="Postcode"
               onChange={(e) => setPostcode(e.target.value)}
               required
-            />
+            /> */}
+            <label className="block text-sm font-medium text-slate-600 mb-1">
+              Order Number
+            </label>
             <input
+              onChange={(e) => setOrderNumber(e.target.value)}
+              className="w-full rounded-lg border border-slate-300
+  px-4 py-2.5 text-slate-900
+  focus:outline-none focus:ring-2 focus:ring-blue-500
+  focus:border-blue-500 transition"
+            />
+            {/* <input
               className=" w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-[#2563EB] placeholder:text-gray-400 "
               type="text"
               placeholder="Order No."
               onChange={(e) => setOrderNumber(e.target.value)}
               required
-            />
+            /> */}
 
             <select
               className=" bg-transparent text-input text-lg border-b-2 focus:outline-none border-black focus:border-[#2563EB] placeholder:text-gray-400 "
