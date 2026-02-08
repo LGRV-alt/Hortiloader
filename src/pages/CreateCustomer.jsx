@@ -71,11 +71,11 @@ export default function CreateCustomer() {
   bg-gradient-to-b from-blue-500 to-blue-700"
         />
         <div className="flex flex-col h-full items-center justify-center md:justify-start relative px-8 py-3">
-          <div className="gap-3 flex-col  w-2/3 flex ">
-            <h2 className="text-2xl font-semibold text-slate-900 text-center">
+          <div className="gap-1 md:gap-3 flex-col w-full md:w-2/3 flex ">
+            <h2 className="tracking-tight text-2xl font-bold text-slate-900 text-center">
               Create Order
             </h2>
-            <div className="mx-auto h-px w-3/4 bg-blue-500/40" />
+            <div className="mx-auto h-[2px] w-full bg-blue-500/40" />
             <label className="block text-sm font-medium text-slate-600 mb-1">
               Customer Name
               <input
@@ -96,7 +96,7 @@ export default function CreateCustomer() {
               focus:border-blue-500 transition"
               />
             </label>
-            <label className="block text-sm font-medium text-slate-600 mb-1">
+            <label className="block text-sm  font-medium text-slate-600 mb-1">
               Order Number
               <input
                 onChange={(e) => setOrderNumber(e.target.value)}
@@ -108,7 +108,7 @@ export default function CreateCustomer() {
             </label>
             <div className="grid grid-cols-2 gap-4">
               <select
-                className="text-center bg-transparent text-input text-lg border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="customerType"
                 id="customerType"
                 onChange={(e) => setCustomerType(e.target.value)}
@@ -123,7 +123,7 @@ export default function CreateCustomer() {
               </select>
 
               <select
-                className="text-center bg-transparent text-input text-lg border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] "
+                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] "
                 name="day"
                 id="boardPage"
                 onChange={(e) => setOther(e.target.value)}
@@ -138,7 +138,7 @@ export default function CreateCustomer() {
             </div>
             <div className="grid grid-cols-3 gap-2">
               <select
-                className="text-center bg-transparent text-input text-lg border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="day"
                 id="day"
                 onChange={(e) => setDay(e.target.value)}
@@ -156,7 +156,7 @@ export default function CreateCustomer() {
               </select>
 
               <input
-                className="text-center w-auto bg-transparent text-input text-lg border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center w-auto bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 type="number"
                 min={currentWeek}
                 max={52}
@@ -165,7 +165,7 @@ export default function CreateCustomer() {
                 required
               />
               <select
-                className="text-center bg-transparent text-input text-lg border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="day"
                 id="yearSelector"
                 onChange={(e) => setYear(e.target.value)}
@@ -179,12 +179,12 @@ export default function CreateCustomer() {
               </select>
             </div>
           </div>
-          <div className="h-full w-3/4 mt-2 flex flex-col items-center ">
+          <div className="h-full md:w-3/4 w-full mt-2 flex flex-col items-center ">
             <div className="bg-[#d5ecff] w-full rounded-t-3xl border-2">
               <p className=" p-2  ">Additional Info</p>
             </div>
             <textarea
-              className="border-t-0 border-2 rounded-b-3xl p-2 w-full h-full text-center bg-transparent focus:outline-none placeholder:text-gray-400 "
+              className="text-sm md:text-base border-t-0 border-2 rounded-b-3xl p-2 w-full h-full text-center bg-transparent focus:outline-none placeholder:text-gray-400 "
               type="text"
               placeholder="Issues/Load information"
               onChange={(e) => setOrderInfo(e.target.value)}
@@ -192,19 +192,10 @@ export default function CreateCustomer() {
               required
             />
           </div>
-          {/* <button
-            className="bg-[#2563EB] w-1/2 text-white py-2 px-4 rounded-md mt-4 transition-all border-black border-2 hover:bg-[#1f52c0]"
-            onClick={handleSubmit}
-            disabled={saving}
-          >
-            <div>
-              <p> {saving ? "Saving..." : "Save"}</p>
-            </div>
-          </button> */}
           <button
             onClick={handleSubmit}
             disabled={saving}
-            className="mt-4 w-1/2 rounded-xl py-3.5 text-white text-lg font-medium
+            className="mt-4 md:w-1/3 w-1/2 rounded-xl py-2 text-white text-base font-medium
   bg-gradient-to-b from-blue-500 to-blue-700
   shadow-lg shadow-blue-500/30
   hover:from-blue-600 hover:to-blue-800

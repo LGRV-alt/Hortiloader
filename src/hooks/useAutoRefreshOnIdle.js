@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
 export default function useAutoRefreshOnIdleAndDaily({
-  idleTimeoutMs = 6 * 60 * 60 * 1000, // 6 Hours
+  idleTimeoutMs = 6 * 60 * 30 * 1000, //3 Hours
   checkDailyEveryMs = 1 * 60 * 60 * 1000, // 1 Hour
 } = {}) {
   const timeoutRef = useRef();
@@ -26,7 +26,7 @@ export default function useAutoRefreshOnIdleAndDaily({
     ];
 
     activityEvents.forEach((event) =>
-      window.addEventListener(event, resetIdleTimer)
+      window.addEventListener(event, resetIdleTimer),
     );
 
     resetIdleTimer();
@@ -46,7 +46,7 @@ export default function useAutoRefreshOnIdleAndDaily({
       const lastCheck = localStorage.getItem("lastAppRefreshDate");
 
       console.log(
-        `[AutoRefresh] Daily check running... Today: ${todayCheck}, Last: ${lastCheck}`
+        `[AutoRefresh] Daily check running... Today: ${todayCheck}, Last: ${lastCheck}`,
       );
 
       if (lastCheck !== todayCheck) {
@@ -61,7 +61,7 @@ export default function useAutoRefreshOnIdleAndDaily({
       clearTimeout(timeoutRef.current);
       clearInterval(intervalRef.current);
       activityEvents.forEach((event) =>
-        window.removeEventListener(event, resetIdleTimer)
+        window.removeEventListener(event, resetIdleTimer),
       );
     };
   }, [idleTimeoutMs, checkDailyEveryMs]);

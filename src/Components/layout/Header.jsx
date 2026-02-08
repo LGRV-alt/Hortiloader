@@ -109,9 +109,9 @@ export default function Header({
       ) : (
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <div className="flex flex-col justify-center items-center ">
-            <div className="flex items-center gap-2 text-xs md:text-sm">
+            <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300">
               <span>
-                Sync -{" "}
+                Last Updated{" "}
                 {lastFetched
                   ? new Date(lastFetched).toLocaleTimeString([], {
                       hour: "2-digit",
@@ -122,7 +122,7 @@ export default function Header({
               <button
                 onClick={handleManualRefresh}
                 disabled={refreshing}
-                className="hover:text-blue-500 text-base"
+                className="hover:text-blue-800 text-blue-500 text-base"
                 // className="bg-secondary-colour text-white px-2 py-1 rounded hover:bg-orange-400 disabled:opacity-50"
               >
                 <IoIosRefresh />
@@ -130,7 +130,7 @@ export default function Header({
             </div>
             <div className="flex items-center gap-1">
               <button
-                className="text-2xl hover:text-blue-500"
+                className="text-2xl hover:text-blue-800 text-blue-500"
                 onClick={() => handleWeekChange(week - 1)}
               >
                 <GrFormPrevious />
@@ -139,7 +139,7 @@ export default function Header({
               <select
                 value={week}
                 onChange={(e) => handleWeekChange(Number(e.target.value))}
-                className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
+                className="bg-transparent appearance-none text-center focus:outline-none focus:bg-white focus:text-black"
               >
                 {Array.from({ length: 52 }, (_, i) => i + 1).map((w) => (
                   <option key={w} value={w}>
@@ -148,7 +148,7 @@ export default function Header({
                 ))}
               </select>
               <button
-                className="text-2xl hover:text-blue-500"
+                className="text-2xl text-blue-500 hover:text-blue-800"
                 onClick={() => handleWeekChange(week + 1)}
               >
                 <GrFormNext />
