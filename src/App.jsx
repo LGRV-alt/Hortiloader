@@ -8,6 +8,7 @@ import HoldingPage from "./pages/HoldingPage";
 import Collect from "./pages/Collect";
 import SearchPage from "./pages/SearchPage";
 import DeletedTasks from "./pages/DeletedTasks";
+import PlantLabelManager from "./pages/PlantLabelManager";
 
 import WeekdayPage from "./pages/Weekday";
 import TrolleyMapper from "./pages/TrolleyMapper";
@@ -153,6 +154,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <HoldingPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/label-manager"
+                element={
+                  <ProtectedRoute>
+                    <PlantLabelManager />
                   </ProtectedRoute>
                 }
               />
