@@ -115,15 +115,26 @@ export default function PlantLabelManager() {
     );
   };
 
-  if (loading) return <div className="p-6">Loading…</div>;
+  if (loading)
+    return (
+      <div className="flex justify-center items-center w-full h-full text-3xl font-semibold">
+        Loading…
+      </div>
+    );
 
   return (
-    <div className="grid md:grid-cols-2 md:grid-rows-1 h-full p-5">
+    <div className="grid md:grid-cols-2 md:grid-rows-1 h-full p-5 bg-gray-200 gap-2">
       {/* ------------------ input ------------------ */}
-      <div className="h-full flex flex-col justify-start items-center p-5 gap-5">
-        <h1 className="text-2xl font-semibold">Plant Label Checker</h1>
+      <div className="h-full flex flex-col justify-start items-center p-5 bg-white rounded-xl">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Plant Label Checker
+        </h1>
+        <p className="pb-5">
+          Input plant names in full as shown on order sheet for consistancy in
+          searching
+        </p>
         <textarea
-          className="w-full h-2/3 p-3 border rounded font-mono"
+          className="w-full h-2/3 p-3 border rounded mb-5 border-black font-mono"
           placeholder="Paste plant names (one per line)"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -161,67 +172,69 @@ export default function PlantLabelManager() {
       </div>
 
       {/* ------------------ results ------------------ */}
-      {results.length > 0 && (
-        <div className="border rounded divide-y">
-          {results.map((r, i) => (
-            <div
-              key={r.id}
-              className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3"
-            >
-              <span className="font-medium">
-                {r.name}{" "}
-                {r.hasLabels !== "new" && (
-                  <span
-                    style={{
-                      fontWeight: "bold",
-                      color: r.hasLabels === "labels" ? "green" : "red",
-                    }}
-                  >
-                    (
-                    {r.hasLabels === "labels" ? "Has labels" : "Needs printing"}
-                    )
-                  </span>
-                )}
-              </span>
+      <div className="border divide-y rounded-xl bg-white flex flex-col  p-5">
+        <h1 className="text-2xl text-center font-semibold">Results</h1>
 
-              {r.hasLabels === "new" && (
-                <div className="flex gap-2 mt-2 sm:mt-0">
-                  <button
-                    onClick={() => resolve(i, "labels")}
-                    className="px-3 py-1 border border-green-600 text-green-700 rounded"
-                  >
-                    ✓ Has labels
-                  </button>
-                  <button
-                    onClick={() => resolve(i, "print")}
-                    className="px-3 py-1 border border-red-600 text-red-700 rounded"
-                  >
-                    ✗ Needs printing
-                  </button>
-                </div>
-              )}
-
+        {results.map((r, i) => (
+          <div
+            key={r.id}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3"
+          >
+            <span className="font-medium">
+              {r.name}{" "}
               {r.hasLabels !== "new" && (
-                <div className="flex gap-2 mt-2 sm:mt-0">
-                  <button
-                    onClick={() =>
-                      resolve(i, r.hasLabels === "labels" ? "print" : "labels")
-                    }
-                    className={`px-3 py-1 border rounded ${
-                      r.hasLabels === "labels"
-                        ? "border-red-600 text-red-700"
-                        : "border-green-600 text-green-700"
-                    }`}
-                  >
-                    Mark as{" "}
-                    {r.hasLabels === "labels" ? "Needs printing" : "Has labels"}
-                  </button>
-                </div>
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    color: r.hasLabels === "labels" ? "green" : "red",
+                  }}
+                >
+                  (
+                  {r.hasLabels === "labels"
+                    ? "Has labels ✓"
+                    : "Needs printing ✗"}
+                  )
+                </span>
               )}
-            </div>
-          ))}
-        </div>
-      )}
+            </span>
+
+            {r.hasLabels === "new" && (
+              <div className="flex gap-2 mt-2 sm:mt-0">
+                <button
+                  onClick={() => resolve(i, "labels")}
+                  className="px-3 py-1 border border-green-600 text-green-700 rounded"
+                >
+                  ✓ Has labels
+                </button>
+                <button
+                  onClick={() => resolve(i, "print")}
+                  className="px-3 py-1 border border-red-600 text-red-700 rounded"
+                >
+                  ✗ Needs printing
+                </button>
+              </div>
+            )}
+
+            {r.hasLabels !== "new" && (
+              <div className="flex gap-2 mt-2 sm:mt-0">
+                <button
+                  onClick={() =>
+                    resolve(i, r.hasLabels === "labels" ? "print" : "labels")
+                  }
+                  className={`px-3 py-1 border rounded ${
+                    r.hasLabels === "labels"
+                      ? "border-red-600 text-red-700"
+                      : "border-green-600 text-green-700"
+                  }`}
+                >
+                  Mark as{" "}
+                  {r.hasLabels === "labels" ? "Needs printing" : "Has labels"}
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
