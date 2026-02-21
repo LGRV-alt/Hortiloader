@@ -290,6 +290,13 @@ export default function Header({
               Trolley Tracker
             </NavLink>
             <NavLink
+              to="/label-manager"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Label Manager
+            </NavLink>
+            <NavLink
               className={"hover:text-blue-500 flex "}
               onClick={() => setMenuOpen(false)}
               to="/search"

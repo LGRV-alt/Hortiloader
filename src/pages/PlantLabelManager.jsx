@@ -2,87 +2,102 @@ import { useEffect, useState } from "react";
 import pb from "../api/pbConnect";
 
 /* ------------------ utils ------------------ */
-
 const normalize = (s) =>
   s
     .toLowerCase()
-    .replace(/^\d+\s*(x|of)?\s*/i, "")
-    .replace(/\s*(x|of)?\s*\d+$/i, "")
-    .replace(/\s+/g, " ")
+    .replace(/\u00A0/g, " ") // replace non-breaking spaces
+    .replace(/[^\w\s]/g, "") // remove punctuation
+    .replace(/\s+/g, " ") // collapse multiple spaces
     .trim();
 
-/* ------------------ page ------------------ */
-
+/* ------------------ component ------------------ */
 export default function PlantLabelManager() {
   const [plants, setPlants] = useState([]);
   const [input, setInput] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  /* initial load */
+  /* ------------------ fetch plants once ------------------ */
   useEffect(() => {
-    pb.collection("plant_labels")
-      .getFullList({
-        sort: "plant_name",
-        fields: "id,plant_name,has_labels",
-      })
-      .then(setPlants)
-      .finally(() => setLoading(false));
+    const fetchPlants = async () => {
+      setLoading(true);
+      try {
+        if (!pb.authStore.isValid) return;
+
+        const list = await pb.collection("plant_labels").getFullList({
+          sort: "plant_name",
+          fields: "id,plant_name,has_labels,user,organization",
+        });
+
+        setPlants(
+          list.map((p) => ({
+            ...p,
+            has_labels:
+              p.has_labels === "labels"
+                ? "labels"
+                : p.has_labels === "print"
+                  ? "print"
+                  : "new",
+          })),
+        );
+      } catch (err) {
+        console.error("Error fetching plants:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlants();
   }, []);
 
-  /* ------------------ check list ------------------ */
-
+  /* ------------------ check / map input ------------------ */
   const checkPlants = async () => {
     const lines = input
       .split("\n")
       .map((l) => l.trim())
       .filter(Boolean);
-
     if (!lines.length) return;
 
-    const map = new Map(plants.map((p) => [normalize(p.plant_name), p]));
+    const plantMap = new Map(plants.map((p) => [normalize(p.plant_name), p]));
 
     const nextResults = [];
 
     for (const raw of lines) {
       const key = normalize(raw);
-      const existing = map.get(key);
+      const existing = plantMap.get(key);
 
       if (existing) {
         nextResults.push({
           id: existing.id,
-          name: existing.plant_name,
+          name: raw,
           hasLabels: existing.has_labels,
           status: "known",
         });
       } else {
-        // create immediately with NULL
+        // create new plant in PocketBase
         const created = await pb.collection("plant_labels").create({
-          plant_name: key,
-          has_labels: null,
+          plant_name: raw,
+          has_labels: "new",
           user: pb.authStore.model.id,
         });
 
+        const createdWithState = { ...created, has_labels: "new" };
+
         nextResults.push({
           id: created.id,
-          name: created.plant_name,
-          hasLabels: null,
+          name: raw,
+          hasLabels: "new",
           status: "new",
         });
 
-        setPlants((prev) =>
-          [...prev, created].sort((a, b) =>
-            a.plant_name.localeCompare(b.plant_name),
-          ),
-        );
+        setPlants((prev) => [...prev, createdWithState]);
       }
     }
 
     setResults(nextResults);
   };
 
-  /* ------------------ resolve ------------------ */
-
+  /* ------------------ resolve / toggle ------------------ */
   const resolve = async (index, value) => {
     const item = results[index];
 
@@ -103,73 +118,110 @@ export default function PlantLabelManager() {
   if (loading) return <div className="p-6">Loading…</div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h1 className="text-2xl font-semibold">Plant Label Checker</h1>
-
-      {/* input */}
-      <div className="space-y-2">
+    <div className="grid md:grid-cols-2 md:grid-rows-1 h-full p-5">
+      {/* ------------------ input ------------------ */}
+      <div className="h-full flex flex-col justify-start items-center p-5 gap-5">
+        <h1 className="text-2xl font-semibold">Plant Label Checker</h1>
         <textarea
-          className="w-full h-40 p-3 border rounded font-mono"
+          className="w-full h-2/3 p-3 border rounded font-mono"
           placeholder="Paste plant names (one per line)"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
-        <button
-          onClick={checkPlants}
-          className="px-4 py-2 bg-blue-600 text-white rounded"
-        >
-          Check plants
-        </button>
+
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={checkPlants}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            Check plants
+          </button>
+
+          <button
+            onClick={() => {
+              const cleaned =
+                input
+                  .match(/.+?(?:\d+L(?:\s*\d+\/\d+cm)?(?:\s*tall)?|tall|cm)/gi)
+                  ?.map((p) => p.trim())
+                  .join("\n") || "";
+              setInput(cleaned);
+            }}
+            className="px-4 py-2 bg-green-600 text-white rounded"
+          >
+            Clean / Split Input
+          </button>
+
+          <button
+            onClick={() => setResults([])}
+            className="px-4 py-2 bg-gray-500 text-white rounded"
+          >
+            Clear List
+          </button>
+        </div>
       </div>
 
-      {/* results */}
-      {results.map((r, i) => (
-        <div
-          key={r.id}
-          className="flex items-center justify-between p-4 hover:bg-gray-50"
-        >
-          <span className="font-medium">{r.name}</span>
+      {/* ------------------ results ------------------ */}
+      {results.length > 0 && (
+        <div className="border rounded divide-y">
+          {results.map((r, i) => (
+            <div
+              key={r.id}
+              className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3"
+            >
+              <span className="font-medium">
+                {r.name}{" "}
+                {r.hasLabels !== "new" && (
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      color: r.hasLabels === "labels" ? "green" : "red",
+                    }}
+                  >
+                    (
+                    {r.hasLabels === "labels" ? "Has labels" : "Needs printing"}
+                    )
+                  </span>
+                )}
+              </span>
 
-          <div className="flex items-center gap-4">
-            {/* Status display */}
-            {/* {r.hasLabels === true && (
-              <span className="text-green-600 font-medium">Has labels ✓</span>
-            )}
-            {r.hasLabels === false && (
-              <span className="text-red-600 font-medium">Needs printing ✗</span>
-            )}
-            {r.hasLabels === null && (
-              <span className="text-orange-600 font-medium">Unknown</span>
-            )} */}
+              {r.hasLabels === "new" && (
+                <div className="flex gap-2 mt-2 sm:mt-0">
+                  <button
+                    onClick={() => resolve(i, "labels")}
+                    className="px-3 py-1 border border-green-600 text-green-700 rounded"
+                  >
+                    ✓ Has labels
+                  </button>
+                  <button
+                    onClick={() => resolve(i, "print")}
+                    className="px-3 py-1 border border-red-600 text-red-700 rounded"
+                  >
+                    ✗ Needs printing
+                  </button>
+                </div>
+              )}
 
-            {/* Always show the edit buttons */}
-            <div className="flex gap-2">
-              <button
-                onClick={() => resolve(i, true)}
-                disabled={r.hasLabels === true}
-                className={`px-3 py-1 text-sm rounded border ${
-                  r.hasLabels === true
-                    ? "bg-green-100 border-green-600 text-green-700 font-medium opacity-70 cursor-not-allowed"
-                    : "border-green-400 text-green-600 hover:bg-green-50"
-                }`}
-              >
-                ✓ Has labels
-              </button>
-              <button
-                onClick={() => resolve(i, false)}
-                disabled={r.hasLabels === false}
-                className={`px-3 py-1 text-sm rounded border ${
-                  r.hasLabels === false
-                    ? "bg-red-100 border-red-600 text-red-700 font-medium opacity-70 cursor-not-allowed"
-                    : "border-red-400 text-red-600 hover:bg-red-50"
-                }`}
-              >
-                ✗ Needs printing
-              </button>
+              {r.hasLabels !== "new" && (
+                <div className="flex gap-2 mt-2 sm:mt-0">
+                  <button
+                    onClick={() =>
+                      resolve(i, r.hasLabels === "labels" ? "print" : "labels")
+                    }
+                    className={`px-3 py-1 border rounded ${
+                      r.hasLabels === "labels"
+                        ? "border-red-600 text-red-700"
+                        : "border-green-600 text-green-700"
+                    }`}
+                  >
+                    Mark as{" "}
+                    {r.hasLabels === "labels" ? "Needs printing" : "Has labels"}
+                  </button>
+                </div>
+              )}
             </div>
-          </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
