@@ -123,40 +123,53 @@ export default function PlantLabelManager() {
       </div>
 
       {/* results */}
-      {results.length > 0 && (
-        <div className="border rounded divide-y">
-          {results.map((r, i) => (
-            <div key={r.id} className="flex items-center justify-between p-3">
-              <span className="font-medium">{r.name}</span>
+      {results.map((r, i) => (
+        <div
+          key={r.id}
+          className="flex items-center justify-between p-4 hover:bg-gray-50"
+        >
+          <span className="font-medium">{r.name}</span>
 
-              {r.hasLabels === true && (
-                <span className="text-green-600">Has labels ✓</span>
-              )}
+          <div className="flex items-center gap-4">
+            {/* Status display */}
+            {/* {r.hasLabels === true && (
+              <span className="text-green-600 font-medium">Has labels ✓</span>
+            )}
+            {r.hasLabels === false && (
+              <span className="text-red-600 font-medium">Needs printing ✗</span>
+            )}
+            {r.hasLabels === null && (
+              <span className="text-orange-600 font-medium">Unknown</span>
+            )} */}
 
-              {r.hasLabels === false && (
-                <span className="text-red-600">Needs printing ✗</span>
-              )}
-
-              {r.hasLabels === null && (
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => resolve(i, true)}
-                    className="px-3 py-1 border border-green-600 text-green-700 rounded"
-                  >
-                    ✓ Has labels
-                  </button>
-                  <button
-                    onClick={() => resolve(i, false)}
-                    className="px-3 py-1 border border-red-600 text-red-700 rounded"
-                  >
-                    ✗ Needs printing
-                  </button>
-                </div>
-              )}
+            {/* Always show the edit buttons */}
+            <div className="flex gap-2">
+              <button
+                onClick={() => resolve(i, true)}
+                disabled={r.hasLabels === true}
+                className={`px-3 py-1 text-sm rounded border ${
+                  r.hasLabels === true
+                    ? "bg-green-100 border-green-600 text-green-700 font-medium opacity-70 cursor-not-allowed"
+                    : "border-green-400 text-green-600 hover:bg-green-50"
+                }`}
+              >
+                ✓ Has labels
+              </button>
+              <button
+                onClick={() => resolve(i, false)}
+                disabled={r.hasLabels === false}
+                className={`px-3 py-1 text-sm rounded border ${
+                  r.hasLabels === false
+                    ? "bg-red-100 border-red-600 text-red-700 font-medium opacity-70 cursor-not-allowed"
+                    : "border-red-400 text-red-600 hover:bg-red-50"
+                }`}
+              >
+                ✗ Needs printing
+              </button>
             </div>
-          ))}
+          </div>
         </div>
-      )}
+      ))}
     </div>
   );
 }
