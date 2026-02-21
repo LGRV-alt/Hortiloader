@@ -1,441 +1,162 @@
-// src/pages/PlantLabelManager.jsx
-
-import { useState, useEffect } from "react";
-// import PocketBase from 'pocketbase';
+import { useEffect, useState } from "react";
 import pb from "../api/pbConnect";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
+
+/* ------------------ utils ------------------ */
+
+const normalize = (s) =>
+  s
+    .toLowerCase()
+    .replace(/^\d+\s*(x|of)?\s*/i, "")
+    .replace(/\s*(x|of)?\s*\d+$/i, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+/* ------------------ page ------------------ */
 
 export default function PlantLabelManager() {
-  const [plants, setPlants] = useState([]); // [{id, plant_name, has_labels}, ...]
+  const [plants, setPlants] = useState([]);
+  const [input, setInput] = useState("");
+  const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  /* initial load */
   useEffect(() => {
-    async function fetchPlants() {
-      try {
-        const records = await pb.collection("plant_labels").getFullList({
-          sort: "plant_name",
-          fields: "id,plant_name,has_labels",
-        });
-        setPlants(records);
-      } catch (err) {
-        console.error(err);
-        alert("Could not load plant data");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchPlants();
-  }, []);
-
-  if (loading) return <Typography>Loading...</Typography>;
-
-  return (
-    <Box sx={{ p: 4, maxWidth: 900, mx: "auto" }}>
-      <Typography variant="h4" gutterBottom align="center">
-        Label Availability Checker
-      </Typography>
-
-      <DatabaseBuilder plants={plants} setPlants={setPlants} pb={pb} />
-      <OrderChecker plants={plants} pb={pb} />
-    </Box>
-  );
-}
-
-function DatabaseBuilder({ plants, setPlants, pb }) {
-  const [name, setName] = useState("");
-  const [hasLabels, setHasLabels] = useState(false);
-
-  const save = async () => {
-    const trimmed = name.trim();
-    if (!trimmed) return;
-
-    try {
-      const result = await pb.collection("plant_labels").getList(1, 1, {
-        filter: `plant_name = "${trimmed.replace(/"/g, '\\"')}"`,
-      });
-
-      if (result.items.length > 0) {
-        await pb.collection("plant_labels").update(result.items[0].id, {
-          has_labels: hasLabels,
-        });
-      } else {
-        await pb.collection("plant_labels").create({
-          plant_name: trimmed,
-          has_labels: hasLabels,
-          user: pb.authStore.model.id,
-        });
-      }
-
-      // Refresh list
-      const updated = await pb.collection("plant_labels").getFullList({
+    pb.collection("plant_labels")
+      .getFullList({
         sort: "plant_name",
         fields: "id,plant_name,has_labels",
-      });
-      setPlants(updated);
+      })
+      .then(setPlants)
+      .finally(() => setLoading(false));
+  }, []);
 
-      setName("");
-      setHasLabels(false);
-      alert(
-        `Saved: ${trimmed} → ${hasLabels ? "Has labels" : "Needs printing"}`,
-      );
-    } catch (err) {
-      alert("Save failed: " + err.message);
-    }
-  };
+  /* ------------------ check list ------------------ */
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" || e.key === "Tab") {
-      e.preventDefault();
-      save();
-    }
-  };
-
-  return (
-    <Box sx={{ mb: 6, p: 3, border: "1px solid #eee", borderRadius: 2 }}>
-      <Typography variant="h6" gutterBottom>
-        Add / Update Plant
-      </Typography>
-      <Box
-        sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}
-      >
-        <Autocomplete
-          freeSolo
-          options={plants.map((p) => p.plant_name)}
-          value={name}
-          onChange={(_, val) => setName(val || "")}
-          onInputChange={(_, val) => setName(val)}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Plant Name"
-              sx={{ width: 400 }}
-              onKeyDown={handleKeyDown}
-            />
-          )}
-        />
-
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Checkbox
-            checked={hasLabels}
-            onChange={(e) => setHasLabels(e.target.checked)}
-          />
-          <Typography>Has physical labels</Typography>
-        </Box>
-
-        <Button variant="contained" onClick={save}>
-          Save
-        </Button>
-      </Box>
-      <Typography variant="caption" sx={{ mt: 1, display: "block" }}>
-        Type name → check box if you have labels → Enter/Tab to save
-      </Typography>
-    </Box>
-  );
-}
-
-// function OrderChecker({ plants, pb }) {
-//   const [text, setText] = useState("");
-//   const [results, setResults] = useState([]);
-
-//   const check = () => {
-//     const lines = text
-//       .split("\n")
-//       .map((l) => l.trim())
-//       .filter(Boolean);
-
-//     if (!lines.length) {
-//       alert("Paste some plant names");
-//       return;
-//     }
-
-//     // Simple: treat each non-empty line as a plant name (ignore quantities for now)
-//     const names = lines.map((line) => {
-//       // Remove common prefixes/suffixes if needed
-//       return line.replace(/^\d+\s*(?:x|-|of)?\s*/i, "").trim();
-//     });
-
-//     const map = new Map(
-//       plants.map((p) => [p.plant_name.toLowerCase(), p.has_labels]),
-//     );
-
-//     const processed = names.map((name) => {
-//       const key = name.toLowerCase();
-//       const known = map.has(key);
-//       return {
-//         name,
-//         hasLabels: known ? map.get(key) : null,
-//       };
-//     });
-
-//     setResults(processed);
-//   };
-
-//   const toggleAndSave = async (item) => {
-//     const newValue = !item.hasLabels;
-//     try {
-//       const result = await pb.collection("plant_labels").getList(1, 1, {
-//         filter: `plant_name = "${item.name.replace(/"/g, '\\"')}"`,
-//       });
-
-//       if (result.items.length > 0) {
-//         await pb.collection("plant_labels").update(result.items[0].id, {
-//           has_labels: newValue,
-//         });
-//       } else {
-//         await pb.collection("plant_labels").create({
-//           plant_name: item.name,
-//           has_labels: newValue,
-//         });
-//       }
-
-//       // Quick local update
-//       setResults((prev) =>
-//         prev.map((r) =>
-//           r.name === item.name ? { ...r, hasLabels: newValue } : r,
-//         ),
-//       );
-
-//       // Optional: full refresh if you want suggestions updated immediately
-//       // const updated = await pb...getFullList(...); setPlants(updated);
-//     } catch (err) {
-//       alert("Update failed");
-//     }
-//   };
-
-//   return (
-//     <Box sx={{ p: 3, border: "1px solid #eee", borderRadius: 2 }}>
-//       <Typography variant="h6" gutterBottom>
-//         Check Order Plants
-//       </Typography>
-//       <TextField
-//         multiline
-//         rows={6}
-//         fullWidth
-//         label="Paste plant names (one per line)"
-//         value={text}
-//         onChange={(e) => setText(e.target.value)}
-//         sx={{ mb: 2 }}
-//       />
-//       <Button variant="contained" onClick={check} fullWidth>
-//         Check Availability
-//       </Button>
-
-//       {results.length > 0 && (
-//         <List sx={{ mt: 3 }}>
-//           {results.map((r, i) => (
-//             <ListItem key={i} divider>
-//               <ListItemText
-//                 primary={r.name}
-//                 secondary={
-//                   r.hasLabels === null ? (
-//                     <Box sx={{ color: "purple" }}>
-//                       Unknown — check shelves
-//                       <Button
-//                         size="small"
-//                         sx={{ ml: 2 }}
-//                         onClick={() => toggleAndSave(r)}
-//                       >
-//                         I have labels ✓
-//                       </Button>
-//                       <Button
-//                         size="small"
-//                         color="error"
-//                         sx={{ ml: 1 }}
-//                         onClick={() => toggleAndSave({ ...r, hasLabels: true })} // force false path
-//                       >
-//                         No labels ✗
-//                       </Button>
-//                     </Box>
-//                   ) : r.hasLabels ? (
-//                     <span style={{ color: "green" }}>Has labels ✓</span>
-//                   ) : (
-//                     <span style={{ color: "red" }}>Needs printing ✗</span>
-//                   )
-//                 }
-//               />
-//             </ListItem>
-//           ))}
-//         </List>
-//       )}
-//     </Box>
-//   );
-// }
-
-function OrderChecker({ plants, pb }) {
-  const [text, setText] = useState("");
-  const [results, setResults] = useState([]);
-
-  const check = async () => {
-    const lines = text
+  const checkPlants = async () => {
+    const lines = input
       .split("\n")
       .map((l) => l.trim())
       .filter(Boolean);
 
-    if (!lines.length) {
-      alert("Paste some plant names (one per line)");
-      return;
-    }
+    if (!lines.length) return;
 
-    // Clean names - remove quantity prefixes if present
-    const names = lines.map((line) => {
-      return line
-        .replace(/^\d+\s*(?:x|-|of|pcs)?\s*/i, "")
-        .replace(/\s*(?:x|-|of|pcs)?\s*\d+$/i, "")
-        .trim();
-    });
+    const map = new Map(plants.map((p) => [normalize(p.plant_name), p]));
 
-    const nameToLower = (name) => name.toLowerCase();
-    const knownMap = new Map(plants.map((p) => [nameToLower(p.plant_name), p]));
+    const nextResults = [];
 
-    const processed = [];
+    for (const raw of lines) {
+      const key = normalize(raw);
+      const existing = map.get(key);
 
-    for (const name of names) {
-      const key = nameToLower(name);
-      if (knownMap.has(key)) {
-        const entry = knownMap.get(key);
-        processed.push({
-          name,
-          hasLabels: entry.has_labels,
-          id: entry.id,
-          isNew: false,
+      if (existing) {
+        nextResults.push({
+          id: existing.id,
+          name: existing.plant_name,
+          hasLabels: existing.has_labels,
+          status: "known",
         });
       } else {
-        // Auto-create with has_labels = false
-        try {
-          const created = await pb.collection("plant_labels").create({
-            plant_name: name,
-            has_labels: false,
-            user: pb.authStore.model.id,
-          });
+        // create immediately with NULL
+        const created = await pb.collection("plant_labels").create({
+          plant_name: key,
+          has_labels: null,
+          user: pb.authStore.model.id,
+        });
 
-          processed.push({
-            name,
-            hasLabels: false,
-            id: created.id,
-            isNew: true,
-          });
+        nextResults.push({
+          id: created.id,
+          name: created.plant_name,
+          hasLabels: null,
+          status: "new",
+        });
 
-          // Add to local plants list so it shows up in autocomplete immediately
-          setPlants((prev) =>
-            [...prev, created].sort((a, b) =>
-              a.plant_name.localeCompare(b.plant_name),
-            ),
-          );
-        } catch (err) {
-          console.error("Auto-create failed:", err);
-          processed.push({
-            name,
-            hasLabels: null,
-            isNew: true,
-            error: true,
-          });
-        }
+        setPlants((prev) =>
+          [...prev, created].sort((a, b) =>
+            a.plant_name.localeCompare(b.plant_name),
+          ),
+        );
       }
     }
 
-    setResults(processed);
+    setResults(nextResults);
   };
 
-  const setHasLabels = async (index, value) => {
+  /* ------------------ resolve ------------------ */
+
+  const resolve = async (index, value) => {
     const item = results[index];
-    if (!item.id) return;
 
-    try {
-      await pb.collection("plant_labels").update(item.id, {
-        has_labels: value,
-      });
+    // optimistic update
+    setResults((prev) => {
+      const copy = [...prev];
+      copy[index] = { ...copy[index], hasLabels: value };
+      return copy;
+    });
 
-      // Update local results
-      setResults((prev) => {
-        const newResults = [...prev];
-        newResults[index] = { ...newResults[index], hasLabels: value };
-        return newResults;
-      });
+    await pb.collection("plant_labels").update(item.id, { has_labels: value });
 
-      // Update global plants list
-      setPlants((prev) =>
-        prev.map((p) => (p.id === item.id ? { ...p, has_labels: value } : p)),
-      );
-    } catch (err) {
-      alert("Update failed");
-    }
+    setPlants((prev) =>
+      prev.map((p) => (p.id === item.id ? { ...p, has_labels: value } : p)),
+    );
   };
+
+  if (loading) return <div className="p-6">Loading…</div>;
 
   return (
-    <Box sx={{ p: 3, border: "1px solid #eee", borderRadius: 2 }}>
-      <Typography variant="h6" gutterBottom>
-        Check Order Plants
-      </Typography>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <h1 className="text-2xl font-semibold">Plant Label Checker</h1>
 
-      <TextField
-        multiline
-        rows={6}
-        fullWidth
-        label="Paste plant names (one per line)"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        sx={{ mb: 2 }}
-      />
+      {/* input */}
+      <div className="space-y-2">
+        <textarea
+          className="w-full h-40 p-3 border rounded font-mono"
+          placeholder="Paste plant names (one per line)"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button
+          onClick={checkPlants}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Check plants
+        </button>
+      </div>
 
-      <Button variant="contained" onClick={check} fullWidth>
-        Check & Auto-register Unknown Plants
-      </Button>
-
+      {/* results */}
       {results.length > 0 && (
-        <List sx={{ mt: 3 }}>
+        <div className="border rounded divide-y">
           {results.map((r, i) => (
-            <ListItem key={i} divider>
-              <ListItemText
-                primary={r.name}
-                secondary={
-                  r.error ? (
-                    <span style={{ color: "red" }}>Error creating entry</span>
-                  ) : r.hasLabels === null || r.isNew ? (
-                    <Box
-                      sx={{
-                        color: "orange",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2,
-                      }}
-                    >
-                      <span>New / Unknown — please verify:</span>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="success"
-                        onClick={() => setHasLabels(i, true)}
-                      >
-                        ✓ Has labels
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="outlined"
-                        color="error"
-                        onClick={() => setHasLabels(i, false)}
-                      >
-                        ✗ Needs printing
-                      </Button>
-                    </Box>
-                  ) : r.hasLabels ? (
-                    <span style={{ color: "green" }}>Has labels ✓</span>
-                  ) : (
-                    <span style={{ color: "red" }}>Needs printing ✗</span>
-                  )
-                }
-              />
-            </ListItem>
+            <div key={r.id} className="flex items-center justify-between p-3">
+              <span className="font-medium">{r.name}</span>
+
+              {r.hasLabels === true && (
+                <span className="text-green-600">Has labels ✓</span>
+              )}
+
+              {r.hasLabels === false && (
+                <span className="text-red-600">Needs printing ✗</span>
+              )}
+
+              {r.hasLabels === null && (
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => resolve(i, true)}
+                    className="px-3 py-1 border border-green-600 text-green-700 rounded"
+                  >
+                    ✓ Has labels
+                  </button>
+                  <button
+                    onClick={() => resolve(i, false)}
+                    className="px-3 py-1 border border-red-600 text-red-700 rounded"
+                  >
+                    ✗ Needs printing
+                  </button>
+                </div>
+              )}
+            </div>
           ))}
-        </List>
+        </div>
       )}
-    </Box>
+    </div>
   );
 }
