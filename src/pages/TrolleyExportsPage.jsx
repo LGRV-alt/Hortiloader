@@ -140,11 +140,12 @@ export default function TrolleyExportsPage() {
               className=" rounded-2xl border-2 b-[#D8E0EA] bg-[#ffffff] "
             >
               <div className=" bg-[#9ac2e3] rounded-t-xl min-h-24 flex flex-col gap-2">
-                <div className="flex justify-between pt-2 px-4">
+                <div className="flex justify-between items-center pt-2 px-4">
                   <div className="flex items-center">
                     <p className=" md:text-xl text-sm font-medium me-2 ">
                       {record.name.toUpperCase() || "Untitled Export"}
                     </p>
+                    <p className="pr-2">{record.vehicleInfo.code}</p>
                     {user.role === "admin" && (
                       <button
                         onClick={(e) => {
