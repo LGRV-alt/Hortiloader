@@ -119,7 +119,7 @@ export default function App() {
             </div>
           )}
           <ChangelogModal />
-          <div className="print:hidden sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white">
+          <div className="print:hidden sticky top-0 z-50 col-start-1 col-end-6 row-start-1 row-end-2 bg-white ">
             <Header
               setChosenWeek={setChosenWeek}
               setChosenYear={setChosenYear}
@@ -129,7 +129,7 @@ export default function App() {
               year={chosenYear}
             />
           </div>
-          <div className="bg-white col-start-1 col-end-4 row-start-2 row-end-3">
+          <div className="bg-white dark:bg-black dark:text-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               {/* Main Page */}
               <Route

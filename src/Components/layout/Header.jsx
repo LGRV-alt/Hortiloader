@@ -9,6 +9,7 @@ import { useTaskStore } from "../../hooks/useTaskStore";
 import { IoIosRefresh } from "react-icons/io";
 import toast from "react-hot-toast";
 import pb from "../../api/pbConnect";
+import DarkModeToggle from "../DarkmodeToggle";
 
 export default function Header({
   setChosenWeek,
@@ -190,6 +191,7 @@ export default function Header({
               <div className="flex gap-2">
                 {user.role !== "viewer" && !menuOpen && (
                   <>
+                    <DarkModeToggle />
                     <button
                       onClick={() => setEdit((prev) => !prev)}
                       className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 hidden md:flex"
