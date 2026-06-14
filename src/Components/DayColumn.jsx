@@ -73,7 +73,7 @@ export default function DayColumn({
   return (
     <>
       {/* Whole column */}
-      <div className="bg-slate-300 dark:bg-darkMain dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+      <div className="bg-slate-300 dark:bg-darkMain dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black text-base">
         <div className="flex items-center gap-2 ">
           {/* Title of column */}
           <h5 className="font-bold" onClick={() => console.log(arr)}>
@@ -92,7 +92,7 @@ export default function DayColumn({
       {/* Data in the column */}
       {arr.map((record) => (
         <div
-          className="flex justify-between items-center px-1 pt-1 "
+          className="flex justify-between items-center px-1 pt-1 text-[0.8rem]"
           key={record.id}
         >
           <div
@@ -126,7 +126,7 @@ export default function DayColumn({
                 data-tooltip-content={record.orderInfo}
               >
                 <Tooltip id={`my-tooltip-${record.id}`} />
-                <div className="flex text-sm">
+                <div className="flex ">
                   <p className={getCustomerTextColor(record)}>
                     {record.title} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber || ""}
