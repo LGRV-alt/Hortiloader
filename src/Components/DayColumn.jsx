@@ -64,16 +64,16 @@ export default function DayColumn({
       case "working":
         return <TiSpanner fontSize="1.5em" />;
       case "missed":
-        return <MdOutlineQuestionMark color="red" fontSize="1.5em" />;
+        return <MdOutlineQuestionMark color="gray" fontSize="1.5em" />;
       default:
-        return <FaExclamation color="black" fontSize="1em" />;
+        return <FaExclamation color="red" fontSize="1em" />;
     }
   };
 
   return (
     <>
       {/* Whole column */}
-      <div className="bg-slate-300 flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+      <div className="bg-slate-300 dark:bg-black dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2 ">
           {/* Title of column */}
           <h5 className="font-bold" onClick={() => console.log(arr)}>
@@ -139,7 +139,7 @@ export default function DayColumn({
                 className="flex justify-center items-center"
                 to={`/view/${record.id}`}
               >
-                <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center ">
                   {getStatusIcon(record.status)}
                 </div>
               </Link>

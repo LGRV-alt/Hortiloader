@@ -14,6 +14,8 @@ export default {
         textDark: "#212529",
         textLight: "#FFFFFF",
         "secondary-colour": "#E88D67",
+        darkMain: "#0d1117",
+        darkBorder: "#4b5563",
       },
       fontFamily: {
         display: ["New Amsterdam", "sans-serif"],

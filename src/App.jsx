@@ -129,7 +129,7 @@ export default function App() {
               year={chosenYear}
             />
           </div>
-          <div className="bg-white dark:bg-black dark:text-white col-start-1 col-end-4 row-start-2 row-end-3">
+          <div className="bg-white dark:bg-darkMain dark:text-white col-start-1 col-end-4 row-start-2 row-end-3">
             <Routes>
               {/* Main Page */}
               <Route

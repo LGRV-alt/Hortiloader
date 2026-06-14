@@ -34,7 +34,7 @@ export default function Body({
     <div className="relative h-full">
       {/* Actual Day Grid Layout */}
       <div className="grid grid-row-7 grid-cols-1 grid-rows-1 md:grid-cols-6 md:grid-rows-2 h-full">
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 ">
+        <div className="mb-10 md:mb-0 md:border-x-2 dark:border-darkBorder border-black row-span-2 ">
           <DayColumn
             arr={monday}
             day="Monday"
@@ -47,7 +47,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 border-t-2 md:border-t-0">
+        <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
           <DayColumn
             arr={tuesday}
             day="Tuesday"
@@ -60,7 +60,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 border-t-2 md:border-t-0">
+        <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
           <DayColumn
             arr={wednesday}
             day="Wednesday"
@@ -73,7 +73,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 border-t-2 md:border-t-0">
+        <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
           <DayColumn
             arr={thursday}
             day="Thursday"
@@ -86,7 +86,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 border-black row-span-2 border-t-2 md:border-t-0">
+        <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
           <DayColumn
             arr={friday}
             day="Friday"
@@ -99,7 +99,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 border-black border-t-2 md:border-t-0">
+        <div className="mb-10 md:mb-0 md:border-r-2 md:row-start-1 md:row-end-2 md:col-start-6 dark:border-darkBorder border-black border-t-2 md:border-t-0">
           <DayColumn
             arr={saturday}
             day="Saturday"
@@ -112,7 +112,7 @@ export default function Body({
             customerList={customerList}
           />
         </div>
-        <div className="mb-10 border-t-2 md:border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 border-black ">
+        <div className="mb-10 border-t-2 md:border-t-2 md:mb-0 md:border-r-2 md:row-start-2 md:row-end-3 md:col-start-6 dark:border-darkBorder border-black ">
           <DayColumn
             arr={sunday}
             day="Sunday"
