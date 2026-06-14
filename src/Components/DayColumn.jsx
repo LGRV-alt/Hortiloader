@@ -64,7 +64,7 @@ export default function DayColumn({
       case "working":
         return <TiSpanner fontSize="1.5em" />;
       case "missed":
-        return <MdOutlineQuestionMark color="gray" fontSize="1.5em" />;
+        return <MdOutlineQuestionMark fontSize="1.5em" />;
       default:
         return <FaExclamation color="red" fontSize="1em" />;
     }
@@ -102,8 +102,10 @@ export default function DayColumn({
           >
             {edit ? (
               <a
-                className={`hover:bg-slate-300  border rounded cursor-pointer transition ${
-                  customerList.includes(record.id) ? "bg-blue-200" : "bg-white"
+                className={`hover:bg-slate-300 p-1  border rounded cursor-pointer transition ${
+                  customerList.includes(record.id)
+                    ? "dark:bg-darkBorder bg-blue-200"
+                    : "dark:bg-darkMain bg-white"
                 }`}
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}

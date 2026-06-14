@@ -170,13 +170,13 @@ export default function Header({
                   onClick={() => setEdit(!edit)}
                   to="/trolley-mapper"
                 >
-                  <button className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-green-600 hover:outline transition-all duration-300 bg-green-600  text-white">
+                  <button className="w-24 py-1 px-2 rounded-md hover:outline transition-all duration-300 bg-green-600  text-white">
                     Create Run
                   </button>
                 </Link>
                 <button
                   onClick={() => setCustomerList([])}
-                  className="w-24 py-1 px-2 rounded-md hover:bg-regal-blue hover:text-orange-600 hover:outline transition-all duration-200 bg-orange-600  text-white"
+                  className="w-24 py-1 px-2 rounded-md  hover:outline transition-all duration-200 bg-orange-600  text-white"
                 >
                   Clear
                 </button>
@@ -191,7 +191,6 @@ export default function Header({
               <div className="flex gap-2">
                 {user.role !== "viewer" && !menuOpen && (
                   <>
-                    <DarkModeToggle />
                     <button
                       onClick={() => setEdit((prev) => !prev)}
                       className="bg-blue-600 px-3 py-1 rounded items-center hover:bg-blue-700 hidden md:flex md:text-sm"
@@ -209,6 +208,7 @@ export default function Header({
                     </Link>
                   </>
                 )}
+                <DarkModeToggle />
                 <NavLink
                   className={
                     "hover:text-blue-500 flex justify-center items-center "
@@ -321,6 +321,7 @@ export default function Header({
                 Admin Logs
               </NavLink>
             )}
+            <DarkModeToggle />
           </div>
           <div className="text-lg flex flex-col gap-2 w-full items-center">
             <button

@@ -36,7 +36,6 @@ export default function WeekdayPage() {
     if (theme === "dark") {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
-      console.log(theme);
       setPrinting(true);
       window.print();
       document.documentElement.classList.add("dark");

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { MdDarkMode } from "react-icons/md";
+import { FiSun } from "react-icons/fi";
 
 export default function DarkModeToggle() {
   const [dark, setDark] = useState(localStorage.getItem("theme") === "dark");
@@ -15,7 +17,11 @@ export default function DarkModeToggle() {
 
   return (
     <button onClick={() => setDark(!dark)}>
-      {dark ? "Light Mode" : "Dark Mode"}
+      {dark ? (
+        <FiSun fontSize="1.5rem" color="yellow" />
+      ) : (
+        <MdDarkMode fontSize="1.5rem " color="white" />
+      )}
     </button>
   );
 }
