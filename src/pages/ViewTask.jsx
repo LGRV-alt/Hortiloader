@@ -158,10 +158,10 @@ export default function ViewTask() {
   };
 
   return (
-    <div className=" p-2 md:p-6 bg-[#ffffff] h-full grid md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
+    <div className=" p-2 md:p-6 dark:bg-darkMain bg-[#ffffff] h-full grid md:grid-cols-[2fr_1fr] gap-4 text-sm md:text-lg  ">
       {/* ----------------Load Spinner --------------- */}
       {loading && (
-        <div className="absolute inset-0 bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
+        <div className="absolute inset-0 dark:bg-darkMain bg-white z-50 pt-20 flex flex-col items-center justify-center pointer-events-auto">
           <h2 className="text-xl font-bold mb-8">Fetching Task...</h2>
           <div className="relative w-full h-full overflow-hidden">
             <div className="absolute left-0  -translate-y-1/2">
@@ -172,9 +172,9 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-      <div className=" grid grid-rows-[2fr_3fr_1fr] h-full  rounded-3xl text-xs md:text-lg shadow-lg shadow-gray-400 bg-white ">
+      <div className=" grid grid-rows-[2fr_3fr_1fr] h-full  rounded-3xl text-xs md:text-lg shadow-lg dark:shadow-darkBorder shadow-gray-400  dark:bg-darkMain bg-white ">
         {/* ------ HEADER ------ */}
-        <div className="grid grid-cols-[2fr_1fr] p-4 rounded-t-3xl bg-regal-blue text-white ">
+        <div className="grid grid-cols-[2fr_1fr] p-4 rounded-t-3xl dark:bg-darkBorder bg-regal-blue text-white ">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col ">
             {/* Title */}
@@ -410,7 +410,7 @@ export default function ViewTask() {
             {/* <h3 className="pb-2  font-medium  ">Additional Info</h3> */}
             <textarea
               // readOnly={!isEditing}
-              className="p-2 w-4/5 md:h-full text-center  bg-transparent focus:border-2 border-black focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
+              className="p-2 w-4/5 md:h-full text-center  bg-transparent focus:border-2  focus:outline-none placeholder:text-gray-400 resize-none appearance-none"
               type="text"
               placeholder="Task information"
               onChange={(e) => setOrderInfo(e.target.value)}
@@ -426,20 +426,20 @@ export default function ViewTask() {
               <span className="border-gray-400 border-t-2 w-4/5 h-2"></span>
               <div className="grid grid-cols-3 w-full  px-5  pt-2 md:gap-8 gap-2 ">
                 <button
-                  className="bg-gray-300 rounded-md font-semibold px-4 py-2 hover:bg-gray-400"
+                  className="bg-gray-300 dark:bg-darkBorder rounded-md font-semibold px-4 py-2 transition-all hover:outline"
                   onClick={() => setIsEditing(!isEditing)}
                 >
                   Edit
                 </button>
                 <button
-                  className="bg-blue-500 py-2 px-4 font-semibold rounded-md text-white hover:text-white  transition-all hover:outline hover:bg-blue-600 "
+                  className="bg-blue-500 py-2 px-4 font-semibold rounded-md text-white hover:text-white  transition-all hover:outline"
                   onClick={handleSubmit}
                 >
                   <p>{savingState}</p>
                 </button>
                 {(user?.role === "admin" || user?.role === "super-user") && (
                   <button
-                    className="bg-red-500 rounded-md font-semibold text-white px-4 py-2 hover:bg-red-600"
+                    className="bg-red-500 rounded-md font-semibold text-white px-4 py-2 transition-all hover:outline"
                     onClick={() => setShowDeleteModal(true)}
                   >
                     <p>Delete</p>
@@ -453,7 +453,7 @@ export default function ViewTask() {
 
       {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl bg-white">
+        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl dark:shadow-darkBorder dark:bg-darkMain bg-white">
           <div className="w-full">
             <FileUpload taskID={id} onUpload={setPictures} />
             <Pictures
