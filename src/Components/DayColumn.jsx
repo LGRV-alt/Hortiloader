@@ -111,7 +111,15 @@ export default function DayColumn({
                 data-tooltip-content={record.orderInfo}
                 onClick={() => handleCustomerList(record.id)}
               >
-                <Tooltip id={`my-tooltip-${record.id}`} />
+                <Tooltip
+                  style={{
+                    maxWidth: "320px", // or "400px", "450px" etc.
+                    whiteSpace: "pre-wrap", // allows wrapping
+                    wordBreak: "break-word",
+                    textAlign: "left",
+                  }}
+                  id={`my-tooltip-${record.id}`}
+                />
                 <div className="flex">
                   <p className={getCustomerTextColor(record)}>
                     {record.title} {record.postcode.toUpperCase()}{" "}
@@ -125,7 +133,15 @@ export default function DayColumn({
                 data-tooltip-id={`my-tooltip-${record.id}`}
                 data-tooltip-content={record.orderInfo}
               >
-                <Tooltip id={`my-tooltip-${record.id}`} />
+                <Tooltip
+                  style={{
+                    maxWidth: "320px",
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                    textAlign: "left",
+                  }}
+                  id={`my-tooltip-${record.id}`}
+                />
                 <div className="flex ">
                   <p className={getCustomerTextColor(record)}>
                     {record.title} {record.postcode.toUpperCase()}{" "}
