@@ -73,7 +73,7 @@ export default function Header({
   }
 
   return (
-    <header className="z-50 border-b-2 border-black bg-main dark:bg-[#151b23] dark:border-darkBorder text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkSecondary dark:border-darkBorder text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -93,7 +93,7 @@ export default function Header({
             <span className="pr-1">Year</span>
             <select
               onChange={handleYearChange}
-              className="bg-transparent appearance-none focus:outline-none focus:bg-white focus:text-black"
+              className="bg-transparent appearance-none focus:outline-none focus:bg-white  focus:text-black"
             >
               <option value={2026}>2026</option>
               <option value={2025}>2025</option>
@@ -194,17 +194,17 @@ export default function Header({
                     <DarkModeToggle />
                     <button
                       onClick={() => setEdit((prev) => !prev)}
-                      className="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 hidden md:flex"
+                      className="bg-blue-600 px-3 py-1 rounded items-center hover:bg-blue-700 hidden md:flex md:text-sm"
                     >
-                      Map
+                      Create Delivery Group
                     </button>
 
                     <Link to="/create-customer">
                       <button
                         onClick={() => setMenuOpen(false)}
-                        className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex"
+                        className="bg-green-600 px-3 py-1 rounded hover:bg-green-700 hidden md:flex items-center text-sm"
                       >
-                        Add Order
+                        Add Task
                       </button>
                     </Link>
                   </>
@@ -243,10 +243,10 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6">
+        <div className="border-l-2 md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main dark:bg-darkSecondary dark:border-darkBorder  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6 ">
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
-            className="flex justify-end   text-white "
+            className="flex justify-end hover:text-red-600  text-white "
           >
             {menuOpen ? (
               <FaTimes fontSize="1.5rem" />
@@ -254,8 +254,8 @@ export default function Header({
               <FaBars fontSize="1.5rem" />
             )}
           </button>
-          <div className="border-t-2 border-white w-full"></div>
-          <div className="md:pt-10 flex flex-col w-full items-center md:items-end gap-4 md:pr-3">
+          <div className="border-t-2 dark:border-darkBorder border-white w-full"></div>
+          <div className="md:pt-10 flex flex-col w-full items-center md:items-center gap-4 ">
             <NavLink
               to="/"
               onClick={() => setMenuOpen(false)}
@@ -335,9 +335,10 @@ export default function Header({
                 onClick={() => setMenuOpen(false)}
                 className="w-1/2  bg-green-600 justify-center px-2 py-1 rounded hover:bg-green-700 flex md:hidden text-white"
               >
-                Add Order
+                Add Task
               </button>
             </Link>
+
             <button
               onClick={signout}
               className="w-1/2 md:mt-32 bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"

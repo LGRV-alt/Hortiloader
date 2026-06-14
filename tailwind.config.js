@@ -15,6 +15,7 @@ export default {
         textLight: "#FFFFFF",
         "secondary-colour": "#E88D67",
         darkMain: "#0d1117",
+        darkSecondary: "#151b23",
         darkBorder: "#4b5563",
       },
       fontFamily: {

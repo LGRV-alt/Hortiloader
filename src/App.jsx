@@ -109,7 +109,7 @@ export default function App() {
         <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           {loading && (
             <div
-              className="fixed inset-0 z-50 bg-white/90 backdrop-blur-sm
+              className="fixed inset-0 z-50 bg-white/80 dark:bg-darkMain/80 backdrop-blur-sm
                flex flex-col items-start justify-center"
               role="status"
               aria-live="polite"

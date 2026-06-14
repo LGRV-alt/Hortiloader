@@ -73,7 +73,7 @@ export default function DayColumn({
   return (
     <>
       {/* Whole column */}
-      <div className="bg-slate-300 dark:bg-black dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
+      <div className="bg-slate-300 dark:bg-darkMain dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black">
         <div className="flex items-center gap-2 ">
           {/* Title of column */}
           <h5 className="font-bold" onClick={() => console.log(arr)}>
@@ -97,7 +97,7 @@ export default function DayColumn({
         >
           <div
             className={`${
-              !edit && "hover:bg-slate-300"
+              !edit && "hover:bg-slate-300 dark:hover:bg-darkBorder"
             } flex justify-between w-full  hover:border-black  transition-all`}
           >
             {edit ? (
@@ -136,10 +136,10 @@ export default function DayColumn({
               ""
             ) : (
               <Link
-                className="flex justify-center items-center"
+                className="flex justify-end items-center"
                 to={`/view/${record.id}`}
               >
-                <div className="flex justify-center items-center ">
+                <div className="flex justify-center items-center min-w-7">
                   {getStatusIcon(record.status)}
                 </div>
               </Link>
