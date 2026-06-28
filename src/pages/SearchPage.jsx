@@ -321,7 +321,7 @@ export default function SearchPage() {
           <div className="mt-3 flex flex-col md:flex-row md:items-center gap-3 justify-center">
             {/* Status */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs uppercase tracking-wider text-gray-500">
+              <span className="text-xs uppercase tracking-wider dark:text-white text-gray-500">
                 Status:
               </span>
               <button
@@ -355,7 +355,7 @@ export default function SearchPage() {
 
             {/* Date */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs uppercase tracking-wider text-gray-500">
+              <span className="text-xs uppercase tracking-wider dark:text-white text-gray-500">
                 Date:
               </span>
               <button
@@ -476,7 +476,7 @@ export default function SearchPage() {
 
         {/* Empty state */}
         {showEmpty && (
-          <div className="rounded-3xl border border-dashed border-gray-300 bg-white p-8 text-center text-gray-600">
+          <div className="rounded-3xl border border-dashed dark:border-darkBorder dark:text-white border-gray-300 dark:bg-darkSecondary bg-white p-8 text-center text-gray-600">
             No results for{" "}
             <span className="font-semibold">“{lastSearchedRef.current}”</span>.
           </div>
