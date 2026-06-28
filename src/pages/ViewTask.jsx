@@ -172,9 +172,9 @@ export default function ViewTask() {
       )}
 
       {/* ------------Task---------------- */}
-      <div className=" grid grid-rows-[2fr_3fr_1fr] h-full  rounded-3xl text-xs md:text-lg shadow-lg dark:shadow-darkBorder shadow-gray-400  dark:bg-darkMain bg-white ">
+      <div className=" grid grid-rows-[2fr_3fr_1fr] border-2 overflow-hidden border-black h-full  rounded-2xl text-xs md:text-lg shadow-lg dark:shadow-darkSecondary shadow-gray-400  dark:bg-darkMain bg-white ">
         {/* ------ HEADER ------ */}
-        <div className="grid grid-cols-[2fr_1fr] p-4 rounded-t-3xl dark:bg-darkBorder bg-regal-blue text-white ">
+        <div className="grid grid-cols-[2fr_1fr] p-4  dark:bg-darkSecondary bg-regal-blue border-b-2 border-black text-white ">
           {/* ---------------------left side of the card header-------------------------- */}
           <div className="w-full flex flex-col ">
             {/* Title */}
@@ -453,7 +453,7 @@ export default function ViewTask() {
 
       {/* ------Picture/File Upload-------- */}
       {user.role !== "viewer" && (
-        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl dark:shadow-darkBorder dark:bg-darkMain bg-white">
+        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl border-2 border-black overflow-hidden dark:shadow-darkSecondary dark:bg-darkMain bg-white">
           <div className="w-full">
             <FileUpload taskID={id} onUpload={setPictures} />
             <Pictures

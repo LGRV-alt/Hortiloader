@@ -60,55 +60,55 @@ export default function CreateCustomer() {
     }
   };
   return (
-    <div className="h-full w-full flex justify-center bg-slate-100 md:p-5 p-4">
+    <div className="h-full w-full flex justify-center bg-slate-100 dark:bg-darkMain  md:p-5 p-4">
       <div
-        className="relative w-full max-w-3xl rounded-2xl bg-white
+        className="relative w-full max-w-3xl rounded-2xl bg-white dark:bg-darkSecondary
   shadow-[0_20px_40px_rgba(15,23,42,0.12)]
-  border border-slate-200 overflow-hidden"
+  border-[3px] dark:border-darkBorder border-slate-200 overflow-hidden"
       >
         <div
           className="absolute left-0 top-0 h-full w-4
-  bg-gradient-to-b from-blue-500 to-blue-700"
+  bg-gradient-to-b from-blue-500 to-blue-700 dark:from-slate-600 dark:to-slate-900"
         />
-        <div className="flex flex-col h-full items-center justify-center md:justify-start relative px-8 py-3">
+        <div className=" text-slate-900 dark:text-white flex flex-col h-full items-center justify-center md:justify-start relative px-8 py-3">
           <div className="gap-1 md:gap-3 flex-col w-full md:w-2/3 flex ">
-            <h2 className="tracking-tight text-2xl font-bold text-slate-900 text-center">
+            <h2 className="tracking-tight text-2xl font-bold  dark:text-white text-center">
               Create Order
             </h2>
-            <div className="mx-auto h-[2px] w-full bg-blue-500/40" />
-            <label className="block text-sm font-medium text-slate-600 mb-1">
+            <div className="mx-auto h-[2px] w-full bg-blue-500/40 dark:bg-slate-600" />
+            <label className="block text-sm font-medium  mb-1">
               Customer Name
               <input
                 onChange={(e) => setTitle(e.target.value)}
                 className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-slate-900
+              px-4 py-2.5 text-black
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
             </label>
-            <label className="block text-sm font-medium text-slate-600 mb-1">
+            <label className="block text-sm font-medium  mb-1">
               Postcode
               <input
                 onChange={(e) => setPostcode(e.target.value)}
                 className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-slate-900
+              px-4 py-2.5 text-black
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
             </label>
-            <label className="block text-sm  font-medium text-slate-600 mb-1">
+            <label className="block text-sm  font-medium mb-1">
               Order Number
               <input
                 onChange={(e) => setOrderNumber(e.target.value)}
                 className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-slate-900
+              px-4 py-2.5 text-black
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
             </label>
             <div className="grid grid-cols-2 gap-4">
               <select
-                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center focus:text-black bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="customerType"
                 id="customerType"
                 onChange={(e) => setCustomerType(e.target.value)}
@@ -123,7 +123,7 @@ export default function CreateCustomer() {
               </select>
 
               <select
-                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] "
+                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] "
                 name="day"
                 id="boardPage"
                 onChange={(e) => setOther(e.target.value)}
@@ -138,7 +138,7 @@ export default function CreateCustomer() {
             </div>
             <div className="grid grid-cols-3 gap-2">
               <select
-                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className=" focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="day"
                 id="day"
                 onChange={(e) => setDay(e.target.value)}
@@ -156,7 +156,7 @@ export default function CreateCustomer() {
               </select>
 
               <input
-                className="text-center w-auto bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="focus:text-black text-center w-auto bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 type="number"
                 min={currentWeek}
                 max={52}
@@ -165,7 +165,7 @@ export default function CreateCustomer() {
                 required
               />
               <select
-                className="text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
                 name="day"
                 id="yearSelector"
                 onChange={(e) => setYear(e.target.value)}
@@ -180,8 +180,8 @@ export default function CreateCustomer() {
             </div>
           </div>
           <div className="h-full md:w-3/4 w-full mt-2 flex flex-col items-center ">
-            <div className="bg-[#d5ecff] w-full rounded-t-3xl border-2">
-              <p className=" p-2  ">Additional Info</p>
+            <div className="bg-[#d5ecff] dark:bg-darkBorder w-full rounded-t-3xl border-2">
+              <p className=" p-2">Additional Info</p>
             </div>
             <textarea
               className="text-sm md:text-base border-t-0 border-2 rounded-b-3xl p-2 w-full h-full text-center bg-transparent focus:outline-none placeholder:text-gray-400 "
