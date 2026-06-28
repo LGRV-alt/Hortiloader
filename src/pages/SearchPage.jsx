@@ -24,7 +24,7 @@ const esc = (s = "") => String(s).replace(/(["\\])/g, "\\$1");
 
 function getISOWeekYear(date = new Date()) {
   const d = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
   );
   const day = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - day);
@@ -46,7 +46,7 @@ function buildFilter({ org, term, segment, statuses, datePreset }) {
     else if (segment === "orderInfo") parts.push(`orderInfo~"${q}"`);
     else
       parts.push(
-        `(title~"${q}" || orderInfo~"${q}" || postcode~"${q}" || orderNumber~"${q}")`
+        `(title~"${q}" || orderInfo~"${q}" || postcode~"${q}" || orderNumber~"${q}")`,
       );
   }
 
@@ -236,7 +236,7 @@ export default function SearchPage() {
 
   const toggleStatus = (s) =>
     setStatuses((prev) =>
-      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
+      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s],
     );
 
   if (!user) {
@@ -250,7 +250,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="bg-gray-200 h-full pt-5 scroll-smooth lg:px-10 px-1">
+    <div className="bg-gray-200 dark:bg-darkMain h-full pt-5 scroll-smooth lg:px-10 px-1">
       <div className="flex justify-start flex-col ">
         <h3 className="self-center text-2xl lg:text-3xl font-bold tracking-tighter">
           Search Page
@@ -261,7 +261,7 @@ export default function SearchPage() {
         </p>
         {/* Segmented search + filters */}
         <form
-          className="p-2 lg:p-10 mb-4 bg-white w-full lg:w-3/4 self-center rounded-3xl shadow-xl"
+          className="border-[3px] border-darkBorder p-2 lg:p-10 mb-4 bg-white dark:bg-darkSecondary  w-full lg:w-3/4 self-center rounded-3xl shadow-xl"
           onSubmit={onSubmit}
           role="search"
           aria-label="Orders"
@@ -283,7 +283,7 @@ export default function SearchPage() {
                 className={`px-3 py-1.5 rounded-full text-sm border transition ${
                   segment === seg.key
                     ? "bg-emerald-600 text-white border-emerald-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                    : "bg-white dark:bg-slate-700 dark:text-white text-gray-700 border-darkBorder hover:bg-gray-50"
                 }`}
               >
                 {seg.label}
@@ -294,7 +294,7 @@ export default function SearchPage() {
           {/* Search row */}
           <div className="gap-2 flex justify-center items-center">
             <input
-              className="w-full text-base border-2  md:w-1/2 p-2 rounded-xl pl-1 lg:pl-5"
+              className="w-full text-base dark:bg-slate-600 border-darkBorder border-2  md:w-1/2 p-2 rounded-xl pl-1 lg:pl-5"
               type="text"
               placeholder='e.g "Stanleys Garden Centre" or AB12 3CD'
               value={searchTerm}
@@ -304,7 +304,7 @@ export default function SearchPage() {
             <button
               type="button"
               onClick={onClear}
-              className="text-sm md:text-base py-2 px-3 bg-gray-300 rounded hover:bg-gray-400"
+              className="text-sm md:text-base py-2 px-3 bg-gray-300 dark:bg-slate-600 rounded hover:bg-gray-400"
             >
               Clear
             </button>
@@ -331,7 +331,7 @@ export default function SearchPage() {
                 className={`px-3 py-1.5 rounded-full text-sm border transition ${
                   statuses.length === 0
                     ? "bg-emerald-600 text-white border-emerald-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                    : "bg-white dark:bg-slate-700 dark:text-white text-gray-700 border-darkBorder hover:bg-gray-50"
                 }`}
               >
                 Any
@@ -345,7 +345,7 @@ export default function SearchPage() {
                   className={`px-3 py-1.5 rounded-full text-sm border transition ${
                     statuses.includes(s)
                       ? "bg-emerald-600 text-white border-emerald-600"
-                      : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                      : "bg-white dark:bg-slate-700 dark:text-white text-gray-700 border-darkBorder hover:bg-gray-50"
                   }`}
                 >
                   {uppercaseFirstLetter(s)}
@@ -365,7 +365,7 @@ export default function SearchPage() {
                 className={`px-3 py-1.5 rounded-full text-sm border transition ${
                   datePreset === "any"
                     ? "bg-emerald-600 text-white border-emerald-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                    : "bg-white dark:bg-slate-700 dark:text-white text-gray-700 border-darkBorder hover:bg-gray-50"
                 }`}
               >
                 Any time
@@ -377,7 +377,7 @@ export default function SearchPage() {
                 className={`px-3 py-1.5 rounded-full text-sm border transition ${
                   datePreset === "week"
                     ? "bg-emerald-600 text-white border-emerald-600"
-                    : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                    : "bg-white dark:bg-slate-700 dark:text-white text-gray-700 border-darkBorder hover:bg-gray-50"
                 }`}
               >
                 This week
@@ -390,8 +390,8 @@ export default function SearchPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-10">
           {records.map((record) => (
             <Link key={record.id} to={`/view/${record.id}`}>
-              <div className="shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
-                <div className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
+              <div className="rounded-3xl dark:bg-darkMain bg-white border-darkBorder border-[3px] overflow-hidden">
+                <div className="border-b-[3px] border-darkBorder grid grid-cols-[2fr_1fr] min-h-28  p-3 dark:bg-darkSecondary bg-regal-blue text-white">
                   <div>
                     <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
                       {uppercaseFirstLetter(record.title)}
@@ -464,7 +464,7 @@ export default function SearchPage() {
             {Array.from({ length: 2 }).map((_, i) => (
               <div
                 key={i}
-                className="animate-pulse rounded-3xl bg-white shadow-lg shadow-gray-400 p-6 h-48"
+                className="animate-pulse rounded-3xl dark:bg-darkMain border-[3px] border-darkBorder bg-white shadow-lg shadow-gray-400 p-6 h-48"
               >
                 <div className="h-6 w-1/3 bg-gray-200 rounded mb-3"></div>
                 <div className="h-4 w-1/2 bg-gray-200 rounded mb-2"></div>
