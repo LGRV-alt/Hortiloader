@@ -80,8 +80,8 @@ export default function CreateCustomer() {
               Customer Name
               <input
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-black
+                className="w-full rounded-lg border dark:bg-slate-800 dark:border-darkBorder border-slate-300
+              px-4 py-2.5 
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
@@ -90,8 +90,8 @@ export default function CreateCustomer() {
               Postcode
               <input
                 onChange={(e) => setPostcode(e.target.value)}
-                className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-black
+                className="w-full rounded-lg dark:bg-slate-800 dark:border-darkBorder border border-slate-300
+              px-4 py-2.5 
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
@@ -100,8 +100,8 @@ export default function CreateCustomer() {
               Order Number
               <input
                 onChange={(e) => setOrderNumber(e.target.value)}
-                className="w-full rounded-lg border border-slate-300
-              px-4 py-2.5 text-black
+                className="w-full rounded-lg dark:bg-slate-800 dark:border-darkBorder border border-slate-300
+              px-4 py-2.5 
               focus:outline-none focus:ring-2 focus:ring-blue-500
               focus:border-blue-500 transition"
               />
