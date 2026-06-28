@@ -73,7 +73,7 @@ export default function DayColumn({
   return (
     <>
       {/* Whole column */}
-      <div className="bg-slate-300 dark:bg-darkMain dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black text-base">
+      <div className="bg-slate-300 dark:bg-darkSecondary dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black text-base">
         <div className="flex items-center gap-2 ">
           {/* Title of column */}
           <h5 className="font-bold" onClick={() => console.log(arr)}>
@@ -102,7 +102,7 @@ export default function DayColumn({
           >
             {edit ? (
               <a
-                className={`hover:bg-slate-300 p-1  border rounded cursor-pointer transition ${
+                className={`hover:bg-slate-300 dark:hover:bg-slate-200 p-1  border rounded cursor-pointer transition ${
                   customerList.includes(record.id)
                     ? "dark:bg-darkBorder bg-blue-200"
                     : "dark:bg-darkMain bg-white"

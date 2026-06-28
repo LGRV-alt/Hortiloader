@@ -73,7 +73,7 @@ export default function Header({
   }
 
   return (
-    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkSecondary dark:border-darkBorder text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkMain dark:border-darkBorder text-white px-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
@@ -88,7 +88,7 @@ export default function Header({
           </h1>
         </Link>
         {/* Year Selection and Current Week */}
-        <div className=" flex-col hidden md:flex">
+        <div className=" flex-col hidden md:flex text-sm">
           <div>
             <span className="pr-1">Year</span>
             <select
@@ -110,7 +110,7 @@ export default function Header({
       ) : (
         <div className="absolute left-1/2 transform -translate-x-1/2">
           <div className="flex flex-col justify-center items-center ">
-            <div className="flex items-center gap-1 text-xs md:text-sm text-gray-300">
+            <div className="flex items-center gap-1 text-xs md:text-xs text-gray-300">
               <span>
                 Last Updated{" "}
                 {lastFetched
@@ -176,9 +176,9 @@ export default function Header({
                 </Link>
                 <button
                   onClick={() => setCustomerList([])}
-                  className="w-24 py-1 px-2 rounded-md  hover:outline transition-all duration-200 bg-orange-600  text-white"
+                  className="w-auto py-1 px-2 rounded-md  hover:outline transition-all duration-200 bg-orange-600  text-white"
                 >
-                  Clear
+                  Clear Selection
                 </button>
                 <button
                   onClick={() => setEdit((prev) => !prev)}
