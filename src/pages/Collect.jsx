@@ -14,7 +14,7 @@ export default function Collect({ chosenWeek, chosenYear }) {
         (record.day == day) &
         (record.weekNumber == chosenWeek) &
         (record.other == "collect") &
-        (record.year == chosenYear)
+        (record.year == chosenYear),
     );
   };
 
@@ -33,49 +33,49 @@ export default function Collect({ chosenWeek, chosenYear }) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-6 md:grid-rows-2 md:outline h-full">
-        <div className="md:border-r-2 border-black row-span-2">
+        <div className="md:border-r-2 border-darkBorder row-span-2">
           <DayColumn
             arr={monday}
             day={"Monday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2 border-black row-span-2 ">
+        <div className="md:border-r-2 border-darkBorder row-span-2 ">
           <DayColumn
             arr={tuesday}
             day={"Tuesday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2 border-black row-span-2">
+        <div className="md:border-r-2 border-darkBorder row-span-2">
           <DayColumn
             arr={wednesday}
             day={"Wednesday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2 border-black row-span-2">
+        <div className="md:border-r-2 border-darkBorder row-span-2">
           <DayColumn
             arr={thursday}
             day={"Thursday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2  border-black row-span-2">
+        <div className="md:border-r-2  border-darkBorder row-span-2">
           <DayColumn
             arr={friday}
             day={"Friday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2 border-black ">
+        <div className="md:border-r-2 border-darkBorder ">
           <DayColumn
             arr={saturday}
             day={"Saturday"}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
           ></DayColumn>
         </div>
-        <div className="md:border-r-2 border-t-2 border-black">
+        <div className="md:border-r-2 border-t-2 border-darkBorder">
           <DayColumn
             arr={sunday}
             day={"Sunday"}
