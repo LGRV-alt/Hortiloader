@@ -123,9 +123,9 @@ export default function PlantLabelManager() {
     );
 
   return (
-    <div className="grid md:grid-cols-2 md:grid-rows-1 h-full p-5 bg-gray-200 gap-2">
+    <div className="grid md:grid-cols-2 md:grid-rows-1 h-full p-5 dark:bg-darkMain bg-gray-200 gap-2">
       {/* ------------------ input ------------------ */}
-      <div className="h-full flex flex-col justify-start items-center p-5 bg-white rounded-xl">
+      <div className="h-full flex flex-col justify-start items-center p-5 dark:bg-darkMain border-[3px] border-darkBorder bg-white rounded-xl">
         <h1 className="text-2xl font-semibold tracking-tight">
           Plant Label Checker
         </h1>
@@ -134,7 +134,7 @@ export default function PlantLabelManager() {
           searching
         </p>
         <textarea
-          className="w-full h-2/3 p-3 border rounded mb-5 border-black font-mono"
+          className="w-full h-2/3 p-3 border rounded mb-5 dark:bg-darkSecondary border-darkBorder font-mono"
           placeholder="Paste plant names (one per line)"
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -172,7 +172,7 @@ export default function PlantLabelManager() {
       </div>
 
       {/* ------------------ results ------------------ */}
-      <div className="border divide-y rounded-xl bg-white flex flex-col  p-5">
+      <div className="border-[3px] border-darkBorder divide-y rounded-xl dark:bg-darkMain bg-white flex flex-col  p-5">
         <h1 className="text-2xl text-center font-semibold">Results</h1>
 
         {results.map((r, i) => (
