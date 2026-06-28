@@ -15,7 +15,7 @@ export default function TrolleyTrackerPage() {
   const [saving, setSaving] = useState(false);
 
   const filteredCustomers = customers.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase())
+    c.name.toLowerCase().includes(search.toLowerCase()),
   );
 
   const navigate = useNavigate();
@@ -66,27 +66,27 @@ export default function TrolleyTrackerPage() {
 
           const trolliesOut = moves.reduce(
             (sum, m) => sum + (m.trollies_out || 0),
-            0
+            0,
           );
           const trolliesIn = moves.reduce(
             (sum, m) => sum + (m.trollies_in || 0),
-            0
+            0,
           );
           const shelvesOut = moves.reduce(
             (sum, m) => sum + (m.shelves_out || 0),
-            0
+            0,
           );
           const shelvesIn = moves.reduce(
             (sum, m) => sum + (m.shelves_in || 0),
-            0
+            0,
           );
           const extensionsOut = moves.reduce(
             (sum, m) => sum + (m.extensions_out || 0),
-            0
+            0,
           );
           const extensionsIn = moves.reduce(
             (sum, m) => sum + (m.extensions_in || 0),
-            0
+            0,
           );
 
           return {
@@ -125,7 +125,7 @@ export default function TrolleyTrackerPage() {
     // Check for duplicate name (case insensitive)
     const exists = customers.some(
       (cust) =>
-        cust.name.trim().toLowerCase() === newCustomerName.trim().toLowerCase()
+        cust.name.trim().toLowerCase() === newCustomerName.trim().toLowerCase(),
     );
     if (exists) {
       setError("A customer with that name already exists.");
@@ -178,41 +178,41 @@ export default function TrolleyTrackerPage() {
   // Totals across all customers
   const totalTrolliesOut = customers.reduce(
     (sum, c) => sum + (c.trolliesOut || 0),
-    0
+    0,
   );
   const totalTrolliesIn = customers.reduce(
     (sum, c) => sum + (c.trolliesIn || 0),
-    0
+    0,
   );
   const totalTrolliesOutstanding = customers.reduce(
     (sum, c) => sum + (c.trolliesOutstanding || 0),
-    0
+    0,
   );
 
   const totalShelvesOut = customers.reduce(
     (sum, c) => sum + (c.shelvesOut || 0),
-    0
+    0,
   );
   const totalShelvesIn = customers.reduce(
     (sum, c) => sum + (c.shelvesIn || 0),
-    0
+    0,
   );
   const totalShelvesOutstanding = customers.reduce(
     (sum, c) => sum + (c.shelvesOutstanding || 0),
-    0
+    0,
   );
 
   const totalExtensionsOut = customers.reduce(
     (sum, c) => sum + (c.extensionsOut || 0),
-    0
+    0,
   );
   const totalExtensionsIn = customers.reduce(
     (sum, c) => sum + (c.extensionsIn || 0),
-    0
+    0,
   );
   const totalExtensionsOutstanding = customers.reduce(
     (sum, c) => sum + (c.extensionsOutstanding || 0),
-    0
+    0,
   );
 
   return (
@@ -232,11 +232,11 @@ export default function TrolleyTrackerPage() {
         </div>
       )}
 
-      <div className="bg-white rounded-2xl border-2 border-black shadow p-4 overflow-x-auto">
+      <div className="bg-white dark:bg-darkMain rounded-2xl border-[3px] border-darkBorder shadow p-4 overflow-x-auto">
         <input
           type="text"
           placeholder="Search..."
-          className="border p-2 rounded mb-3 border-black"
+          className="border-[3px] dark:bg-darkSecondary p-2 rounded mb-3 border-darkBorder"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -327,7 +327,7 @@ export default function TrolleyTrackerPage() {
                   <td className="py-2 px-2 text-center">
                     <button
                       onClick={() => handleView(cust)}
-                      className="bg-gray-200 hover:bg-gray-300 rounded-xl px-3 py-1 text-sm"
+                      className="bg-gray-200 dark:bg-darkSecondary border-darkBorder border-2 dark:hover:bg-slate-400 hover:bg-gray-300 rounded-xl px-3 py-1 text-sm"
                     >
                       View
                     </button>
@@ -337,7 +337,7 @@ export default function TrolleyTrackerPage() {
             )}
           </tbody>
           <tfoot>
-            <tr className="font-bold bg-gray-50 border-t-2">
+            <tr className="font-bold dark:bg-darkSecondary border-darkBorder bg-gray-50 border-t-2">
               <td className="py-2 px-2 text-right">Total:</td>
               <td className="py-2 px-2 text-center">{totalTrolliesOut}</td>
               <td className="py-2 px-2 text-center">{totalTrolliesIn}</td>
@@ -382,10 +382,10 @@ export default function TrolleyTrackerPage() {
       {/* ----------------------Add Customer Modal-------------------------------- */}
       {showAddModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-2xl shadow-xl w-full max-w-sm">
+          <div className="bg-white dark:bg-darkMain border-[3px] border-darkBorder p-6 rounded-2xl shadow-xl w-full max-w-sm">
             <h2 className="text-xl text-center font-bold mb-3">Add Customer</h2>
             <input
-              className="border p-2 w-full rounded mb-4"
+              className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-4"
               type="text"
               placeholder="Customer Name"
               value={newCustomerName}
@@ -393,20 +393,20 @@ export default function TrolleyTrackerPage() {
               autoFocus
             />
             <textarea
-              className="border p-2 w-full rounded mb-4"
+              className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-4"
               placeholder="Address/Postcode (optional)"
               value={newCustomerNotes}
               onChange={(e) => setNewCustomerNotes(e.target.value)}
             />
             <textarea
-              className="border p-2 w-full rounded mb-4"
+              className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-4"
               placeholder="Email/Mobile (optional)"
               value={newCustomerContactInfo}
               onChange={(e) => setNewCustomerContactInfo(e.target.value)}
             />
             <div className="flex justify-end gap-2">
               <button
-                className="px-4 py-2 bg-gray-200 rounded-xl hover:bg-gray-300"
+                className="px-4 py-2 dark:bg-darkSecondary border-2 border-darkBorder bg-gray-200 rounded-xl hover:bg-gray-300"
                 onClick={() => setShowAddModal(false)}
               >
                 Cancel

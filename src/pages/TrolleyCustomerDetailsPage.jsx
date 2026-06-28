@@ -80,27 +80,27 @@ export default function TrolleyCustomerDetailsPage() {
   // Outstanding
   const totalTrolliesOut = movements.reduce(
     (sum, m) => sum + (m.trollies_out || 0),
-    0
+    0,
   );
   const totalTrolliesIn = movements.reduce(
     (sum, m) => sum + (m.trollies_in || 0),
-    0
+    0,
   );
   const totalShelvesOut = movements.reduce(
     (sum, m) => sum + (m.shelves_out || 0),
-    0
+    0,
   );
   const totalShelvesIn = movements.reduce(
     (sum, m) => sum + (m.shelves_in || 0),
-    0
+    0,
   );
   const totalExtensionsOut = movements.reduce(
     (sum, m) => sum + (m.extensions_out || 0),
-    0
+    0,
   );
   const totalExtensionsIn = movements.reduce(
     (sum, m) => sum + (m.extensions_in || 0),
-    0
+    0,
   );
 
   // Add movement
@@ -246,24 +246,24 @@ export default function TrolleyCustomerDetailsPage() {
           {/* -----------------------------------Edit customer modal------------------------------------ */}
           {editingCustomer && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+              <div className="dark:bg-darkMain bg-white p-6 rounded shadow-md w-full max-w-sm">
                 <h2 className="text-lg font-bold mb-4">Edit Account Details</h2>
                 <input
-                  className="border p-2 w-full rounded mb-2"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-2"
                   type="text"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
                   placeholder="Name"
                 />
                 <textarea
-                  className="border p-2 w-full rounded mb-2"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-2"
                   value={editNotes}
                   onChange={(e) => setEditNotes(e.target.value)}
                   placeholder="Address/Postcode (optional)"
                   rows={2}
                 />
                 <textarea
-                  className="border p-2 w-full rounded mb-4"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-4"
                   value={editContactInfo}
                   onChange={(e) => setEditContactInfo(e.target.value)}
                   placeholder="Contact Info (optional)"
@@ -290,12 +290,12 @@ export default function TrolleyCustomerDetailsPage() {
                         const duplicate = others.some(
                           (cust) =>
                             cust.name.trim().toLowerCase() ===
-                            editName.trim().toLowerCase()
+                            editName.trim().toLowerCase(),
                         );
                         if (duplicate) {
                           setSaving(false);
                           toast.error(
-                            "A customer with that name already exists."
+                            "A customer with that name already exists.",
                           );
                           return;
                         }
@@ -370,14 +370,14 @@ export default function TrolleyCustomerDetailsPage() {
           {user.role !== "viewer" && (
             <form
               onSubmit={handleAddMovement}
-              className="bg-gray-50 p-4 rounded-xl mb-6 shadow"
+              className="dark:bg-darkMain border-[3px] border-darkBorder bg-gray-50 p-4 rounded-xl mb-6 shadow"
             >
               <h3 className="font-semibold mb-2">Add Movement</h3>
               <div className="flex gap-2 mb-2 flex-wrap">
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Trollies out"
                   value={trolliesOut}
                   onChange={(e) => setTrolliesOut(e.target.value)}
@@ -385,7 +385,7 @@ export default function TrolleyCustomerDetailsPage() {
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Trollies in"
                   value={trolliesIn}
                   onChange={(e) => setTrolliesIn(e.target.value)}
@@ -393,7 +393,7 @@ export default function TrolleyCustomerDetailsPage() {
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Shelves out"
                   value={shelvesOut}
                   onChange={(e) => setShelvesOut(e.target.value)}
@@ -401,7 +401,7 @@ export default function TrolleyCustomerDetailsPage() {
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Shelves in"
                   value={shelvesIn}
                   onChange={(e) => setShelvesIn(e.target.value)}
@@ -409,7 +409,7 @@ export default function TrolleyCustomerDetailsPage() {
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Extensions out"
                   value={extensionsOut}
                   onChange={(e) => setExtensionsOut(e.target.value)}
@@ -417,14 +417,14 @@ export default function TrolleyCustomerDetailsPage() {
                 <input
                   type="number"
                   min="0"
-                  className="border p-2 rounded"
+                  className="border-2 border-darkBorder dark:bg-darkSecondary p-2 rounded"
                   placeholder="Extensions in"
                   value={extensionsIn}
                   onChange={(e) => setExtensionsIn(e.target.value)}
                 />
               </div>
               <textarea
-                className="border p-2 w-full rounded mb-2"
+                className="border-2 border-darkBorder dark:bg-darkSecondary p-2 w-full rounded mb-2"
                 placeholder="Notes (optional)"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}

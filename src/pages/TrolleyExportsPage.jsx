@@ -18,7 +18,7 @@ export default function TrolleyExportsPage() {
 
   const navigate = useNavigate();
   const user = pb.authStore.record;
-  const userName = user.username.toLowerCase();
+  const userName = user.display_username.toLowerCase();
 
   const fetchPage = async (pageNum) => {
     if (isLoading || !hasMore) return;
@@ -129,17 +129,19 @@ export default function TrolleyExportsPage() {
   // const DISPATCHED_STATUS = "dispatched";
 
   return (
-    <div className="md:grid md:grid-cols-2 flex flex-col gap-4 h-full md:p-6 p-2 md:gap-2 bg-slate-100">
+    <div className="md:grid md:grid-cols-2 flex flex-col gap-4 h-full md:p-6 p-2 md:gap-2 dark:bg-darkMain bg-slate-100">
       {exports.length === 0 && !isLoading ? (
-        <p className="text-gray-500 text-center">No runs found.</p>
+        <p className="text-gray-500 dark:text-white text-center">
+          No runs found.
+        </p>
       ) : (
         <>
           {exports.map((record, index) => (
             <div
               key={index}
-              className=" rounded-2xl border-2 b-[#D8E0EA] bg-[#ffffff] "
+              className="overflow-hidden rounded-2xl border-[3px] b-[#D8E0EA] border-darkBorder dark:bg-darkMain bg-[#ffffff] "
             >
-              <div className=" bg-[#9ac2e3] rounded-t-xl min-h-24 flex flex-col gap-2">
+              <div className=" bg-[#9ac2e3] dark:bg-darkSecondary border-b-[3px] border-darkBorder  min-h-24 flex flex-col gap-2">
                 <div className="flex justify-between items-center pt-2 px-4">
                   <div className="flex items-center">
                     <p className=" md:text-xl text-sm font-medium me-2 ">
@@ -254,7 +256,7 @@ export default function TrolleyExportsPage() {
       {/* Delete Confirmation Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-sm">
+          <div className="bg-white dark:bg-darkMain border-[3px] border-darkBorder p-6 rounded shadow-md w-full max-w-sm">
             <h2 className="text-lg font-bold mb-4">Confirm Deletion</h2>
             <p className="mb-2 text-sm">
               Enter username to delete:{" "}
@@ -264,7 +266,7 @@ export default function TrolleyExportsPage() {
               type="text"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border px-3 py-2 mb-4 rounded"
+              className="w-full border px-3 py-2 mb-4 rounded dark:bg-darkSecondary border-darkBorder"
             />
             <div className="flex justify-end gap-2">
               <button
