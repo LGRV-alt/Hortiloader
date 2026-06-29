@@ -64,12 +64,12 @@ export default function DeletedTasks() {
   if (deletedTasks.length === 0) return <div>No deleted tasks found.</div>;
 
   return (
-    <div className="md:p-4 bg-white h-full w-full">
+    <div className="md:p-4 dark:bg-darkMain bg-white h-full w-full">
       <div className="h-full flex flex-col items-center p-4">
         <h2 className="text-xl text-center font-bold mb-4">Deleted Tasks</h2>
-        <table className="w-full md:w-2/3 md:text-lg text-sm text-center border-black border-2">
+        <table className="w-full md:w-2/3 md:text-lg text-sm text-center border-darkBorder border-[3px] dark:bg-darkSecondary">
           <thead>
-            <tr className="bg-gray-300">
+            <tr className="dark:bg-darkMain border-b-2 border-darkBorder bg-gray-300">
               <th>Title</th>
               <th>Deleted By</th>
               <th>Deleted At</th>

@@ -21,7 +21,7 @@ export default function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const normUsername = `${normalizeInput(loginOrgName)}-${normalizeInput(
-      username
+      username,
     )}`;
     const normOrg = normalizeInput(loginOrgName);
 
@@ -53,7 +53,7 @@ export default function Login() {
   const handleSignup = async (e) => {
     e.preventDefault();
     const normUsername = `${normalizeInput(orgName)}-${normalizeInput(
-      username
+      username,
     )}`;
     const normOrg = normalizeInput(orgName);
     const display_username = normalizeInput(username);
@@ -83,7 +83,7 @@ export default function Login() {
         version: "v1.0",
       },
       normOrg,
-      display_username
+      display_username,
     );
 
     if (!result.success) {
@@ -120,12 +120,12 @@ export default function Login() {
   }
 
   return (
-    <div className="grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
+    <div className="dark:bg-darkMain grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
       <div className="flex flex-col mt-10 md:justify-center items-center">
         {toggle ? (
           <form
             onSubmit={handleLogin}
-            className="bg-white p-6 rounded shadow-xl w-80"
+            className="dark:bg-darkSecondary border-darkBorder border-[3px] dark:text-white bg-white p-6 rounded shadow-xl w-80"
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
             <div className="space-y-4">
@@ -133,7 +133,7 @@ export default function Login() {
                 Organization Name
                 <input
                   type="text"
-                  className="text-lg font-medium w-full border-b-2 outline-none focus:border-green-600"
+                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
                   value={loginOrgName}
                   onChange={(e) => setLoginOrgName(e.target.value)}
                   required
@@ -144,7 +144,7 @@ export default function Login() {
                 Username
                 <input
                   type="text"
-                  className="text-lg font-medium w-full border-b-2 outline-none focus:border-green-600"
+                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
@@ -155,7 +155,7 @@ export default function Login() {
                 Password
                 <input
                   type="password"
-                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
