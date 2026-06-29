@@ -31,9 +31,9 @@ test.describe("Authenticated Routes", () => {
       await page.waitForTimeout(3000); // 5s Pause
 
       // Confirm login worked
-      await expect(page.getByRole("button", { name: "Add Order" })).toBeVisible(
-        { timeout: 10000 }
-      );
+      await expect(
+        page.getByRole("button", { name: "Create Delivery Group" }),
+      ).toBeVisible({ timeout: 10000 });
 
       // Navigate to the route
       await page.goto(`http://localhost:5173/#/${route}`, {
@@ -45,7 +45,7 @@ test.describe("Authenticated Routes", () => {
 
       // confirm login screen is NOT visible
       await expect(
-        page.getByRole("button", { name: "Sign in" })
+        page.getByRole("button", { name: "Sign in" }),
       ).not.toBeVisible();
     });
   });

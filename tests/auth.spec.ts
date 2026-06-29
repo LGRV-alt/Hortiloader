@@ -12,7 +12,9 @@ test.describe("Check Login and Logout Flow", () => {
     await login(page, "Testing", "Testing", "Password1");
 
     // Assert that log in worked
-    const addOrderButton = page.getByRole("button", { name: "Add Order" });
+    const addOrderButton = page.getByRole("button", {
+      name: "Create Delivery Group",
+    });
     await expect(addOrderButton).toBeVisible({ timeout: 10000 });
 
     // Hit the button to show the dropdown menu and click logout

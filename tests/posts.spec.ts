@@ -28,7 +28,7 @@ test.describe("CRUD Tests", () => {
     const deleteTask = page.getByRole("button", { name: "Delete" });
 
     // Page Selectors
-    const addOrderButton = page.getByRole("button", { name: "Add Order" });
+    const addOrderButton = page.getByRole("button", { name: "Add Task" });
     const weekdayHeading = page.getByRole("heading", { name: "Monday" });
 
     // Navigate to the create order page
