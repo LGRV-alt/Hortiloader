@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Privacy() {
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10 text-gray-800">
+    <div className="max-w-3xl mx-auto px-4 py-10 dark:text-white text-gray-800">
       <div className="flex gap-1">
         <Link className="text-blue-500 text-lg pb-12" to="/">
           {" "}

@@ -86,7 +86,7 @@ export default function SettingsPage({}) {
 
     if (subuserCount >= SUBUSER_LIMIT) {
       toast.error(
-        `You can only have ${SUBUSER_LIMIT} users in your organization.`
+        `You can only have ${SUBUSER_LIMIT} users in your organization.`,
       );
       return;
     }
@@ -127,10 +127,12 @@ export default function SettingsPage({}) {
   }
 
   return (
-    <div className={`grid h-full grid-cols-1 md:grid-cols-3 p-4 bg-surface`}>
+    <div
+      className={`grid h-full grid-cols-1 md:grid-cols-3 p-4 dark:bg-darkMain bg-surface`}
+    >
       <div className="flex flex-col items-center w-full">
         {/* <h1 className="text-2xl font-bold mb-4">Settings</h1> */}
-        <div className="bg-white w-full md:w-3/4 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">
+        <div className="dark:bg-darkSecondary border-[3px] border-darkBorder bg-white w-full md:w-3/4 p-4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10 mt-10">
           <h3>Account Info</h3>
           <p>
             Organization -{" "}
@@ -152,7 +154,7 @@ export default function SettingsPage({}) {
             </Link>
           )}
         </div>
-        <div className="bg-white p-4 w-full md:w-3/4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10">
+        <div className="dark:bg-darkSecondary border-[3px] border-darkBorder bg-white p-4 w-full md:w-3/4 gap-4 rounded-2xl flex flex-col justify-center items-center mb-10">
           <h3>User Agreement</h3>
           <Link to="/terms" className="text-blue-600 hover:underline text-sm">
             Terms and Conditions
@@ -161,9 +163,9 @@ export default function SettingsPage({}) {
             Privacy Policy
           </Link>
         </div>
-        <div className="bg-white p-4 w-full md:w-3/4 gap-4 rounded-2xl flex flex-col justify-center items-center">
+        <div className="dark:bg-darkSecondary border-[3px] border-darkBorder bg-white p-4 w-full md:w-3/4 gap-4 rounded-2xl flex flex-col justify-center items-center">
           <h3> Contact & Feedback</h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm dark:text-gray-400 text-gray-600">
             We'd love to hear from you. If you have any questions, suggestions
             or problems, feel free to reach out.
           </p>
@@ -181,7 +183,7 @@ export default function SettingsPage({}) {
       <div>
         {" "}
         {currentUser.role === "admin" && (
-          <div className="bg-white p-4 mt-10 w-full md:w-full gap-4 rounded-2xl flex flex-col items-center">
+          <div className="dark:bg-darkSecondary border-[3px] border-darkBorder bg-white p-4 mt-10 w-full md:w-full gap-4 rounded-2xl flex flex-col items-center">
             <h3 className="font-bold mb-2">Organization Users</h3>
             <ul className="w-full mb-4">
               {users.map((u) => (
@@ -200,14 +202,14 @@ export default function SettingsPage({}) {
                         onClick={async () => {
                           if (
                             window.confirm(
-                              `Delete user "${u.username}"? This cannot be undone.`
+                              `Delete user "${u.username}"? This cannot be undone.`,
                             )
                           ) {
                             try {
                               await pb.collection("users").delete(u.id);
                               toast.success("User deleted");
                               setUsers(
-                                users.filter((user) => user.id !== u.id)
+                                users.filter((user) => user.id !== u.id),
                               );
                             } catch (err) {
                               toast.error("Failed to delete user.");
@@ -251,7 +253,7 @@ export default function SettingsPage({}) {
                 className="flex flex-col gap-2 w-full mt-2"
               >
                 <input
-                  className="border p-2 rounded"
+                  className="border p-2 rounded border-darkBorder dark:bg-slate-600"
                   type="text"
                   placeholder="Username"
                   value={newUser.username.toLowerCase()}
@@ -261,7 +263,7 @@ export default function SettingsPage({}) {
                   required
                 />
                 <input
-                  className="border p-2 rounded"
+                  className="border p-2 rounded border-darkBorder dark:bg-slate-600"
                   type="text"
                   placeholder="Password"
                   value={newUser.password}
@@ -271,7 +273,7 @@ export default function SettingsPage({}) {
                   required
                 />
                 <input
-                  className="border p-2 rounded"
+                  className="border p-2 rounded border-darkBorder dark:bg-slate-600"
                   type="text"
                   placeholder="Password Confirm"
                   value={newUser.passwordConfirm}
@@ -284,7 +286,7 @@ export default function SettingsPage({}) {
                   required
                 />
                 <select
-                  className="border p-2 rounded"
+                  className="border p-2 rounded border-darkBorder dark:bg-slate-600"
                   value={newUser.role}
                   onChange={(e) =>
                     setNewUser((u) => ({ ...u, role: e.target.value }))
@@ -314,7 +316,7 @@ export default function SettingsPage({}) {
       </div>
       <div className="flex flex-col items-center md:pt-0 pt-10">
         <h3 className="text-lg font-bold mb-4 ">Week Headings</h3>
-        <div className="w-full md:w-3/4 p-4 flex justify-center bg-white rounded-2xl">
+        <div className="dark:bg-darkSecondary border-[3px] border-darkBorder w-full md:w-3/4 p-4 flex justify-center bg-white rounded-2xl">
           <form onSubmit={handleSubmit} className="space-y-2">
             {[
               "monday",
@@ -332,7 +334,7 @@ export default function SettingsPage({}) {
                   name={`${day}_heading`}
                   value={form[`${day}_heading`] || ""}
                   onChange={handleChange}
-                  className="w-full border rounded p-1"
+                  className="w-full border border-darkBorder rounded p-1 dark:bg-slate-600"
                 />
               </div>
             ))}
@@ -352,9 +354,9 @@ export default function SettingsPage({}) {
       {/* ------------------------Reset Password Modal------------------------------------------ */}
       {resetUser && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white rounded-xl p-6 shadow-md w-full max-w-xs">
+          <div className="dark:bg-darkMain border-[3px] border-darkBorder bg-white rounded-xl p-6 shadow-md w-full max-w-xs">
             <h3 className="text-lg mb-2 font-bold">
-              Reset password for {resetUser.username}
+              Reset password for {resetUser.display_username}
             </h3>
             <form
               onSubmit={async (e) => {
@@ -374,7 +376,7 @@ export default function SettingsPage({}) {
                   toast.error(
                     err?.data?.password?.message ||
                       err?.message ||
-                      "Failed to update password."
+                      "Failed to update password.",
                   );
 
                   console.error("Error details:", err.data || err.message, err);
@@ -383,7 +385,7 @@ export default function SettingsPage({}) {
               className="flex flex-col gap-2"
             >
               <input
-                className="border p-2 rounded"
+                className="border p-2 rounded border-darkBorder bg-slate-600"
                 type="password"
                 placeholder="New password"
                 value={resetPassword}
@@ -391,7 +393,7 @@ export default function SettingsPage({}) {
                 required
               />
               <input
-                className="border p-2 rounded"
+                className="border p-2 rounded border-darkBorder bg-slate-600"
                 type="password"
                 placeholder="Confirm new password"
                 value={resetPasswordConfirm}
@@ -401,14 +403,14 @@ export default function SettingsPage({}) {
               <div className="flex gap-2 justify-end mt-2">
                 <button
                   type="button"
-                  className="bg-gray-200 px-3 py-1 rounded"
+                  className="hover:outline bg-gray-200 dark:bg-gray-400 px-3 py-1 rounded"
                   onClick={() => setResetUser(null)}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="bg-green-600 text-white px-3 py-1 rounded"
+                  className=" hover:outline bg-green-600 text-white px-3 py-1 rounded"
                 >
                   Update
                 </button>
@@ -420,8 +422,8 @@ export default function SettingsPage({}) {
 
       {/* ---------------------------Roles Modal--------------------------------------------------- */}
       {showRoleInfo && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full relative">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+          <div className="dark:bg-darkMain border-[3px] border-darkBorder bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full relative">
             <h3 className="text-lg font-bold mb-2">User Roles & Permissions</h3>
             <ul className="text-sm space-y-2 mb-4">
               <li>

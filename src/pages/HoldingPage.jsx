@@ -145,8 +145,8 @@ export default function HoldingPage() {
                 className="group block focus:outline-none "
                 aria-label={`Open ${title || "order"}`}
               >
-                <article className=" rounded-3xl dark:bg-darkMain border-[3px] border-darkBorder bg-white hover:outline hover:outline-black overflow-hidden">
-                  <header className="grid grid-cols-[2fr_1fr] min-h-28  p-3 dark:bg-darkSecondary border-b-2 border-darkBorder bg-regal-blue text-white">
+                <article className=" rounded-3xl  dark:bg-darkSecondary border-[3px] border-darkBorder bg-white hover:border-blue-500 overflow-hidden">
+                  <header className="grid grid-cols-[2fr_1fr] min-h-28  p-3 dark:bg-darkMain border-b-2 border-darkBorder bg-regal-blue text-white">
                     <div>
                       <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
                         {title || "Untitled"}
