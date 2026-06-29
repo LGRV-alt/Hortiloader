@@ -84,11 +84,11 @@ export default function HoldingPage() {
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="animate-pulse rounded-3xl bg-white shadow-lg shadow-gray-400 p-6 h-48"
+              className="border-[3px] border-darkBorder animate-pulse rounded-3xl dark:bg-darkMain bg-white shadow-lg shadow-gray-400 p-6 h-48"
             >
-              <div className="h-6 w-1/3 bg-gray-200 rounded mb-3"></div>
-              <div className="h-4 w-1/2 bg-gray-200 rounded mb-2"></div>
-              <div className="h-4 w-2/3 bg-gray-200 rounded"></div>
+              <div className="h-6 w-1/3 dark:bg-darkSecondary bg-gray-200 rounded mb-3"></div>
+              <div className="h-4 w-1/2 dark:bg-darkSecondary bg-gray-200 rounded mb-2"></div>
+              <div className="h-4 w-2/3 dark:bg-darkSecondary bg-gray-200 rounded"></div>
             </div>
           ))}
         </div>
@@ -142,11 +142,11 @@ export default function HoldingPage() {
               <Link
                 key={id}
                 to={`/view/${id}`}
-                className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-black rounded-3xl"
+                className="group block focus:outline-none "
                 aria-label={`Open ${title || "order"}`}
               >
-                <article className="shadow-lg shadow-gray-400 rounded-3xl bg-white hover:outline hover:outline-black">
-                  <header className="grid grid-cols-[2fr_1fr] min-h-28 rounded-t-3xl p-3 bg-regal-blue text-white">
+                <article className=" rounded-3xl dark:bg-darkMain border-[3px] border-darkBorder bg-white hover:outline hover:outline-black overflow-hidden">
+                  <header className="grid grid-cols-[2fr_1fr] min-h-28  p-3 dark:bg-darkSecondary border-b-2 border-darkBorder bg-regal-blue text-white">
                     <div>
                       <h4 className="truncate w-5/6 text-base md:text-2xl font-semibold tracking-tighter">
                         {title || "Untitled"}
