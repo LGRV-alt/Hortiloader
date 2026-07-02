@@ -74,7 +74,7 @@ export default function SortableItem({
     <li
       ref={setNodeRef}
       style={style}
-      className="border-b-2 w-full border-darkBorder  
+      className="border-b-2 w-full border-darkBorder hover:border-blue-500 cursor-pointer  
       "
       onClick={() =>
         setCustomerName(handleCustomerName(item.title, item.orderNumber))
@@ -134,7 +134,7 @@ export default function SortableItem({
           </button>
         </div>
       ) : (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center ">
           <div className="flex items-center gap-2">
             <span
               {...attributes}
