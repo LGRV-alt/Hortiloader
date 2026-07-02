@@ -58,17 +58,17 @@ export default function Vehicle({
       {!readOnly && (
         <div className="print:hidden flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
           <div className="print:hidden flex justify-center items-center gap-1">
-            <div className="border-black md:border-r-2 md:pr-2 gap-1 flex ">
+            <div className="  gap-1 flex ">
               <button
                 onClick={handleVehicleSelection}
-                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2"
                 value="lorry"
               >
                 Lorry
               </button>
               <button
                 onClick={handleVehicleSelection}
-                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2"
                 value="trailer"
               >
                 Trailer
@@ -77,19 +77,19 @@ export default function Vehicle({
 
             <div className="pl-2 gap-1 flex">
               <button
-                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-auto p-2 rounded-xl hover:bg-gray-300 bg-gray-500 text-white border-borderDark border-2"
                 onClick={() => setCustomerName("Blank")}
               >
-                Blank Trolley
+                Blank
               </button>
               <button
-                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
                 onClick={() => setCustomerName("")}
               >
                 Erase
               </button>
               <button
-                className="w-auto p-1 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
                 onClick={handleClearGrid}
               >
                 Clear All
@@ -103,21 +103,21 @@ export default function Vehicle({
               <button
                 onClick={handleTrolleyNumber}
                 value={5}
-                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {3}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={8}
-                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {6}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={9}
-                className="w-12 rounded-2xl border-black border-2 hover:border-blue-500"
+                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {7}T
               </button>
@@ -129,7 +129,7 @@ export default function Vehicle({
                   key={val}
                   onClick={handleTrolleyNumber}
                   value={val}
-                  className="w-12 rounded-2xl border-black border-2 hover:border-blue-500"
+                  className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
                 >
                   {val}T
                 </button>
