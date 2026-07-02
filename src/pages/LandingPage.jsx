@@ -13,7 +13,7 @@ export default function LandingPage() {
             <LogoTree height="40px" width="40px" />
             <a
               href="/"
-              className="text-3xl md:text-4xl font-display font-semi-bold tracking-tight"
+              className="text-2xl md:text-4xl font-display font-semi-bold tracking-tight"
             >
               Hortiloader
             </a>
@@ -44,19 +44,19 @@ export default function LandingPage() {
               Contact
             </a>
           </nav>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <Link
               to="/login"
-              className="p-2 md:px-4 text-sm rounded-lg border hover:border-blue-500"
+              className="p-2 text-center md:px-4 text-xs rounded-lg bg-green-600  hover:border-green-500 border"
             >
               Log In
             </Link>
-            <Link
+            {/* <Link
               to="/login"
-              className="p-2 text-sm rounded-lg bg-green-600  hover:border-green-500 border"
+              className="p-2 text-xs text-center rounded-lg bg-green-600  hover:border-green-500 border"
             >
               Get Started
-            </Link>
+            </Link> */}
             <DarkmodeToggle />
           </div>
         </div>

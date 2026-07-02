@@ -7,6 +7,7 @@ test.describe("CRUD Tests", () => {
   test.beforeEach("Log the user in", async ({ page }) => {
     await login(page, "Testing", "Testing", "Password1");
     await page.waitForTimeout(5000); // 5s Pause
+    await page.getByRole("button", { name: "Got it!" }).click();
   });
 
   test("Create, Update and Delete a task", async ({ page }) => {
