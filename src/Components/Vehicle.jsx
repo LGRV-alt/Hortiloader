@@ -145,22 +145,22 @@ export default function Vehicle({
           <div className="h-full flex flex-col items-center p-2">
             <div
               onClick={(e) => handleTrolleyName(e, 0)}
-              className="border-black border-4 w-2/3 h-12 flex justify-center items-center hover:bg-white hover:cursor-pointer"
+              className="border-black  dark:border-darkBorder border-4 w-2/3 h-12 flex justify-center items-center hover:bg-white hover:cursor-pointer"
             >
               {grid[0]}
             </div>
             <div
               onClick={(e) => handleTrolleyName(e, 1)}
-              className="border-x-4 border-black w-1/4 h-16 flex justify-center items-center hover:bg-white hover:cursor-pointer"
+              className="border-x-4 dark:border-darkBorder  border-black w-1/4 h-16 flex justify-center items-center hover:bg-white hover:cursor-pointer"
             >
               {grid[1]}
             </div>
-            <div className="order-2 border-2 border-black w-2/3 h-full grid grid-cols-3 grid-rows-3">
+            <div className="order-2 border-2 dark:border-darkBorder  border-black w-2/3 h-full grid grid-cols-3 grid-rows-3">
               {grid.slice(2).map((item, index) => (
                 <p
                   key={index + 2}
                   onClick={(e) => handleTrolleyName(e, index + 2)}
-                  className="border-2 text-center border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
+                  className="border-2 text-center dark:border-darkBorder  border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
                 >
                   {item}
                 </p>
