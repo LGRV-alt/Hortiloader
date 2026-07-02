@@ -119,9 +119,23 @@ export default function TrolleyMapper({
       // Fallback: still open print even if copy fails
     }
     // Open print dialog right after (feels instant)
-    window.print();
-    setPrinting(false);
-    saveToPocketBase();
+
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setPrinting(true);
+      window.print();
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setPrinting(false);
+      saveToPocketBase();
+    } else {
+      setPrinting(true);
+      window.print();
+      setPrinting(false);
+      saveToPocketBase();
+    }
   };
 
   const suggestedFileName = `${vehicleInfo.date

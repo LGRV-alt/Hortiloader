@@ -74,19 +74,18 @@ export default function SortableItem({
     <li
       ref={setNodeRef}
       style={style}
-      className={`border-b-2 w-full border-black  ${
-        isDragging ? "opacity-50 scale-95" : "hover:shadow-lg"
-      }`}
+      className="border-b-2 w-full border-darkBorder  
+      "
       onClick={() =>
         setCustomerName(handleCustomerName(item.title, item.orderNumber))
       }
     >
       {isEditing ? (
-        <div className="p-2 gap-2 flex items-center text-xs md:text-base">
+        <div className="p-2 gap-2 flex items-center text-xs md:text-base ">
           <span
             {...attributes}
             {...listeners}
-            className="cursor-grab select-none touch-none text-gray-500"
+            className="cursor-grab select-none touch-none text-gray-500 dark:text-white"
             title="Drag"
           >
             {/* <GripVertical size={16} /> */}
@@ -94,35 +93,35 @@ export default function SortableItem({
           </span>
           <input
             type="text"
-            className="w-2/3 border rounded text-center"
+            className="w-2/3 border rounded text-center border-borderDark dark:bg-slate-500"
             value={formData.title}
             onChange={(e) => handleChange("title", e.target.value)}
             placeholder="Title"
           />
           <input
             type="text"
-            className="w-1/3 border rounded text-center"
+            className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
             value={formData.orderNumber}
             onChange={(e) => handleChange("orderNumber", e.target.value)}
             placeholder="Order No"
           />
           <input
             type="text"
-            className="w-1/3 border rounded text-center"
+            className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
             value={formData.postcode}
             onChange={(e) => handleChange("postcode", e.target.value)}
             placeholder="Postcode"
           />
           <input
             type="text"
-            className="w-1/3 border rounded text-center"
+            className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
             value={formData.trollies}
             onChange={(e) => handleChange("trollies", e.target.value)}
             placeholder="Trollies"
           />
           <input
             type="text"
-            className="w-full border rounded text-center"
+            className="w-full border rounded text-center border-borderDark dark:bg-slate-500"
             value={formData.extras}
             onChange={(e) => handleChange("extras", e.target.value)}
             placeholder="Extras"
@@ -151,10 +150,10 @@ export default function SortableItem({
                 item.customerType === "retail"
                   ? "text-blue-700"
                   : item.customerType === "other"
-                  ? "text-red-500"
-                  : item.customerType === "missed"
-                  ? "text-fuchsia-600"
-                  : ""
+                    ? "text-red-500"
+                    : item.customerType === "missed"
+                      ? "text-fuchsia-600"
+                      : ""
               }`}
             >
               <p className="font-semibold md:text-2xl">{item.title}</p>

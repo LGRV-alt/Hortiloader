@@ -168,12 +168,12 @@ export default function Vehicle({
             </div>
           </div>
         ) : (
-          <div className="md:border-4 border-2 border-black h-full grid grid-cols-4 grid-rows-6 md:text-base text-xs">
+          <div className="md:border-4 border-2 border-black dark:border-darkBorder h-full grid grid-cols-4 grid-rows-6 md:text-base text-xs">
             {grid.map((item, index) => (
               <p
                 key={index}
                 onClick={(e) => handleTrolleyName(e, index)}
-                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
+                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center  hover:cursor-pointer"
               >
                 {item}
               </p>

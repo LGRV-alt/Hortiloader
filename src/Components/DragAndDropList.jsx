@@ -42,7 +42,7 @@ export default function DragAndDropList({
         delay: 250, // Require a 250ms hold
         tolerance: 5, // User can move finger 5px before cancel
       },
-    })
+    }),
   );
   let trolleyTotal = handleTotalTrollies(items);
 
@@ -102,14 +102,14 @@ export default function DragAndDropList({
 
   const handleItemEdit = (id, newData) => {
     const updated = items.map((item) =>
-      item.id === id ? { ...item, ...newData } : item
+      item.id === id ? { ...item, ...newData } : item,
     );
     setItems(updated);
     if (onReorder) onReorder(updated); // sync back to parent
   };
 
   return (
-    <div className="w-full border-black border-2 rounded-lg p-2">
+    <div className="w-full border-darkBorder border-2 rounded-lg p-2">
       {/* This is the view when working on the page and not exporting the PDF */}
       <div className="print:hidden flex justify-between items-center border-black border-b-2 pb-2">
         <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
@@ -118,14 +118,14 @@ export default function DragAndDropList({
           <div className="flex gap-2 print:hidden">
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
             >
               {isEditing ? "Finish Editing" : "Edit"}
             </button>
             <div className="flex items-center">
               <button
                 onClick={saveToPocketBase}
-                className="md:p-2 p-1 text-sm md:text-base bg-green-600 text-white rounded hover:bg-green-700"
+                className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
               >
                 {saveStatus}
               </button>
@@ -133,7 +133,7 @@ export default function DragAndDropList({
 
             <button
               onClick={print}
-              className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded"
+              className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
             >
               Print
             </button>
@@ -144,13 +144,13 @@ export default function DragAndDropList({
           <div className="flex gap-2">
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="p-2 bg-blue-900 text-white rounded hover:bg-blue-300"
             >
               {isEditing ? "Finish Editing" : "Edit"}
             </button>
             <button
               onClick={handleAddTask}
-              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-300"
             >
               + Add
             </button>
@@ -163,7 +163,7 @@ export default function DragAndDropList({
       <div
         className={`${
           printing ? "flex" : "hidden"
-        } justify-between border-black border-b-2 md:pb-2`}
+        } justify-between border-borderDark border-b-2 md:pb-2`}
       >
         <div className="flex gap-2  md:gap-8 md:text-lg text-xs md:justify-between">
           <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>
@@ -176,7 +176,7 @@ export default function DragAndDropList({
       </div>
 
       {isEditing ? (
-        <div className="flex p-2 text-xs md:text-base">
+        <div className="flex p-2 gap-1 text-xs md:text-base">
           {" "}
           <input
             name="driver"
@@ -184,7 +184,7 @@ export default function DragAndDropList({
             placeholder="Driver"
             value={vehicleInfo.driver}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full dark:bg-slate-500"
           />
           <input
             name="reg"
@@ -192,7 +192,7 @@ export default function DragAndDropList({
             placeholder="Reg"
             value={vehicleInfo.reg}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full dark:bg-slate-500"
           />
           <input
             name="code"
@@ -200,14 +200,14 @@ export default function DragAndDropList({
             placeholder="Code"
             value={vehicleInfo.code}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full dark:bg-slate-500"
           />
           <input
             name="date"
             type="date"
             value={vehicleInfo.date}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full"
+            className="border p-2 rounded w-full dark:bg-slate-500"
           />
         </div>
       ) : (
