@@ -53,7 +53,7 @@ export default function LandingPage() {
             </Link>
             <Link
               to="/login"
-              className="p-2 text-sm rounded-lg bg-green-600  hover:border-blue-500 border"
+              className="p-2 text-sm rounded-lg bg-green-600  hover:border-green-500 border"
             >
               Get Started
             </Link>
