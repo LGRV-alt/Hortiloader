@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const LAST_SEEN_KEY = "changelog_last_seen";
 
 // Change this when updating something new
-const CURRENT_VERSION = "2026-01-08";
+const CURRENT_VERSION = "2026-07-02";
 
 export default function ChangelogModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +30,16 @@ export default function ChangelogModal() {
         <h2 className="text-2xl font-bold mb-4">What's New 🎉</h2>
 
         <div className="space-y-4 mb-6">
+          <div>
+            <h3 className="font-semibold text-lg">Jul 2, 2026 Update</h3>
+            <ul className="list-disc pl-5 text-gray-700">
+              <li>
+                Dark mode is now available. Click the icon at the top of the
+                page to switch between light and dark mode. Your preference will
+                be saved in your browser.
+              </li>
+            </ul>
+          </div>
           <div>
             <h3 className="font-semibold text-lg">Jan 8, 2026 Update</h3>
             <ul className="list-disc pl-5 text-gray-700">
