@@ -28,7 +28,7 @@ export default function SortableItem({
     orderNumber: item.orderNumber || "",
   });
 
-  const toggleInfo = useState(true);
+  const [toggleInfo, setToggleInfo] = useState(true);
 
   useEffect(() => {
     setFormData({
@@ -174,10 +174,22 @@ export default function SortableItem({
           </div>
         </div>
       )}
-      <div className="">
-        <button type="radio"></button>
-        <p>{item.orderInfo}</p>
-      </div>
+      {item.orderInfo.length > 1 ? (
+        <div className="flex gap-2 ">
+          <input
+            type="checkbox"
+            checked={toggleInfo}
+            onChange={(e) => setToggleInfo(e.target.checked)}
+          />
+          {toggleInfo !== false ? (
+            <p className="">{item.orderInfo}</p>
+          ) : (
+            <p className="text-gray-400 print:hidden">{item.orderInfo}</p>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
     </li>
   );
 }
