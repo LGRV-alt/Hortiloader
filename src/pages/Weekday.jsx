@@ -100,7 +100,7 @@ export default function WeekdayPage() {
               <Link to={`/edit/${record.id}`}>
                 <div className="flex hover:border-black dark:hover:border-darkBorder hover:border-b-2 gap-2 ">
                   <p
-                    className={`font-normal  ${
+                    className={`font-normal capitalize ${
                       record.customerType === "retail"
                         ? "text-blue-700"
                         : record.customerType === "other"
@@ -110,7 +110,7 @@ export default function WeekdayPage() {
                             : ""
                     }`}
                   >
-                    {record.title}
+                    {record.title.toLowerCase()}
                   </p>
                   <p className="md:text-lg text-xs self-center">
                     {record.orderNumber || ""}

@@ -120,9 +120,9 @@ export default function DayColumn({
                   }}
                   id={`my-tooltip-${record.id}`}
                 />
-                <div className="flex">
+                <div className="flex capitalize">
                   <p className={getCustomerTextColor(record)}>
-                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.title.toLowerCase()} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber || ""}
                   </p>
                 </div>
@@ -142,9 +142,9 @@ export default function DayColumn({
                   }}
                   id={`my-tooltip-${record.id}`}
                 />
-                <div className="flex ">
+                <div className="flex capitalize ">
                   <p className={getCustomerTextColor(record)}>
-                    {record.title} {record.postcode.toUpperCase()}{" "}
+                    {record.title.toLowerCase()} {record.postcode.toUpperCase()}{" "}
                     {record.orderNumber || ""}
                   </p>
                 </div>

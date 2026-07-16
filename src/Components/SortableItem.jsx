@@ -146,7 +146,7 @@ export default function SortableItem({
               {index + 1}.
             </span>
             <div
-              className={`flex gap-2 text-sm items-center font-normal capitalize  ${
+              className={`flex gap-2 capitalize text-sm items-center font-normal capitalize  ${
                 item.customerType === "retail"
                   ? "text-blue-700"
                   : item.customerType === "other"
@@ -156,7 +156,9 @@ export default function SortableItem({
                       : ""
               }`}
             >
-              <p className="font-semibold md:text-2xl">{item.title}</p>
+              <p className="font-semibold md:text-2xl">
+                {item.title.toLowerCase()}
+              </p>
               <p className="text-xs md:text-xl">
                 {reduceOrderNumber(item.orderNumber)}
               </p>
