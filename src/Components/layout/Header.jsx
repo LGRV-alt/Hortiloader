@@ -208,7 +208,9 @@ export default function Header({
                     </Link>
                   </>
                 )}
-                <DarkModeToggle />
+                <div className="hidden md:block">
+                  <DarkModeToggle />
+                </div>
                 <NavLink
                   className={
                     "hover:text-blue-500 flex justify-center items-center "

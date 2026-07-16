@@ -28,6 +28,8 @@ export default function SortableItem({
     orderNumber: item.orderNumber || "",
   });
 
+  const toggleInfo = useState(true);
+
   useEffect(() => {
     setFormData({
       title: item.title || "",
@@ -74,7 +76,7 @@ export default function SortableItem({
     <li
       ref={setNodeRef}
       style={style}
-      className="border-b-2 w-full border-darkBorder hover:border-blue-500 cursor-pointer  
+      className="border-b-2 w-full p-1 border-darkBorder hover:border-blue-500 cursor-pointer  
       "
       onClick={() =>
         setCustomerName(handleCustomerName(item.title, item.orderNumber))
@@ -158,6 +160,7 @@ export default function SortableItem({
             >
               <p className="font-semibold md:text-2xl">
                 {item.title.toLowerCase()}
+                {console.log(item)}
               </p>
               <p className="text-xs md:text-xl">
                 {reduceOrderNumber(item.orderNumber)}
@@ -171,6 +174,10 @@ export default function SortableItem({
           </div>
         </div>
       )}
+      <div className="">
+        <button type="radio"></button>
+        <p>{item.orderInfo}</p>
+      </div>
     </li>
   );
 }

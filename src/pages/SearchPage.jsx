@@ -267,7 +267,7 @@ export default function SearchPage() {
           aria-label="Orders"
         >
           {/* Segments */}
-          <div className="mb-2 flex flex-wrap gap-2 justify-center">
+          <div className="mb-2 hidden md:flex flex-wrap gap-2 justify-center">
             {[
               { key: "all", label: "All" },
               { key: "title", label: "Title" },
@@ -292,7 +292,7 @@ export default function SearchPage() {
           </div>
 
           {/* Search row */}
-          <div className="gap-2 flex justify-center items-center">
+          <div className="gap-2 flex flex-col md:flex-row justify-center items-center">
             <input
               className="w-full text-base dark:bg-slate-600 border-darkBorder border-2  md:w-1/2 p-2 rounded-xl pl-1 lg:pl-5"
               type="text"
@@ -302,25 +302,25 @@ export default function SearchPage() {
             />
 
             <button
-              type="button"
-              onClick={onClear}
-              className="text-sm md:text-base py-2 px-3 bg-gray-300 dark:bg-slate-600 rounded hover:bg-gray-400"
-            >
-              Clear
-            </button>
-            <button
-              className="text-sm md:text-base py-2 w-28 md:w-32 bg-green-600 justify-center rounded hover:bg-green-700 flex text-white disabled:opacity-60"
+              className="text-sm md:text-base py-2 w-3/4 md:w-32 bg-green-600 justify-center rounded-xl hover:bg-green-700 flex text-white disabled:opacity-60"
               type="submit"
               disabled={searching}
             >
               {searching ? "Searching..." : "Search"}
+            </button>
+            <button
+              type="button"
+              onClick={onClear}
+              className="text-sm md:text-base py-2 px-3 bg-red-300 dark:bg-red-600 rounded-xl hover:bg-gray-400"
+            >
+              Clear
             </button>
           </div>
 
           {/* Filters */}
           <div className="mt-3 flex flex-col md:flex-row md:items-center gap-3 justify-center">
             {/* Status */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="hidden md:flex flex-wrap items-center gap-2">
               <span className="text-xs uppercase tracking-wider dark:text-white text-gray-500">
                 Status:
               </span>
