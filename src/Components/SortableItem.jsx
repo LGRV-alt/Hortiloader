@@ -175,9 +175,12 @@ export default function SortableItem({
         </div>
       )}
       {item.orderInfo.length > 1 ? (
-        <div className="flex gap-2 ">
+        <div
+          className={`flex gap-2 ${toggleInfo === true ? "" : "print:hidden"}`}
+        >
           <input
             type="checkbox"
+            className="print:hidden"
             checked={toggleInfo}
             onChange={(e) => setToggleInfo(e.target.checked)}
           />
