@@ -176,7 +176,7 @@ export default function DragAndDropList({
       </div>
 
       {isEditing ? (
-        <div className="flex p-2 gap-1 text-xs md:text-base">
+        <div className="flex p-2 gap-1 text-xs md:text-base text-black">
           {" "}
           <input
             name="driver"
@@ -184,7 +184,7 @@ export default function DragAndDropList({
             placeholder="Driver"
             value={vehicleInfo.driver}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full dark:bg-slate-500"
+            className="border p-2 rounded w-full dark:bg-slate-100"
           />
           <input
             name="reg"
@@ -192,7 +192,7 @@ export default function DragAndDropList({
             placeholder="Reg"
             value={vehicleInfo.reg}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full dark:bg-slate-500"
+            className="border p-2 rounded w-full dark:bg-slate-100"
           />
           <input
             name="code"
@@ -200,14 +200,14 @@ export default function DragAndDropList({
             placeholder="Code"
             value={vehicleInfo.code}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full dark:bg-slate-500"
+            className="border p-2 rounded w-full dark:bg-slate-100"
           />
           <input
             name="date"
             type="date"
             value={vehicleInfo.date}
             onChange={handleVehicleChange}
-            className="border p-2 rounded w-full dark:bg-slate-500"
+            className="border p-2 rounded w-full dark:bg-slate-100"
           />
         </div>
       ) : (

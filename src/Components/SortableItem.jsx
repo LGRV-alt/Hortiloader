@@ -85,7 +85,7 @@ export default function SortableItem({
     >
       {isEditing ? (
         <div className=" flex flex-col items-center text-xs md:text-base ">
-          <div className="flex gap-2 p-2">
+          <div className="flex gap-2 p-2 text-black">
             <span
               {...attributes}
               {...listeners}
@@ -97,35 +97,35 @@ export default function SortableItem({
             </span>
             <input
               type="text"
-              className="w-2/3 border rounded text-center border-borderDark dark:bg-slate-500"
+              className="w-2/3 border rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.title}
               onChange={(e) => handleChange("title", e.target.value)}
               placeholder="Title"
             />
             <input
               type="text"
-              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
+              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.orderNumber}
               onChange={(e) => handleChange("orderNumber", e.target.value)}
               placeholder="Order No"
             />
             <input
               type="text"
-              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
+              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.postcode}
               onChange={(e) => handleChange("postcode", e.target.value)}
               placeholder="Postcode"
             />
             <input
               type="text"
-              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-500"
+              className="w-1/3 border rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.trollies}
               onChange={(e) => handleChange("trollies", e.target.value)}
               placeholder="Trollies"
             />
             <input
               type="text"
-              className="w-full border rounded text-center border-borderDark dark:bg-slate-500"
+              className="w-full border rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.extras}
               onChange={(e) => handleChange("extras", e.target.value)}
               placeholder="Extras"
@@ -140,7 +140,7 @@ export default function SortableItem({
 
           <input
             type="text"
-            className="w-3/4 border rounded text-center border-borderDark dark:bg-slate-500"
+            className="w-3/4 border rounded text-center border-borderDark dark:bg-slate-100 text-black"
             value={formData.orderInfo}
             onChange={(e) => handleChange("orderInfo", e.target.value)}
             placeholder="Order Info"

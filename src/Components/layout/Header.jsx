@@ -208,7 +208,7 @@ export default function Header({
                     </Link>
                   </>
                 )}
-                <div className="hidden md:block">
+                <div className="hidden md:flex">
                   <DarkModeToggle />
                 </div>
                 <NavLink
