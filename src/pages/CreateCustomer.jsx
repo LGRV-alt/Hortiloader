@@ -55,6 +55,7 @@ export default function CreateCustomer() {
       toast.success("Order Created");
       navigate(-1);
     } catch (err) {
+      setSaving(false);
       toast.error("Failed to create task:", err);
       toast.error("Failed to create task. Please try again.");
     }
@@ -108,7 +109,7 @@ export default function CreateCustomer() {
             </label>
             <div className="grid grid-cols-2 gap-4">
               <select
-                className="text-center focus:text-black bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="text-center focus:text-black bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer "
                 name="customerType"
                 id="customerType"
                 onChange={(e) => setCustomerType(e.target.value)}
@@ -123,7 +124,7 @@ export default function CreateCustomer() {
               </select>
 
               <select
-                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] "
+                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer"
                 name="day"
                 id="boardPage"
                 onChange={(e) => setOther(e.target.value)}
@@ -138,7 +139,7 @@ export default function CreateCustomer() {
             </div>
             <div className="grid grid-cols-3 gap-2">
               <select
-                className=" focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className=" focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer"
                 name="day"
                 id="day"
                 onChange={(e) => setDay(e.target.value)}
@@ -156,7 +157,7 @@ export default function CreateCustomer() {
               </select>
 
               <input
-                className="focus:text-black text-center w-auto bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="focus:text-black text-center w-auto bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer"
                 type="number"
                 min={currentWeek}
                 max={52}
@@ -165,7 +166,7 @@ export default function CreateCustomer() {
                 required
               />
               <select
-                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 "
+                className="focus:text-black text-center bg-transparent text-input text-sm md:text-base border-b-2 focus:outline-none border-slate-300 focus:border-[#2563EB] placeholder:text-gray-400 dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer"
                 name="day"
                 id="yearSelector"
                 onChange={(e) => setYear(e.target.value)}
@@ -184,7 +185,7 @@ export default function CreateCustomer() {
               <p className=" p-2">Additional Info</p>
             </div>
             <textarea
-              className="text-sm md:text-base border-t-0 border-2 rounded-b-3xl p-2 w-full h-full text-center bg-transparent focus:outline-none placeholder:text-gray-400 "
+              className="text-sm md:text-base border-t-0 border-2 rounded-b-3xl p-2 w-full h-full text-center bg-transparent focus:outline-none placeholder:text-gray-400 dark:focus:bg-darkSecondary dark:focus-within:text-white cursor-pointer"
               type="text"
               placeholder="Issues/Load information"
               onChange={(e) => setOrderInfo(e.target.value)}
