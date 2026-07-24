@@ -182,7 +182,7 @@ export default function ViewTask() {
               readOnly={!isEditing}
               className={`bg-transparent capitalize truncate w-full text-sm md:text-2xl font-semibold tracking-tighter ${
                 isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  ? "border-b-2  border-black focus:border-secondary-colour focus:outline-none dark:border-white dark:focus:border-secondary-colour"
                   : "border-none pointer-events-none"
               }`}
               type="text"
@@ -197,7 +197,7 @@ export default function ViewTask() {
               readOnly={!isEditing}
               className={`bg-transparent truncate  uppercase w-1/2 ${
                 isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none dark:border-white dark:focus:border-secondary-colour"
                   : "border-none pointer-events-none"
               }`}
               type="text"
@@ -214,7 +214,7 @@ export default function ViewTask() {
                 readOnly={!isEditing}
                 className={`bg-transparent truncate w-1/2  ${
                   isEditing
-                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                    ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none dark:border-white dark:focus:border-secondary-colour"
                     : "border-none pointer-events-none"
                 }`}
                 placeholder="Order No."
@@ -229,7 +229,7 @@ export default function ViewTask() {
               readOnly={!isEditing}
               className={`bg-transparent truncate w-1/2 appearance-none focus-within:text-black ${
                 isEditing
-                  ? "border-b-2 border-black focus:border-secondary-colour focus:outline-none"
+                  ? "cursor-pointer border-b-2 border-black focus:border-secondary-colour focus:outline-none dark:border-white dark:focus:border-secondary-colour dark:focus:bg-darkMain dark:focus-within:text-white"
                   : "border-none pointer-events-none"
               }`}
               name="customerType"
@@ -275,7 +275,7 @@ export default function ViewTask() {
                   readOnly={!isEditing}
                   className={`bg-transparent capitalize appearance-none focus-within:text-black text-end ${
                     isEditing
-                      ? "  appearance-auto cursor-pointer"
+                      ? "  appearance-auto cursor-pointer dark:border-white dark:focus:border-secondary-colour dark:focus:bg-darkMain dark:focus-within:text-white "
                       : "border-none pointer-events-none"
                   }`}
                   name="boardType"
@@ -294,7 +294,7 @@ export default function ViewTask() {
                     readOnly={!isEditing}
                     className={`bg-transparent capitalize appearance-none text-end focus-within:text-black ${
                       isEditing
-                        ? "appearance-auto cursor-pointer"
+                        ? "appearance-auto cursor-pointer dark:focus:bg-darkMain dark:focus-within:text-white "
                         : "border-none pointer-events-none"
                     }`}
                     name="day"
@@ -320,7 +320,7 @@ export default function ViewTask() {
                       readOnly={!isEditing}
                       className={`bg-transparent capitalize appearance-none focus-within:text-black ${
                         isEditing
-                          ? " appearance-auto cursor-pointer"
+                          ? " appearance-auto cursor-pointer dark:focus:bg-darkMain dark:focus-within:text-white "
                           : "border-none pointer-events-none"
                       }`}
                       onChange={(e) => setWeekNumber(e.target.value)}
@@ -341,7 +341,7 @@ export default function ViewTask() {
                     readOnly={!isEditing}
                     className={`bg-transparent capitalize appearance-none ${
                       isEditing
-                        ? " focus-within:text-black appearance-auto cursor-pointer"
+                        ? " focus-within:text-black appearance-auto cursor-pointer dark:focus:bg-darkMain dark:focus-within:text-white "
                         : "border-none pointer-events-none"
                     }`}
                     onChange={(e) => setYear(e.target.value)}
