@@ -109,7 +109,7 @@ export default function DragAndDropList({
   };
 
   return (
-    <div className="w-full border-darkBorder border-2 rounded-lg p-2">
+    <div className="w-full dark:border-darkBorder border-black border-2 rounded-lg p-2">
       {/* This is the view when working on the page and not exporting the PDF */}
       <div className="print:hidden flex justify-between items-center border-black border-b-2 pb-2">
         <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
@@ -163,7 +163,7 @@ export default function DragAndDropList({
       <div
         className={`${
           printing ? "flex" : "hidden"
-        } justify-between border-borderDark border-b-2 md:pb-2`}
+        } justify-between dark:border-borderDark border-black border-b-2 md:pb-2`}
       >
         <div className="flex gap-2  md:gap-8 md:text-lg text-xs md:justify-between">
           <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>

@@ -173,7 +173,7 @@ export default function Vehicle({
               <p
                 key={index}
                 onClick={(e) => handleTrolleyName(e, index)}
-                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center  hover:cursor-pointer"
+                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-black dark:border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center  hover:cursor-pointer"
               >
                 {item}
               </p>
