@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
-import { Package, ShoppingCart, TreeDeciduous } from "lucide-react";
+import { Package, ShoppingCart, Trash2, TreeDeciduous } from "lucide-react";
 
 // Total map capacity. Trolley presets fill a sub-block of this canvas,
 // starting top-left; whatever's left over stays free for shapes.
@@ -19,19 +19,21 @@ const SHAPE_TYPES = {
     icon: Package,
     label: "Pallet",
     circle: false,
-    shapeClass: "border-solid",
+    shapeClass: "border-2 border-solid",
   },
   tree: {
     icon: TreeDeciduous,
     label: "Loose Trees",
     circle: true,
-    shapeClass: "border-solid rounded-full",
+    shapeClass: "border-2 border-solid rounded-full",
   },
   looseTrolley: {
     icon: ShoppingCart,
     label: "Loose Trolley",
     circle: false,
-    shapeClass: "border-dotted",
+    // Thicker than the others so the dots (and gaps between them) actually
+    // read as dotted at a glance, instead of blurring into a solid line.
+    shapeClass: "border-4 border-dotted",
   },
 };
 
@@ -101,8 +103,11 @@ export default function Vehicle({
     }));
   }
 
-  // Clear the entire grid
+  // Clear the entire grid — destructive and irreversible, so confirm first
   function handleClearGrid() {
+    if (!window.confirm("Clear the whole map? This removes every trolley and placed item.")) {
+      return;
+    }
     setVehicleInfo((prev) => ({
       ...prev,
       grid: Array(prev.trolleyNumber).fill(""),
@@ -274,14 +279,18 @@ export default function Vehicle({
             <div className="  gap-1 flex ">
               <button
                 onClick={handleVehicleSelection}
-                className="w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2"
+                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
+                  vehicle === "lorry" ? "ring-4 ring-yellow-300" : ""
+                }`}
                 value="lorry"
               >
                 Lorry
               </button>
               <button
                 onClick={handleVehicleSelection}
-                className="w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2"
+                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
+                  vehicle === "trailer" ? "ring-4 ring-yellow-300" : ""
+                }`}
                 value="trailer"
               >
                 Trailer
@@ -305,9 +314,10 @@ export default function Vehicle({
                 Erase
               </button>
               <button
-                className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
+                className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border-2"
                 onClick={handleClearGrid}
               >
+                <Trash2 className="w-4 h-4" />
                 Clear All
               </button>
             </div>
@@ -450,13 +460,20 @@ export default function Vehicle({
                   left: `${shape.x}%`,
                   top: `${shape.y}%`,
                   width: `${shape.width}%`,
-                  height: `${shape.height}%`,
+                  // Printing hides the toolbar and gives the canvas different
+                  // pixel dimensions than on screen, so a stored height% that
+                  // made a true circle on screen can print as an oval. Forcing
+                  // aspect-ratio 1/1 (driven only by width) keeps trees round
+                  // in both contexts instead of relying on the stale height%.
+                  ...(printing && meta.circle
+                    ? { aspectRatio: "1 / 1", height: "auto" }
+                    : { height: `${shape.height}%` }),
                 }}
               >
                 <div
                   onMouseDown={(e) => handleShapeMouseDown(e, shape)}
                   title={meta.label}
-                  className={`w-full h-full border-2 ${meta.shapeClass} border-black dark:border-darkBorder bg-white/70 dark:bg-darkSecondary/80 flex flex-col items-center justify-center text-center overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 hover:cursor-move`}
+                  className={`w-full h-full ${meta.shapeClass} border-black dark:border-darkBorder bg-white/70 dark:bg-darkSecondary/80 flex flex-col items-center justify-center text-center overflow-hidden hover:bg-slate-200 dark:hover:bg-slate-500 hover:cursor-move`}
                 >
                   <Icon className="w-4 h-4 md:w-5 md:h-5 shrink-0" />
                   <span className="text-[10px] md:text-xs leading-tight break-words px-0.5">
