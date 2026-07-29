@@ -30,6 +30,7 @@ export default function TrolleyMapper({
     vehicleType: "",
     trolleyNumber: 0,
     grid: [],
+    shapes: [],
   });
 
   const isVehicleInfoComplete = () => {
