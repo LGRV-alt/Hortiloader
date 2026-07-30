@@ -12,6 +12,24 @@ import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
 
+const FIELD_LABELS = {
+  title: "Customer Name",
+  day: "Day",
+  postcode: "Postcode",
+  orderNumber: "Order Number",
+  customerType: "Customer Type",
+  other: "Board Type",
+  weekNumber: "Week",
+  orderInfo: "Order Info",
+  status: "Status",
+  year: "Year",
+  trollies: "Trollies",
+  extras: "Extras",
+};
+
+const formatHistoryValue = (v) =>
+  v === null || v === undefined || v === "" ? "—" : String(v);
+
 export default function ViewTask() {
   const [isEditing, setIsEditing] = useState(false);
   const records = useTaskStore((state) => state.tasks);
@@ -45,6 +63,35 @@ export default function ViewTask() {
   const [deletePassword, setDeletePassword] = useState("");
   const [savingState, setSavingState] = useState("Save");
   const [pictures, setPictures] = useState([]);
+
+  // --------------------Change history----------------------------
+  const [history, setHistory] = useState([]);
+  const [historyFetched, setHistoryFetched] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
+
+  const loadHistory = async () => {
+    if (historyFetched) {
+      setShowHistory((prev) => !prev);
+      return;
+    }
+    setHistoryLoading(true);
+    try {
+      const records = await pb.collection("task_history").getFullList({
+        filter: `task="${id}"`,
+        sort: "-created",
+        expand: "changed_by",
+      });
+      setHistory(records);
+      setHistoryFetched(true);
+      setShowHistory(true);
+    } catch (err) {
+      console.error("Could not load task history:", err);
+      toast.error("Could not load task history.");
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
 
   useEffect(() => {
     // useTaskStore.getState().stopPolling();
@@ -451,19 +498,66 @@ export default function ViewTask() {
         </div>
       </div>
 
-      {/* ------Picture/File Upload-------- */}
-      {user.role !== "viewer" && (
-        <div className=" h-full shadow-lg shadow-gray-400 rounded-2xl border-[3px] border-darkBorder overflow-hidden dark:shadow-darkSecondary dark:bg-darkSecondary bg-white">
-          <div className="w-full">
-            <FileUpload taskID={id} onUpload={setPictures} />
-            <Pictures
-              taskID={id}
-              pictures={pictures}
-              setPictures={setPictures}
-            />
+      {/* ------Picture/File Upload + Change History-------- */}
+      <div className="flex flex-col gap-4 h-full">
+        {user.role !== "viewer" && (
+          <div className="shadow-lg shadow-gray-400 rounded-2xl border-[3px] border-darkBorder overflow-hidden dark:shadow-darkSecondary dark:bg-darkSecondary bg-white">
+            <div className="w-full">
+              <FileUpload taskID={id} onUpload={setPictures} />
+              <Pictures
+                taskID={id}
+                pictures={pictures}
+                setPictures={setPictures}
+              />
+            </div>
           </div>
+        )}
+
+        <div className="shadow-lg shadow-gray-400 rounded-2xl border-[3px] border-darkBorder overflow-hidden dark:shadow-darkSecondary dark:bg-darkSecondary bg-white flex flex-col">
+          <button
+            onClick={loadHistory}
+            className="w-full flex justify-between items-center px-4 py-3 font-semibold dark:bg-darkMain bg-regal-blue text-white"
+          >
+            <span>History</span>
+            <span>{historyLoading ? "Loading..." : showHistory ? "▲" : "▼"}</span>
+          </button>
+          {showHistory && (
+            <div className="overflow-y-auto max-h-96 p-3 flex flex-col gap-3 text-xs md:text-sm">
+              {history.length === 0 ? (
+                <p className="text-gray-500 italic">No changes recorded yet.</p>
+              ) : (
+                history.map((entry) => (
+                  <div
+                    key={entry.id}
+                    className="border-b border-gray-300 dark:border-darkBorder pb-2 last:border-none"
+                  >
+                    <p className="font-semibold">
+                      {entry.expand?.changed_by?.display_username || "Unknown"}{" "}
+                      <span className="font-normal text-gray-500">
+                        {new Date(entry.created).toLocaleString([], {
+                          dateStyle: "medium",
+                          timeStyle: "short",
+                        })}
+                      </span>
+                    </p>
+                    <ul className="list-disc list-inside">
+                      {Object.entries(entry.changes || {}).map(
+                        ([field, { from, to }]) => (
+                          <li key={field}>
+                            {FIELD_LABELS[field] || field}:{" "}
+                            {formatHistoryValue(from)} →{" "}
+                            {formatHistoryValue(to)}
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
         </div>
-      )}
+      </div>
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-md shadow-lg w-full max-w-md">

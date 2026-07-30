@@ -142,6 +142,36 @@ const paramsKey = (p = {}) =>
     Number.isInteger(p.year) ? p.year : "any"
   }`;
 
+// Fields worth recording in the task_history audit trail (metadata like
+// updated_by is tracked separately and isn't itself a "change").
+const HISTORY_TRACKED_FIELDS = [
+  "title",
+  "day",
+  "postcode",
+  "orderNumber",
+  "customerType",
+  "other",
+  "weekNumber",
+  "orderInfo",
+  "status",
+  "year",
+  "trollies",
+  "extras",
+];
+
+function buildChanges(prev, data) {
+  const changes = {};
+  for (const key of HISTORY_TRACKED_FIELDS) {
+    if (!(key in data)) continue;
+    const before = prev?.[key] ?? null;
+    const after = data[key] ?? null;
+    if (String(before) !== String(after)) {
+      changes[key] = { from: before, to: after };
+    }
+  }
+  return changes;
+}
+
 export const useTaskStore = create((set, get) => ({
   tasks: [],
   loading: false,
@@ -289,6 +319,22 @@ export const useTaskStore = create((set, get) => ({
       set((state) => ({
         tasks: state.tasks.map((t) => (t.id === id ? updated : t)),
       }));
+
+      // Best-effort audit trail — a history-write failure shouldn't roll
+      // back the task update itself, so it's fire-and-forget.
+      const changes = buildChanges(prev, data);
+      if (Object.keys(changes).length > 0) {
+        const changedBy = data.updated_by ?? pb.authStore.record?.id;
+        pb.collection("task_history")
+          .create({
+            task: id,
+            changed_by: changedBy,
+            user: changedBy,
+            org: prev?.org,
+            changes,
+          })
+          .catch((err) => console.error("Failed to record task history:", err));
+      }
     } catch (err) {
       set((state) => ({
         tasks: state.tasks.map((t) => (t.id === id ? prev : t)),
