@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { nanoid } from "nanoid";
-import { Package, ShoppingCart, Trash2, TreeDeciduous } from "lucide-react";
+import { Package, Spline, Trash2, TreeDeciduous } from "lucide-react";
 
 // Total map capacity. Trolley presets fill a sub-block of this canvas,
 // starting top-left; whatever's left over stays free for shapes.
@@ -23,12 +23,12 @@ const SHAPE_TYPES = {
   },
   tree: {
     icon: TreeDeciduous,
-    label: "Loose Trees",
+    label: "Trees",
     circle: true,
     shapeClass: "border-2 border-solid rounded-full",
   },
   looseTrolley: {
-    icon: ShoppingCart,
+    icon: Spline,
     label: "Loose Trolley",
     circle: false,
     // Thicker than the others so the dots (and gaps between them) actually
@@ -273,80 +273,12 @@ export default function Vehicle({
   return (
     <div
       className={`grid h-full ${
-        printing ? "grid-rows-[1fr]" : "grid-rows-[1fr_6fr]"
+        printing ? "grid-rows-[1fr]" : "grid-rows-[0.5fr_6fr]"
       }`}
     >
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
-        <div className="print:hidden flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
-          <div className="print:hidden flex flex-wrap justify-center items-center gap-1">
-            <div className="  gap-1 flex ">
-              <button
-                onClick={handleVehicleSelection}
-                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white  ${
-                  vehicle === "lorry" ? "" : ""
-                }`}
-                value="lorry"
-              >
-                Lorry
-              </button>
-              <button
-                onClick={handleVehicleSelection}
-                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
-                  vehicle === "trailer" ? "ring-4 ring-yellow-300" : ""
-                }`}
-                value="trailer"
-              >
-                Trailer
-              </button>
-            </div>
-
-            <div className="pl-2 gap-1 flex">
-              <button
-                className="w-auto p-2 rounded-xl hover:bg-gray-300 bg-gray-500 text-white border-borderDark border-2"
-                onClick={() => setCustomerName("Blank")}
-              >
-                Blank
-              </button>
-              <button
-                className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
-                onClick={() => {
-                  setCustomerName("");
-                  setActiveShape(null);
-                }}
-              >
-                Erase
-              </button>
-              <button
-                className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border-2"
-                onClick={handleClearGrid}
-              >
-                <Trash2 className="w-4 h-4" />
-                Clear All
-              </button>
-            </div>
-
-            <div ref={shapeToolbarRef} className="pl-2 gap-1 flex">
-              {Object.entries(SHAPE_TYPES).map(
-                ([type, { icon: Icon, label }]) => (
-                  <button
-                    key={type}
-                    onClick={() =>
-                      setActiveShape((prev) => (prev === type ? null : type))
-                    }
-                    title={`Place a ${label} — click empty space on the map, then drag its corner to resize`}
-                    className={`w-auto p-2 rounded-xl flex items-center gap-1 border-borderDark border-2 text-white hover:bg-green-300 bg-green-600 ${
-                      activeShape === type ? "ring-4 ring-yellow-300" : ""
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    {label}
-                  </button>
-                ),
-              )}
-            </div>
-          </div>
-
+        <div className="print:hidden flex flex-col justify-center gap-2 text-sm pb-2">
           {/* --- Trolley Count Buttons --- */}
           {vehicle === "trailer" ? (
             <ul className="print:hidden flex gap-2 justify-center items-center">
@@ -386,6 +318,71 @@ export default function Vehicle({
               ))}
             </ul>
           )}
+
+          {/* Second row - vehicle choice and other items */}
+          <div className="print:hidden flex justify-center items-center w-full text-sm gap-2">
+            <button
+              onClick={handleVehicleSelection}
+              className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white  ${
+                vehicle === "lorry" ? "" : ""
+              }`}
+              value="lorry"
+            >
+              Lorry
+            </button>
+            <button
+              onClick={handleVehicleSelection}
+              className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
+                vehicle === "trailer" ? "ring-4 ring-yellow-300" : ""
+              }`}
+              value="trailer"
+            >
+              Trailer
+            </button>
+
+            {/* <button
+              className="w-auto p-2 rounded-xl hover:bg-gray-300 bg-gray-500 text-white border-borderDark border-2"
+              onClick={() => setCustomerName("Blank")}
+            >
+              Blank
+            </button> */}
+            <button
+              className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
+              onClick={() => {
+                setCustomerName("");
+                setActiveShape(null);
+              }}
+            >
+              Erase
+            </button>
+            <button
+              className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border-2"
+              onClick={handleClearGrid}
+            >
+              <Trash2 className="w-4 h-4" />
+              Clear All
+            </button>
+
+            <div ref={shapeToolbarRef} className=" flex gap-2">
+              {Object.entries(SHAPE_TYPES).map(
+                ([type, { icon: Icon, label }]) => (
+                  <button
+                    key={type}
+                    onClick={() =>
+                      setActiveShape((prev) => (prev === type ? null : type))
+                    }
+                    title={`Place a ${label} — click empty space on the map, then drag its corner to resize`}
+                    className={`w-auto p-2 rounded-xl flex items-center gap-1 border-borderDark border-2 text-white hover:bg-green-300 bg-green-600 ${
+                      activeShape === type ? "ring-4 ring-yellow-300" : ""
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {label}
+                  </button>
+                ),
+              )}
+            </div>
+          </div>
         </div>
       )}
 
