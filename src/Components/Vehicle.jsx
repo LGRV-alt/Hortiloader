@@ -274,13 +274,13 @@ export default function Vehicle({
     >
       {/* --- Vehicle Setup Controls --- */}
       {!readOnly && (
-        <div className="print:hidden flex flex-col gap-2 md:gap-0 md:flex-row md:justify-between md:items-center p-1">
+        <div className="print:hidden flex flex-col gap-1 md:flex-row md:justify-between md:items-center px-1 py-0.5">
           <div className="print:hidden flex flex-wrap justify-center items-center gap-1">
-            <div className="  gap-1 flex ">
+            <div className="gap-1 flex">
               <button
                 onClick={handleVehicleSelection}
-                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
-                  vehicle === "lorry" ? "ring-4 ring-yellow-300" : ""
+                className={`w-auto px-2 py-1 rounded-lg text-xs md:text-sm hover:bg-orange-300 bg-orange-500 text-white border-borderDark border ${
+                  vehicle === "lorry" ? "ring-2 ring-yellow-300" : ""
                 }`}
                 value="lorry"
               >
@@ -288,8 +288,8 @@ export default function Vehicle({
               </button>
               <button
                 onClick={handleVehicleSelection}
-                className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
-                  vehicle === "trailer" ? "ring-4 ring-yellow-300" : ""
+                className={`w-auto px-2 py-1 rounded-lg text-xs md:text-sm hover:bg-orange-300 bg-orange-500 text-white border-borderDark border ${
+                  vehicle === "trailer" ? "ring-2 ring-yellow-300" : ""
                 }`}
                 value="trailer"
               >
@@ -297,15 +297,15 @@ export default function Vehicle({
               </button>
             </div>
 
-            <div className="pl-2 gap-1 flex">
+            <div className="pl-1 gap-1 flex">
               <button
-                className="w-auto p-2 rounded-xl hover:bg-gray-300 bg-gray-500 text-white border-borderDark border-2"
+                className="w-auto px-2 py-1 rounded-lg text-xs md:text-sm hover:bg-gray-300 bg-gray-500 text-white border-borderDark border"
                 onClick={() => setCustomerName("Blank")}
               >
                 Blank
               </button>
               <button
-                className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
+                className="w-auto px-2 py-1 rounded-lg text-xs md:text-sm hover:bg-red-300 bg-red-500 text-white border-borderDark border"
                 onClick={() => {
                   setCustomerName("");
                   setActiveShape(null);
@@ -314,15 +314,15 @@ export default function Vehicle({
                 Erase
               </button>
               <button
-                className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border-2"
+                className="w-auto px-2 py-1 rounded-lg text-xs md:text-sm flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border"
                 onClick={handleClearGrid}
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-3 h-3 md:w-4 md:h-4" />
                 Clear All
               </button>
             </div>
 
-            <div ref={shapeToolbarRef} className="pl-2 gap-1 flex">
+            <div ref={shapeToolbarRef} className="pl-1 gap-1 flex">
               {Object.entries(SHAPE_TYPES).map(([type, { icon: Icon, label }]) => (
                 <button
                   key={type}
@@ -330,11 +330,11 @@ export default function Vehicle({
                     setActiveShape((prev) => (prev === type ? null : type))
                   }
                   title={`Place a ${label} — click empty space on the map, then drag its corner to resize`}
-                  className={`w-auto p-2 rounded-xl flex items-center gap-1 border-borderDark border-2 text-white hover:bg-green-300 bg-green-600 ${
-                    activeShape === type ? "ring-4 ring-yellow-300" : ""
+                  className={`w-auto px-2 py-1 rounded-lg text-xs md:text-sm flex items-center gap-1 border-borderDark border text-white hover:bg-green-300 bg-green-600 ${
+                    activeShape === type ? "ring-2 ring-yellow-300" : ""
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  <Icon className="w-3 h-3 md:w-4 md:h-4" />
                   {label}
                 </button>
               ))}
@@ -343,25 +343,25 @@ export default function Vehicle({
 
           {/* --- Trolley Count Buttons --- */}
           {vehicle === "trailer" ? (
-            <ul className="print:hidden flex gap-2 justify-center items-center">
+            <ul className="print:hidden flex gap-1 justify-center items-center">
               <button
                 onClick={handleTrolleyNumber}
                 value={5}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-9 rounded-lg text-xs md:text-sm border-borderDark border py-0.5 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {3}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={8}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-9 rounded-lg text-xs md:text-sm border-borderDark border py-0.5 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {6}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={9}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-9 rounded-lg text-xs md:text-sm border-borderDark border py-0.5 hover:bg-blue-300 bg-blue-500 text-white "
               >
                 {7}T
               </button>
@@ -373,7 +373,7 @@ export default function Vehicle({
                   key={val}
                   onClick={handleTrolleyNumber}
                   value={val}
-                  className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                  className="w-9 rounded-lg text-xs md:text-sm border-borderDark border py-0.5 hover:bg-blue-300 bg-blue-500 text-white "
                 >
                   {val}T
                 </button>
@@ -419,29 +419,51 @@ export default function Vehicle({
                 {grid[1]}
               </div>
               <div className="order-2 border-2 dark:border-darkBorder  border-black w-2/3 h-full grid grid-cols-3 grid-rows-3">
-                {grid.slice(2).map((item, index) => (
-                  <p
-                    key={index + 2}
-                    data-shape-blocker
-                    onClick={(e) => handleTrolleyName(e, index + 2)}
-                    className="border-2 text-center dark:border-darkBorder  border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
-                  >
-                    {item}
-                  </p>
-                ))}
+                {grid.slice(2).map((item, index, arr) => {
+                  // Only border the right/bottom of each cell (skipped on the
+                  // last column/row) so shared edges aren't doubled up against
+                  // the wrapping div's own border.
+                  const isLastCol = (index + 1) % 3 === 0;
+                  const isLastRow = index >= (Math.ceil(arr.length / 3) - 1) * 3;
+                  return (
+                    <p
+                      key={index + 2}
+                      data-shape-blocker
+                      onClick={(e) => handleTrolleyName(e, index + 2)}
+                      className={`text-center dark:border-darkBorder border-black flex justify-center items-center hover:bg-white hover:cursor-pointer ${
+                        isLastCol ? "" : "border-r-2"
+                      } ${isLastRow ? "" : "border-b-2"}`}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           ) : (
-            grid.map((item, index) => (
-              <p
-                key={index}
-                data-shape-blocker
-                onClick={(e) => handleTrolleyName(e, index)}
-                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-black dark:border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center  hover:cursor-pointer"
-              >
-                {item}
-              </p>
-            ))
+            grid.map((item, index) => {
+              // Only border the right/bottom of each cell (skipped on the
+              // last column/row) so shared edges aren't doubled up against
+              // the canvas's own outer border.
+              const isLastCol = (index + 1) % GRID_COLS === 0;
+              // Based on the canvas's fixed GRID_ROWS capacity, not
+              // grid.length — otherwise a partially-filled canvas (e.g. only
+              // one row of trolleys placed) treats that row as "last" and
+              // drops its bottom border, even though empty rows remain below it.
+              const isLastRow = index >= (GRID_ROWS - 1) * GRID_COLS;
+              return (
+                <p
+                  key={index}
+                  data-shape-blocker
+                  onClick={(e) => handleTrolleyName(e, index)}
+                  className={`h-full w-full p-2 text-center border-black dark:border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center hover:cursor-pointer ${
+                    isLastCol ? "" : "border-r-[1px] md:border-r-2"
+                  } ${isLastRow ? "" : "border-b-[1px] md:border-b-2"}`}
+                >
+                  {item}
+                </p>
+              );
+            })
           )}
 
           {shapes.map((shape) => {
