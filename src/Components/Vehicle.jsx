@@ -23,7 +23,7 @@ const SHAPE_TYPES = {
   },
   tree: {
     icon: TreeDeciduous,
-    label: "Trees",
+    label: "Tree",
     circle: true,
     shapeClass: "border-2 border-solid rounded-full",
   },
@@ -285,21 +285,21 @@ export default function Vehicle({
               <button
                 onClick={handleTrolleyNumber}
                 value={5}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-12 rounded-2xl p-1 hover:bg-blue-600 bg-blue-500 text-white "
               >
                 {3}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={8}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-12 rounded-2xl p-1 hover:bg-blue-600 bg-blue-500 text-white "
               >
                 {6}T
               </button>
               <button
                 onClick={handleTrolleyNumber}
                 value={9}
-                className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                className="w-12 rounded-2xl  p-1 hover:bg-blue-600 bg-blue-500 text-white "
               >
                 {7}T
               </button>
@@ -311,7 +311,7 @@ export default function Vehicle({
                   key={val}
                   onClick={handleTrolleyNumber}
                   value={val}
-                  className="w-12 rounded-2xl border-borderDark border-2 p-1 hover:bg-blue-300 bg-blue-500 text-white "
+                  className="w-12 rounded-2xl  p-1 hover:bg-blue-600 bg-blue-500 text-white "
                 >
                   {val}T
                 </button>
@@ -323,8 +323,8 @@ export default function Vehicle({
           <div className="print:hidden flex justify-center items-center w-full text-sm gap-2">
             <button
               onClick={handleVehicleSelection}
-              className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white  ${
-                vehicle === "lorry" ? "" : ""
+              className={`w-auto p-2 rounded-xl hover:bg-orange-600 bg-orange-500 text-white  ${
+                vehicle === "lorry" ? "ring-2 dark:ring-white ring-black" : ""
               }`}
               value="lorry"
             >
@@ -332,8 +332,8 @@ export default function Vehicle({
             </button>
             <button
               onClick={handleVehicleSelection}
-              className={`w-auto p-2 rounded-xl hover:bg-orange-300 bg-orange-500 text-white border-borderDark border-2 ${
-                vehicle === "trailer" ? "ring-4 ring-yellow-300" : ""
+              className={`w-auto p-2 rounded-xl hover:bg-orange-600 bg-orange-500 text-white ${
+                vehicle === "trailer" ? "ring-2 dark:ring-white ring-black" : ""
               }`}
               value="trailer"
             >
@@ -347,7 +347,7 @@ export default function Vehicle({
               Blank
             </button> */}
             <button
-              className="w-auto p-2 rounded-xl hover:bg-red-300 bg-red-500 text-white border-borderDark border-2"
+              className="w-auto p-2 rounded-xl hover:bg-red-600 bg-red-500 text-white"
               onClick={() => {
                 setCustomerName("");
                 setActiveShape(null);
@@ -356,11 +356,12 @@ export default function Vehicle({
               Erase
             </button>
             <button
-              className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-900 text-white border-borderDark border-2"
+              className="w-auto p-2 rounded-xl flex items-center gap-1 hover:bg-neutral-700 bg-neutral-600 text-white"
               onClick={handleClearGrid}
+              title="Clear Whole Map"
             >
               <Trash2 className="w-4 h-4" />
-              Clear All
+              Clear
             </button>
 
             <div ref={shapeToolbarRef} className=" flex gap-2">
@@ -372,8 +373,10 @@ export default function Vehicle({
                       setActiveShape((prev) => (prev === type ? null : type))
                     }
                     title={`Place a ${label} — click empty space on the map, then drag its corner to resize`}
-                    className={`w-auto p-2 rounded-xl flex items-center gap-1 border-borderDark border-2 text-white hover:bg-green-300 bg-green-600 ${
-                      activeShape === type ? "ring-4 ring-yellow-300" : ""
+                    className={`w-auto p-2 rounded-xl flex items-center gap-1 text-white hover:bg-green-700 bg-green-600 ${
+                      activeShape === type
+                        ? "ring-2 dark:ring-white ring-black"
+                        : ""
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -422,12 +425,16 @@ export default function Vehicle({
                 {grid[1]}
               </div>
               <div className="order-2 border-2 dark:border-darkBorder  border-black w-2/3 h-full grid grid-cols-3 grid-rows-3">
-                {grid.slice(2).map((item, index, arr) => {
+                {grid.slice(2).map((item, index) => {
                   // Only border the right/bottom of each cell (skipped on the
                   // last column/row) so shared edges aren't doubled up against
-                  // the wrapping div's own border.
+                  // the wrapping div's own border. Based on the sub-grid's
+                  // fixed 3x3 capacity (grid-rows-3), not how many slots are
+                  // actually filled — otherwise a partially-filled sub-grid
+                  // treats its last filled row as "last" and drops its
+                  // bottom border, even though empty rows remain below it.
                   const isLastCol = (index + 1) % 3 === 0;
-                  const isLastRow = index >= (Math.ceil(arr.length / 3) - 1) * 3;
+                  const isLastRow = index >= (3 - 1) * 3;
                   return (
                     <p
                       key={index + 2}
