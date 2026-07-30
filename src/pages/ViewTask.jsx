@@ -11,24 +11,7 @@ import toast from "react-hot-toast";
 import DanishTrolleyLoader from "../Components/DanishTrolleyLoader";
 import pb from "../api/pbConnect";
 import { useTaskStore } from "../hooks/useTaskStore";
-
-const FIELD_LABELS = {
-  title: "Customer Name",
-  day: "Day",
-  postcode: "Postcode",
-  orderNumber: "Order Number",
-  customerType: "Customer Type",
-  other: "Board Type",
-  weekNumber: "Week",
-  orderInfo: "Order Info",
-  status: "Status",
-  year: "Year",
-  trollies: "Trollies",
-  extras: "Extras",
-};
-
-const formatHistoryValue = (v) =>
-  v === null || v === undefined || v === "" ? "—" : String(v);
+import { FIELD_LABELS, formatHistoryValue } from "../utilis/taskFields";
 
 export default function ViewTask() {
   const [isEditing, setIsEditing] = useState(false);
