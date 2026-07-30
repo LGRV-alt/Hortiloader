@@ -277,8 +277,15 @@ export default function Vehicle({
       }`}
     >
       {/* --- Vehicle Setup Controls --- */}
-      {!readOnly && (
-        <div className="print:hidden flex flex-col justify-center gap-2 text-sm pb-2">
+      {/* Hidden off the same `printing` flag that flips the canvas's grid
+          template to a single row, not just the print:hidden CSS class —
+          otherwise there's a brief render where the layout already expects
+          the controls gone but they're still actually taking up space
+          (print:hidden only applies once real print media engages), which
+          corrupts the canvas's height for that frame and made shapes
+          appear to drift once printed. */}
+      {!readOnly && !printing && (
+        <div className="print:hidden flex flex-col md:justify-center gap-2 text-xs md:text-sm pb-2">
           {/* --- Trolley Count Buttons --- */}
           {vehicle === "trailer" ? (
             <ul className="print:hidden flex gap-2 justify-center items-center">
@@ -320,7 +327,7 @@ export default function Vehicle({
           )}
 
           {/* Second row - vehicle choice and other items */}
-          <div className="print:hidden flex justify-center items-center w-full text-sm gap-2">
+          <div className="print:hidden flex justify-center items-center w-full text-xs md:text-sm gap-2 flex-wrap">
             <button
               onClick={handleVehicleSelection}
               className={`w-auto p-2 rounded-xl hover:bg-orange-600 bg-orange-500 text-white  ${
