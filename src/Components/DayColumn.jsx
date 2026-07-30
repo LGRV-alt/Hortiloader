@@ -95,86 +95,86 @@ export default function DayColumn({
         const isNew = newTaskIds?.has(record.id);
         return (
           <div
-            className={`flex justify-between items-center px-1 pt-1 text-[0.8rem] ${
+            className={`flex justify-between items-center  text-[0.8rem] ${
               isNew ? "bg-yellow-100 dark:bg-yellow-900/40" : ""
             }`}
             key={record.id}
           >
             <div
               className={`${
-                !edit && "hover:bg-slate-300 dark:hover:bg-darkBorder"
+                !edit && "p-1 hover:bg-slate-300 dark:hover:bg-darkBorder"
               } flex justify-between w-full  hover:border-black  transition-all`}
             >
-              {isNew && (
+              {/* {isNew && (
                 <span
                   className="w-2 h-2 rounded-full bg-red-500 self-center mr-1 shrink-0"
                   title="New task"
                 />
+              )} */}
+              {edit ? (
+                <a
+                  className={`hover:bg-slate-300 dark:hover:bg-slate-200 p-1  border rounded cursor-pointer transition ${
+                    customerList.includes(record.id)
+                      ? "dark:bg-darkBorder bg-blue-200"
+                      : "dark:bg-darkMain bg-white"
+                  }`}
+                  data-tooltip-id={`my-tooltip-${record.id}`}
+                  data-tooltip-content={record.orderInfo}
+                  onClick={() => handleCustomerList(record.id)}
+                >
+                  <Tooltip
+                    style={{
+                      maxWidth: "320px", // or "400px", "450px" etc.
+                      whiteSpace: "pre-wrap", // allows wrapping
+                      wordBreak: "break-word",
+                      textAlign: "left",
+                    }}
+                    id={`my-tooltip-${record.id}`}
+                  />
+                  <div className="flex capitalize">
+                    <p className={getCustomerTextColor(record)}>
+                      {record.title.toLowerCase()}{" "}
+                      {record.postcode.toUpperCase()} {record.orderNumber || ""}
+                    </p>
+                  </div>
+                </a>
+              ) : (
+                <Link
+                  to={`/view/${record.id}`}
+                  data-tooltip-id={`my-tooltip-${record.id}`}
+                  data-tooltip-content={record.orderInfo}
+                >
+                  <Tooltip
+                    style={{
+                      maxWidth: "320px",
+                      whiteSpace: "pre-wrap",
+                      wordBreak: "break-word",
+                      textAlign: "left",
+                    }}
+                    id={`my-tooltip-${record.id}`}
+                  />
+                  <div className="flex capitalize ">
+                    <p className={getCustomerTextColor(record)}>
+                      {record.title.toLowerCase()}{" "}
+                      {record.postcode.toUpperCase()} {record.orderNumber || ""}
+                    </p>
+                  </div>
+                </Link>
               )}
               {edit ? (
-              <a
-                className={`hover:bg-slate-300 dark:hover:bg-slate-200 p-1  border rounded cursor-pointer transition ${
-                  customerList.includes(record.id)
-                    ? "dark:bg-darkBorder bg-blue-200"
-                    : "dark:bg-darkMain bg-white"
-                }`}
-                data-tooltip-id={`my-tooltip-${record.id}`}
-                data-tooltip-content={record.orderInfo}
-                onClick={() => handleCustomerList(record.id)}
-              >
-                <Tooltip
-                  style={{
-                    maxWidth: "320px", // or "400px", "450px" etc.
-                    whiteSpace: "pre-wrap", // allows wrapping
-                    wordBreak: "break-word",
-                    textAlign: "left",
-                  }}
-                  id={`my-tooltip-${record.id}`}
-                />
-                <div className="flex capitalize">
-                  <p className={getCustomerTextColor(record)}>
-                    {record.title.toLowerCase()} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber || ""}
-                  </p>
-                </div>
-              </a>
-            ) : (
-              <Link
-                to={`/view/${record.id}`}
-                data-tooltip-id={`my-tooltip-${record.id}`}
-                data-tooltip-content={record.orderInfo}
-              >
-                <Tooltip
-                  style={{
-                    maxWidth: "320px",
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-word",
-                    textAlign: "left",
-                  }}
-                  id={`my-tooltip-${record.id}`}
-                />
-                <div className="flex capitalize ">
-                  <p className={getCustomerTextColor(record)}>
-                    {record.title.toLowerCase()} {record.postcode.toUpperCase()}{" "}
-                    {record.orderNumber || ""}
-                  </p>
-                </div>
-              </Link>
-            )}
-            {edit ? (
-              ""
-            ) : (
-              <Link
-                className="flex justify-end items-center"
-                to={`/view/${record.id}`}
-              >
-                <div className="flex justify-center items-center min-w-7">
-                  {getStatusIcon(record.status)}
-                </div>
-              </Link>
-            )}
+                ""
+              ) : (
+                <Link
+                  className="flex justify-end items-center"
+                  to={`/view/${record.id}`}
+                >
+                  <div className="flex justify-center items-center min-w-7">
+                    {getStatusIcon(record.status)}
+                  </div>
+                </Link>
+              )}
+            </div>
           </div>
-        </div>
         );
       })}
     </>

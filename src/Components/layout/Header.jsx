@@ -221,9 +221,9 @@ export default function Header({
                     </Link>
                   </>
                 )}
-                <div className="hidden md:flex">
+                {/* <div className="hidden md:flex">
                   <DarkModeToggle />
-                </div>
+                </div> */}
                 <button
                   onClick={markAllSeen}
                   title={
