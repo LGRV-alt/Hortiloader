@@ -2,6 +2,7 @@
 import DayColumn from "../Components/DayColumn";
 import { daysOfWeek } from "../api/pocketbase";
 import { useTaskStore } from "../hooks/useTaskStore";
+import { useNewTaskIds } from "../hooks/useNotificationStore";
 
 export default function Body({
   chosenWeek,
@@ -12,6 +13,7 @@ export default function Body({
   userSettings,
 }) {
   const records = useTaskStore((state) => state.tasks);
+  const newTaskIds = useNewTaskIds();
   const filterUsersByDay = (day) => {
     return records.filter(
       (record) =>
@@ -45,6 +47,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
@@ -58,6 +61,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
@@ -71,6 +75,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
@@ -84,6 +89,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 md:mb-0 md:border-r-2 dark:border-darkBorder border-black row-span-2 border-t-2 md:border-t-0">
@@ -97,6 +103,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 md:mb-0  md:row-start-1 md:row-end-2 md:col-start-6 dark:border-darkBorder border-black border-t-2 md:border-t-0">
@@ -110,6 +117,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
         <div className="mb-10 border-t-2 md:border-t-2 md:mb-0  md:row-start-2 md:row-end-3 md:col-start-6 dark:border-darkBorder border-black ">
@@ -123,6 +131,7 @@ export default function Body({
             edit={edit}
             setCustomerList={setCustomerList}
             customerList={customerList}
+            newTaskIds={newTaskIds}
           />
         </div>
       </div>

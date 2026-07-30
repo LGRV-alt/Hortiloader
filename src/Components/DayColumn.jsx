@@ -24,6 +24,7 @@ export default function DayColumn({
   edit,
   setCustomerList,
   customerList,
+  newTaskIds,
 }) {
   const handleCustomerList = (id) => {
     setCustomerList((prevSelected) => {
@@ -90,17 +91,27 @@ export default function DayColumn({
       </div>
 
       {/* Data in the column */}
-      {arr.map((record) => (
-        <div
-          className="flex justify-between items-center px-1 pt-1 text-[0.8rem]"
-          key={record.id}
-        >
+      {arr.map((record) => {
+        const isNew = newTaskIds?.has(record.id);
+        return (
           <div
-            className={`${
-              !edit && "hover:bg-slate-300 dark:hover:bg-darkBorder"
-            } flex justify-between w-full  hover:border-black  transition-all`}
+            className={`flex justify-between items-center px-1 pt-1 text-[0.8rem] ${
+              isNew ? "bg-yellow-100 dark:bg-yellow-900/40" : ""
+            }`}
+            key={record.id}
           >
-            {edit ? (
+            <div
+              className={`${
+                !edit && "hover:bg-slate-300 dark:hover:bg-darkBorder"
+              } flex justify-between w-full  hover:border-black  transition-all`}
+            >
+              {isNew && (
+                <span
+                  className="w-2 h-2 rounded-full bg-red-500 self-center mr-1 shrink-0"
+                  title="New task"
+                />
+              )}
+              {edit ? (
               <a
                 className={`hover:bg-slate-300 dark:hover:bg-slate-200 p-1  border rounded cursor-pointer transition ${
                   customerList.includes(record.id)
@@ -164,7 +175,8 @@ export default function DayColumn({
             )}
           </div>
         </div>
-      ))}
+        );
+      })}
     </>
   );
 }

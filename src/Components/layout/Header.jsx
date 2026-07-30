@@ -1,11 +1,15 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
-import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
+import { FaBars, FaTimes, FaSearch, FaBell } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import LogoTree from "../svg/LogoTree";
 import { getDateWeek, signout } from "../../api/pocketbase";
 import { useTaskStore } from "../../hooks/useTaskStore";
+import {
+  useNotificationStore,
+  useNewTaskIds,
+} from "../../hooks/useNotificationStore";
 import { IoIosRefresh } from "react-icons/io";
 import toast from "react-hot-toast";
 import pb from "../../api/pbConnect";
@@ -26,6 +30,15 @@ export default function Header({
   const [refreshing, setRefreshing] = useState(false);
 
   const user = pb.authStore.record;
+
+  const initLastSeen = useNotificationStore((state) => state.initLastSeen);
+  const markAllSeen = useNotificationStore((state) => state.markAllSeen);
+  const newTaskIds = useNewTaskIds();
+  const newTaskCount = newTaskIds.size;
+
+  useEffect(() => {
+    if (user?.id) initLastSeen(user.id);
+  }, [user?.id, initLastSeen]);
 
   const handleManualRefresh = async () => {
     setRefreshing(true);
@@ -211,6 +224,22 @@ export default function Header({
                 <div className="hidden md:flex">
                   <DarkModeToggle />
                 </div>
+                <button
+                  onClick={markAllSeen}
+                  title={
+                    newTaskCount > 0
+                      ? `${newTaskCount} new task${newTaskCount === 1 ? "" : "s"} — click to mark seen`
+                      : "No new tasks"
+                  }
+                  className="relative hover:text-blue-500 flex justify-center items-center"
+                >
+                  <FaBell fontSize={"1.2rem"} />
+                  {newTaskCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] leading-none rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
+                      {newTaskCount > 9 ? "9+" : newTaskCount}
+                    </span>
+                  )}
+                </button>
                 <NavLink
                   className={
                     "hover:text-blue-500 flex justify-center items-center "
