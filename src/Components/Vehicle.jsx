@@ -422,29 +422,51 @@ export default function Vehicle({
                 {grid[1]}
               </div>
               <div className="order-2 border-2 dark:border-darkBorder  border-black w-2/3 h-full grid grid-cols-3 grid-rows-3">
-                {grid.slice(2).map((item, index) => (
-                  <p
-                    key={index + 2}
-                    data-shape-blocker
-                    onClick={(e) => handleTrolleyName(e, index + 2)}
-                    className="border-2 text-center dark:border-darkBorder  border-black flex justify-center items-center hover:bg-white hover:cursor-pointer"
-                  >
-                    {item}
-                  </p>
-                ))}
+                {grid.slice(2).map((item, index, arr) => {
+                  // Only border the right/bottom of each cell (skipped on the
+                  // last column/row) so shared edges aren't doubled up against
+                  // the wrapping div's own border.
+                  const isLastCol = (index + 1) % 3 === 0;
+                  const isLastRow = index >= (Math.ceil(arr.length / 3) - 1) * 3;
+                  return (
+                    <p
+                      key={index + 2}
+                      data-shape-blocker
+                      onClick={(e) => handleTrolleyName(e, index + 2)}
+                      className={`text-center dark:border-darkBorder border-black flex justify-center items-center hover:bg-white hover:cursor-pointer ${
+                        isLastCol ? "" : "border-r-2"
+                      } ${isLastRow ? "" : "border-b-2"}`}
+                    >
+                      {item}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           ) : (
-            grid.map((item, index) => (
-              <p
-                key={index}
-                data-shape-blocker
-                onClick={(e) => handleTrolleyName(e, index)}
-                className="h-full w-full p-2 text-center border-[1px] md:border-2 border-black dark:border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center  hover:cursor-pointer"
-              >
-                {item}
-              </p>
-            ))
+            grid.map((item, index) => {
+              // Only border the right/bottom of each cell (skipped on the
+              // last column/row) so shared edges aren't doubled up against
+              // the canvas's own outer border.
+              const isLastCol = (index + 1) % GRID_COLS === 0;
+              // Based on the canvas's fixed GRID_ROWS capacity, not
+              // grid.length — otherwise a partially-filled canvas (e.g. only
+              // one row of trolleys placed) treats that row as "last" and
+              // drops its bottom border, even though empty rows remain below it.
+              const isLastRow = index >= (GRID_ROWS - 1) * GRID_COLS;
+              return (
+                <p
+                  key={index}
+                  data-shape-blocker
+                  onClick={(e) => handleTrolleyName(e, index)}
+                  className={`h-full w-full p-2 text-center border-black dark:border-darkBorder hover:bg-slate-200 dark:hover:bg-slate-400 flex justify-center items-center hover:cursor-pointer ${
+                    isLastCol ? "" : "border-r-[1px] md:border-r-2"
+                  } ${isLastRow ? "" : "border-b-[1px] md:border-b-2"}`}
+                >
+                  {item}
+                </p>
+              );
+            })
           )}
 
           {shapes.map((shape) => {
