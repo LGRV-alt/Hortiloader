@@ -111,21 +111,21 @@ export default function DragAndDropList({
   return (
     <div className="w-full dark:border-darkBorder border-black border-2 rounded-lg p-2">
       {/* This is the view when working on the page and not exporting the PDF */}
-      <div className="print:hidden flex justify-between items-center border-black border-b-2 pb-2">
+      <div className="print:hidden flex justify-between items-center dark:border-darkBorder border-black border-b-2 pb-2">
         <p className="text-sm md:text-base">Total Trollies-{trolleyTotal}</p>
 
         {!isEditing && (
           <div className="flex gap-2 print:hidden">
             <button
               onClick={() => setIsEditing((prev) => !prev)}
-              className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
+              className="md:p-2 p-1 text-sm md:text-base  bg-blue-600 text-white rounded-2xl hover:bg-blue-700"
             >
               {isEditing ? "Finish Editing" : "Edit"}
             </button>
             <div className="flex items-center">
               <button
                 onClick={saveToPocketBase}
-                className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
+                className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded-2xl hover:bg-blue-700"
               >
                 {saveStatus}
               </button>
@@ -133,7 +133,7 @@ export default function DragAndDropList({
 
             <button
               onClick={print}
-              className="md:p-2 p-1 text-sm md:text-base border-2 border-borderDark bg-blue-900 text-white rounded-2xl hover:bg-blue-300"
+              className="md:p-2 p-1 text-sm md:text-base bg-blue-600 text-white rounded-2xl hover:bg-blue-700"
             >
               Print
             </button>
@@ -163,7 +163,7 @@ export default function DragAndDropList({
       <div
         className={`${
           printing ? "flex" : "hidden"
-        } justify-between dark:border-borderDark border-black border-b-2 md:pb-2`}
+        } justify-between dark:border-borderDark border-black border-b-2 md:pb-4`}
       >
         <div className="flex gap-2  md:gap-8 md:text-lg text-xs md:justify-between">
           <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>
