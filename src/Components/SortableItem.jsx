@@ -85,7 +85,7 @@ export default function SortableItem({
     >
       {isEditing ? (
         <div className=" flex flex-col items-center text-xs md:text-base ">
-          <div className="flex gap-2 p-2 text-black">
+          <div className="flex gap-2 p-2 text-black ">
             <span
               {...attributes}
               {...listeners}
@@ -125,7 +125,7 @@ export default function SortableItem({
             />
             <input
               type="text"
-              className="w-full border rounded text-center border-borderDark dark:bg-slate-100"
+              className="w-full border  rounded text-center border-borderDark dark:bg-slate-100"
               value={formData.extras}
               onChange={(e) => handleChange("extras", e.target.value)}
               placeholder="Extras"
@@ -138,9 +138,9 @@ export default function SortableItem({
             </button>
           </div>
 
-          <input
+          <textarea
             type="text"
-            className="w-3/4 border rounded text-center border-borderDark dark:bg-slate-100 text-black"
+            className="w-full text-center border rounded border-borderDark dark:bg-slate-100 text-black"
             value={formData.orderInfo}
             onChange={(e) => handleChange("orderInfo", e.target.value)}
             placeholder="Order Info"
