@@ -163,7 +163,7 @@ export default function DragAndDropList({
       <div
         className={`${
           printing ? "flex" : "hidden"
-        } justify-between dark:border-borderDark border-black border-b-2 md:pb-4`}
+        } justify-between dark:border-borderDark border-black border-b-2 md:pb-2`}
       >
         <div className="flex gap-2  md:gap-8 md:text-lg text-xs md:justify-between">
           <p>{`${vehicleInfo.driver.toUpperCase()}`}</p>

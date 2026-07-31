@@ -25,8 +25,8 @@ export default function ChangelogModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-4xl w-full p-12 shadow-2xl">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 h-full p-4 overflow-auto text-xs md:text-base">
+      <div className="bg-white rounded-2xl max-w-4xl w-full md:p-12 p-4 h-3/4 shadow-2xl ">
         <h2 className="text-2xl font-bold mb-4">What's New 🎉</h2>
 
         <div className="space-y-4 mb-6">

@@ -274,7 +274,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="border-l-2 md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main dark:bg-darkSecondary dark:border-darkBorder  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6 ">
+        <div className="md:border-l-2 md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main dark:bg-darkSecondary dark:border-darkBorder  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6 ">
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="flex justify-end hover:text-red-600  text-white "
