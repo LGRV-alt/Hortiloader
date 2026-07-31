@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 const LAST_SEEN_KEY = "changelog_last_seen";
 
 // Change this when updating something new
-const CURRENT_VERSION = "2026-07-02";
+const CURRENT_VERSION = "2026-07-31";
 
 export default function ChangelogModal() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +31,32 @@ export default function ChangelogModal() {
 
         <div className="space-y-4 mb-6">
           <div>
+            <h3 className="font-semibold text-lg">Jul 31, 2026 Update</h3>
+            <ul className="list-disc pl-5 text-gray-700 ">
+              <li>
+                <span className="font-extrabold">Notifications</span> - New
+                tasks are now highlighted, bell icon located in the header shows
+                how many are unread. Click the bell icon to clear the view.
+              </li>
+              <li>
+                <span className="font-extrabold">Trolley Mapper</span> - Added
+                pallets, trees and loose trollies that can be added to each load
+                map.
+              </li>
+              <li>
+                <span className="font-extrabold">Tasks </span>- Each task now
+                has a history section showing each update the task has been
+                through.
+              </li>
+            </ul>
+          </div>
+          <div>
             <h3 className="font-semibold text-lg">Jul 2, 2026 Update</h3>
             <ul className="list-disc pl-5 text-gray-700">
               <li>
-                Dark mode is now available. Click the icon at the top of the
-                page to switch between light and dark mode. Your preference will
-                be saved in your browser.
+                Dark mode is now available. Click the icon located within the
+                sidebar menu to switch between light and dark mode. Your
+                preference will be saved in your browser.
               </li>
             </ul>
           </div>
