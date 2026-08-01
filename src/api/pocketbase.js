@@ -235,6 +235,22 @@ export function signout() {
   // window.location.reload();
 }
 
+// PocketBase validation errors carry per-field detail under error.data.data
+// (error.data is an alias for the raw response body). Surface that instead
+// of the generic "Failed to create record." message when it's available.
+function extractSignupErrorMessage(error) {
+  const fieldErrors = error?.data?.data;
+  if (fieldErrors && typeof fieldErrors === "object") {
+    const messages = Object.values(fieldErrors)
+      .map((info) => info?.message)
+      .filter(Boolean);
+    if (messages.length > 0) {
+      return messages.join(" ");
+    }
+  }
+  return error?.message || "Signup failed.";
+}
+
 export async function signup(
   username,
   password,
@@ -243,46 +259,81 @@ export async function signup(
   orgName,
   display_username
 ) {
+  const trimmedOrgName = orgName.trim();
+  const trimmedUsername = username.trim();
+  const trimmedEmail = email.trim();
+  const trimmedDisplayUsername = display_username.trim();
+
   try {
     // 1. Check if org name already exists
-    const existing = await pb.collection("organization").getFullList({
-      filter: `name = "${orgName}"`,
+    const existingOrg = await pb.collection("organization").getFullList({
+      filter: `name = "${trimmedOrgName}"`,
     });
-    console.log(existing);
-    if (existing.length > 0) {
+    if (existingOrg.length > 0) {
       return {
         success: false,
         message: "Organization name already exists. Please choose another.",
       };
     }
+
+    // 2. Check if the email is already registered to an account.
+    // (Username doesn't need its own check: it's always prefixed with the
+    // org name, and the org name is already confirmed unique above, so the
+    // combined username can't collide with an existing one.)
+    const existingEmail = await pb.collection("users").getFullList({
+      filter: `email = "${trimmedEmail}"`,
+    });
+    if (existingEmail.length > 0) {
+      return {
+        success: false,
+        message: "An account with that email already exists.",
+      };
+    }
+
     // Create Org
-    const org = await pb.collection("organization").create({ name: orgName });
+    const org = await pb
+      .collection("organization")
+      .create({ name: trimmedOrgName });
 
     const data = {
-      username,
+      username: trimmedUsername,
       password,
       passwordConfirm: password,
-      email,
+      email: trimmedEmail,
       termsAgreement,
       organization: org.id,
       role: "admin",
-      display_username,
+      display_username: trimmedDisplayUsername,
     };
 
-    // Create User
-    const createdUser = await pb.collection("users").create(data);
+    let createdUser;
+    try {
+      // Create User
+      createdUser = await pb.collection("users").create(data);
 
-    // Set org's owner field to this user's id
-    await pb.collection("organization").update(org.id, {
-      owner: createdUser.id,
-    });
+      // Set org's owner field to this user's id
+      await pb.collection("organization").update(org.id, {
+        owner: createdUser.id,
+      });
+    } catch (error) {
+      // Roll back the org so a failed signup doesn't permanently claim its name
+      try {
+        await pb.collection("organization").delete(org.id);
+      } catch (cleanupError) {
+        console.error(
+          "Failed to roll back orphaned organization:",
+          cleanupError,
+        );
+      }
+      throw error;
+    }
 
     // Optional: Trigger verification email
-    await pb.collection("users").requestVerification(email);
+    await pb.collection("users").requestVerification(trimmedEmail);
 
     return { success: true, user: createdUser };
   } catch (error) {
-    return { success: false, message: error.message || "Signup failed." };
+    return { success: false, message: extractSignupErrorMessage(error) };
   }
 }
 

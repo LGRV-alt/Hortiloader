@@ -87,20 +87,20 @@ export default function Header({
   }
 
   return (
-    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkMain dark:border-darkBorder text-white pr-4 py-1 flex justify-between items-center relative h-full">
+    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkMain dark:border-darkBorder text-white px-2 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
         className="flex items-center gap-2"
       >
-        <Link className="md:hidden" to="/">
-          <LogoTree height="40px" width="40px" />
+        <Link className="lg:hidden" to="/">
+          <LogoTree height="60px" width="50px" />
         </Link>
         <Link to="/" className="hidden lg:flex pl-1">
           <HortiLoaderWordmark height="35px" />
         </Link>
         {/* Year Selection and Current Week */}
-        <div className=" flex-col hidden md:flex text-sm">
+        <div className=" flex-col hidden md:flex pl-3 lg:pl-0 text-sm">
           <div>
             <span className="pr-1">Year</span>
             <select

@@ -3,6 +3,7 @@ import { login, signup } from "../api/pocketbase";
 import LogoTree from "../Components/svg/LogoTree";
 import toast from "react-hot-toast";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import HortiLoaderWordmark from "../Components/svg/HortiLoaderWordmark";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -57,8 +58,18 @@ export default function Login() {
     )}`;
     const normOrg = normalizeInput(orgName);
     const display_username = normalizeInput(username);
-    if (!username || !password || !email) {
+    if (!username || !password || !email || !orgName) {
       toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (username.trim().length < 3) {
+      toast.error("Username must be at least 3 characters");
+      return;
+    }
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -112,6 +123,7 @@ export default function Login() {
   function normalizeInput(str) {
     return str
       ? str
+          .trim()
           .normalize("NFKD")
           .replace(/[\u0300-\u036f]/g, "")
           .toLowerCase()
@@ -121,41 +133,41 @@ export default function Login() {
 
   return (
     <div className="dark:bg-darkMain grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
-      <div className="flex flex-col mt-10 md:justify-center items-center">
+      <div className="flex flex-col md:justify-center items-center">
         {toggle ? (
           <form
             onSubmit={handleLogin}
-            className="dark:bg-darkSecondary border-darkBorder border-[3px] dark:text-white bg-white p-6 rounded shadow-xl w-80"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96 mt-10 md:mt0"
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
             <div className="space-y-4">
-              <label className="block text-sm font-light">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Organization Name
                 <input
                   type="text"
-                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={loginOrgName}
                   onChange={(e) => setLoginOrgName(e.target.value)}
                   required
                 />
               </label>
 
-              <label className="block text-sm font-light">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Username
                 <input
                   type="text"
-                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
                   required
                 />
               </label>
-              <label className="font-thin block text-sm">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Password
                 <input
                   type="password"
-                  className="p-1 rounded dark:bg-slate-600 text-lg font-medium w-full border-darkBorder border-2"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
@@ -166,7 +178,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loginStatus !== "Sign In"}
-              className="w-full mt-6 bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50"
+              className="w-full mt-6 bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loginStatus}
             </button>
@@ -174,21 +186,21 @@ export default function Login() {
               <button
                 type="button"
                 onClick={handleToggle}
-                className="text-blue-600 underline text-sm"
+                className="text-blue-600 dark:text-blue-400 underline text-sm"
               >
                 Create an account
               </button>
               <div className="mt-2">
                 <Link
                   to="/forgot-password"
-                  className="text-blue-600 hover:underline text-sm"
+                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
                 >
                   Forgot your password?
                 </Link>
                 <br />
                 <Link
                   to="/resend-verification"
-                  className="text-blue-600 hover:underline text-sm"
+                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
                 >
                   Didn't get a verification email?
                 </Link>
@@ -198,58 +210,58 @@ export default function Login() {
         ) : (
           <form
             onSubmit={handleSignup}
-            className="bg-white p-6 rounded shadow-xl w-80"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96 mt-10 md:mt-0"
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Sign up</h2>
             <div className="space-y-4">
-              <label className="block text-sm font-thin">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Organization Name
                 <input
                   type="text"
-                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                   required
                 />
               </label>
-              <label className="block text-sm font-thin">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Email
                 <input
                   type="email"
-                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   autoComplete="email"
                   required
                 />
               </label>
-              <label className="font-thin block text-sm">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Username
                 <input
                   type="text"
-                  className="font-medium text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   autoComplete="username"
                   required
                 />
               </label>
-              <label className="font-thin block text-sm">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Password
                 <input
                   type="password"
-                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="new-password"
                   required
                 />
               </label>
-              <label className="font-thin block text-sm">
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                 Confirm Password
                 <input
                   type="password"
-                  className="text-lg w-full border-b-2 outline-none focus:border-green-600"
+                  className="mt-1 w-full rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700/50 dark:text-white px-3 py-2 text-base font-medium outline-none transition focus:border-green-500 focus:ring-2 focus:ring-green-500/30"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   autoComplete="new-password"
@@ -260,15 +272,16 @@ export default function Login() {
             <button
               type="submit"
               disabled={signUpStatus !== "Sign up"}
-              className="w-full mt-6 bg-green-500 text-white py-2 rounded hover:bg-green-600 disabled:opacity-50"
+              className="w-full mt-6 bg-green-600 text-white py-2.5 rounded-lg font-medium hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {signUpStatus}
             </button>
-            <label className="flex items-start gap-2 text-sm mt-4">
+            <label className="flex items-start gap-2 text-sm mt-4 text-slate-600 dark:text-slate-300">
               <input
                 type="checkbox"
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
+                className="mt-0.5 accent-green-600"
                 required
               />
               <span>
@@ -276,7 +289,7 @@ export default function Login() {
                 <Link
                   to="/terms"
                   target="_blank"
-                  className="text-blue-600 underline"
+                  className="text-blue-600 dark:text-blue-400 underline"
                 >
                   Terms and Conditions
                 </Link>{" "}
@@ -284,7 +297,7 @@ export default function Login() {
                 <Link
                   to="/privacy"
                   target="_blank"
-                  className="text-blue-600 underline"
+                  className="text-blue-600 dark:text-blue-400 underline"
                 >
                   Privacy Policy
                 </Link>
@@ -294,7 +307,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={handleToggle}
-                className="text-blue-600 underline text-sm"
+                className="text-blue-600 dark:text-blue-400 underline text-sm"
               >
                 Continue to log in
               </button>
@@ -303,13 +316,13 @@ export default function Login() {
         )}
       </div>
 
-      <div className=" md:flex row-start-1 md:col-start-2 bg-regal-blue items-center justify-center">
+      <div className=" md:flex row-start-1 md:col-start-2 bg-regal-blue items-center justify-center pt-5 md:pt-0">
         <div className="flex flex-col items-center">
           <div className="hidden md:flex">
             {" "}
             <LogoTree height="200px" />
           </div>
-          <h2 className="text-5xl font-display text-white mt-4">HortiLoader</h2>
+          <HortiLoaderWordmark height="60px" />
           <p className="text-lg text-white">create and track orders</p>
         </div>
       </div>

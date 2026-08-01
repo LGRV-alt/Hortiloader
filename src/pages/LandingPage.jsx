@@ -11,9 +11,11 @@ export default function LandingPage() {
       <header className="w-full border-b-2 border-darkBorder bg-main dark:bg-darkMain text-white top-0 z-30">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
           <div className="flex items-center gap-3">
-            <LogoTree height="40px" width="40px" />
+            <span className="hidden">
+              <LogoTree className="hidden" height="40px" width="40px" />
+            </span>
             <a href="/" className="flex items-center">
-              <HortiLoaderWordmark height="32px" />
+              <HortiLoaderWordmark height="40px" />
             </a>
           </div>
           <nav className="hidden md:flex items-center gap-2 text-sm">
@@ -51,7 +53,7 @@ export default function LandingPage() {
           <div className="flex gap-2">
             <Link
               to="/login"
-              className="p-2 text-center md:px-4 text-xs rounded-lg bg-green-600  hover:border-green-500 border"
+              className="p-2 text-center md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
             >
               Log In
             </Link>
