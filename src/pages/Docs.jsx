@@ -14,6 +14,7 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 import HortiLoaderWordmark from "../Components/svg/HortiLoaderWordmark";
+import useAuth from "../hooks/useAuth";
 
 const DOCS_NAV = [
   {
@@ -154,7 +155,8 @@ const DOCS_SECTIONS = {
   },
   search: {
     title: "Search",
-    description: "Quickly find a task or customer without scrolling through weeks of the board.",
+    description:
+      "Quickly find a task or customer without scrolling through weeks of the board.",
     subsections: [
       {
         heading: "What you can search",
@@ -288,6 +290,7 @@ const CALLOUT_LABELS = { note: "Note", tip: "Tip" };
 
 export default function Docs() {
   const { topic } = useParams();
+  const isAuthenticated = useAuth();
   const slug = DOCS_SECTIONS[topic] ? topic : DEFAULT_SLUG;
   const activeSection = DOCS_SECTIONS[slug];
 
@@ -296,18 +299,14 @@ export default function Docs() {
   }, [slug]);
 
   return (
-    <div className="flex flex-col md:flex-row w-full min-h-dvh bg-white dark:bg-darkMain dark:text-white text-gray-800">
+    <div className="flex flex-col md:flex-row w-full h-full bg-white dark:bg-darkMain dark:text-white text-gray-800">
       {/* Sidebar */}
       <aside className="md:w-64 shrink-0 border-b md:border-b-0 md:border-r border-gray-200 dark:border-darkBorder px-5 py-6 md:sticky md:top-0 md:h-dvh md:overflow-y-auto">
-        <Link to="/" className="inline-flex mb-4">
-          <HortiLoaderWordmark height="28px" />
-        </Link>
-        <Link
-          to="/"
-          className="text-blue-500 hover:text-blue-600 text-sm inline-flex items-center gap-1 mb-8"
-        >
-          ← Home
-        </Link>
+        {!isAuthenticated && (
+          <Link to="/" className="inline-flex mb-4">
+            <HortiLoaderWordmark height="40px" />
+          </Link>
+        )}
         <h2 className="text-xs font-semibold tracking-wider text-gray-400 dark:text-gray-500 uppercase mb-3 px-1">
           Documentation
         </h2>
@@ -332,9 +331,7 @@ export default function Docs() {
                       }`}
                     >
                       <Icon
-                        className={
-                          isActive ? "opacity-90" : "opacity-60"
-                        }
+                        className={isActive ? "opacity-90" : "opacity-60"}
                         size={13}
                       />
                       {item.title}
@@ -407,7 +404,7 @@ export default function Docs() {
             {activeSection.subsections.map((sub) => (
               <a
                 key={sub.heading}
-                href={`#${sub.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                // href={`#${sub.heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                 className="pl-3 -ml-px text-sm text-gray-500 dark:text-gray-400 hover:text-blue-500 border-l border-transparent hover:border-blue-500 transition-colors"
               >
                 {sub.heading}
