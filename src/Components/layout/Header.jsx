@@ -4,6 +4,7 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { FaBars, FaTimes, FaSearch, FaBell } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import LogoTree from "../svg/LogoTree";
+import HortiLoaderWordmark from "../svg/HortiLoaderWordmark";
 import { getDateWeek, signout } from "../../api/pocketbase";
 import { useTaskStore } from "../../hooks/useTaskStore";
 import {
@@ -86,19 +87,17 @@ export default function Header({
   }
 
   return (
-    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkMain dark:border-darkBorder text-white px-4 py-1 flex justify-between items-center relative h-full">
+    <header className="z-50 border-b-2 border-black bg-main dark:bg-darkMain dark:border-darkBorder text-white pr-4 py-1 flex justify-between items-center relative h-full">
       {/* Left: Logo and Title */}
       <div
         onClick={() => setMenuOpen(false)}
         className="flex items-center gap-2"
       >
-        <Link to="/">
+        <Link className="md:hidden" to="/">
           <LogoTree height="40px" width="40px" />
         </Link>
-        <Link to="/">
-          <h1 className="text-4xl font-display hidden lg:flex pr-4 tracking-tight">
-            HortiLoader
-          </h1>
+        <Link to="/" className="hidden lg:flex pl-1">
+          <HortiLoaderWordmark height="35px" />
         </Link>
         {/* Year Selection and Current Week */}
         <div className=" flex-col hidden md:flex text-sm">
@@ -251,7 +250,7 @@ export default function Header({
                 </NavLink>
                 <button
                   onClick={() => setMenuOpen((prev) => !prev)}
-                  className="ml-2 text-white hover:text-blue-500 "
+                  className=" text-white hover:text-blue-500 "
                 >
                   {menuOpen ? (
                     <FaTimes fontSize="1.5rem" />
@@ -343,6 +342,13 @@ export default function Header({
             >
               Settings
             </NavLink>
+            <NavLink
+              to="/docs"
+              onClick={() => setMenuOpen(false)}
+              className="hover:text-blue-300"
+            >
+              Docs
+            </NavLink>
             {user.role === "admin" && (
               <NavLink
                 to="/logs"
@@ -353,6 +359,13 @@ export default function Header({
               </NavLink>
             )}
             <DarkModeToggle />
+            <button
+              onClick={signout}
+              className="w-1/2 
+               bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
+            >
+              Logout
+            </button>
           </div>
           <div className="text-lg flex flex-col gap-2 w-full items-center">
             <button

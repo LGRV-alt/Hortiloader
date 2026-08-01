@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import LogoTree from "../Components/svg/LogoTree";
+import HortiLoaderWordmark from "../Components/svg/HortiLoaderWordmark";
 import DarkmodeToggle from "../Components/DarkmodeToggle";
 
 export default function LandingPage() {
@@ -11,11 +12,8 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
           <div className="flex items-center gap-3">
             <LogoTree height="40px" width="40px" />
-            <a
-              href="/"
-              className="text-2xl md:text-4xl font-display font-semi-bold tracking-tight"
-            >
-              Hortiloader
+            <a href="/" className="flex items-center">
+              <HortiLoaderWordmark height="32px" />
             </a>
           </div>
           <nav className="hidden md:flex items-center gap-2 text-sm">
@@ -43,6 +41,12 @@ export default function LandingPage() {
             >
               Contact
             </a>
+            <Link
+              to="/docs"
+              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
+            >
+              Docs
+            </Link>
           </nav>
           <div className="flex gap-2">
             <Link
@@ -224,6 +228,9 @@ export default function LandingPage() {
           </Link>
           <Link to="/terms" className="hover:text-slate-950">
             Terms
+          </Link>
+          <Link to="/docs" className="hover:text-slate-950">
+            Docs
           </Link>
           <Link to="/login" className="hover:text-slate-950">
             Login

@@ -19,6 +19,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import Docs from "./pages/Docs";
 
 import AuthRedirect from "./Components/AuthRedirect";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -271,6 +272,8 @@ export default function App() {
               />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/docs/:topic" element={<Docs />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
                 path="/auth/confirm-password-reset/:token"
@@ -302,6 +305,8 @@ export default function App() {
             <Route path="/_/" element={<AuthRedirect />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/docs/:topic" element={<Docs />} />
             <Route path="/accept-terms" element={<AcceptTerms />} />
             <Route path="/landing-page" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
