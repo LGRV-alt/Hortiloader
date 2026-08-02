@@ -87,7 +87,7 @@ const DOCS_SECTIONS = {
   board: {
     title: "The Board & Tasks",
     description:
-      "The main board is where weekly deliveries are planned, reordered, and tracked day by day.",
+      "The main board is where weekly deliveries and tasks are planned, reordered and tracked day by day.",
     subsections: [
       {
         heading: "Viewing the board",
@@ -98,13 +98,13 @@ const DOCS_SECTIONS = {
       {
         heading: "Moving tasks around",
         body: [
-          "Tasks can be dragged and dropped to reorder them within a day or move them to a different day entirely, making it easy to reschedule work as plans change.",
+          "Click a task to open it, then update its proposed day from there — an easy way to keep the week current.",
         ],
       },
       {
         heading: "Task status at a glance",
         body: [
-          "Each task card is designed to be scannable — you should be able to tell what's outstanding for a given day without opening anything.",
+          "Each task card is designed to be scannable — you should be able to tell what's outstanding for a given day without opening anything. Icons show load status and colours indicate different customer or task types. On desktop, hovering over a task name will also display any saved notes.",
         ],
       },
     ],
@@ -112,18 +112,18 @@ const DOCS_SECTIONS = {
   "editing-tasks": {
     title: "Editing & Viewing Tasks",
     description:
-      "Open any task to see full details, make changes, or remove it from the board.",
+      "Open any task to see full details, make changes or remove it from the board.",
     subsections: [
       {
         heading: "Opening a task",
         body: [
-          "Selecting a task from the board opens a detail view with everything recorded against it — customer, quantities, and delivery information.",
+          "Selecting a task from the board opens a detailed view with everything recorded against it — customer, quantities and delivery information.",
         ],
       },
       {
         heading: "Editing details",
         body: [
-          "From the detail view you can update any of a task's information. Changes are saved back to the shared board so other users see them right away.",
+          "From the detailed view you can update any of a task's information. Changes are saved back to the shared board so other users see them right away.",
         ],
       },
       {
@@ -142,7 +142,7 @@ const DOCS_SECTIONS = {
       {
         heading: "What counts as a collection",
         body: [
-          "Some tasks are about collecting stock rather than delivering it. The Collections page brings these together in one place instead of mixing them into the weekly board.",
+          "Some tasks are about collecting stock rather than delivering it. The Collections page brings these together in one place. Although the collections are also found on the main board, this view allows a clear view of the orders for collection.",
         ],
       },
       {
@@ -198,24 +198,36 @@ const DOCS_SECTIONS = {
   "trolley-mapper": {
     title: "Trolley Mapper & Delivery Runs",
     description:
-      "Group tasks into a delivery run, plan the route, and export it for the day.",
+      "Group tasks into a delivery run, plan the route and export it for the day.",
     subsections: [
       {
         heading: "Creating a run",
         body: [
-          "The Trolley Mapper lets you select tasks from the board and group them into a delivery run.",
+          "Click Create Delivery Group in the header to enter selection mode, where you can pick tasks from the board to add to your list. Once you've selected the tasks you want, create the run — this opens the Trolley Mapper page with those tasks loaded in.",
         ],
       },
       {
-        heading: "Ordering stops",
+        heading: "Task List",
         body: [
-          "Once tasks are grouped, lay out the order customers will be visited so drivers have a clear sequence to follow.",
+          "Once tasks are imported, they're placed in a numbered list. Reorder them with drag and drop to match the delivery sequence.",
+        ],
+      },
+      {
+        heading: "Load Map",
+        body: [
+          "The load map starts as a blank area representing the load space. Use the buttons above to fill a standard 4×6 grid — once you've selected the right number of rows, empty boxes will appear. Click any task/order, then click a box to assign it a name, building a readable map for loading. You can also drag and drop non-fixed items, like pallets or loose trees into place.",
+        ],
+      },
+      {
+        heading: "Printing",
+        body: [
+          "Once the load map is complete, save and print the current view. This opens a print screen where you can check everything is displayed properly — the maps are best viewed in landscape orientation, and a custom scale may be needed depending on your screen size.",
         ],
       },
       {
         heading: "Viewing past runs",
         body: [
-          "Every run you create appears under Delivery Runs, where you can review its contents at any time.",
+          "Every run you create appears under Delivery Runs, where you can review and update its contents at any time.",
         ],
       },
       {
@@ -228,18 +240,18 @@ const DOCS_SECTIONS = {
   },
   "label-manager": {
     title: "Label Manager",
-    description: "Create and manage plant labels for printing.",
+    description: "Manage plant labels",
     subsections: [
       {
-        heading: "Creating labels",
+        heading: "Label stock",
         body: [
-          "The Label Manager is used to create plant labels, keeping label information consistent across deliveries.",
+          "The Label Manager is used to maintain label stock. You can input the name of a label and mark it as currently in stock or needing printing — this suits an organization that uses print-on-demand services but also keeps some labels in stock on site.",
         ],
       },
       {
-        heading: "Printing labels",
+        heading: "Naming",
         body: [
-          "Once labels are set up, they can be printed directly from this page ahead of a delivery run.",
+          "To keep the list working as intended, label names should stay uniform — even slightly different spelling can create a new item instead of matching an existing one.",
         ],
       },
     ],
@@ -257,7 +269,7 @@ const DOCS_SECTIONS = {
       {
         heading: "Who can change settings",
         body: [
-          "Admins can also manage team accounts and roles from Settings — this is where new users get added.",
+          "Admins can also manage team accounts and roles from Settings — this is where new users get added and the weekly headings can be changed or updated.",
         ],
       },
     ],
@@ -269,7 +281,7 @@ const DOCS_SECTIONS = {
       {
         heading: "What's logged",
         body: [
-          "Admins can view a log of deleted tasks, including who deleted them and when, giving a history of changes made to the board.",
+          "Admins can view a log of deleted tasks, including who deleted them and when, giving a history of changes made to the board. Tasks can be permanently deleted or restored from this page.",
         ],
       },
       {
