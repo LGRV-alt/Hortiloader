@@ -57,25 +57,25 @@ const DOCS_SECTIONS = {
   "getting-started": {
     title: "Getting Started",
     description:
-      "A quick orientation before your first delivery week — what HortiLoader is, and how to sign in.",
+      "A quick orientation before your first delivery week — what HortiLoader is and how to sign in.",
     subsections: [
       {
         heading: "What is HortiLoader?",
         body: [
-          "HortiLoader is a shared whiteboard and calendar for planning weekly delivery tasks and tracking trolleys. Everyone on your team works against the same board, and changes sync automatically so you always see up to date information.",
+          "HortiLoader is a shared whiteboard and calendar for planning weekly deliveries and tasks and tracking trolleys. Everyone on your team works against the same board and changes sync automatically so you always see up to date information.",
         ],
       },
       {
         heading: "Signing in",
         body: [
-          "Log in with your username, password, and organization name — all three are required, since one HortiLoader instance can serve multiple organizations.",
+          "Log in with your organization name, username and password — all three are required. ",
           "If you don't have an account yet, ask an admin at your organization to create one for you. Admins can add accounts from the Settings page.",
         ],
       },
       {
         heading: "Finding your way around",
         body: [
-          "The header along the top gives you week/year navigation, quick actions, and a menu with links to every area of the app. Most day-to-day work happens on the main board.",
+          "The header along the top gives you week/year navigation, quick actions and a menu with links to every area of the app. Most day-to-day work happens on the main board.",
         ],
       },
     ],
