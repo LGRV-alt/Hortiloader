@@ -7,6 +7,7 @@ test.describe("Check Login and Logout Flow", () => {
     const logInButton = page.getByRole("link", { name: "Log In" });
     // Page selectors
     const signInButton = page.getByRole("button", { name: "Sign in" });
+    const sidebarButton = page.getByTestId("sidebar-button");
 
     // Helper Function for loggin in
     await login(page, "Testing", "Testing", "Password1");
@@ -18,7 +19,7 @@ test.describe("Check Login and Logout Flow", () => {
     await expect(addOrderButton).toBeVisible({ timeout: 10000 });
 
     // Hit the button to show the dropdown menu and click logout
-    await page.locator(".ml-2").click();
+    await sidebarButton.click();
     await page.getByRole("button", { name: "Logout" }).click();
 
     // Assert that the page is back to the signin page

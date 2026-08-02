@@ -5,7 +5,7 @@ export async function login(
   page: Page,
   orgName: string,
   username: string,
-  password: string
+  password: string,
 ) {
   await page.addInitScript(() => {
     localStorage.setItem("changelog_last_seen", "2026-01-10");
@@ -18,8 +18,8 @@ export async function login(
   // ... rest of your test
 
   // Assign the title
-  const landingPageTitle = page.getByRole("link", { name: "Hortiloader" });
-  const LoginTitle = page.getByRole("heading", { name: "Hortiloader" });
+  const landingPageTitle = page.getByTestId("landing-page-header");
+  const LoginTitle = page.getByText("create and track orders");
 
   // Assign the locators for organization name, username and password
   const loginBtn = page.getByRole("link", { name: "Log In" });

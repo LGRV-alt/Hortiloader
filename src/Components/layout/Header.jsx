@@ -96,7 +96,7 @@ export default function Header({
         <Link className="lg:hidden" to="/">
           <LogoTree height="60px" width="50px" />
         </Link>
-        <Link to="/" className="hidden lg:flex pl-1">
+        <Link data-testid="Header" to="/" className="hidden lg:flex pl-1">
           <HortiLoaderWordmark height="35px" />
         </Link>
         {/* Year Selection and Current Week */}
@@ -249,6 +249,7 @@ export default function Header({
                   <FaSearch fontSize={"1.2rem"} />
                 </NavLink>
                 <button
+                  data-testid="sidebar-button"
                   onClick={() => setMenuOpen((prev) => !prev)}
                   className=" text-white hover:text-blue-500 "
                 >
@@ -384,12 +385,12 @@ export default function Header({
               </button>
             </Link>
 
-            <button
+            {/* <button
               onClick={signout}
               className="w-1/2 md:mt-32 bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </div>
       )}

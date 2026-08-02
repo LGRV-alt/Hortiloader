@@ -14,7 +14,11 @@ export default function LandingPage() {
             <span className="hidden">
               <LogoTree className="hidden" height="40px" width="40px" />
             </span>
-            <a href="/" className="flex items-center">
+            <a
+              href="/"
+              data-testid="landing-page-header"
+              className="flex items-center"
+            >
               <HortiLoaderWordmark height="40px" />
             </a>
           </div>
