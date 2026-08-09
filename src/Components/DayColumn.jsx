@@ -113,10 +113,10 @@ export default function DayColumn({
               )} */}
               {edit ? (
                 <a
-                  className={` dark:hover:border-blue-600 p-1 border-2 border-black dark:border-white rounded cursor-pointer transition ${
+                  className={`p-1 border-2 rounded cursor-pointer transition ${
                     customerList.includes(record.id)
-                      ? "dark:border-blue-600 border-blue-600 hover:border-red-500 dark:hover:border-red-500"
-                      : "dark:bg-darkMain bg-white"
+                      ? "border-blue-600 dark:border-blue-600 hover:border-red-500 dark:hover:border-red-500"
+                      : "border-black dark:border-white bg-white dark:bg-darkMain hover:border-black dark:hover:border-blue-600"
                   }`}
                   data-tooltip-id={`my-tooltip-${record.id}`}
                   data-tooltip-content={record.orderInfo}
