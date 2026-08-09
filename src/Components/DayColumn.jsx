@@ -65,9 +65,9 @@ export default function DayColumn({
       case "working":
         return <TiSpanner fontSize="1.5em" />;
       case "missed":
-        return <MdOutlineQuestionMark fontSize="1.5em" />;
+        return <MdOutlineQuestionMark color="red" fontSize="1.5em" />;
       default:
-        return <FaExclamation color="red" fontSize="1em" />;
+        return <FaExclamation fontSize="1em" />;
     }
   };
 
