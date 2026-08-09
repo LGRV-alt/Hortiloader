@@ -420,14 +420,14 @@ export default function Vehicle({
               <div
                 data-shape-blocker
                 onClick={(e) => handleTrolleyName(e, 0)}
-                className="border-black  dark:border-darkBorder border-4 w-2/3 h-12 flex justify-center items-center hover:bg-white hover:cursor-pointer"
+                className="border-black  dark:border-darkBorder border-4 w-2/3 h-12 flex justify-center items-center hover:bg-slate-500 hover:cursor-pointer"
               >
                 {grid[0]}
               </div>
               <div
                 data-shape-blocker
                 onClick={(e) => handleTrolleyName(e, 1)}
-                className="border-x-4 dark:border-darkBorder  border-black w-1/4 h-16 flex justify-center items-center hover:bg-white hover:cursor-pointer"
+                className="border-x-4 dark:border-darkBorder  border-black w-1/4 h-16 flex justify-center items-center hover:bg-slate-500 hover:cursor-pointer"
               >
                 {grid[1]}
               </div>
@@ -447,7 +447,7 @@ export default function Vehicle({
                       key={index + 2}
                       data-shape-blocker
                       onClick={(e) => handleTrolleyName(e, index + 2)}
-                      className={`text-center dark:border-darkBorder border-black flex justify-center items-center hover:bg-white hover:cursor-pointer ${
+                      className={`text-center dark:border-darkBorder border-black flex justify-center items-center hover:bg-slate-500 hover:cursor-pointer ${
                         isLastCol ? "" : "border-r-2"
                       } ${isLastRow ? "" : "border-b-2"}`}
                     >

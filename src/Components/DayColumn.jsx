@@ -102,8 +102,8 @@ export default function DayColumn({
           >
             <div
               className={`${
-                !edit && "p-1 hover:bg-slate-300 dark:hover:bg-darkBorder"
-              } flex justify-between w-full  hover:border-black  transition-all`}
+                !edit && " hover:bg-slate-300 dark:hover:bg-darkBorder"
+              } p-1 flex justify-between w-full  hover:border-black  transition-all`}
             >
               {/* {isNew && (
                 <span
@@ -113,9 +113,9 @@ export default function DayColumn({
               )} */}
               {edit ? (
                 <a
-                  className={`hover:bg-slate-300 dark:hover:bg-slate-200 p-1  border rounded cursor-pointer transition ${
+                  className={` dark:hover:border-blue-600 p-1 border-2 border-black dark:border-white rounded cursor-pointer transition ${
                     customerList.includes(record.id)
-                      ? "dark:bg-darkBorder bg-blue-200"
+                      ? "dark:border-blue-600 border-blue-600 hover:border-red-500 dark:hover:border-red-500"
                       : "dark:bg-darkMain bg-white"
                   }`}
                   data-tooltip-id={`my-tooltip-${record.id}`}
