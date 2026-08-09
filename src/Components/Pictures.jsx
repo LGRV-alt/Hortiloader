@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import pb from "../api/pbConnect";
 import toast from "react-hot-toast";
-import { AiFillFilePdf } from "react-icons/ai";
+import { AiFillFilePdf, AiFillFileImage, AiFillFile } from "react-icons/ai";
 
 Modal.setAppElement("#root");
+
+const isPdfFile = (filename) => filename.toLowerCase().endsWith(".pdf");
+const isImageFile = (filename) =>
+  /\.(jpe?g|png|gif|webp|svg|bmp)$/i.test(filename);
+
+const getFileUrl = (file) =>
+  `${pb.baseUrl}/api/files/${file.collectionId}/${file.id}/${file.file}`;
 
 const Pictures = ({ taskID, pictures, setPictures }) => {
   const [selectedPicture, setSelectedPicture] = useState(null);
@@ -44,7 +51,7 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
     try {
       await pb.collection("files").delete(pictureToDelete.id);
       setPictures((prev) =>
-        prev.filter((file) => file.id !== pictureToDelete.id)
+        prev.filter((file) => file.id !== pictureToDelete.id),
       );
       toast.success("File deleted successfully.");
       setShowDeleteModal(false);
@@ -66,53 +73,38 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
       {error && <p>{error}</p>}
       <div className="flex justify-center gap-2 flex-wrap pt-2">
         {pictures.map((picture) => {
-          const isPDF = picture.file.toLowerCase().endsWith(".pdf");
+          const isPDF = isPdfFile(picture.file);
+          const isImage = isImageFile(picture.file);
           return (
             <div
-              className="flex flex-col justify-center items-center text-center border-2 gap-1 bg-gray-100 hover:border-secondary-colour rounded-lg"
+              className="flex flex-col justify-center items-center text-center border-2 gap-1 bg-gray-100 dark:border-darkBorder dark:bg-slate-800 hover:border-secondary-colour rounded-lg"
               key={picture.id}
               style={{ width: "100px", minHeight: "100px" }}
             >
               <p className="md:text-lg capitalize w-full text-center">
                 {picture.title}
               </p>
-              {isPDF ? (
-                <a
-                  href={`${pb.baseUrl}/api/files/${picture.collectionId}/${picture.id}/${picture.file}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  <div
-                    style={{
-                      width: "50px",
-                      height: "50px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: "8px",
-                      backgroundColor: "#f3f4f6",
-                      cursor: "pointer",
-                    }}
-                  >
-                    {" "}
-                    <AiFillFilePdf size={60} color="#d32f2f" />
-                  </div>
-                </a>
-              ) : (
-                <img
-                  src={`${pb.baseUrl}/api/files/${picture.collectionId}/${picture.id}/${picture.file}`}
-                  alt={picture.title || "Uploaded image"}
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    objectFit: "cover",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => openModal(picture)}
-                />
-              )}
+              <div
+                onClick={() => openModal(picture)}
+                style={{
+                  width: "50px",
+                  height: "50px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  backgroundColor: "#f3f4f6",
+                  cursor: "pointer",
+                }}
+              >
+                {isPDF ? (
+                  <AiFillFilePdf size={32} color="#d32f2f" />
+                ) : isImage ? (
+                  <AiFillFileImage size={32} color="#2563eb" />
+                ) : (
+                  <AiFillFile size={32} color="#6b7280" />
+                )}
+              </div>
               {role !== "viewer" && (
                 <button
                   className="bg-red-600 w-full text-sm text-white font-semibold hover:bg-red-500"
@@ -170,18 +162,30 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
             </div>
           </div>
           <div className="flex-grow overflow-auto">
-            {selectedPicture.file.toLowerCase().endsWith(".pdf") ? (
+            {isPdfFile(selectedPicture.file) ? (
               <iframe
-                src={`${pb.baseUrl}/api/files/${selectedPicture.collectionId}/${selectedPicture.id}/${selectedPicture.file}`}
+                src={getFileUrl(selectedPicture)}
                 title="PDF Viewer"
                 className="w-full h-full bg-white"
               ></iframe>
-            ) : (
+            ) : isImageFile(selectedPicture.file) ? (
               <img
-                src={`${pb.baseUrl}/api/files/${selectedPicture.collectionId}/${selectedPicture.id}/${selectedPicture.file}`}
+                src={getFileUrl(selectedPicture)}
                 alt={selectedPicture.title || "Uploaded image"}
                 className="w-full h-full object-contain bg-black"
               />
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-white gap-4">
+                <AiFillFile size={80} color="#9ca3af" />
+                <a
+                  href={getFileUrl(selectedPicture)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-300 underline"
+                >
+                  Open {selectedPicture.title}
+                </a>
+              </div>
             )}
           </div>
         </Modal>

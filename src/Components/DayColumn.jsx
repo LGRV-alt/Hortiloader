@@ -96,7 +96,7 @@ export default function DayColumn({
         return (
           <div
             className={`flex justify-between items-center  text-[0.8rem] ${
-              isNew ? "bg-yellow-100 dark:bg-yellow-900/40" : ""
+              isNew ? "bg-yellow-100 dark:bg-red-900" : ""
             }`}
             key={record.id}
           >
