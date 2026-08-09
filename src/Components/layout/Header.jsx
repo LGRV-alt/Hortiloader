@@ -274,7 +274,7 @@ export default function Header({
 
       {/* Floating Nav Menu (absolute) */}
       {menuOpen && (
-        <div className="md:border-l-2 md:text-lg text-2xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main dark:bg-darkSecondary dark:border-darkBorder  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6 ">
+        <div className="overflow-auto md:border-l-2 md:text-lg text-xl tracking-tight font-semibold fixed items-end  inset-y-0 right-0  bg-main dark:bg-darkSecondary dark:border-darkBorder  text-white z-50 flex flex-col gap-4 px-3 py-4 w-full md:w-1/6 ">
           <button
             onClick={() => setMenuOpen((prev) => !prev)}
             className="flex justify-end hover:text-red-600  text-white "
@@ -286,7 +286,7 @@ export default function Header({
             )}
           </button>
           <div className="border-t-2 dark:border-darkBorder border-white w-full"></div>
-          <div className="md:pt-10 flex flex-col w-full items-center md:items-center gap-4 ">
+          <div className="md:pt-10 flex flex-col w-full items-center md:items-center gap-2 md:gap-4 ">
             <NavLink
               to="/"
               onClick={() => setMenuOpen(false)}
@@ -360,30 +360,33 @@ export default function Header({
               </NavLink>
             )}
             <DarkModeToggle />
-            <button
-              onClick={signout}
-              className="w-1/2 
-               bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
-            >
-              Logout
-            </button>
-          </div>
-          <div className="text-lg flex flex-col gap-2 w-full items-center">
-            <button
-              onClick={() => handleMapClick()}
-              className="w-1/2 bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
-            >
-              Map
-            </button>
-
-            <Link className="w-full flex justify-center" to="/create-customer">
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="w-1/2  bg-green-600 justify-center px-2 py-1 rounded hover:bg-green-700 flex md:hidden text-white"
+            <div className="text-lg flex flex-col gap-2 w-full items-center">
+              <Link
+                className="w-full flex justify-center"
+                to="/create-customer"
               >
-                Add Task
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="w-1/2  bg-green-600 justify-center px-2 py-1 rounded hover:bg-green-700 flex md:hidden text-white"
+                >
+                  Add Task
+                </button>
+              </Link>
+              <button
+                onClick={() => handleMapClick()}
+                className="w-1/2 bg-blue-600 px-2 justify-center py-1 rounded hover:bg-blue-700 flex md:hidden text-white"
+              >
+                Map
               </button>
-            </Link>
+
+              <button
+                onClick={signout}
+                className="w-1/2 
+               bg-red-600 px-2 py-1 rounded hover:bg-red-700 text-white"
+              >
+                Logout
+              </button>
+            </div>
 
             {/* <button
               onClick={signout}
