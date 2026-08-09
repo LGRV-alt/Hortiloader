@@ -77,9 +77,9 @@ const Pictures = ({ taskID, pictures, setPictures }) => {
           const isImage = isImageFile(picture.file);
           return (
             <div
-              className="flex flex-col justify-center items-center text-center border-2 gap-1 bg-gray-100 dark:border-darkBorder dark:bg-slate-800 hover:border-secondary-colour rounded-lg"
+              className="p-2 flex flex-col justify-center items-center text-center border-2 gap-1 bg-gray-100 dark:border-darkBorder dark:bg-slate-800 hover:border-secondary-colour rounded-lg"
               key={picture.id}
-              style={{ width: "100px", minHeight: "100px" }}
+              style={{ width: "150px", minHeight: "150px" }}
             >
               <p className="md:text-lg capitalize w-full text-center">
                 {picture.title}
