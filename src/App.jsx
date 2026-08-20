@@ -26,7 +26,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import DanishTrolleyLoader from "./Components/DanishTrolleyLoader";
 
 // -------------------Functions ------------------
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useAuth from "./hooks/useAuth";
 import { Toaster } from "react-hot-toast";
@@ -35,8 +35,6 @@ import { useTaskStore } from "./hooks/useTaskStore";
 import { getCurrentWeek } from "./utilis/dateUtils";
 import ViewExportPage from "./pages/ViewExportPage";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-import VerifyEmail from "./pages/auth/VerifyEmail";
-import ResendVerification from "./pages/auth/ResendVerification";
 import AcceptTerms from "./pages/auth/AcceptTerms";
 import CreateCustomer from "./pages/CreateCustomer";
 import { useSettingsStore } from "./hooks/useSettingsStore";
@@ -44,9 +42,13 @@ import ViewTask from "./pages/ViewTask";
 import NotFound from "./pages/NotFound";
 import LandingPage from "./pages/LandingPage";
 import ChangelogModal from "./pages/ChangelogModal";
+import SubscriptionGate from "./Components/SubscriptionGate";
+import TrialBanner from "./Components/TrialBanner";
+import SubscribeSuccess from "./pages/SubscribeSuccess";
 
 export default function App() {
   useAutoRefreshOnIdle();
+  const location = useLocation();
   const [chosenWeek, setChosenWeek] = useState(getCurrentWeek(new Date()));
   const [chosenYear, setChosenYear] = useState(2026);
   const [edit, setEdit] = useState(false);
@@ -106,8 +108,11 @@ export default function App() {
           top: 80,
         }}
       />
-      {isAuthenticated ? (
-        <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
+      {location.pathname === "/subscribe/success" ? (
+        <SubscribeSuccess />
+      ) : isAuthenticated ? (
+        <SubscriptionGate>
+          <div className="relative grid-cols-[1fr_10fr] grid-rows-[60px_10fr] grid w-screen h-dvh overflow-x-hidden">
           {loading && (
             <div
               className="fixed inset-0 z-50 bg-white/80 dark:bg-darkMain/80 backdrop-blur-sm
@@ -131,6 +136,7 @@ export default function App() {
             />
           </div>
           <div className="bg-white dark:bg-darkMain dark:text-white col-start-1 col-end-4 row-start-2 row-end-3">
+            <TrialBanner />
             <Routes>
               {/* Main Page */}
               <Route
@@ -279,13 +285,10 @@ export default function App() {
                 path="/auth/confirm-password-reset/:token"
                 element={<ResetPassword />}
               />
-              <Route
-                path="/resend-verification"
-                element={<ResendVerification />}
-              />
             </Routes>
           </div>
-        </div>
+          </div>
+        </SubscriptionGate>
       ) : (
         <div className="grid-cols-1 grid w-screen h-dvh overflow-x-hidden">
           <Routes>
@@ -293,14 +296,6 @@ export default function App() {
             <Route
               path="/auth/confirm-password-reset/:token"
               element={<ResetPassword />}
-            />
-            <Route
-              path="/auth/confirm-verification/:token"
-              element={<VerifyEmail />}
-            />
-            <Route
-              path="/resend-verification"
-              element={<ResendVerification />}
             />
             <Route path="/_/" element={<AuthRedirect />} />
             <Route path="/terms" element={<Terms />} />

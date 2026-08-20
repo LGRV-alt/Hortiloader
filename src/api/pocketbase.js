@@ -185,26 +185,37 @@ export async function updateTask(
 
 export async function login(username, password, orgName) {
   try {
-    // 1. Look up user by username (or email), get their org id
-    const users = await pb.collection("users").getFullList({
-      filter: `username="${username}"`,
-      expand: "organization",
-    });
-    const user = users[0];
-    if (!user) {
-      return {
-        success: false,
-        reason: "credentials",
-        message: "Incorrect username, password, or organization.",
-      };
-    }
+    // 1. Authenticate first. Looking the user up via an unauthenticated
+    // List query (the old approach) needs read access to `users` that
+    // the collection's list/view rules no longer grant - but
+    // authWithPassword() is its own endpoint and isn't gated by those
+    // rules, so it still works.
+    const authData = await pb
+      .collection("users")
+      .authWithPassword(username, password);
 
-    // 2. Load their organization and compare names (case-insensitive, trimmed)
-    const orgRecord = user.expand?.organization;
+    // 2. Load their organization and compare names (case-insensitive,
+    // trimmed) - the app's two-factor identity check. Sign back out on
+    // any mismatch so a wrong org name doesn't leave the browser
+    // authenticated.
+    // requestKey: null opts this out of the SDK's auto-cancellation -
+    // authWithPassword() succeeding updates pb.authStore synchronously,
+    // which triggers other listeners (e.g. useSubscriptionStatus) to
+    // immediately fire their own request to this same org record. Without
+    // this, those two GETs race and the SDK cancels one of them, which
+    // would otherwise throw here and incorrectly sign the user back out.
+    const orgId = authData.record.organization;
+    const orgRecord = orgId
+      ? await pb
+          .collection("organization")
+          .getOne(orgId, { requestKey: null })
+      : null;
+
     if (
       !orgRecord ||
       orgRecord.name.trim().toLowerCase() !== orgName.trim().toLowerCase()
     ) {
+      pb.authStore.clear();
       return {
         success: false,
         reason: "credentials",
@@ -212,15 +223,13 @@ export async function login(username, password, orgName) {
       };
     }
 
-    // 3. Actually authenticate (will update authStore)
-    await pb.collection("users").authWithPassword(username, password);
-
-    // 4. Other checks if you want (terms, verified, etc.)
+    // 3. Other checks if you want (terms, verified, etc.)
     // ...existing logic...
 
     return { success: true };
   } catch (error) {
     // ...existing error handling...
+    pb.authStore.clear();
     return {
       success: false,
       reason: "credentials",
@@ -265,35 +274,34 @@ export async function signup(
   const trimmedDisplayUsername = display_username.trim();
 
   try {
-    // 1. Check if org name already exists
-    const existingOrg = await pb.collection("organization").getFullList({
-      filter: `name = "${trimmedOrgName}"`,
-    });
-    if (existingOrg.length > 0) {
-      return {
-        success: false,
-        message: "Organization name already exists. Please choose another.",
-      };
-    }
+    // Billing is per-organization, tracked on the organization record
+    // itself. There's no server-side enforcement of these fields - see
+    // useSubscriptionStatus for how they're read and used.
+    const now = new Date();
+    const trialEnds = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+    const graceEnds = new Date(now.getTime() + 37 * 24 * 60 * 60 * 1000);
 
-    // 2. Check if the email is already registered to an account.
-    // (Username doesn't need its own check: it's always prefixed with the
-    // org name, and the org name is already confirmed unique above, so the
-    // combined username can't collide with an existing one.)
-    const existingEmail = await pb.collection("users").getFullList({
-      filter: `email = "${trimmedEmail}"`,
-    });
-    if (existingEmail.length > 0) {
-      return {
-        success: false,
-        message: "An account with that email already exists.",
-      };
+    // 1. Create Org - rather than pre-checking the name with a List query,
+    // let the create attempt fail naturally against the collection's own
+    // uniqueness validation on `name`.
+    let org;
+    try {
+      org = await pb.collection("organization").create({
+        name: trimmedOrgName,
+        trial_ends: trialEnds.toISOString(),
+        grace_ends: graceEnds.toISOString(),
+        subscription_status: "trialing",
+      });
+    } catch (error) {
+      if (error?.data?.data?.name?.code === "validation_not_unique") {
+        return {
+          success: false,
+          message:
+            "That organization name is already taken. Please choose another.",
+        };
+      }
+      throw error;
     }
-
-    // Create Org
-    const org = await pb
-      .collection("organization")
-      .create({ name: trimmedOrgName });
 
     const data = {
       username: trimmedUsername,
@@ -307,29 +315,62 @@ export async function signup(
     };
 
     let createdUser;
+    let authToken;
     try {
       // Create User
       createdUser = await pb.collection("users").create(data);
 
+      // Setting the org's owner (next step) requires being authenticated
+      // as a member of that org - get a token for the user we just
+      // created via a raw send() rather than authWithPassword(), since
+      // authWithPassword() would log the browser into this account as a
+      // side effect (Login.jsx expects the visitor to stay logged out
+      // after signup, so they see "check your email to verify").
+      const authResult = await pb.send(
+        "/api/collections/users/auth-with-password",
+        { method: "POST", body: { identity: trimmedUsername, password } },
+      );
+      authToken = authResult.token;
+
       // Set org's owner field to this user's id
-      await pb.collection("organization").update(org.id, {
-        owner: createdUser.id,
-      });
+      await pb.collection("organization").update(
+        org.id,
+        { owner: createdUser.id },
+        { headers: { Authorization: authToken } },
+      );
     } catch (error) {
-      // Roll back the org so a failed signup doesn't permanently claim its name
+      // Roll back so a failed signup doesn't leave an orphaned org or
+      // user. Deleting the org requires auth as a member of it, so this
+      // can only succeed if we got far enough to obtain authToken above -
+      // if user creation itself is what failed, the org is left behind
+      // for manual cleanup (there's no user to authenticate as).
+      const authOptions = authToken
+        ? { headers: { Authorization: authToken } }
+        : undefined;
       try {
-        await pb.collection("organization").delete(org.id);
+        await pb.collection("organization").delete(org.id, authOptions);
       } catch (cleanupError) {
         console.error(
           "Failed to roll back orphaned organization:",
           cleanupError,
         );
       }
+      if (createdUser) {
+        try {
+          await pb.collection("users").delete(createdUser.id, authOptions);
+        } catch (cleanupError) {
+          console.error("Failed to roll back orphaned user:", cleanupError);
+        }
+      }
+
+      if (error?.data?.data?.email?.code === "validation_not_unique") {
+        return {
+          success: false,
+          message: "An account with that email already exists.",
+        };
+      }
       throw error;
     }
-
-    // Optional: Trigger verification email
-    await pb.collection("users").requestVerification(trimmedEmail);
 
     return { success: true, user: createdUser };
   } catch (error) {

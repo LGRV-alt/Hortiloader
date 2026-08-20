@@ -15,6 +15,8 @@ import { IoIosRefresh } from "react-icons/io";
 import toast from "react-hot-toast";
 import pb from "../../api/pbConnect";
 import DarkModeToggle from "../DarkmodeToggle";
+import TrialIndicator from "../TrialIndicator";
+import PendingIndicator from "../PendingIndicator";
 
 export default function Header({
   setChosenWeek,
@@ -223,6 +225,10 @@ export default function Header({
                 {/* <div className="hidden md:flex">
                   <DarkModeToggle />
                 </div> */}
+                <div className="hidden sm:flex">
+                  <TrialIndicator />
+                  <PendingIndicator />
+                </div>
                 <button
                   onClick={markAllSeen}
                   title={
@@ -286,6 +292,10 @@ export default function Header({
             )}
           </button>
           <div className="border-t-2 dark:border-darkBorder border-white w-full"></div>
+          <div className="sm:hidden flex justify-center">
+            <TrialIndicator />
+            <PendingIndicator />
+          </div>
           <div className="md:pt-10 flex flex-col w-full items-center md:items-center gap-2 md:gap-4 ">
             <NavLink
               to="/"

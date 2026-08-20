@@ -197,13 +197,6 @@ export default function Login() {
                 >
                   Forgot your password?
                 </Link>
-                <br />
-                <Link
-                  to="/resend-verification"
-                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
-                >
-                  Didn't get a verification email?
-                </Link>
               </div>
             </div>
           </form>
