@@ -57,6 +57,15 @@ export default function LandingPage() {
             </Link> */}
             </div>
           </nav>
+          <div className="md:hidden flex justify-center items-center gap-2">
+            <DarkmodeToggle />
+            <Link
+              to="/login"
+              className="p-2 text-center text-white  md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
+            >
+              Log In
+            </Link>
+          </div>
         </div>
       </header>
 
