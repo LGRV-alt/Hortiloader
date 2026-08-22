@@ -132,7 +132,7 @@ export default function Login() {
   }
 
   return (
-    <div className="dark:bg-darkMain md:bg-white bg-regal-blue grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
+    <div className="dark:md:bg-darkMain md:bg-white bg-regal-blue grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
       <div className="flex flex-col md:justify-center pt-5 pb-5 items-center">
         {toggle ? (
           <form
