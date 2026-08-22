@@ -99,7 +99,7 @@ export default function Header({
           <LogoTree height="60px" width="50px" />
         </Link>
         <Link data-testid="Header" to="/" className="hidden lg:flex pl-1">
-          <HortiLoaderWordmark height="35px" />
+          <HortiLoaderWordmark height="32px" />
         </Link>
         {/* Year Selection and Current Week */}
         <div className=" flex-col hidden md:flex pl-3 lg:pl-0 text-sm">

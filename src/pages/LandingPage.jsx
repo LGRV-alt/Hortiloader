@@ -19,11 +19,11 @@ export default function LandingPage() {
               data-testid="landing-page-header"
               className="flex items-center"
             >
-              <HortiLoaderWordmark height="40px" />
+              <HortiLoaderWordmark height="32px" />
             </a>
           </div>
           <nav className="hidden md:flex items-center text-gray-300  text-sm">
-            <a href="#features" className="hover:text-gray-200 p-2">
+            <a href="#features" className="hover:text-white p-2">
               Features
             </a>
             {/* <a href="#how" className="hover:text-white p-2">

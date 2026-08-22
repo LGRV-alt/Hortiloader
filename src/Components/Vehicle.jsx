@@ -491,14 +491,29 @@ export default function Vehicle({
               // Outer wrapper only positions/sizes the shape and hosts the
               // corner controls — it must NOT clip, or a circular tree's
               // rounded overflow cuts the resize handle/delete button away.
+              //
+              // Positioned by its CENTER (x+width/2, y+height/2) plus a
+              // -50%/-50% self-transform, not by top-left + width/height
+              // directly. shape.x/y are still stored as the top-left corner
+              // (that's what the drag/resize math above uses) - this is
+              // just how it's rendered. The reason: printing forces
+              // circular shapes to aspect-ratio 1/1 (see below) so trees
+              // don't print as ovals, which means their rendered height no
+              // longer equals the stored height%. Anchoring from top-left
+              // left the bottom edge (and visual center) drift downward by
+              // whatever that height changed by, making trees look like
+              // they'd moved. Center-anchoring makes the shape grow/shrink
+              // around a fixed point instead, regardless of what height it
+              // actually resolves to.
               <div
                 key={shape.id}
                 data-shape-blocker
                 className="absolute"
                 style={{
-                  left: `${shape.x}%`,
-                  top: `${shape.y}%`,
+                  left: `${shape.x + shape.width / 2}%`,
+                  top: `${shape.y + shape.height / 2}%`,
                   width: `${shape.width}%`,
+                  transform: "translate(-50%, -50%)",
                   // Printing hides the toolbar and gives the canvas different
                   // pixel dimensions than on screen, so a stored height% that
                   // made a true circle on screen can print as an oval. Forcing
