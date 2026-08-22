@@ -27,9 +27,4 @@ export const protectedURLRoutes = [
 ];
 
 // Unprotected Routes
-export const unprotectedRoutes = [
-  "terms",
-  "privacy",
-  "resend-verification",
-  "forgot-password",
-];
+export const unprotectedRoutes = ["terms", "privacy", "forgot-password"];
