@@ -9,8 +9,8 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen dark:bg-darkMain dark:text-white bg-slate-50">
       {/* Header */}
       <header className="w-full border-b-2 border-darkBorder bg-main dark:bg-darkMain text-white top-0 z-30">
-        <div className="max-w-full mx-auto flex items-center justify-between px-2 py-2">
-          <div className="flex items-center gap-3">
+        <div className="max-w-full h-16  mx-auto flex items-center justify-between px-2 py-2">
+          <div className="flex items-center gap-1">
             <span className="hidden">
               <LogoTree className="hidden" height="40px" width="40px" />
             </span>
@@ -22,59 +22,41 @@ export default function LandingPage() {
               <HortiLoaderWordmark height="40px" />
             </a>
           </div>
-          <nav className="hidden md:flex items-center gap-2 text-sm">
-            <a
-              href="#features"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+          <nav className="hidden md:flex items-center text-gray-300  text-sm">
+            <a href="#features" className="hover:text-gray-200 p-2">
               Features
             </a>
-            <a
-              href="#how"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            {/* <a href="#how" className="hover:text-white p-2">
               How it Works
-            </a>
-            <a
-              href="#pricing"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            </a> */}
+            <a href="#pricing" className="hover:text-white p-2">
               Pricing
             </a>
-            <a
-              href="#about"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            {/* <a href="#about" className="hover:text-white p-2">
               About
-            </a>
-            <a
-              href="#contact"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            </a> */}
+            {/* <a href="#contact" className="hover:text-white p-2">
               Contact
-            </a>
-            <Link
-              to="/docs"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            </a> */}
+            <Link to="/docs" className="hover:text-white p-2">
               Docs
             </Link>
-          </nav>
-          <div className="flex gap-2">
-            <Link
-              to="/login"
-              className="p-2 text-center md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
-            >
-              Log In
-            </Link>
-            {/* <Link
+            <div className="flex gap-2">
+              <DarkmodeToggle />
+              <Link
+                to="/login"
+                className="p-2 text-center text-white md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
+              >
+                Log In
+              </Link>
+              {/* <Link
               to="/login"
               className="p-2 text-xs text-center rounded-lg bg-green-600  hover:border-green-500 border"
             >
               Get Started
             </Link> */}
-            <DarkmodeToggle />
-          </div>
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -122,19 +104,19 @@ export default function LandingPage() {
               },
               {
                 title: "Track Loading Progress",
-                desc: "See which trolleys are ready, in progress or on the truck, with status updates everyone can see in real time.",
+                desc: "See which orders are ready, in progress or loaded, with status updates everyone can see.",
               },
               {
                 title: "Loading Sheets",
-                desc: "Group orders together in a clear map to assist in the loading and delivery of each load.",
+                desc: "Group orders together in a clear map to assist in the loading and delivery.",
               },
               {
                 title: "Trolley Tracking",
-                desc: "Trolley movements can be logged and tracked with total numbers easily shown at a glance, so nothing gets lost between sites.",
+                desc: "Trolley movements and exchanges can be logged and tracked with total numbers easily shown at a glance.",
               },
               {
                 title: "Account Control",
-                desc: "Add team accounts with role based permissions — admin, super user, staff or viewer — to fit your business.",
+                desc: "Add team accounts with role based permissions — admin, super user, staff or viewer.",
               },
               {
                 title: "Picture/File Upload",
@@ -146,7 +128,7 @@ export default function LandingPage() {
               },
               {
                 title: "Multi-User Sync",
-                desc: "Everyone works off the same live board, so changes from your team show up for everyone else without a refresh.",
+                desc: "Everyone works off the same live board, so changes from your team show up for everyone else.",
               },
             ].map((f) => (
               <div

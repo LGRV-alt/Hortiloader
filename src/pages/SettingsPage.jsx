@@ -102,7 +102,7 @@ export default function SettingsPage({}) {
         termsAgreement: {
           agreed: true,
           timestamp: new Date().toISOString(),
-          version: "v1.0",
+          version: "v1.1",
         },
       });
 

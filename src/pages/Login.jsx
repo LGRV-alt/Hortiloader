@@ -91,7 +91,7 @@ export default function Login() {
       {
         agreed: true,
         timestamp: new Date().toISOString(),
-        version: "v1.0",
+        version: "v1.1",
       },
       normOrg,
       display_username,

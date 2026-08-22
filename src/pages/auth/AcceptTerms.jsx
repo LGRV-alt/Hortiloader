@@ -11,7 +11,7 @@ export default function AcceptTerms() {
 
   useEffect(() => {
     const user = pb.authStore.model;
-    if (pb.authStore.isValid && user?.termsAgreement?.version === "v1.0") {
+    if (pb.authStore.isValid && user?.termsAgreement?.version === "v1.1") {
       navigate("/");
     }
   }, []);
@@ -35,7 +35,7 @@ export default function AcceptTerms() {
         termsAgreement: {
           agreed: true,
           timestamp: new Date().toISOString(),
-          version: "v1.0",
+          version: "v1.1",
         },
       });
 
