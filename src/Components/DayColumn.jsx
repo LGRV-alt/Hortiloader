@@ -104,7 +104,7 @@ export default function DayColumn({
           >
             <div
               className={`${
-                !edit && " hover:bg-slate-300 dark:hover:bg-slate-900"
+                !edit && " hover:bg-slate-300 dark:hover:bg-slate-900 "
               } p-1 flex justify-between w-full  hover:border-black  transition-all`}
             >
               {/* {isNew && (
