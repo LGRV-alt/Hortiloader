@@ -484,7 +484,7 @@ export default function ViewTask() {
       {/* ------Picture/File Upload + Change History-------- */}
       <div className="flex flex-col gap-4 h-full">
         {user.role !== "viewer" && (
-          <div className="shadow-lg shadow-gray-400 rounded-2xl border-[3px] border-darkBorder overflow-hidden dark:shadow-darkSecondary dark:bg-darkSecondary bg-white">
+          <div className="shadow-lg shadow-gray-400 h-1/3 rounded-2xl border-[3px] border-darkBorder overflow-hidden dark:shadow-darkSecondary dark:bg-darkSecondary bg-white">
             <div className="w-full">
               <FileUpload taskID={id} onUpload={setPictures} />
               <Pictures
@@ -502,7 +502,9 @@ export default function ViewTask() {
             className="w-full flex justify-between items-center px-4 py-3 font-semibold dark:bg-darkMain bg-regal-blue text-white"
           >
             <span>History</span>
-            <span>{historyLoading ? "Loading..." : showHistory ? "▲" : "▼"}</span>
+            <span>
+              {historyLoading ? "Loading..." : showHistory ? "▲" : "▼"}
+            </span>
           </button>
           {showHistory && (
             <div className="overflow-y-auto max-h-96 p-3 flex flex-col gap-3 text-xs md:text-sm">
@@ -527,9 +529,16 @@ export default function ViewTask() {
                       {Object.entries(entry.changes || {}).map(
                         ([field, { from, to }]) => (
                           <li key={field}>
-                            {FIELD_LABELS[field] || field}:{" "}
-                            {formatHistoryValue(from)} →{" "}
-                            {formatHistoryValue(to)}
+                            <span className="font-bold">
+                              {FIELD_LABELS[field] || field}:{" "}
+                            </span>
+                            <span className="text-red-500">
+                              {formatHistoryValue(from)}
+                            </span>{" "}
+                            →{" "}
+                            <span className="text-green-500">
+                              {formatHistoryValue(to)}
+                            </span>
                           </li>
                         ),
                       )}

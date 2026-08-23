@@ -9,8 +9,8 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen dark:bg-darkMain dark:text-white bg-slate-50">
       {/* Header */}
       <header className="w-full border-b-2 border-darkBorder bg-main dark:bg-darkMain text-white top-0 z-30">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-2 py-2">
-          <div className="flex items-center gap-3">
+        <div className="max-w-full h-16  mx-auto flex items-center justify-between px-2 py-2">
+          <div className="flex items-center gap-1">
             <span className="hidden">
               <LogoTree className="hidden" height="40px" width="40px" />
             </span>
@@ -19,55 +19,52 @@ export default function LandingPage() {
               data-testid="landing-page-header"
               className="flex items-center"
             >
-              <HortiLoaderWordmark height="40px" />
+              <HortiLoaderWordmark height="32px" />
             </a>
           </div>
-          <nav className="hidden md:flex items-center gap-2 text-sm">
-            <a
-              href="#features"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+          <nav className="hidden md:flex items-center text-gray-300  text-sm">
+            <a href="#features" className="hover:text-white p-2">
               Features
             </a>
-            <a
-              href="#how"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            {/* <a href="#how" className="hover:text-white p-2">
               How it Works
+            </a> */}
+            <a href="#pricing" className="hover:text-white p-2">
+              Pricing
             </a>
-            <a
-              href="#about"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            {/* <a href="#about" className="hover:text-white p-2">
               About
-            </a>
-            <a
-              href="#contact"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            </a> */}
+            {/* <a href="#contact" className="hover:text-white p-2">
               Contact
-            </a>
-            <Link
-              to="/docs"
-              className="hover:bg-white hover:rounded-full hover:bg-opacity-15 p-4"
-            >
+            </a> */}
+            <Link to="/docs" className="hover:text-white p-2">
               Docs
             </Link>
-          </nav>
-          <div className="flex gap-2">
-            <Link
-              to="/login"
-              className="p-2 text-center md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
-            >
-              Log In
-            </Link>
-            {/* <Link
+            <div className="flex gap-2">
+              <DarkmodeToggle />
+              <Link
+                to="/login"
+                className="p-2 text-center text-white md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
+              >
+                Log In
+              </Link>
+              {/* <Link
               to="/login"
               className="p-2 text-xs text-center rounded-lg bg-green-600  hover:border-green-500 border"
             >
               Get Started
             </Link> */}
+            </div>
+          </nav>
+          <div className="md:hidden flex justify-center items-center gap-2">
             <DarkmodeToggle />
+            <Link
+              to="/login"
+              className="p-2 text-center text-white  md:px-4 text-sm rounded-lg bg-green-600  hover:bg-green-700 "
+            >
+              Log In
+            </Link>
           </div>
         </div>
       </header>
@@ -86,7 +83,7 @@ export default function LandingPage() {
             to="/login"
             className="px-6 py-3 rounded-xl dark:bg-slate-700 dark:hover:bg-slate-500 bg-slate-900 text-white hover:bg-slate-800"
           >
-            Try it Free
+            Start your free 30-day trial
           </Link>
           {/* <a
             href="#features"
@@ -95,6 +92,9 @@ export default function LandingPage() {
             Learn More
           </a> */}
         </div>
+        <p className="dark:text-slate-400 text-slate-500 text-xs mt-4">
+          No card required to start. £49.99/month after your trial ends.
+        </p>
       </section>
 
       {/* Features Section */}
@@ -105,27 +105,39 @@ export default function LandingPage() {
             {[
               {
                 title: "Fast Order Creation",
-                desc: "Quickly add and update orders with an intuitive interface.",
+                desc: "Quickly add and update orders with an intuitive interface — set the customer, postcode, order details and delivery day in seconds.",
+              },
+              {
+                title: "Weekly Board View",
+                desc: "Orders are laid out by day across the week, so your whole team can see what's going out and when, at a glance.",
               },
               {
                 title: "Track Loading Progress",
-                desc: "See which trolleys are ready, in progress or on the truck.",
+                desc: "See which orders are ready, in progress or loaded, with status updates everyone can see.",
               },
               {
                 title: "Loading Sheets",
-                desc: "Group orders together in a clear map to assist in the loading and delivery of each load.",
+                desc: "Group orders together in a clear map to assist in the loading and delivery.",
               },
               {
                 title: "Trolley Tracking",
-                desc: "Trolley movements can be logged and tracked with total numbers easily shown at a glance.",
+                desc: "Trolley movements and exchanges can be logged and tracked with total numbers easily shown at a glance.",
               },
               {
                 title: "Account Control",
-                desc: "Add team accounts with role based permissions to fit your business.",
+                desc: "Add team accounts with role based permissions — admin, super user, staff or viewer.",
               },
               {
                 title: "Picture/File Upload",
-                desc: "Attach photos and files to each order.",
+                desc: "Attach photos and files to each order, useful for special instructions or proof of a completed delivery.",
+              },
+              {
+                title: "Search",
+                desc: "Quickly find any order or customer without hunting back through old weeks.",
+              },
+              {
+                title: "Multi-User Sync",
+                desc: "Everyone works off the same live board, so changes from your team show up for everyone else.",
               },
             ].map((f) => (
               <div
@@ -181,19 +193,56 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 dark:bg-darkMain bg-white">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-2xl font-bold mb-4">Simple, Honest Pricing</h2>
+          <p className="dark:text-slate-300 text-slate-600 mb-10">
+            Try Hortiloader free for 30 days — no card required. Keep using it
+            after your trial by subscribing for a single monthly price.
+          </p>
+          <div className="border border-darkBorder rounded-2xl p-8 dark:bg-darkSecondary bg-slate-50 max-w-sm mx-auto">
+            <div className="text-sm font-semibold text-emerald-600 mb-2">
+              30-Day Free Trial
+            </div>
+            <div className="flex items-end justify-center gap-1 mb-1">
+              <span className="text-4xl font-extrabold">£49.99</span>
+              <span className="dark:text-slate-400 text-slate-500 mb-1">
+                /month
+              </span>
+            </div>
+            <p className="dark:text-slate-400 text-slate-500 text-xs mb-6">
+              Billed monthly after your free trial ends. Cancel anytime.
+            </p>
+            <ul className="text-left text-sm dark:text-slate-300 text-slate-600 space-y-2 mb-6">
+              <li>✓ Full access to all features</li>
+              <li>✓ Unlimited team accounts</li>
+              <li>✓ No card required to start your trial</li>
+            </ul>
+            <Link
+              to="/login"
+              className="block px-6 py-3 rounded-xl dark:bg-slate-700 dark:hover:bg-slate-500 bg-slate-900 text-white hover:bg-slate-800"
+            >
+              Start your free trial
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-16 dark:bg-emerald-900 bg-emerald-600 text-white text-center">
         <h2 className="text-3xl font-bold mb-4">
           Ready to streamline your orders?
         </h2>
         <p className="mb-6 text-emerald-100">
-          Join other garden centres using Hortiloader today.
+          Join other garden centres using Hortiloader today — free for 30 days,
+          no card required.
         </p>
         <Link
           to="/login"
           className="px-6 py-3 bg-white text-emerald-700 font-semibold rounded-xl hover:bg-emerald-50"
         >
-          Get Started
+          Start your free trial
         </Link>
       </section>
 
@@ -201,19 +250,14 @@ export default function LandingPage() {
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold mb-4">About Hortiloader</h2>
           <p className="dark:text-slate-400 text-slate-600 text-sm leading-relaxed max-w-2xl mx-auto">
-            Hortiloader is a side project built out of a love for plants and
-            practical tools. It started as a hobby idea to make organising
-            horticultural orders and trolleys a little easier.
+            Hortiloader was built out of a love for plants and practical tools,
+            to make organising horticultural orders and trolleys easier for
+            garden centres and suppliers.
           </p>
           <p className="dark:text-slate-400 text-slate-600 text-sm leading-relaxed mt-3 max-w-2xl mx-auto">
-            It’s currently in <span className="font-semibold">beta</span> — that
-            means it’s still growing and may change over time. Feel free to
-            explore, test it out and share feedback if you find it useful!
-          </p>
-          <p className="dark:text-slate-400 text-slate-500 text-xs mt-6 max-w-2xl mx-auto">
-            This project is shared freely as a hobby and learning experience.
-            There are no guarantees or support obligations but you’re very
-            welcome to use it and see what you think.
+            We’re always improving Hortiloader based on feedback from the
+            businesses using it day to day. If you have suggestions or run into
+            any issues, we’d love to hear from you.
           </p>
         </div>
       </section>
@@ -225,8 +269,7 @@ export default function LandingPage() {
       >
         <p>© {new Date().getFullYear()} Hortiloader. All rights reserved.</p>
         <p className="mt-2 text-xs dark:text-slate-400 text-slate-500">
-          Version 0.9 – Beta release. Hortiloader is a personal project shared
-          for testing and feedback. No warranties or guarantees are provided.
+          Try Hortiloader free for 30 days, no card required.
         </p>
         <div className="mt-3 flex justify-center gap-4">
           <Link to="/privacy" className="hover:text-slate-950">

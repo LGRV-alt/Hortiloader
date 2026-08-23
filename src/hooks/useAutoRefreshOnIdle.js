@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { signout } from "../api/pocketbase";
 
 export default function useAutoRefreshOnIdleAndDaily({
   idleTimeoutMs = 6 * 60 * 30 * 1000, //3 Hours
@@ -32,29 +33,32 @@ export default function useAutoRefreshOnIdleAndDaily({
     resetIdleTimer();
 
     // DAILY AUTO REFRESH
-    // Initialize daily refresh date on first load, if missing
-    const today = new Date().toISOString().slice(0, 10);
-    const lastRefresh = localStorage.getItem("lastAppRefreshDate");
-
-    if (!lastRefresh) {
-      console.log("[AutoRefresh] Setting initial daily refresh date.");
-      localStorage.setItem("lastAppRefreshDate", today);
-    }
-
-    intervalRef.current = setInterval(() => {
+    // Checked immediately on mount (not just on the interval) so a browser
+    // reopened after being closed overnight is caught right away, rather
+    // than staying signed in for up to checkDailyEveryMs before the next
+    // interval tick notices the date changed.
+    const checkDailyRefresh = () => {
       const todayCheck = new Date().toISOString().slice(0, 10);
       const lastCheck = localStorage.getItem("lastAppRefreshDate");
 
-      console.log(
-        `[AutoRefresh] Daily check running... Today: ${todayCheck}, Last: ${lastCheck}`,
-      );
+      if (!lastCheck) {
+        console.log("[AutoRefresh] Setting initial daily refresh date.");
+        localStorage.setItem("lastAppRefreshDate", todayCheck);
+        return;
+      }
 
       if (lastCheck !== todayCheck) {
-        console.warn("[AutoRefresh] New day detected. Refreshing app...");
+        console.warn(
+          "[AutoRefresh] New day detected. Signing out and refreshing app...",
+        );
         localStorage.setItem("lastAppRefreshDate", todayCheck);
+        signout();
         location.reload();
       }
-    }, checkDailyEveryMs);
+    };
+
+    checkDailyRefresh();
+    intervalRef.current = setInterval(checkDailyRefresh, checkDailyEveryMs);
 
     // CLEANUP
     return () => {

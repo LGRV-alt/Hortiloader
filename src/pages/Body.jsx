@@ -40,7 +40,7 @@ export default function Body({
           <DayColumn
             arr={monday}
             day="Monday"
-            route={userSettings?.monday_heading || "Misc"}
+            route={userSettings?.monday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][0]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -54,7 +54,7 @@ export default function Body({
           <DayColumn
             arr={tuesday}
             day="Tuesday"
-            route={userSettings?.tuesday_heading || "Misc"}
+            route={userSettings?.tuesday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][1]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -68,7 +68,7 @@ export default function Body({
           <DayColumn
             arr={wednesday}
             day="Wednesday"
-            route={userSettings?.wednesday_heading || "Misc"}
+            route={userSettings?.wednesday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][2]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -82,7 +82,7 @@ export default function Body({
           <DayColumn
             arr={thursday}
             day="Thursday"
-            route={userSettings?.thursday_heading || "Misc"}
+            route={userSettings?.thursday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][3]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -96,7 +96,7 @@ export default function Body({
           <DayColumn
             arr={friday}
             day="Friday"
-            route={userSettings?.friday_heading || "Misc"}
+            route={userSettings?.friday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][4]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -110,7 +110,7 @@ export default function Body({
           <DayColumn
             arr={saturday}
             day="Saturday"
-            route={userSettings?.saturday_heading || "Misc"}
+            route={userSettings?.saturday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][5]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}
@@ -124,7 +124,7 @@ export default function Body({
           <DayColumn
             arr={sunday}
             day="Sunday"
-            route={userSettings?.sunday_heading || "Misc"}
+            route={userSettings?.sunday_heading || ""}
             numberOfDay={daysOfWeek[chosenYear][chosenWeek][6]}
             chosenYear={chosenYear}
             chosenWeek={chosenWeek}

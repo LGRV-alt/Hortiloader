@@ -74,8 +74,8 @@ export default function DayColumn({
   return (
     <>
       {/* Whole column */}
-      <div className="bg-slate-300 dark:bg-darkSecondary dark:border-darkBorder flex flex-col justify-center items-center border-b-2  md:border-b-2 border-black text-base">
-        <div className="flex items-center gap-2 ">
+      <div className="bg-slate-300 dark:bg-darkSecondary dark:border-darkBorder flex flex-col justify-start items-center border-b-2  md:border-b-2 border-black text-base min-h-16">
+        <div className="flex items-center gap-2 pt-2">
           {/* Title of column */}
           <h5 className="font-bold" onClick={() => console.log(arr)}>
             {day}
@@ -87,7 +87,9 @@ export default function DayColumn({
             <FaSearchPlus />
           </NavLink>
         </div>
-        <p>{route}</p>
+        <p className="w-full text-center truncate text-sm px-1 capitalize">
+          {route}
+        </p>
       </div>
 
       {/* Data in the column */}
@@ -102,7 +104,7 @@ export default function DayColumn({
           >
             <div
               className={`${
-                !edit && " hover:bg-slate-300 dark:hover:bg-darkBorder"
+                !edit && " hover:bg-slate-300 dark:hover:bg-slate-900 "
               } p-1 flex justify-between w-full  hover:border-black  transition-all`}
             >
               {/* {isNew && (

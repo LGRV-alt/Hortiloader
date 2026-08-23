@@ -84,15 +84,32 @@ export default function Terms() {
 
       <section className="mb-6">
         <h2 className="text-xl font-semibold mb-2">
-          6. Premium Features (Future)
+          6. Subscription and Billing
         </h2>
         <p>
-          We may offer optional paid features in the future via a secure
-          provider.
+          Hortiloader is free to use for the first 30 days after you create
+          an account, with no card required to start.
         </p>
         <p>
-          Details on plans and refund policies will be provided before any
-          purchase.
+          After your 30-day trial ends, continued access requires a paid
+          subscription, currently £49.99 per month, billed monthly.
+          Subscriptions are handled securely through Stripe.
+        </p>
+        <p>
+          If a subscription isn’t set up after the trial (and a short grace
+          period), access to the Service will be suspended until payment is
+          made.
+        </p>
+        <p>
+          To subscribe, cancel, or make changes to your subscription, contact
+          us at{" "}
+          <a
+            href="mailto:support@hortiloader.com"
+            className="text-blue-600 underline"
+          >
+            support@hortiloader.com
+          </a>
+          .
         </p>
       </section>
 

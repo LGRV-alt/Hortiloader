@@ -311,9 +311,9 @@ export default function Docs() {
   }, [slug]);
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-full bg-white dark:bg-darkMain dark:text-white text-gray-800">
+    <div className="flex flex-col md:flex-row w-full h-full bg-white dark:bg-darkMain dark:text-white text-gray-800 ">
       {/* Sidebar */}
-      <aside className="md:w-64 shrink-0 border-b md:border-b-0 md:border-r border-gray-200 dark:border-darkBorder px-5 py-6 md:sticky md:top-0 md:h-dvh md:overflow-y-auto">
+      <aside className="md:w-64 shrink-0 border-b md:border-b-0 md:border-r bg-regal-blue dark:bg-darkSecondary border-gray-200 dark:border-darkBorder px-5 py-6 md:sticky md:top-0 md:h-dvh md:overflow-y-auto">
         {!isAuthenticated && (
           <Link to="/" className="inline-flex mb-4">
             <HortiLoaderWordmark height="40px" />
@@ -325,7 +325,7 @@ export default function Docs() {
         <nav className="flex flex-col gap-5">
           {DOCS_NAV.map((group) => (
             <div key={group.group}>
-              <p className="text-[11px] font-semibold tracking-wider text-gray-400 dark:text-gray-500 uppercase mb-1.5 px-3">
+              <p className="text-[11px] font-semibold tracking-wider text-white dark:text-gray-500 uppercase mb-1.5 px-3">
                 {group.group}
               </p>
               <div className="flex flex-col gap-0.5">
@@ -339,7 +339,7 @@ export default function Docs() {
                       className={`flex items-center gap-2.5 px-3 py-1.5 rounded-md text-sm transition-colors ${
                         isActive
                           ? "bg-blue-600 text-white font-medium"
-                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-darkSecondary"
+                          : "text-white hover:bg-gray-100 hover:text-black  "
                       }`}
                     >
                       <Icon

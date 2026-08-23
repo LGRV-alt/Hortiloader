@@ -2,18 +2,13 @@
 import { Navigate } from "react-router-dom";
 import pb from "../api/pbConnect";
 
-const REQUIRED_TERMS_VERSION = "v1.0"; // match your latest terms version
+const REQUIRED_TERMS_VERSION = "v1.1"; // match your latest terms version
 
 export default function ProtectedRoute({ roles, children }) {
   const user = pb.authStore.record;
 
   if (!pb.authStore.isValid) {
     return <Navigate to="/" />;
-  }
-
-  // Only force verification for admin users!
-  if (user?.role === "admin" && !user?.verified) {
-    return <Navigate to="/resend-verification" />;
   }
 
   if (

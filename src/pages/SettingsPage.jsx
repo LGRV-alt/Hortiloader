@@ -24,7 +24,7 @@ export default function SettingsPage({}) {
     passwordConfirm: "",
   });
 
-  const SUBUSER_LIMIT = 8;
+  const SUBUSER_LIMIT = 20;
   const subuserCount = users.length; // this already includes the admin
 
   const currentUser = pb.authStore.record;
@@ -102,7 +102,7 @@ export default function SettingsPage({}) {
         termsAgreement: {
           agreed: true,
           timestamp: new Date().toISOString(),
-          version: "v1.0",
+          version: "v1.1",
         },
       });
 

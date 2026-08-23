@@ -91,7 +91,7 @@ export default function Login() {
       {
         agreed: true,
         timestamp: new Date().toISOString(),
-        version: "v1.0",
+        version: "v1.1",
       },
       normOrg,
       display_username,
@@ -132,12 +132,12 @@ export default function Login() {
   }
 
   return (
-    <div className="dark:bg-darkMain grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
-      <div className="flex flex-col md:justify-center items-center">
+    <div className="dark:md:bg-darkMain md:bg-white bg-regal-blue grid grid-cols-1 grid-rows-[1fr_5fr] md:grid-rows-1  md:grid-cols-2 h-screen">
+      <div className="flex flex-col md:justify-center pt-5 pb-5 items-center">
         {toggle ? (
           <form
             onSubmit={handleLogin}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96 mt-10 md:mt0"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96  md:mt-0"
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Welcome</h2>
             <div className="space-y-4">
@@ -197,20 +197,13 @@ export default function Login() {
                 >
                   Forgot your password?
                 </Link>
-                <br />
-                <Link
-                  to="/resend-verification"
-                  className="text-blue-600 dark:text-blue-400 hover:underline text-sm"
-                >
-                  Didn't get a verification email?
-                </Link>
               </div>
             </div>
           </form>
         ) : (
           <form
             onSubmit={handleSignup}
-            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96 mt-10 md:mt-0"
+            className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 dark:text-white p-8 rounded-2xl shadow-xl shadow-slate-900/10 dark:shadow-black/30 w-96  md:mt-0"
           >
             <h2 className="text-2xl text-center font-semibold mb-6">Sign up</h2>
             <div className="space-y-4">
@@ -322,7 +315,9 @@ export default function Login() {
             {" "}
             <LogoTree height="200px" />
           </div>
-          <HortiLoaderWordmark height="60px" />
+          <Link to={"/"}>
+            <HortiLoaderWordmark height="50px" />
+          </Link>
           <p className="text-lg text-white">create and track orders</p>
         </div>
       </div>
