@@ -81,17 +81,16 @@ export default function App() {
   // }, [chosenWeek, chosenYear, fetchTasks]);
 
   useEffect(() => {
-    fetchSettings();
-  }, []);
+    if (isAuthenticated) {
+      fetchSettings();
+    }
+  }, [isAuthenticated, fetchSettings]);
 
   useEffect(() => {
     if (!isAuthenticated) {
       stopPolling();
       return;
     }
-
-    // (optional) only fetch settings once or guard it
-    // fetchSettings();
 
     // one call covers initial + any week/year changes
     startPollingWithImmediateFetch({ week: chosenWeek, year: chosenYear });
