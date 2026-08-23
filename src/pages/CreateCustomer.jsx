@@ -198,7 +198,7 @@ export default function CreateCustomer() {
             disabled={saving}
             className="mt-4 md:w-1/3 w-1/2 rounded-xl py-2 text-white text-base font-medium
   bg-gradient-to-b from-blue-500 to-blue-700
-  shadow-lg shadow-blue-500/30
+ 
   hover:from-blue-600 hover:to-blue-800
   hover:-translate-y-[1px]
   active:translate-y-0
